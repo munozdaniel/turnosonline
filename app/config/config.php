@@ -5,10 +5,10 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
-        'host'        => 'localhost',
+        'host'        => '192.168.42.14',
         'username'    => 'root',
-        'password'    => '',
-        'dbname'      => 'test',
+        'password'    => 'infoimps',
+        'dbname'      => 'impsorgweb',
         'charset'     => 'utf8',
     ),
     'application' => array(
@@ -17,6 +17,7 @@ return new \Phalcon\Config(array(
         'migrationsDir'  => APP_PATH . '/app/migrations/',
         'viewsDir'       => APP_PATH . '/app/views/',
         'pluginsDir'     => APP_PATH . '/app/plugins/',
+        'formsDir'     => APP_PATH . '/app/forms/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
