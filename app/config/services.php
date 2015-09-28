@@ -78,3 +78,70 @@ $di->setShared('session', function () {
 
     return $session;
 });
+
+// This service returns a MySQL database
+$di->set('dbUsuarios', function () use ($config) {
+    return new DbAdapter($config->gestionusuarios->toArray());
+
+});
+
+$di->set('mail', function () use ($config) {
+    //sleep(2);
+    //require "../libraries/PHPMailer/PHPMailer.php";
+    $mail = new PHPMailer;
+    //Muestra Mensajes de error con detalles 3 o 4.
+    // $mail->SMTPDebug = 2;
+    $mail->isSMTP();
+    $mail->isHTML(true);
+
+    $mail->CharSet      = $config->mail->charset;
+    $mail->Host         = $config->mail->host;
+    $mail->SMTPAuth     = true;
+    $mail->Username     = $config->mail->username;
+    $mail->Password     = $config->mail->password;
+    $mail->SMTPSecure   = $config->mail->security;
+    $mail->Port         = $config->mail->port;
+    echo $config->mail->name." -- ".$config->mail->email;
+    $mail->addAddress($config->mail->email, $config->mail->name);
+
+    return $mail;
+});
+/**
+ * Register the flash service with custom CSS classes
+ */
+$di->set('flash', function()
+{
+    return new Phalcon\Flash\Direct(array(
+        'error'     => 'alert alert-danger multiple col-md-8',
+        'success'   => 'alert alert-success',
+        'notice'    => 'alert alert-info ',
+        'warning'   => 'alert alert-warning ',
+    ));
+});
+
+/**
+ * Register a user component
+ */
+$di->set('elemento', function(){
+    return new Elementos();
+});
+/**
+ * Registramos el gestor de eventos (Utilizado en plugins/Seguridad.php)
+ */
+$di->set('dispatcher', function() use ($di)
+{
+
+    $eventsManager = $di->getShared('eventsManager');
+
+    $roles = new Seguridad($di);
+
+    /**
+     * Escuchamos eventos en el componente dispatcher usando el plugin Roles
+     */
+    $eventsManager->attach('dispatch', $roles);
+
+    $dispatcher = new Phalcon\Mvc\Dispatcher();
+    $dispatcher->setEventsManager($eventsManager);
+
+    return $dispatcher;
+});
