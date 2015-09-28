@@ -1,7 +1,14 @@
-<div class="page-header">
-    <h1>Congratulations!</h1>
-</div>
-
-<p>You're now flying with Phalcon. Great things are about to happen!</p>
-
-<em>This page is located at views/index/index.phtml</em>
+{{ partial('index/parcial/slider_area') }}
+{{ partial('index/parcial/about') }}
+{{ partial('index/parcial/service') }}
+{{ partial('index/parcial/works') }}
+{{ partial('index/parcial/team') }}
+{{ partial('index/parcial/pricing') }}
+{{ partial('index/parcial/blog') }}
+{{ partial('index/parcial/testimonial') }}
+{{ partial('index/parcial/clients') }}
+{{ partial('index/parcial/contact') }}
+{{ partial('index/parcial/contactFeature') }}
+{{ partial('index/parcial/subscribe') }}
+{{ partial('index/parcial/footer') }}
+{{ content() }}
