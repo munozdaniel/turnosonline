@@ -1,0 +1,42 @@
+# IDE specific files
+/.settings/
+/.idea
+/.cproject
+/.project
+
+# Generated files
+/ext/Makefile*
+/ext/config*
+/ext/acinclude.m4
+/ext/aclocal.m4
+/ext/autom4te*
+/ext/install-sh
+/ext/ltmain.sh
+/ext/missing
+/ext/mkinstalldirs
+/ext/run-tests.php
+/ext/.deps
+/ext/libtool
+
+# Compilation files
+*.o
+*.lo
+*.la
+.libs
+/build/32bits/build/
+/build/64bits/build/
+/build/safe/build/
+/build/build/
+/ext/build/
+/ext/modules/
+
+# Logs
+*.log
+/unit-tests/logs/*
+
+# Temporary files
+.DS_Store
+*~
+/.temp/
+#Archivos Personales
+public/temp/
