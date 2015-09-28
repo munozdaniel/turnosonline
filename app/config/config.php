@@ -11,6 +11,14 @@ return new \Phalcon\Config(array(
         'dbname'      => 'impsorgweb',
         'charset'     => 'utf8',
     ),
+    'gestionusuarios' => array(
+        'adapter'     => 'Mysql',
+        'host'        => '192.168.42.14',
+        'username'    => 'root',
+        'password'    => 'infoimps',
+        'dbname'      => 'gestionusuarios',
+        'charset'     => 'utf8',
+    ),
     'application' => array(
         'controllersDir' => APP_PATH . '/app/controllers/',
         'modelsDir'      => APP_PATH . '/app/models/',
@@ -21,5 +29,15 @@ return new \Phalcon\Config(array(
         'libraryDir'     => APP_PATH . '/app/library/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
+    ),
+    'mail' => array(
+        'host'     => 'mail.imps.org.ar',
+        'username'        => 'plantilla@imps.org.ar',
+        'password'    => 'dan$%&--iel',
+        'security'    => '',
+        'port'      => '26',
+        'charset'     => 'UTF-8',
+        'email'     => 'dmunioz@imps.org.ar',
+        'name'     => 'dmunioz@imps.org.ar',
     )
 ));
