@@ -6,8 +6,8 @@
                 <div class="about_area">
                     <!-- START ABOUT HEADING -->
                     <div class="heading">
-                        <h2 class="wow fadeInLeftBig">About Us</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+                        <h2 class="wow fadeInLeftBig">Información General</h2>
+
                     </div>
 
                     <!-- START ABOUT CONTENT -->
@@ -21,13 +21,41 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                        <span class="fa fa-check-square-o"></span>Creative & clean Design
+                                                        <span class="fa fa-check-square-o"></span>Óptica y Contactología
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <div id="collapseOne" class="panel-collapse collapse in">
+                                            <div id="collapseOne" class="panel-collapse collapse ">
                                                 <div class="panel-body">
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                    <p>
+                                                        <strong>HORARIOS:</strong>
+                                                        <a class="pull-right " data-toggle="modal" data-target="#info-optica" ><i class="fa fa-info-circle"></i><b> más info</b></a></p>
+                                                    <hr>
+                                                    <p>
+                                                        <strong>Horario de Verano: 01 de Noviembre al 30 de Abril</strong>
+                                                        <br>
+                                                        <strong>Lunes a Viernes:</strong> 09:00 a 19:00 hs.
+                                                        <br>
+                                                        <strong>Sábados:</strong> 09:00 a 13:00 hs.
+                                                        <br>
+                                                        <br>
+
+                                                        <strong>Horario de Invierno: 01 de Mayo al 31 de Octubre</strong>
+                                                        <br>
+                                                        <strong>Lunes a Viernes:</strong> 08:30 a 18:30 hs.
+                                                        <br>
+                                                        <strong>Sábados:</strong> 09:00 a 13:00 hs.
+                                                    </p>
+
+                                                    <p><hr> <strong>CONTACTO:</strong><hr></p>
+                                                    <p>
+                                                        <strong>Teléfono:</strong> +54 (0299) 447 - 6235<br>
+
+                                                        <strong>Dirección:</strong> San Martín esquina Santiago del Estero<br>
+
+                                                        <strong>E-Mail:</strong> optica@imps.org.ar<br>
+                                                        Neuquén Capital - Argentina<br>
+                                                    </p><br>
                                                 </div>
                                             </div>
                                         </div>
@@ -36,13 +64,54 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                                        <span class="fa fa-check-square-o"></span>100% responsive layout
+                                                        <span class="fa fa-check-square-o"></span>Farmacia IMPS
                                                     </a>
                                                 </h4>
                                             </div>
                                             <div id="collapseTwo" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                                    <p><hr>
+                                                    <strong>FARMACIA CENTRO:</strong>
+                                                    <a  class="pull-right" data-toggle="modal" data-target="#info-farmacia" ><i class="fa fa-info-circle"></i><b> más info</b></a></p>
+                                                    <hr>
+                                                    </p>
+
+                                                    <p>
+                                                        <strong>HORARIO:</strong><br><br>
+                                                        <strong>Lunes a Viernes:</strong> 08:00 a 21:00 hs.<br>
+                                                        <strong>Sábados:</strong> 08:00 a 13:00 hs.<br>
+                                                        <strong>Domingos y Feriados:</strong> Farmacia Andina.<br>
+
+                                                    </p>
+
+                                                    <p><strong>CONTACTO:</strong></p>
+                                                    <p>
+                                                        <strong>Teléfono:</strong> +54 (0299) 442 - 5037<br>
+                                                        <strong>Dirección:</strong>  Roca 698<br>
+                                                        <strong>E-Mail:</strong> farmacia@imps.org.ar<br>
+                                                        Neuquén Capital - Argentina<br>
+                                                    </p>
+
+                                                    <p><hr>
+                                                    <strong>FARMACIA OESTE</strong>
+                                                    <hr>
+                                                    </p>
+
+                                                    <p>
+                                                        <strong>HORARIO:</strong><br><br>
+                                                        <strong>Lunes a Viernes:</strong>  Horario corrido 9:00 a 19:00 hs.<br>
+                                                        <strong>Sábados:</strong> 08:00 a 13:00 hs.<br>
+                                                        <strong>Domingos y Feriados:</strong> Farmacia Andina.<br>
+                                                    </p>
+
+                                                    <p> <strong>CONTACTO:</strong></p>
+                                                    <p>
+                                                        <strong>Teléfono:</strong> +54 (0299) 446 - 5127<br>
+                                                        <strong>Dirección:</strong> Antártida Argentina 3411<br>
+                                                        <strong>E-Mail:</strong> farmaciaoeste@imps.org.ar<br>
+                                                        Neuquén Capital - Argentina<br>
+                                                    </p>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -51,36 +120,39 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                                        <span class="fa fa-check-square-o"></span>Detail Documentation
+                                                        <span class="fa fa-check-square-o"></span>Depto. Turismo IMPS
                                                     </a>
                                                 </h4>
                                             </div>
                                             <div id="collapseThree" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                    <p>
+                                                        <strong>DÍAS Y HORARIOS DE ATENCIÓN:</strong><hr>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Lunes a Viernes:</strong>  Mañana de 08:00 a 13:30 hs.<br>
+                                                    </p>
+                                                    <p> <hr><strong>CONTACTO:</strong><hr></p>
+                                                    <p>
+                                                        <strong>Teléfono:</strong> +54 (0299) 447 - 9921<br>
+                                                        <strong>Dirección:</strong> Fotheringham y Juan B. Justo<br>
+                                                        <strong>E-Mail:</strong> turismo@imps.tur.ar<br>
+                                                        <strong>Web: </strong><a href="http://www.melewe.com.ar" target="_blank" style="text-decoration:none;" > www.melewe.com.ar</a>
+                                                    </p>
+                                                    <br>
+                                                    Neuquén Capital - Argentina<br>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- START SINGLE FEATURED ITEAM #4 -->
-                                        <div class="panel panel-default wow fadeInLeft">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                                                        <span class="fa fa-check-square-o"></span>24Hours Premium Support
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseFour" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages.
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="about_slider">
+                                    <div class="alert alert-warning" role="alert" style="border-radius: 0px;z-index: 1000;position: absolute">
+                                        Novedades
+                                    </div>
                                     <!-- BEGAIN FEATURED SLIDER -->
                                     <div class="featured_slider">
                                         <!-- SINGLE SLIDE IN THE SLIDER -->
