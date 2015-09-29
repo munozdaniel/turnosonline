@@ -9,33 +9,31 @@
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="single_contact_feaured wow fadeInUp">
-                            <i class="fa fa-phone"></i>
-                            <h4>Call Us</h4>
-                            <p>1-265-596-580</p>
+                            {{ link_to('','<i class="fa fa-history"></i><h4>Historia</h4><p>Conoce los inicio de IMPS.</p>','style':'text-decoration:none; color:#2da2c8;') }}
                         </div>
                     </div>
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="single_contact_feaured wow fadeInUp">
-                            <i class="fa fa-envelope-o"></i>
-                            <h4>Email Address</h4>
-                            <p>singlepro@gmail.com</p>
+                            {{ link_to('','<i class="fa fa-sitemap"></i>
+                            <h4>Estructura</h4>
+                            <p><br></p>','style':'text-decoration:none; color:#2da2c8;') }}
                         </div>
                     </div>
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="single_contact_feaured wow fadeInUp">
-                            <i class="fa fa-map-marker"></i>
-                            <h4>Office Location</h4>
-                            <p>Your Company Office Location</p>
+                            {{ link_to('','<i class="fa fa-users"></i>
+                            <h4>Autoridades</h4>
+                            <p><br></p>','style':'text-decoration:none; color:#2da2c8;') }}
                         </div>
                     </div>
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="single_contact_feaured wow fadeInUp">
-                            <i class="fa fa-clock-o"></i>
-                            <h4>Working Hours</h4>
-                            <p>Monday-Friday 9.00-21.00</p>
+                            {{ link_to('','<i class="fa fa-pied-piper-alt"></i>
+                            <h4>Sector Interno</h4>
+                            <p>Acceso restringido.</p>','style':'text-decoration:none; color:#2da2c8;') }}
                         </div>
                     </div>
                 </div>

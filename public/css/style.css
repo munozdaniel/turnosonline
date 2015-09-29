@@ -1569,14 +1569,14 @@ textarea .form-control {
 }
 
 
-.single_contact_feaured > i {
+.single_contact_feaured > a > i {
   font-size: 50px;
   line-height: 50px;
   margin-bottom: 5px;
 }
 
 
-.single_contact_feaured > h4 {
+.single_contact_feaured > a > h4 {
   font-size: 18px;
   text-transform: uppercase;
   font-weight: 800;
@@ -1584,7 +1584,7 @@ textarea .form-control {
 }
 
 
-.single_contact_feaured>p{
+.single_contact_feaured > a >p{
 	color: #888888;
 }
 
