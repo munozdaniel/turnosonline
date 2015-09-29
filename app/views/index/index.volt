@@ -7,6 +7,6 @@
 
 {{ partial('index/parcial/contact') }}
 {{ partial('index/parcial/contactFeature') }}
-{{ partial('index/parcial/clients') }}
+{{ partial('index/parcial/infoContacto') }}
 {{ partial('index/parcial/footer') }}
 {{ content() }}
