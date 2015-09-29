@@ -20,14 +20,14 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul id="top-menu" class="nav navbar-nav navbar-right main_nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#service">Services</a></li>
-                        <li><a href="#works">Works</a></li>
-                        <li><a href="#team">Team</a></li>
+                        <li class="active"><a href="#">Inicio</a></li>
+                        <li><a href="#about">Información</a></li>
+                        <li><a href="#service">Servicios</a></li>
+                        <li><a href="#works">Guía de Tramites</a></li>
+                        <li><a href="#team">Prestaciones</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#blog">Blog</a></li>
-                        <li><a href="#contact">Contacts</a></li>
+                        <li><a href="#contact">Contacto</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
