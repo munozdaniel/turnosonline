@@ -17,7 +17,7 @@
                                     <img src="img/team-1.jpg" alt="img">
                                 </div>
                                 <h5 class="">Beneficios Previsionales</h5>
-                                <span>MENÚ</span>
+                                <span>Sistema Previsional IMPS</span>
                                 <ul>
                                     <li><a href="#prev-jub" data-toggle="modal">Jubilación Ordinaria</a></li>
                                     <li><a href="#prev-pen" data-toggle="modal">Pensión Ordinaria</a></li>
@@ -39,7 +39,7 @@
                                     <img src="img/team-2.jpg" alt="img">
                                 </div>
                                 <h5>Haberes de los Beneficios</h5>
-                                <span>MENÚ</span>
+                                <span>Sistema Previsional IMPS</span>
                                 <ul>
                                     <li><a href="#prev-hab-jub" data-toggle="modal">Haber Jubilación Ordinaria</a></li>
                                     <li><a href="#prev-hab-pen" data-toggle="modal">Haber Pensión Ordinaria</a></li>
@@ -64,7 +64,7 @@
                                     <img src="img/team-3.jpg" alt="img">
                                 </div>
                                 <h5>Documentación</h5>
-                                <span>MENÚ</span>
+                                <span>Sistema Previsional IMPS</span>
                                 <ul>
                                     <li><a href="/website/muestraArchivo.action?ruta=%2Fpdf%2Fdocumentos%2FOrdenanza_11633.pdf" target="_blank">Ordenanza 11.633</a></li>
                                     <li><br></li>
@@ -85,7 +85,7 @@
                                     <img src="img/team-4.jpg" alt="img">
                                 </div>
                                 <h5>Formularios</h5>
-                                <span>MENÚ</span>
+                                <span>Sistema Previsional IMPS</span>
                                 <ul>
                                     <li>{{link_to('','Ver Formularios a Completar')}}</li>
                                     <li><br></li>
@@ -106,7 +106,7 @@
                                     <img src="img/team-5.jpg" alt="img">
                                 </div>
                                 <h5>Coseguro Asistencial</h5>
-                                <span>MENÚ</span>
+                                <span>Sistema Previsional IMPS</span>
                                 <ul>
                                     <li>{{link_to('','Ver Información')}}</li>
                                     <li><br></li>
@@ -127,7 +127,7 @@
                                     <img src="img/team-1.jpg" alt="img">
                                 </div>
                                 <h5>Documentos</h5>
-                                <span>MENÚ</span>
+                                <span>Sistema Previsional IMPS</span>
                                 <ul>
                                     <li>{{link_to('','Decreto Nº 996 / 2009 (Práctica Rentada)')}}</li>
                                     <li>{{link_to('','Resolución Nº 148 / 2005 (Aporte Coseguro)')}}</li>
