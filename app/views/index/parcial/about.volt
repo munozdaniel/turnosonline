@@ -185,48 +185,5 @@
             </div>
         </div>
     </div>
-    <!-- BEGAIN SKILLS  -->
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="skills_area">
-                <div class="slider_overlay"></div>
-                <div class="container">
-                    <div class="skills">
-                        <div class="heading">
-                            <h3 class="wow fadeInDown">Our Skills</h3>
-                        </div>
-                        <!-- START SINGLE SKILL-->
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="single_skill wow fadeInUp">
-                                <div id="myStat" data-dimension="150" data-text="85%" data-info="" data-width="10" data-fontsize="25" data-percent="85" data-fgcolor="#999" data-bgcolor="#fff"  data-icon="fa-task"></div>
-                                <h4>Design</h4>
-                            </div>
-                        </div>
-                        <!-- START SINGLE SKILL-->
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="single_skill wow fadeInUp">
-                                <div id="myStathalf2" data-dimension="150" data-text="90%" data-info="" data-width="10" data-fontsize="25" data-percent="90" data-fgcolor="#999" data-bgcolor="#fff"  data-icon="fa-task"></div>
-                                <h4>HTML/CSS</h4>
-                            </div>
-                        </div>
-                        <!-- START SINGLE SKILL-->
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="single_skill wow fadeInUp">
-                                <div id="myStat2" data-dimension="150" data-text="65%" data-info="" data-width="10" data-fontsize="25" data-percent="65" data-fgcolor="#999" data-bgcolor="#fff"  data-icon="fa-task"></div>
-                                <h4>jQuery</h4>
-                            </div>
-                        </div>
-                        <!-- START SINGLE SKILL-->
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="single_skill wow fadeInUp">
-                                <div id="myStat3" data-dimension="150" data-text="75%" data-info="" data-width="10" data-fontsize="25" data-percent="75" data-fgcolor="#999" data-bgcolor="#fff"  data-icon="fa-task"></div>
-                                <h4>WordPress</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END SKILLS  -->
+
 </section>
