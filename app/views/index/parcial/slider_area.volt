@@ -14,9 +14,9 @@
                 <img src="img/full-slider/full-slide7.jpg" alt="img">
                 <!-- FIRST SLIDE CAPTION-->
                 <div class="slider_caption">
-                    <h2>Hi,We are Ultramodern Single pro</h2>
-                    <p>we are a group of experienced designers and developers</p>
-                    <a href="#" class="slider_btn">Who We are</a>
+                    <h2>IMPS</h2>
+                    <p>Instituto Municipal de Previsión Social</p>
+                    <a href="#about" class="slider_btn">Iniciar Recorrido</a>
                 </div>
             </li>
 
@@ -28,9 +28,9 @@
                 <img src="img/full-slider/full-slide2.jpg" alt="img">
                 <!-- SECOND SLIDE CAPTION-->
                 <div class="slider_caption">
-                    <h2>Hi,We are Ultramodern Single pro</h2>
-                    <p>we are a group of experienced designers and developers</p>
-                    <a href="#" class="slider_btn">Who We are</a>
+                    <h2>Solicitud de Turnos Online</h2>
+                    <p>Para solicitar o consultar sobre los prestamos puedes sacar tu turno a traves de la web.</p>
+                    <a href="#service" class="slider_btn">Ver Servicios</a>
                 </div>
             </li>
 
@@ -42,9 +42,9 @@
                 <img src="img/full-slider/full-slide1.jpg" alt="img">
                 <!-- THIRD SLIDE CAPTION-->
                 <div class="slider_caption">
-                    <h2>we'll change your Idea of Design</h2>
-                    <p>we are a group of experienced designers and developers</p>
-                    <a href="#" class="slider_btn">Who We are</a>
+                    <h2>Necesitas ayuda para realizar los Tramites?</h2>
+                    <p>Te ofrecemos una guía detallada para que puedas realizar tus tramites sin problemas</p>
+                    <a href="#works" class="slider_btn">Ver Guía de Tramites</a>
                 </div>
             </li>
         </ul>
@@ -53,12 +53,12 @@
             <!-- PREV IN THE SLIDE -->
             <a class="prev" href="/item1">
                 <span class="icon-wrap"></span>
-                <h3><strong>Prev</strong></h3>
+                <h3><strong>Anterior</strong></h3>
             </a>
             <!-- NEXT IN THE SLIDE -->
             <a class="next" href="/item3">
                 <span class="icon-wrap"></span>
-                <h3><strong>Next</strong></h3>
+                <h3><strong>Siguiente</strong></h3>
             </a>
         </nav>
     </div>
