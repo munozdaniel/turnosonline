@@ -19,7 +19,7 @@
         <!-- Bootstrap css file-->
         {{ stylesheet_link('css/bootstrap.min.css') }}
         <!-- Font awesome css file-->
-        {{ stylesheet_link('css/font-awesome.min.css') }}
+        {{ stylesheet_link('css/font-awesome.css') }}
         <!-- Superslide css file-->
         {{ stylesheet_link('css/superslides.css') }}
         <!-- Slick slider css file -->
@@ -72,7 +72,7 @@
     {{ javascript_include('js/modernizr.custom.js') }}
     {{ javascript_include('js/classie.js') }}
     {{ javascript_include('js/elastic_grid.min.js') }}
-    {{ javascript_include('js/portfolio_slider.js') }}
+    {# javascript_include('js/portfolio_slider.js') #}
     <!-- Custom js-->
     {{ javascript_include('js/custom.js') }}
 

@@ -25,8 +25,6 @@
                         <li><a href="#service">Servicios</a></li>
                         <li><a href="#works">Guía de Tramites</a></li>
                         <li><a href="#team">Prestaciones</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#blog">Blog</a></li>
                         <li><a href="#contact">Contacto</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
