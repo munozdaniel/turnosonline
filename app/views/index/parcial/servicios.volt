@@ -18,10 +18,11 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <!-- BEGAIN SINGLE SERVICE -->
                             <div class="single_service wow fadeInLeft">
-                                <div class="service_iconarea">
+                                {{ link_to('certificacion/index','<div class="service_iconarea">
                                     <span class="fa fa-file-text service_icon"></span>
                                 </div>
                                 <h3 class="service_title">Certificación Negativa</h3>
+                                ','class':'puntero') }}
                                 <p> Ud. podrá obtener el comprobante de Certificación Negativa que acredita que no registra antecedentes de Jubilación y/o Pensión del Instituto Municipal de Previsión Social de la Ciudad de Neuquén.
                                 </p>
                             </div>
@@ -29,10 +30,11 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <!-- BEGAIN SINGLE SERVICE -->
                             <div class="single_service wow fadeInRight">
-                                <div class="service_iconarea">
+                                {{ link_to('','class':'puntero',' <div class="service_iconarea">
                                     <span class="fa fa-ticket service_icon"></span>
                                 </div>
-                                <h3 class="service_title">Turnos Online</h3>
+                                <h3 class="service_title">Turnos Online</h3>') }}
+
                                 <p>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación, las fechas para solicitarlos se publicarán <strong><a style="color:#286090; cursor: pointer !important;">aquí</a></strong>. En caso de no poseer un correo electronico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p>
                             </div>
                         </div>
