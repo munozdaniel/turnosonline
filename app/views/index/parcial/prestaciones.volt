@@ -13,8 +13,17 @@
                         <!-- BEGAIN SINGLE TEAM SLIDE#1 -->
                         <div class="col-lg-3 col-md-3 col-sm-4">
                             <div class="single_team wow fadeInUp">
-                                <div class="team_img">
-                                    <img src="img/team-1.jpg" alt="img">
+                                <div class="team_img" >
+                                    <ul class="ch-grid">
+                                        <li>
+                                            <div class="ch-item ch-img-1">
+                                                <div class="ch-info">
+                                                    <h3> </h3>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </div>
                                 <h5 class="">Beneficios Previsionales</h5>
                                 <span>Sistema Previsional IMPS</span>
@@ -26,21 +35,30 @@
                                     <li><br></li>
                                 </ul>
                                 <div class="team_social">
-                                    <a href="#"><i class="fa fa-male"></i></a>
-                                    <a href="#"><i class="fa fa-money"></i></a>
-                                    <a href="#"><i class="fa fa-wheelchair"></i></a>
+                                    <a><i class="fa fa-male"></i></a>
+                                    <a><i class="fa fa-money"></i></a>
+                                    <a><i class="fa fa-wheelchair"></i></a>
                                 </div>
                             </div>
                         </div>
                         <!-- BEGAIN SINGLE TEAM SLIDE#2 -->
                         <div class="col-lg-3 col-md-3 col-sm-4">
                             <div class="single_team wow fadeInUp">
-                                <div class="team_img">
-                                    <img src="img/team-2.jpg" alt="img">
+                                <div class="team_img" >
+                                    <ul class="ch-grid">
+                                        <li>
+                                            <div class="ch-item ch-img-2">
+                                                <div class="ch-info">
+                                                    <h3> </h3>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </div>
                                 <h5>Haberes de los Beneficios</h5>
                                 <span>Sistema Previsional IMPS</span>
-                                <ul>
+                                <ul >
                                     <li><a href="#prev-hab-jub" data-toggle="modal">Haber Jubilación Ordinaria</a></li>
                                     <li><a href="#prev-hab-pen" data-toggle="modal">Haber Pensión Ordinaria</a></li>
                                     <li><a href="#prev-hab-ret" data-toggle="modal">Haber Retiro por Invalidez</a></li>
@@ -49,23 +67,32 @@
 
                                 </ul>
                                 <div class="team_social">
-                                    <a href="#"><i class="fa fa-male"></i></a>
-                                    <a href="#"><i class="fa fa-money"></i></a>
-                                    <a href="#"><i class="fa fa-wheelchair"></i></a>
-                                    <a href="#"><i class="fa fa-university"></i></a>
-                                    <a href="#"><i class="fa fa-area-chart"></i></a>
+                                    <a><i class="fa fa-male"></i></a>
+                                    <a><i class="fa fa-money"></i></a>
+                                    <a><i class="fa fa-wheelchair"></i></a>
+                                    <a><i class="fa fa-university"></i></a>
+                                    <a><i class="fa fa-area-chart"></i></a>
                                 </div>
                             </div>
                         </div>
                         <!-- BEGAIN SINGLE TEAM SLIDE#3 -->
                         <div class="col-lg-3 col-md-3 col-sm-4">
                             <div class="single_team wow fadeInUp">
-                                <div class="team_img">
-                                    <img src="img/team-3.jpg" alt="img">
+                                <div class="team_img" >
+                                    <ul class="ch-grid">
+                                        <li>
+                                            <div class="ch-item ch-img-3">
+                                                <div class="ch-info">
+                                                    <h3> </h3>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </div>
                                 <h5>Documentación</h5>
                                 <span>Sistema Previsional IMPS</span>
-                                <ul>
+                                <ul >
                                     <li><a href="/website/muestraArchivo.action?ruta=%2Fpdf%2Fdocumentos%2FOrdenanza_11633.pdf" target="_blank">Ordenanza 11.633</a></li>
                                     <li><br></li>
                                     <li><br></li>
@@ -74,15 +101,24 @@
                                     <li><br></li>
                                 </ul>
                                 <div class="team_social">
-                                    <a href="#"><i class="fa fa-file-text-o"></i></a>
+                                    <a><i class="fa fa-file-text-o"></i></a>
                                 </div>
                             </div>
                         </div>
                         <!-- BEGAIN SINGLE TEAM SLIDE#4 -->
                         <div class="col-lg-3 col-md-3 col-sm-4">
                             <div class="single_team wow fadeInUp">
-                                <div class="team_img">
-                                    <img src="img/team-4.jpg" alt="img">
+                                <div class="team_img" >
+                                    <ul class="ch-grid">
+                                        <li>
+                                            <div class="ch-item ch-img-4">
+                                                <div class="ch-info">
+                                                    <h3> </h3>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </div>
                                 <h5>Formularios</h5>
                                 <span>Sistema Previsional IMPS</span>
@@ -95,15 +131,24 @@
                                     <li><br></li>
                                 </ul>
                                 <div class="team_social">
-                                    <a href="#"><i class="fa fa-file-text"></i></a>
+                                    <a><i class="fa fa-file-text"></i></a>
                                 </div>
                             </div>
                         </div>
                         <!-- BEGAIN SINGLE TEAM SLIDE#5 -->
                         <div class="col-lg-3 col-md-3 col-sm-4">
                             <div class="single_team wow fadeInUp">
-                                <div class="team_img">
-                                    <img src="img/team-5.jpg" alt="img">
+                                <div class="team_img" >
+                                    <ul class="ch-grid">
+                                        <li>
+                                            <div class="ch-item ch-img-5">
+                                                <div class="ch-info">
+                                                    <h3> </h3>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </div>
                                 <h5>Coseguro Asistencial</h5>
                                 <span>Sistema Previsional IMPS</span>
@@ -116,15 +161,24 @@
                                     <li><br></li>
                                 </ul>
                                 <div class="team_social">
-                                    <a href="#"><i class="fa fa-files-o"></i></a>
+                                    <a><i class="fa fa-files-o"></i></a>
                                 </div>
                             </div>
                         </div>
                         <!-- BEGAIN SINGLE TEAM SLIDE#6 -->
                         <div class="col-lg-3 col-md-3 col-sm-4">
                             <div class="single_team wow fadeInUp">
-                                <div class="team_img">
-                                    <img src="img/team-1.jpg" alt="img">
+                                <div class="team_img" >
+                                    <ul class="ch-grid">
+                                        <li>
+                                            <div class="ch-item ch-img-6">
+                                                <div class="ch-info">
+                                                    <h3> </h3>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </div>
                                 <h5>Documentos</h5>
                                 <span>Sistema Previsional IMPS</span>
@@ -135,8 +189,8 @@
                                     <li><br></li>
                                 </ul>
                                 <div class="team_social">
-                                    <a href="#"><i class="fa fa-file-text-o"></i></a>
-                                    <a href="#"><i class="fa fa-file-text"></i></a>
+                                    <a><i class="fa fa-file-text-o"></i></a>
+                                    <a><i class="fa fa-file-text"></i></a>
                                 </div>
                             </div>
                         </div>
