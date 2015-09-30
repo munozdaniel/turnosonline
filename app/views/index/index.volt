@@ -1,5 +1,5 @@
 {{ partial('index/parcial/slider_area') }}
-{{ partial('index/parcial/about') }}
+{{ partial('index/parcial/informacion') }}
 {{ partial('index/parcial/service') }}
 {{ partial('index/parcial/works') }}
 {{ partial('index/parcial/prestaciones') }}
