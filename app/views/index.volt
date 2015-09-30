@@ -48,6 +48,7 @@
         <![endif]-->
     </head>
     <body>
+         {{ partial('parcial/preload') }}
         {{ content() }}
     </body>
     <!-- Javascript Files
