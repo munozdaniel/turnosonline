@@ -1,7 +1,7 @@
 {{ partial('index/parcial/slider_area') }}
 {{ partial('index/parcial/informacion') }}
 {{ partial('index/parcial/servicios') }}
-{{ partial('index/parcial/works') }}
+{{ partial('index/parcial/tramites') }}
 {{ partial('index/parcial/prestaciones') }}
 {{ partial('index/parcial/testimonial') }}
 
