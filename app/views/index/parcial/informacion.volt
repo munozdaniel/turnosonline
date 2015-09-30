@@ -29,7 +29,7 @@
                                                 <div class="panel-body">
                                                     <p>
                                                         <strong>HORARIOS:</strong>
-                                                        <a class="pull-right " data-toggle="modal" data-target="#info-optica" ><i class="fa fa-info-circle"></i><b> más info</b></a></p>
+                                                        <a class="pull-right puntero" data-toggle="modal" data-target="#info-optica" ><i class="fa fa-info-circle"></i><b> más info</b></a></p>
                                                     <hr>
                                                     <p>
                                                         <strong>Horario de Verano: 01 de Noviembre al 30 de Abril</strong>
@@ -72,7 +72,7 @@
                                                 <div class="panel-body">
                                                     <p><hr>
                                                     <strong>FARMACIA CENTRO:</strong>
-                                                    <a  class="pull-right" data-toggle="modal" data-target="#info-farmacia" ><i class="fa fa-info-circle"></i><b> más info</b></a></p>
+                                                    <a  class="pull-right puntero" data-toggle="modal" data-target="#info-farmacia" ><i class="fa fa-info-circle"></i><b> más info</b></a></p>
                                                     <hr>
                                                     </p>
 

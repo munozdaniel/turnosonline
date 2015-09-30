@@ -2661,3 +2661,11 @@ textarea .form-control {
     opacity: 1;
     transform: scale(1);
 }
+
+/*PUNTERO*/
+.puntero{
+    cursor: pointer !important;
+}
+.puntero:hover{
+    text-decoration: none !important;
+}
