@@ -91,7 +91,7 @@ img{
   position:absolute;
   left:50%; /* centers the loading animation horizontally one the screen */
   top:50%; /* centers the loading animation vertically one the screen */
-  background-image:url(img/status.gif); /* path to your loading animation */
+  background-image:url(../img/status.gif); /* path to your loading animation */
   background-repeat:no-repeat;
   background-position:center;
   margin:-100px 0 0 -100px; /* is width and height divided by two */
@@ -589,7 +589,7 @@ img{
 	width: 100%;
 	min-height: 350px;
 	padding: 85px 0px;
-	background-image: url(img/skills_bg.jpg);
+	background-image: url(../img/skills_bg.jpg);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	position: relative;
@@ -739,7 +739,7 @@ div[data-dimension] {
 
 
 .counter_section {
-  background-image: url("img/works_counterbg.jpg");
+  background-image: url("../img/works_counterbg.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: inline;
@@ -1308,7 +1308,7 @@ div[data-dimension] {
 
 
 .testi_content:before {
-  background-image: url("img/testimonial-arrow.png");
+  background-image: url("../img/testimonial-arrow.png");
   background-position: center center;
   background-repeat: no-repeat;
   content: "";
@@ -1569,14 +1569,14 @@ textarea .form-control {
 }
 
 
-.single_contact_feaured > a > i {
+.single_contact_feaured  > i {
   font-size: 50px;
   line-height: 50px;
   margin-bottom: 5px;
 }
 
 
-.single_contact_feaured > a > h4 {
+.single_contact_feaured  > h4 {
   font-size: 18px;
   text-transform: uppercase;
   font-weight: 800;
@@ -1584,7 +1584,7 @@ textarea .form-control {
 }
 
 
-.single_contact_feaured > a >p{
+.single_contact_feaured  >p{
 	color: #888888;
 }
 
