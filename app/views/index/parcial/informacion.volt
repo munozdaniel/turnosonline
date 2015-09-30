@@ -187,3 +187,83 @@
     </div>
 
 </section>
+<!-- ==========================MODALES============================= -->
+<!-- Modal Info Optica -->
+<div id="info-optica" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Óptica y Contactología</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            En nuestra óptica usted encontrará las más variada colección de anteojos de sol y recetados, con importantes descuentos.
+                        </p>
+                        <p>
+                            Encontrará un staff de profesionales que lo asesorará en la elección de su anteojo.
+                        </p>
+                        <p>
+                            Contamos con un gabinte de contactología en el que se realizan la adaptación, el control y la enseñanza de las lentes de contacto.
+                        </p>
+                        <p>
+                            Para su comodidad el coseguro asistencial del IMPS se tramita directamente en la Óptica; esto significa que una vez realziada la visita al oftalmólogo debe valorizar su receta en el ISSN; y con ello acercarse a nuestras instalaciones.
+                        </p>
+                        <p>
+                            Usted cuenta con un Beneficio de un Seguro Anual, el cual es otorgado al retirar el anteojo previamente recetado por su oftalmólogo; el cual le brinda una cobertura del cincuenta por ciento (50%) de descuento en los cristales en caso de rotura o extravío. Dicho beneficio también es válido de igual manera para las lentes de contacto. Debe presentar para su validez la factura de compra sellada con el nombre del beneficiario.
+                        </p>
+
+                        <p>
+                            También en Óptica y Contactología IMPS encontrará cámaras digitales de la línea Kodak y accesorios.
+                        </p>
+                        <p>
+                            El afiliado municipal cuenta con la posibilidad de adquirir los productos que desee con la modalidad de Ordenes de Óptica, las cuales se tramitan directamente en nuestro local. Dichas órdenes varían entre diez (10) y quince (15) cuotas dependiendo si son anteojos recetados, de sol, lentes de contacto o cámaras digitales.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="img/informacion/opt.jpg" class="img-responsive" alt="Institucion Optica">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Modal Info Optica -->
+<!-- Modal Info Farmacia -->
+<div id="info-farmacia" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Farmacia</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            En nuestra farmacia el afiliado municipal de la ciudad de Neuquén cuenta con cobertura del 100% en medicamentos cubiertos por el ISSN y demás obras sociales con convenio.
+                        </p>
+                        <p>
+                            Encontrará un staff de profesionales que lo atenderá con la seriedad y compromiso que Ud. se merece.
+                        </p>
+                        <p>
+                            El afiliado municipal cuenta con la posibilidad de adquirir productos de perfumería con la modalidad de Órdenes de Farmacia que serán tramitadas en el local de la farmacia o en algunos casos especiales en la oficinas del Instituto Municipal de Previsión Social.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="img/informacion/farm.jpg" class="img-responsive" alt="institucion farmacia">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Modal Info Farmacia -->
