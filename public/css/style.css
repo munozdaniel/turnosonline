@@ -464,7 +464,7 @@ img{
 
 
 .heading p{
-	font-size: 16px;
+	font-size: 18px;/*Original 16px*/
 	line-height: 28px;
 	font-weight: 300;
 }
@@ -2668,4 +2668,8 @@ textarea .form-control {
 }
 .puntero:hover{
     text-decoration: none !important;
+}
+/*FUENTE PARA LOS MODALES*/
+.fuente-16 {
+    font-size: 16px !important;
 }
