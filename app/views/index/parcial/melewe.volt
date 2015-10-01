@@ -24,7 +24,7 @@
                                 <div class="post_commentbox">
                                     <a href="#"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></a>
                                 </div>
-                                <p><strong>Direccion:</strong> Boulevard Quetihue 378 <br>
+                                <p class="fuente-16"><strong>Dirección:</strong> Boulevard Quetihue 378 <br>
                                     <strong>Tel:</strong> 02944 - 495 802 <br>
                                     <strong>Villa la Angostura | Neuquén</strong>
                                 </p>
@@ -41,8 +41,8 @@
                                 <div class="post_commentbox">
                                     <a href=""><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></a>
                                 </div>
-                                <p>
-                                    <strong>Direccion:</strong> Pioneros s/n.<br>
+                                <p class="fuente-16">
+                                    <strong>Dirección:</strong> Pioneros s/n.<br>
                                     <strong>Tel:</strong> 0299-155570228<br>
                                     <strong>Caviahue | Neuquén</strong>
                                 </p>
@@ -58,7 +58,7 @@
                                 <div class="post_commentbox">
                                     <a href=""><i class="fa fa-star"></i><i class="fa fa-star"></i></a>
                                 </div>
-                                <p>
+                                <p class="fuente-16">
                                     <strong>Dirección:</strong> Arroyo Quetrihue s/n.<br>
                                     <strong> Tel:</strong> 02942 - 15660301<br>
                                     <strong> Moquehue | Neuquén</strong>
@@ -75,7 +75,7 @@
                                 <div class="post_commentbox">
                                     <a href=""><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></a>
                                 </div>
-                                <p>
+                                <p class="fuente-16">
                                     <strong>Direccion:</strong> Av. Koessler 1900.<br>
                                     <strong>Tel:</strong> 02972 - 421982 <br>
                                     <strong>San Martín De Los Andes | Neuquén</strong>
@@ -93,7 +93,7 @@
                                     <a href="#">Apart Hotel</a>
                                     <span><i class="fa fa-home"></i>Complejo Casas y Duplex</span>
                                 </div>
-                                <p>
+                                <p class="fuente-16">
                                     <strong>Dirección:</strong> San Antonio y Conaniyeu<br>
                                     <strong>Tel:</strong> 02934 - 497533<br>
                                     <br>
