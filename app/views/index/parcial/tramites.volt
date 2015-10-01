@@ -53,7 +53,7 @@
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-carta" class="thumbnail" data-toggle="modal">
                             <img src="img/tramites/6-tramite.jpg" alt="Carta Poder" class="img-responsive">
-                            <p class="tramites-label">Carta Poder</p>
+                            <p class="tramites-label">Carta <br> Poder</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
@@ -65,7 +65,7 @@
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-convenio" class="thumbnail" data-toggle="modal">
                             <img src="img/tramites/8-tramite.jpg" alt="Convenio de Adhesión al Coseguro" class="img-responsive">
-                            <p class="tramites-label">Convenio Adhesión al Coseguro</p>
+                            <p class="tramites-label">Adhesión al Coseguro</p>
                         </a>
                     </div>
                 </div>
@@ -75,19 +75,19 @@
                 <div class="col-xs-6 col-sm-3 col-md-3">
                     <a href="#gt-optica" class="thumbnail" data-toggle="modal">
                         <img src="img/tramites/9-tramite.jpg" alt="Óptica" class="img-responsive">
-                        <p class="tramites-label">Óptica</p>
+                        <p class="tramites-label">Óptica<br></p>
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-3">
                     <a href="#gt-ortopedia" class="thumbnail" data-toggle="modal">
                         <img src="img/tramites/10-tramite.jpg" alt="Ortopedia" class="img-responsive">
-                        <p class="tramites-label">Ortopedia</p>
+                        <p class="tramites-label">Ortopedia<br></p>
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-3">
                     <a href="#gt-excimer" class="thumbnail" data-toggle="modal">
                         <img src="img/tramites/11-tramite.jpg" alt="Excimer Láser" class="img-responsive">
-                        <p class="tramites-label">Excimer Láser</p>
+                        <p class="tramites-label">Excimer Láser<br></p>
                     </a>
                 </div>
 
