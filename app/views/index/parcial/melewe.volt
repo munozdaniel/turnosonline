@@ -18,7 +18,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="single_post wow fadeInUp">
                                 <div class="blog_img">
-                                    <img src="img/melewe/villa.jpg" alt="img">
+                                    {{ image('img/melewe/villa.jpg','alt':'villa la angostura') }}
                                 </div>
                                 <h3>Villa La Angostura</h3>
                                 <div class="post_commentbox">
@@ -35,7 +35,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="single_post wow fadeInUp">
                                 <div class="blog_img">
-                                    <img src="img/melewe/caviahue.jpg" alt="img">
+                                    {{ image('img/melewe/caviahue.jpg','alt':'caviahue') }}
                                 </div>
                                 <h3>Caviahue</h3>
                                 <div class="post_commentbox">
@@ -52,7 +52,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="single_post wow fadeInUp">
                                 <div class="blog_img">
-                                    <img src="img/melewe/moquehue.jpg" alt="img">
+                                    {{ image('img/melewe/moquehue.jpg','alt':'moquehue') }}
                                 </div>
                                 <h3>Moquehue</h3>
                                 <div class="post_commentbox">
@@ -69,7 +69,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="single_post wow fadeInUp">
                                 <div class="blog_img">
-                                    <img src="img/melewe/sanmartin.jpg" alt="img">
+                                    {{ image('img/melewe/sanmartin.jpg','alt':'sanmartin') }}
                                 </div>
                                 <h3>San Martín de los Andes</h3>
                                 <div class="post_commentbox">
@@ -86,7 +86,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="single_post wow fadeInUp">
                                 <div class="blog_img">
-                                    <img src="img/melewe/lasgrutas.jpg" alt="img">
+                                    {{ image('img/melewe/lasgrutas.jpg','alt':'lasgrutas') }}
                                 </div>
                                 <h3>Las Grutas</h3>
                                 <div class="post_commentbox">
