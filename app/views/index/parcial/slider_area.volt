@@ -11,7 +11,7 @@
                 <!-- FIRST SLIDE OVERLAY -->
                 <div class="slider_overlay"></div>
                 <!-- FIRST SLIDE MAIN IMAGE -->
-                <img src="img/full-slider/full-slide7.jpg" alt="img">
+                <img src="img/full-slider/full-slide1.jpg" alt="img">
                 <!-- FIRST SLIDE CAPTION-->
                 <div class="slider_caption">
                     <h2>IMPS</h2>
@@ -39,11 +39,11 @@
                 <!-- THIRD SLIDE OVERLAY -->
                 <div class="slider_overlay"></div>
                 <!-- THIRD SLIDE MAIN IMAGE -->
-                <img src="img/full-slider/full-slide1.jpg" alt="img">
+                <img src="img/full-slider/full-slide7.jpg" alt="img">
                 <!-- THIRD SLIDE CAPTION-->
                 <div class="slider_caption">
-                    <h2>Necesitas ayuda para realizar los Tramites?</h2>
-                    <p>Te ofrecemos una guía detallada para que puedas realizar tus tramites sin problemas</p>
+                    <h2>Necesitas ayuda para realizar los Trámites?</h2>
+                    <p>Te ofrecemos una guía detallada para que puedas realizar tus trámites sin problemas</p>
                     <a href="#works" class="slider_btn">Ver Guía de Tramites</a>
                 </div>
             </li>
