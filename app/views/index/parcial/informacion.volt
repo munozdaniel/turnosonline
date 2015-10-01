@@ -157,7 +157,7 @@
                                     <div class="featured_slider">
                                         <!-- SINGLE SLIDE IN THE SLIDER -->
                                         <div class="single_iteam">
-                                            {{ link_to('novedades/emprendimiento',image('img/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
+                                            {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
                                         </div>
                                         <!-- SINGLE SLIDE IN THE SLIDER -->
                                         <div class="single_iteam">
@@ -225,7 +225,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -258,12 +258,58 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 <!-- Fin: Modal Info Farmacia -->
+    <!- ============================================= NOVEDADES ===========================================>
+<!-- Avistaje Fauna Marina -->
+<div id="novedades-emprendimiento" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Avistaje de Fauna Marina</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Emprendimiento Mari Menuco</h3>
+                        <p class="fuente-16">
+                        El I.M.P.S. informa a sus afiliados que como resultado de nuestra participación en la Licitación Pública Nacional Nº 2, ha sido beneficiado por Decreto Provincial Nº 1657/12 de la adjudicación en venta del lote 7 de aproximadamente 65 Ha, en el Istmo que separa los Lagos Mari Menuco y Los Barreales.
+                        <br>
+                        En dicho lote el I.M.P.S. desarrollará un complejo turístico de aproximadamente 15 Ha que contará con un camping, quincho y demás dependencias.
+                        <br>
+                        En la superficie restante se plantea una urbanización, con lotes de 500 m2 aproximadamente, los que serán ofrecidos en venta a nuestros afiliados.
+                        <br>
+                        El valor del lote será determinado una vez finalizados los proyectos de infraestructura contemplándose una forma de pago accesible con un anticipo inicial y cuotas.
+                        </p>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                            {{link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03.jpg','alt':'terreno 1') )}}
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <a href="#" class="thumbnail">
+                            {{link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02.jpg','alt':'terreno 2') )}}
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <a href="#" class="thumbnail">
+                            {{link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04.jpg','alt':'terreno 3') )}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Avistaje Fauna Marina -->
 <!-- Avistaje Fauna Marina -->
 <div id="novedades-ave" class="modal fade">
     <div class="modal-dialog">
@@ -275,37 +321,37 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {{ image('img/novedades/avista-big.jpg') }}
+                        {{ image('img/informacion/avistaje-big.jpg') }}
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 <!-- Fin: Avistaje Fauna Marina -->
-    <!-- Avistaje Fauna Marina -->
-    <div id="novedades-fechaTurnos" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Avistaje de Fauna Marina</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ image('img/feature_img3.jpg','alt':'Fecha Turnos Online') }}
-                        </div>
+<!-- Avistaje Fauna Marina -->
+<div id="novedades-fechaTurnos" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Avistaje de Fauna Marina</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ image('img/feature_img3.jpg','alt':'Fecha Turnos Online') }}
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
-    <!-- Fin: Avistaje Fauna Marina -->
+</div>
+<!-- Fin: Avistaje Fauna Marina -->
 </section>
