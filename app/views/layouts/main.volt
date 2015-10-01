@@ -14,7 +14,10 @@
                     </button>
                     <!-- LOGO -->
                     <!-- TEXT BASED LOGO -->
-                    <a class="navbar-brand" href="#">IM<span>PS</span></a>
+                    <a class="navbar-brand" href="#">
+                        <img id="logo" src="img/logo.png" alt="logo imps"
+                             style="    top: 0%;left: 2%;display: inline-block !important; margin: -10% 0% 0% 0%;width: 30%;"> IM<span>PS</span>
+                    </a>
                     <!-- IMG BASED LOGO  -->
                     <!--  <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo"></a> -->
                 </div>
