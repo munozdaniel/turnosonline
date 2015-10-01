@@ -20,25 +20,25 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-jubilacion" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/1-tramite.jpg" alt="Jubilación Ordinaria" class="img-responsive">
+                            {{ image('img/tramites/1-tramite.jpg','alt':'Jubilación Ordinaria','class':'img-responsive') }}
                             <p class="tramites-label">Jubilación Ordinaria</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-pension" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/2-tramite.jpg" alt="Pensión Ordinaria" class="img-responsive">
+                            {{ image('img/tramites/2-tramite.jpg','alt':'Pensión Ordinaria','class':'img-responsive') }}
                             <p class="tramites-label">Pensión Ordinaria</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-retiro" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/3-tramite.jpg" alt="Retiro por Invalidez" class="img-responsive">
+                            {{ image('img/tramites/3-tramite.jpg','alt':'Retiro por Ordinaria','class':'img-responsive') }}
                             <p class="tramites-label">Retiro por Invalidez</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-reconocimiento" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/4-tramite.jpg" alt="Reconocimiento de Servicios" class="img-responsive">
+                            {{ image('img/tramites/4-tramite.jpg','alt':'Reconocimiento de Servicios','class':'img-responsive') }}
                             <p class="tramites-label">Reconocimiento de Servicios</p>
                         </a>
                     </div>
@@ -46,25 +46,25 @@
 
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-supervivencia" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/5-tramite.jpg" alt="Certificado de Supervivencia" class="img-responsive">
+                            {{ image('img/tramites/5-tramite.jpg','alt':'Certificado de Supervivencia','class':'img-responsive') }}
                             <p class="tramites-label">Certificado de Supervivencia</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-carta" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/6-tramite.jpg" alt="Carta Poder" class="img-responsive">
-                            <p class="tramites-label">Carta <br> Poder</p>
+                            {{ image('img/tramites/6-tramite.jpg','alt':'Carta Poder','class':'img-responsive') }}
+                            <p class="tramites-label">Carta Poder</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-seguro" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/7-tramite.jpg" alt="Seguro de Vida Obligatorio" class="img-responsive">
+                            {{ image('img/tramites/7-tramite.jpg','alt':'Seguro de Vida Obligatorio','class':'img-responsive') }}
                             <p class="tramites-label">Seguro de Vida Obligatorio</p>
                         </a>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3">
                         <a href="#gt-convenio" class="thumbnail" data-toggle="modal">
-                            <img src="img/tramites/8-tramite.jpg" alt="Convenio de Adhesión al Coseguro" class="img-responsive">
+                            {{ image('img/tramites/8-tramite.jpg','alt':'Convenio de Adhesión al Coseguro','class':'img-responsive') }}
                             <p class="tramites-label">Adhesión al Coseguro</p>
                         </a>
                     </div>
@@ -74,19 +74,19 @@
 
                 <div class="col-xs-6 col-sm-3 col-md-3">
                     <a href="#gt-optica" class="thumbnail" data-toggle="modal">
-                        <img src="img/tramites/9-tramite.jpg" alt="Óptica" class="img-responsive">
+                        {{ image('img/tramites/9-tramite.jpg','alt':'Óptica','class':'img-responsive') }}
                         <p class="tramites-label">Óptica<br></p>
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-3">
                     <a href="#gt-ortopedia" class="thumbnail" data-toggle="modal">
-                        <img src="img/tramites/10-tramite.jpg" alt="Ortopedia" class="img-responsive">
+                        {{ image('img/tramites/10-tramite.jpg','alt':'Ortopedia','class':'img-responsive') }}
                         <p class="tramites-label">Ortopedia<br></p>
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-3">
                     <a href="#gt-excimer" class="thumbnail" data-toggle="modal">
-                        <img src="img/tramites/11-tramite.jpg" alt="Excimer Láser" class="img-responsive">
+                        {{ image('img/tramites/11-tramite.jpg','alt':'Excimer Laser','class':'img-responsive') }}
                         <p class="tramites-label">Excimer Láser<br></p>
                     </a>
                 </div>
