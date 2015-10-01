@@ -5,8 +5,8 @@
 {{ partial('index/parcial/prestaciones') }}
 {{ partial('index/parcial/testimonial') }}
 
-{{ partial('index/parcial/contact') }}
-{{ partial('index/parcial/contactFeature') }}
-{{ partial('index/parcial/infoContacto') }}
+{{ partial('index/parcial/emailContacto') }}
+{{ partial('index/parcial/sector') }}
+{{ partial('index/parcial/contactos') }}
 {{ partial('index/parcial/footer') }}
 {{ content() }}
