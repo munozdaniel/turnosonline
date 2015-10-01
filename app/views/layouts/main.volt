@@ -14,7 +14,7 @@
                     </button>
                     <!-- LOGO -->
                     <!-- TEXT BASED LOGO -->
-                    <a class="navbar-brand" href="#">Single<span>Pro</span></a>
+                    <a class="navbar-brand" href="#">IM<span>PS</span></a>
                     <!-- IMG BASED LOGO  -->
                     <!--  <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo"></a> -->
                 </div>
