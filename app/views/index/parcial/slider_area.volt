@@ -11,7 +11,7 @@
                 <!-- FIRST SLIDE OVERLAY -->
                 <div class="slider_overlay"></div>
                 <!-- FIRST SLIDE MAIN IMAGE -->
-                <img src="img/full-slider/full-slide1.jpg" alt="img">
+                {{ image('img/full-slider/full-slide1.jpg','alt':'slider imps') }}
                 <!-- FIRST SLIDE CAPTION-->
                 <div class="slider_caption">
                     <h2>IMPS</h2>
@@ -25,7 +25,7 @@
                 <!-- SECOND SLIDE OVERLAY -->
                 <div class="slider_overlay"></div>
                 <!-- SECOND SLIDE MAIN IMAGE -->
-                <img src="img/full-slider/full-slide2.jpg" alt="img">
+                {{ image('img/full-slider/full-slide2.jpg','alt':'servicios') }}
                 <!-- SECOND SLIDE CAPTION-->
                 <div class="slider_caption">
                     <h2>Solicitud de Turnos Online</h2>
@@ -39,7 +39,7 @@
                 <!-- THIRD SLIDE OVERLAY -->
                 <div class="slider_overlay"></div>
                 <!-- THIRD SLIDE MAIN IMAGE -->
-                <img src="img/full-slider/full-slide7.jpg" alt="img">
+                {{ image('img/full-slider/full-slide7.jpg','alt':'tramites') }}
                 <!-- THIRD SLIDE CAPTION-->
                 <div class="slider_caption">
                     <h2>Necesitas ayuda para realizar los Trámites?</h2>
