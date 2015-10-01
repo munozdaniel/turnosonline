@@ -157,24 +157,22 @@
                                     <div class="featured_slider">
                                         <!-- SINGLE SLIDE IN THE SLIDER -->
                                         <div class="single_iteam">
-                                            <a href="#"> <img src="img/feature_img1.jpg" alt="img"></a>
+                                            {{ link_to('novedades/emprendimiento',image('img/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
                                         </div>
                                         <!-- SINGLE SLIDE IN THE SLIDER -->
                                         <div class="single_iteam">
-                                            <a href="#"> <img src="img/feature_img2.jpg" alt="img"></a>
+                                            <a href="#novedades-ave" data-toggle="modal">
+                                                {{ image('img/feature_img2.jpg','alt':'Avistaje Fauna Marina') }}
+                                            </a>
                                         </div>
                                         <!-- SINGLE SLIDE IN THE SLIDER -->
                                         <div class="single_iteam">
-                                            <a href="#"> <img src="img/feature_img3.jpg" alt="img"></a>
+                                            <a href="#novedades-fechaTurnos" data-toggle="modal">
+                                                {{ image('img/feature_img3.jpg','alt':'Fecha Turnos Online') }}
+                                            </a>
                                         </div>
-                                        <!-- SINGLE SLIDE IN THE SLIDER -->
-                                        <div class="single_iteam">
-                                            <a href="#"> <img src="img/feature_img6.jpg" alt="img"></a>
-                                        </div>
-                                        <!-- SINGLE SLIDE IN THE SLIDER -->
-                                        <div class="single_iteam">
-                                            <a href="#"> <img src="img/feature_img5.jpg" alt="img"></a>
-                                        </div>
+
+
                                     </div>
                                     <!-- END FEATURED SLIDER -->
                                 </div>
@@ -186,7 +184,6 @@
         </div>
     </div>
 
-</section>
 <!-- ==========================MODALES============================= -->
 <!-- Modal Info Optica -->
 <div id="info-optica" class="modal fade">
@@ -223,7 +220,7 @@
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <img src="img/informacion/opt.jpg" class="img-responsive" alt="Institucion Optica">
+                        {{ image('img/informacion/opt.jpg','class':'img-responsive','alt':'Institucion Optica') }}
                     </div>
                 </div>
             </div>
@@ -256,7 +253,7 @@
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <img src="img/informacion/farm.jpg" class="img-responsive" alt="institucion farmacia">
+                        {{ image('img/informacion/farm.jpg','class':'img-responsive','alt':'institucion farmacia') }}
                     </div>
                 </div>
             </div>
@@ -267,3 +264,48 @@
     </div>
 </div>
 <!-- Fin: Modal Info Farmacia -->
+<!-- Avistaje Fauna Marina -->
+<div id="novedades-ave" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Avistaje de Fauna Marina</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ image('img/novedades/avista-big.jpg') }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Avistaje Fauna Marina -->
+    <!-- Avistaje Fauna Marina -->
+    <div id="novedades-fechaTurnos" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Avistaje de Fauna Marina</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ image('img/feature_img3.jpg','alt':'Fecha Turnos Online') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin: Avistaje Fauna Marina -->
+</section>
