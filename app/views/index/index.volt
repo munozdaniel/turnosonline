@@ -1,4 +1,4 @@
-{{ partial('index/parcial/slider_area') }}
+{{ partial('index/parcial/home') }}
 {{ content() }}
 {{ partial('index/parcial/informacion') }}
 {{ partial('index/parcial/servicios') }}
