@@ -286,20 +286,15 @@
                         <br>
                         El valor del lote será determinado una vez finalizados los proyectos de infraestructura contemplándose una forma de pago accesible con un anticipo inicial y cuotas.
                         </p>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3">
+                        <div class="col-sm-6 col-md-3">
                             {{link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03.jpg','alt':'terreno 1') )}}
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <a href="#" class="thumbnail">
+                        </div>
+                        <div class="col-sm-6 col-md-3">
                             {{link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02.jpg','alt':'terreno 2') )}}
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <a href="#" class="thumbnail">
+                        </div>
+                        <div class="col-sm-6 col-md-3">
                             {{link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04.jpg','alt':'terreno 3') )}}
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
