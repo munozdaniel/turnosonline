@@ -24,7 +24,7 @@
 
             <!-- THE SECOND SLIDE-->
             <li>
-                <a href="#about" class="slow" style="text-decoration: none;">
+                <a href="#service" class="slow" style="text-decoration: none;">
                     <!-- SECOND SLIDE OVERLAY -->
                     <div class="slider_overlay"></div>
                     <!-- SECOND SLIDE MAIN IMAGE -->
@@ -40,7 +40,7 @@
 
             <!-- THE THIRD SLIDE-->
             <li>
-                <a href="#about" class="slow" style="text-decoration: none;">
+                <a href="#works" class="slow" style="text-decoration: none;">
                     <!-- THIRD SLIDE OVERLAY -->
                     <div class="slider_overlay"></div>
                     <!-- THIRD SLIDE MAIN IMAGE -->
