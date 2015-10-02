@@ -76,5 +76,12 @@
     {# javascript_include('js/portfolio_slider.js') #}
     <!-- Custom js-->
     {{ javascript_include('js/custom.js') }}
+    {%  if (assets.collection("footer")) %}
+        {{  assets.outputJs("footer") }}
+
+    {% endif %}
+    {%  if (assets.collection("footerInline")) %}
+        {{  assets.outputInlineJs("footerInline") }}
+    {% endif %}
 
 </html>
