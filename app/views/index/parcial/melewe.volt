@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="col-lg-12 col-md-12" align="center">
-                <a href="http://www.melewe.com.ar/" class="slider_btn">VISITAR PÁGINA OFICIAL</a>
+                <a href="http://www.melewe.com.ar/" class="slider_btn" target="_blank">VISITAR PÁGINA OFICIAL</a>
             </div>
         </div>
     </div>
