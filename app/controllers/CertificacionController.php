@@ -1,6 +1,6 @@
 <?php
 
-class CertificacionController extends \Phalcon\Mvc\Controller
+class CertificacionController extends ControllerBase
 {
     public function initialize()
     {
@@ -11,7 +11,8 @@ class CertificacionController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
-
+        $this->assets->collection('footerInline')
+            ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
     }
 
 }
