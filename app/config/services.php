@@ -55,13 +55,25 @@ $di->setShared('view', function () use ($config) {
     return $view;
 });
 
-/**
+/**=========================================================================================
  * Database connection is created based in the parameters defined in the configuration file
- */
+ ===========================================================================================*/
 $di->set('db', function () use ($config) {
     return new DbAdapter($config->database->toArray());
 });
+// This service returns a MySQL database
+$di->set('dbUsuarios', function () use ($config) {
+    return new DbAdapter($config->gestionusuarios->toArray());
 
+});
+// This service returns a MySQL database
+$di->set('dbSujypweb', function () use ($config) {
+    return new DbAdapter($config->sujypweb->toArray());
+
+});
+/**=========================================================================================
+ *
+ ===========================================================================================*/
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
@@ -79,11 +91,6 @@ $di->setShared('session', function () {
     return $session;
 });
 
-// This service returns a MySQL database
-$di->set('dbUsuarios', function () use ($config) {
-    return new DbAdapter($config->gestionusuarios->toArray());
-
-});
 
 $di->set('mail', function () use ($config) {
     //sleep(2);
