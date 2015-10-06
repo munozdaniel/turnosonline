@@ -27,6 +27,7 @@ return new \Phalcon\Config(array(
         'pluginsDir'     => APP_PATH . '/app/plugins/',
         'formsDir'     => APP_PATH . '/app/forms/',
         'libraryDir'     => APP_PATH . '/app/library/',
+        'mpdfDir'     => APP_PATH . '/app/library/mpdf/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
     ),
