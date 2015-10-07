@@ -2730,3 +2730,17 @@ textarea .form-control {
     margin-top: 10%;
     margin-bottom: -24%;
 }
+
+/*Validador*/
+
+.mi-alert {
+    /*padding: 15px; */
+    margin-bottom: 9px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-validador{
+    color: #9E0505;
+    background-color: #F3E6E6;
+    /* border-color: #bce8f1; */
+}

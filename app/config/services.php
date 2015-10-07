@@ -122,6 +122,7 @@ $di->set('flash', function()
         'error'     => 'alert alert-danger multiple col-md-8',
         'success'   => 'alert alert-success',
         'notice'    => 'alert alert-info ',
+        'validador'    => 'mi-alert alert-validador ',
         'warning'   => 'alert alert-warning ',
     ));
 });
