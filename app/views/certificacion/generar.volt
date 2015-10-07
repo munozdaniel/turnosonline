@@ -50,7 +50,7 @@
         <br>
     </div>
 {% endif %}
-<footer style="vertical-align: bottom; margin-top:50%">
+<footer style="vertical-align: bottom; margin-top:50%; text-align: center">
 <p><em>Ante cualquier consulta, Ud. puede comunicarse al I.M.P.S. al teléfono 0299 4433978 int 25.</em></p>
 </footer>
 </body>
