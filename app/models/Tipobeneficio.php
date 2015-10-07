@@ -1,67 +1,43 @@
 <?php
 
-class Usuarios extends \Phalcon\Mvc\Model
+class Tipobeneficio extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    public $usuario_id;
+    public $tipobeneficio_id;
 
     /**
      *
      * @var string
      */
-    public $usuario_nick;
+    public $tipobeneficio_grupo;
 
     /**
      *
      * @var string
      */
-    public $usuario_nombreCompleto;
-
-    /**
-     *
-     * @var string
-     */
-    public $usuario_contrasenia;
+    public $tipobeneficio_nombre;
 
     /**
      *
      * @var integer
      */
-    public $usuario_sector;
-
-    /**
-     *
-     * @var string
-     */
-    public $usuario_email;
-
-    /**
-     *
-     * @var integer
-     */
-    public $usuario_activo;
-
-    /**
-     *
-     * @var string
-     */
-    public $usuario_fechaCreacion;
+    public $tipobeneficio_validez;
 
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->setConnectionService('dbUsuarios');
+        $this->setConnectionService('dbSujypweb');
         //Deberia ser de solo lectura
-        $this->setReadConnectionService('dbUsuarios');
-        $this->hasMany('usuario_id', 'Usuarioporrol', 'usuario_id', array('alias' => 'Usuarioporrol'));
-        $this->belongsTo('sector_id', 'Sector', 'sector_id', array('alias' => 'Sector'));
+        $this->setReadConnectionService('dbSujypweb');
+        $this->hasMany('tipobeneficio_id', 'Datosbeneficio', 'datosbeneficio_tipoBeneficio', array('alias' => 'Datosbeneficio'));
     }
+
     /**
      * Returns table name mapped in the model.
      *
@@ -69,14 +45,14 @@ class Usuarios extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'usuarios';
+        return 'tipobeneficio';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Usuarios[]
+     * @return Tipobeneficio[]
      */
     public static function find($parameters = null)
     {
@@ -87,7 +63,7 @@ class Usuarios extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Usuarios
+     * @return Tipobeneficio
      */
     public static function findFirst($parameters = null)
     {
