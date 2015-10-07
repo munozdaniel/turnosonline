@@ -20,7 +20,10 @@
                     <div class="about_content wow bounceInUp">
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
+
                                 <div class="certificacion-info">
+
+
                                     <hr>
                                     <i class="fa fa-info-circle"
                                        style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
@@ -31,18 +34,22 @@
                                          <hr>
                                     </span>
                                 </div>
-                                {{ content() }}
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="certificacion-form" align="center">
                                     {{ form('certificacion/generar','method':'post') }}
-                                    <div>
-                                        {{ text_field('certificacion-nroDoc','class':'','style':'width:50%;height: 50px !important;font-size: 26px;','placeholder':' INGRESE SU Nº DE DOCUMENTO') }}
-                                    </div>
-                                    <br>
-                                    <br>
 
+                                    <div class="col-md-8 col-md-offset-2 col-sm-12">
+                                        {{ content() }}
+                                    </div>
+                                    <div>
+                                        {{ certificacionForm.render('nroDoc') }}
+                                    </div>
+
+                                    <br>
+                                    <br>
                                     <div class="col-md-4 col-md-offset-4">
+
                                         {{ submit_button('GENERAR PDF','class':'btn btn-blue btn-lg btn-block') }}
                                         <br>
                                     </div>

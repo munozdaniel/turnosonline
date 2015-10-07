@@ -15,6 +15,7 @@
 {% if ( beneficio == false )or(persona == false) %}
     {#NO EXISTE LA PERSONA O NO POSEE BENEFICIOS#}
     <h2 style="text-align: center">CERTIFICADO NEGATIVO DE BENEFICIO</h2>
+    <br>
     <p style="text-align: center"><strong>Nº de Documento: </strong>{{ nroDocumento }}</p>
     <div style="text-align: justify">
         <p>No se registra antecedente de Jubilación y/o Pensión del Instituto Municipal de Previsión Social de la
@@ -30,7 +31,7 @@
 {% else %}
     {#LA PERSONA EXISTE Y POSEE BENEFICIOS#}
     <h2 style="text-align: center">CERTIFICADO DE BENEFICIO</h2>
-    <p style="text-align: center"><strong>Nº de Documento: </strong>{{ nroDocumento }}</p>
+    <br>
     <div style="text-align: left">
         <p><strong>Apellido/s y
                 Nombre/s: </strong> {{ persona.datospersona_apellido~', '~ persona.datospersona_nombre }}</p>
@@ -50,8 +51,8 @@
         <br>
     </div>
 {% endif %}
-<footer style="vertical-align: bottom; margin-top:50%; text-align: center">
-<p><em>Ante cualquier consulta, Ud. puede comunicarse al I.M.P.S. al teléfono 0299 4433978 int 25.</em></p>
+<footer style="vertical-align: bottom; margin-top:40%; text-align: center">
+<p><em>Ante cualquier consulta, Ud. puede comunicarse al I.M.P.S. al teléfono <strong> 0299 4433978 int 25.</strong></em></p>
 </footer>
 </body>
 </html>
