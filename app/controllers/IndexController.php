@@ -15,7 +15,27 @@ class IndexController extends ControllerBase
      /*  $this->assets->collection('footerInline')
             ->addInlineJs("if(self.location=='http://192.168.42.149/impsweb/'){var timeoutId = setTimeout(\"self.location='#about'\",15000);}");
      */
-     }
-    /*Si se van a crear otras vistas tener en cuenta que el menu no se va a visualizar correctamente ya */
+    }
+    /*Ejemplo de como utilizar mpdf y crear un pdf a partir de otro pdf*/
+    public function crearPdfOrdenanzaAction(){
+        $this->buscarPdf('files/prestaciones/Ordenanza_11633.pdf');
+    }
+    private function buscarPdf($url)
+    {
+        $mpdf=new mPDF();
+        $mpdf->SetImportUse();
+        $pagecount = $mpdf->SetSourceFile($url);
+        for($i=1;$i<=$pagecount;$i++){
+            // Do not add page until page template set, as it is inserted at the start of each page (? guat)
+            $mpdf->AddPage();
+            $tplId = $mpdf->ImportPage($i);
+            $mpdf->UseTemplate($tplId,'','',210,297);
+        }
+        $mpdf->WriteHTML('<p><indexentry content="Dromedary" xref="Camel:types" />The dromedary is atype of camel</p>');
+        // The template $tplId will be inserted on all subsequent pages until (optionally)
+        // $mpdf->SetPageTemplate();
+        $mpdf->Output();
+        exit;
+    }
 }
 

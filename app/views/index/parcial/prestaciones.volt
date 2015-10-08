@@ -93,7 +93,9 @@
                                 <h5>Documentación</h5>
                                 <span>Sistema Previsional IMPS</span>
                                 <ul >
-                                    <li><a href="/website/muestraArchivo.action?ruta=%2Fpdf%2Fdocumentos%2FOrdenanza_11633.pdf" target="_blank">Ordenanza 11.633</a></li>
+                                    <li>
+                                        {{ link_to('index/crearPdfOrdenanza','Ordenanza 11.633','target':'_blank') }}
+                                    </li>
                                     <li><br></li>
                                     <li><br></li>
                                     <li><br></li>
