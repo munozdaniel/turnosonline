@@ -2565,6 +2565,9 @@ textarea .form-control {
     border-right: 0  !important;;
 }
 /*==============IMG PRESTACIONES =============*/
+.alinear-izq{
+    text-align: left;
+}
 .ch-grid {
     margin: 0 0 0 0;
     padding: 0;
