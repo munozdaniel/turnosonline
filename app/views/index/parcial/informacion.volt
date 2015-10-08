@@ -150,8 +150,8 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="about_slider">
-                                    <div class="alert alert-warning" role="alert" style="border-radius: 0px;z-index: 1000;position: absolute">
-                                        Novedades
+                                    <div class="ribbon">
+                                        <h3 >NOVEDADES</h3>
                                     </div>
                                     <!-- BEGAIN FEATURED SLIDER -->
                                     <div class="featured_slider">
