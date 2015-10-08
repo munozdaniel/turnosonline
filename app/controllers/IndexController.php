@@ -16,7 +16,11 @@ class IndexController extends ControllerBase
             ->addInlineJs("if(self.location=='http://192.168.42.149/impsweb/'){var timeoutId = setTimeout(\"self.location='#about'\",15000);}");
      */
     }
-    /*Ejemplo de como utilizar mpdf y crear un pdf a partir de otro pdf*/
+
+    /**
+     * Ejemplo de como utilizar mpdf y crear un pdf a partir de otro pdf
+     * (generando un link hacia el archivo es mas que suficiente para mostrar el pdf)
+     */
     public function crearPdfOrdenanzaAction(){
         $this->buscarPdf('files/prestaciones/Ordenanza_11633.pdf');
     }
