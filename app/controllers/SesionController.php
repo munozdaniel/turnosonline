@@ -41,7 +41,7 @@ class SesionController extends ControllerBase
                     $miSesion = $this->session->get('auth');
                     $this->flash->success('Bienvenido/a '.$miSesion['usuario_nombreCompleto'] . " - Rol: ".$miSesion['rol_nombre']);
                     //Redireccionar la ejecución si el usuario es valido
-                    return $this->redireccionar('index/index');
+                    return $this->redireccionar('administrar/index');
 
                 }
                 else{
@@ -66,7 +66,7 @@ class SesionController extends ControllerBase
         if(empty($idRol))
         {//No se encontro el rol asignado al usuario
             $this->flash->error("Usuario sin Permisos");
-            return $this->redireccionar('index/index');
+            return $this->redireccionar('sesion/index');
         }
         else
         {
