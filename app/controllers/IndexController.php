@@ -5,6 +5,7 @@ class IndexController extends ControllerBase
     public function initialize()
     {
         $this->tag->setTitle('Bienvenidos');
+        $this->view->setTemplateAfter('main');
         parent::initialize();
 
     }
