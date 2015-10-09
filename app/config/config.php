@@ -36,6 +36,7 @@ return new \Phalcon\Config(array(
         'formsDir'       => APP_PATH . '/app/forms/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'mpdfDir'        => APP_PATH . '/app/library/mpdf/',
+        'phpmailerDir'        => APP_PATH . '/app/library/phpmailer/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
     ),
