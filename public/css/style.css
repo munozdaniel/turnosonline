@@ -13,7 +13,7 @@ Tags: light, white, landing page,single page,Multipurpose,custom-colors,Bootstra
 ==================================================
 	#BASIC TYPOGRAPHY
 	#HEADER
-	#ABOUT SECTION
+	#ABOUT,#admin SECTION
 	#SERVICE SECTION
 	#Works SECTION
 	#TEAM SECTION
@@ -439,7 +439,7 @@ img{
 /* ABOUT SECTION */
 /*--------------------*/
 
-#about {
+#about,#admin {
   display: inline;
   float: left;
   width: 100%;
@@ -2434,7 +2434,7 @@ textarea .form-control {
 	.team_social a {font-size: 15px;height: 30px;line-height: 30px;width: 30px;}
 	.blog_slider .slick-prev {left: 86.5%;}
 	.og-close {z-index: 999;}
-	#about {padding: 50px 0;}
+	#about,#admin {padding: 50px 0;}
 	#service {padding: 50px 0 50px;}
 	#works {padding: 0 0 50px;}
 	#team {padding: 50px 0;}
@@ -2878,16 +2878,7 @@ textarea .form-control {
 .exito{
     /* border-color: #bce8f1; */
     color: #FBFBFB;
-    background-color: #649C39;
-    /* padding: 15px; */
-    margin-bottom: 9px;
-    border: 5px solid transparent;
-    /* border-radius: 4px; */
-}
-.aviso{
-    /* border-color: #bce8f1; */
-    color: #FBFBFB;
-    background-color: #d58512;
+    background-color: #D23B3B;
     /* padding: 15px; */
     margin-bottom: 9px;
     border: 5px solid transparent;
