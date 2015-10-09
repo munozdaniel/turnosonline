@@ -108,7 +108,6 @@ $di->set('mail', function () use ($config) {
     $mail->Password     = $config->mail->password;
     $mail->SMTPSecure   = $config->mail->security;
     $mail->Port         = $config->mail->port;
-    echo $config->mail->name." -- ".$config->mail->email;
     $mail->addAddress($config->mail->email, $config->mail->name);
 
     return $mail;
@@ -123,6 +122,9 @@ $di->set('flash', function()
         'success'   => 'alert alert-success',
         'notice'    => 'alert alert-info ',
         'validador'    => 'mi-alert alert-validador ',
+        'problema'    => 'problema',
+        'exito'    => 'exito',
+        'aviso'    => 'aviso',
         'warning'   => 'alert alert-warning ',
     ));
 });

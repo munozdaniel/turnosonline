@@ -29,7 +29,7 @@ class Seguridad extends \Phalcon\Mvc\User\Plugin
         //con un mensaje flash
         if ($allowed != \Phalcon\Acl::ALLOW)
         {
-            $this->flash->error("Zona restringida, no puedes entrar aquí!");
+            $this->flash->message('problema',"<p>ZONA RESTRINGIDA, NO TIENES PERMISO PARA ACCEDER A LA SECCIÓN SOLICITADA</p>");
             $dispatcher->forward(
                 array(
                     'controller' => 'index',

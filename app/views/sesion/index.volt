@@ -11,12 +11,16 @@
                         <div class="media-body">
                             <h4 class="media-heading" style="color:#FFFFFF;">INICIAR SESIÓN</h4>
                             <span>Empleados IMPS</span>
+
                         </div>
                     </div>
                     <hr style="opacity: 0.2">
+                    <div class="col-md-12">
+                    {{ content() }}
+                    </div>
                     {{ form('sesion/validar',"class":"form-signin wow flipInX",'data-wow-duration':'2s','data-wow-delay':'1s') }}
                         {{ text_field('sesion_nombre',"class":"form-control","placeholder":"Usuario",'required':'',"autofocus":"") }}
-                        {{ password_field('sesion_password',"class":"form-control","placeholder":"Contraseña",'required':'') }}
+                        {{ password_field('sesion_contrasena',"class":"form-control","placeholder":"Contraseña",'required':'') }}
                         {{ submit_button('Ingresar','class':'btn btn-lg btn-primary btn-block') }}
                         <a href="#recuperar" data-toggle="modal" class="pull-right need-help"
                            style="color: #FFFFFF; text-decoration: none;">
@@ -49,7 +53,7 @@
                                 <!--  FORM -->
                                 {{ form('sesion/recuperar',"class":"subscribe_form") }}
                                     <div class="subscrive_group wow fadeInUp">
-                                        {{ email_field('recuperar_email','class':'form-control subscribe_mail','placeholder':'INGRESE SU CORREO ELECTRONICO') }}
+                                        {{ email_field('sesion_email','class':'form-control subscribe_mail','placeholder':'INGRESE SU CORREO ELECTRONICO') }}
                                         {{ submit_button('class':'subscr_btn btn-theme','value':'Solicitar') }}
                                     </div>
                                 {{ end_form() }}
