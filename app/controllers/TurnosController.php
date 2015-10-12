@@ -35,13 +35,21 @@ class TurnosController extends ControllerBase
 
             if ($periodoSolicitudForm->isValid($data) != false) {
 
-                //Si todo esta bien:
-                $solicitudTurno = new Solicitudturno();
-                if ($solicitudTurno->save()) {
-                    //return $this->redireccionar('administrar/index');
+                //PeriodoSolicitud = Fechasturnos.
+                $fechasTurnos = new Fechasturnos();
+                $fechasTurnos->assign(array(
+                    'fechasTurnos_inicioSolicitud' => $this->request->getPost('periodoSolicitudDesde'),
+                    'fechasTurnos_finSolicitud' => $this->request->getPost('periodoSolicitudHasta'),
+                    'fechasTurnos_inicioAtencion' => $this->request->getPost('periodoAtencionDesde'),
+                    'fechasTurnos_finAtencion' => $this->request->getPost('periodoAtencionHasta'),
+                    'fechasTurnos_cantidadDeTurnos' => $this->request->getPost('cantidadDias','int'),
+                    'fechasTurnos_cantidadAutorizados' => $this->request->getPost('cantidadTurnos','int'),
+                ));
+                if ($fechasTurnos->save()) {
+                    $this->flash->message('exito','La configuración de los períodos se ha realizado satisfactoriamente.');
+                    $periodoSolicitudForm->clear();
                 }
-
-                $this->flash->error('[<ins>ERROR</ins>] ' . $solicitudTurno->getMessages());
+                $this->flash->error( $fechasTurnos->getMessages());
             }
         }
     }
