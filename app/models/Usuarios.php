@@ -58,7 +58,7 @@ class Usuarios extends \Phalcon\Mvc\Model
     {
         $this->setConnectionService('dbUsuarios');
         //Deberia ser de solo lectura
-        //$this->setReadConnectionService('dbUsuarios');
+        $this->setReadConnectionService('dbUsuarios');
         $this->hasMany('usuario_id', 'Usuarioporrol', 'usuario_id', array('alias' => 'Usuarioporrol'));
         $this->belongsTo('sector_id', 'Sector', 'sector_id', array('alias' => 'Sector'));
     }

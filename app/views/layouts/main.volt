@@ -3,7 +3,9 @@
     <!-- BEGIN MENU -->
     <div class="menu_area">
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
             <div class="container">
+
                 <div class="navbar-header">
                     <!-- FOR MOBILE VIEW COLLAPSED BUTTON -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -30,6 +32,7 @@
                         <li><a href="#team">Prestaciones</a></li>
                         <li><a href="#contact">Contacto</a></li>
                     </ul>
+
                 </div><!--/.nav-collapse -->
             </div>
         </nav>

@@ -7,7 +7,7 @@ class ControllerBase extends Controller
     protected function initialize()
     {
         $this->tag->prependTitle('IMPS | ');
-        $this->view->setTemplateAfter('main');
+
     }
 
     protected function redireccionar($uri)

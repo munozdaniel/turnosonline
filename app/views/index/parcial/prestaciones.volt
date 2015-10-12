@@ -27,10 +27,10 @@
                                 </div>
                                 <h5 class="">Beneficios Previsionales</h5>
                                 <span>Sistema Previsional IMPS</span>
-                                <ul>
-                                    <li><a href="#prev-jub" data-toggle="modal">Jubilación Ordinaria</a></li>
-                                    <li><a href="#prev-pen" data-toggle="modal">Pensión Ordinaria</a></li>
-                                    <li><a href="#prev-ret" data-toggle="modal">Retiro por Invalidez</a></li>
+                                <ul class="alinear-izq">
+                                    <li><a href="#prev-jub" data-toggle="modal">- Jubilación Ordinaria</a></li>
+                                    <li><a href="#prev-pen" data-toggle="modal">- Pensión Ordinaria</a></li>
+                                    <li><a href="#prev-ret" data-toggle="modal">- Retiro por Invalidez</a></li>
                                     <li><br></li>
                                     <li><br></li>
                                 </ul>
@@ -58,12 +58,12 @@
                                 </div>
                                 <h5>Haberes de los Beneficios</h5>
                                 <span>Sistema Previsional IMPS</span>
-                                <ul >
-                                    <li><a href="#prev-hab-jub" data-toggle="modal">Haber Jubilación Ordinaria</a></li>
-                                    <li><a href="#prev-hab-pen" data-toggle="modal">Haber Pensión Ordinaria</a></li>
-                                    <li><a href="#prev-hab-ret" data-toggle="modal">Haber Retiro por Invalidez</a></li>
-                                    <li><a href="#prev-mov" data-toggle="modal">Movilidad de los Haberes</a></li>
-                                    <li><a href="#prev-hab-max" data-toggle="modal">Haber Máximo y Mínimo</a></li>
+                                <ul class="alinear-izq">
+                                    <li><a href="#prev-hab-jub" data-toggle="modal">- Haber Jubilación Ordinaria</a></li>
+                                    <li><a href="#prev-hab-pen" data-toggle="modal">- Haber Pensión Ordinaria</a></li>
+                                    <li><a href="#prev-hab-ret" data-toggle="modal">- Haber Retiro por Invalidez</a></li>
+                                    <li><a href="#prev-mov" data-toggle="modal">- Movilidad de los Haberes</a></li>
+                                    <li><a href="#prev-hab-max" data-toggle="modal">- Haber Máximo y Mínimo</a></li>
 
                                 </ul>
                                 <div class="team_social">
@@ -93,7 +93,9 @@
                                 <h5>Documentación</h5>
                                 <span>Sistema Previsional IMPS</span>
                                 <ul >
-                                    <li><a href="/website/muestraArchivo.action?ruta=%2Fpdf%2Fdocumentos%2FOrdenanza_11633.pdf" target="_blank">Ordenanza 11.633</a></li>
+                                    <li>
+                                        {{ link_to('index/crearPdfOrdenanza','Ordenanza 11.633','target':'_blank') }}
+                                    </li>
                                     <li><br></li>
                                     <li><br></li>
                                     <li><br></li>
@@ -122,12 +124,12 @@
                                 </div>
                                 <h5>Formularios</h5>
                                 <span>Sistema Previsional IMPS</span>
-                                <ul>
-                                    <li>{{link_to('formularios/index','Ver Formularios a Completar')}}</li>
-                                    <li><br></li>
-                                    <li><br></li>
-                                    <li><br></li>
-                                    <li><br></li>
+                                <ul class="alinear-izq">
+                                    <li>{{ link_to('public/files/prestaciones/Certificado_Supervivencia_Domicilio.pdf','- Certificacion de Supervivencia','target':'_blank') }}</li>
+                                    <li>{{ link_to('public/files/prestaciones/Solicitud_Jub_Pen_Ret.pdf','- Solicitud Jub/Pen/Retiro','target':'_blank') }}</li>
+                                    <li>{{ link_to('public/files/prestaciones/Solicitud_Rec_Servicios.pdf','- Solicitud Reconoc. de Servicios','target':'_blank') }}</li>
+                                    <li>{{ link_to('public/files/prestaciones/Formulario_572_Ganancias.pdf','- Form 572 Ganancias','target':'_blank') }}</li>
+                                    <li>{{ link_to('public/files/prestaciones/Carta_Poder.pdf','- Carta Poder','target':'_blank') }}</li>
                                     <li><br></li>
                                 </ul>
                                 <div class="team_social">
@@ -182,9 +184,9 @@
                                 </div>
                                 <h5>Documentos</h5>
                                 <span>Sistema Previsional IMPS</span>
-                                <ul>
-                                    <li>{{link_to('','Decreto Nº 996 / 2009 (Práctica Rentada)')}}</li>
-                                    <li>{{link_to('','Resolución Nº 148 / 2005 (Aporte Coseguro)')}}</li>
+                                <ul class="alinear-izq">
+                                    <li>{{ link_to('public/files/prestaciones/Decreto.pdf','- Decreto Nº 996 / 2009 <br>(Práctica Rentada)','target':'_blank') }}</li>
+                                    <li>{{ link_to('public/files/prestaciones/Resolucion148-05.pdf','- Resolución Nº 148 / 2005 <br>(Aporte Coseguro)','target':'_blank') }}</li>
                                     <li><br></li>
                                     <li><br></li>
                                 </ul>
