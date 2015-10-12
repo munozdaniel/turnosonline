@@ -17,12 +17,16 @@
             </div>
         </div>
         <div class="row formulario-turnos">
+                <div class="col-md-12">
+                    {{ content() }}
+                </div>
+
             <div class="col-lg-8 col-md-8 col-md-offset-2">
 
                 <!-- START PERIODO SOLICITUD CONTENT -->
                 <div class="about_content wow bounceInUp ">
                     {{ form('turnos/guardarPeriodoSolicitud','method':'post','style':'text-align:left') }}
-                    {{ content() }}
+
                     <div class="row">
                         <h4><label>Período para solicitud de turnos </label></h4><br>
 
