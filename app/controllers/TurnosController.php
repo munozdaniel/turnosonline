@@ -18,6 +18,9 @@ class TurnosController extends ControllerBase
     {
 
     }
-
+    public function periodoSolicitudAction()
+    {
+        $this->view->formulario = new PeriodoSolicitudForm();
+    }
 }
 
