@@ -14,7 +14,7 @@ class DateValidator  extends Validator implements ValidatorInterface {
     // constructor is defined only because you wanted to have "cancelOnFail" true,
     // If you don't want this, then the implementation of constructor is not necessary
     public function __construct($options = null) {
-
+        //NO ENTIENDO PARA QUE SIRVE!!!!
         //pass options to original constructor
         parent::__construct($options);
 
@@ -28,9 +28,10 @@ class DateValidator  extends Validator implements ValidatorInterface {
         //var_dump($attribute);//delete this line, it's for you to see what it is
 
         //Obtengo el valor del primer campo.
-        $desde = $validator->getValue($attribute);
+        $hasta = $validator->getValue($attribute);
         //Obtengo el valor del segundo campo.
-        $hasta = $this->getOption('hasta');
+        $desde = $this->getOption('desde');
+
         if($desde<$hasta)
         {
             return true;
@@ -41,11 +42,11 @@ class DateValidator  extends Validator implements ValidatorInterface {
         $message = $this->getOption('message');
         if (!$message) {
             //message was not provided, so set some default
-            $message = "Verificar ".$this->getOption('verificarCampo').". La fecha <ins>$desde</ins> debe ser menor a la fecha <ins>$hasta</ins>";
+            $message = $this->getOption('mensajeError');
         }
 
         //add message object
-        $validator->appendMessage(new Message($message, $attribute, 'IsAwesomeDate'));
+        $validator->appendMessage(new Message($message, $attribute, 'Fechas Incorrectas'));
 
         return false;
 

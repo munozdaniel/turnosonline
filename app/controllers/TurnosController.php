@@ -26,26 +26,23 @@ class TurnosController extends ControllerBase
 
     public function guardarPeriodoSolicitudAction()
     {
-        $this->view->formulario = new PeriodoSolicitudForm();
+        $this->view->pick('turnos/periodoSolicitud');
+        $periodoSolicitudForm = new PeriodoSolicitudForm();
+        $this->view->formulario = $periodoSolicitudForm;
 
-        // Form is a simple <input type=text name=test> form
         if ($this->request->isPost()) {
-            $validation = new Phalcon\Validation();
-            //Aplico el DateValidator al campo de la vista (el primer atributo es el ID)
-            //periodoSolicitudDesde < periodoSolicitudHasta
-            $validation->add('periodoSolicitudDesde', new DateValidator(array(
-                'verificarCampo' => '<strong>Período para solicitud de turnos</strong>',
-                'hasta' => $this->request->getPost('periodoSolicitudHasta') // envio fecha a comparar
-            )));
+            $data = $this->request->getPost();
 
-            $messages = $validation->validate($this->request->getPost());
+            if ($periodoSolicitudForm->isValid($data) != false) {
 
-            if (count($messages)) {
-                // Validation failed here
-                foreach ($messages as $m)
-                    $this->flash->error('[<ins>ERROR</ins>] ' . $m->getMessage());
+                //Si todo esta bien:
+                $solicitudTurno = new Solicitudturno();
+                if ($solicitudTurno->save()) {
+                    //return $this->redireccionar('administrar/index');
+                }
+
+                $this->flash->error('[<ins>ERROR</ins>] ' . $solicitudTurno->getMessages());
             }
-            $this->view->pick('turnos/periodoSolicitud');
         }
     }
 }

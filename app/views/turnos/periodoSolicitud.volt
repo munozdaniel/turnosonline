@@ -33,10 +33,12 @@
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                             {{ formulario.label('periodoSolicitudDesde',['class': 'control-label']) }}
                             {{ formulario.render('periodoSolicitudDesde',['class': 'btn-block']) }}
+                            {{ formulario.messages('periodoSolicitudDesde') }}
                         </div>
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                             {{ formulario.label('periodoSolicitudHasta',['class': 'control-label']) }}
                             {{ formulario.render('periodoSolicitudHasta',['class': 'btn-block']) }}
+                            {{ formulario.messages('periodoSolicitudHasta') }}
                         </div>
                     </div>
                     <hr>
@@ -46,10 +48,12 @@
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                             {{ formulario.label('periodoAtencionDesde',['class': 'control-label']) }}
                             {{ formulario.render('periodoAtencionDesde',['class': 'btn-block']) }}
+                            {{ formulario.messages('periodoAtencionDesde') }}
                         </div>
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                             {{ formulario.label('periodoAtencionHasta',['class': 'control-label']) }}
                             {{ formulario.render('periodoAtencionHasta',['class': 'btn-block']) }}
+                            {{ formulario.messages('periodoAtencionHasta') }}
                         </div>
                     </div>
                     <hr>
@@ -57,6 +61,7 @@
                         <h4>{{ formulario.label('cantidadDias',['class': 'control-label']) }}</h4><br>
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                             {{ formulario.render('cantidadDias',['class': 'btn-block']) }}
+                            {{ formulario.messages('cantidadDias') }}
                         </div>
                     </div>
                     <hr>
@@ -64,6 +69,7 @@
                         <h4>{{ formulario.label('cantidadTurnos',['class': 'control-label']) }}</h4><br>
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-12 col-xs-12">
                             {{ formulario.render('cantidadTurnos' ,['class': 'btn-block']) }}
+                            {{ formulario.messages('cantidadTurnos') }}
                         </div>
                     </div>
                     <hr>

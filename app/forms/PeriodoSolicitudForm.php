@@ -10,6 +10,8 @@ use Phalcon\Forms\Element\Text;
 use Phalcon\Validation\Validator\PresenceOf;
 use \Phalcon\Forms\Element\Date;
 use Phalcon\Validation\Validator\Numericality;
+use Phalcon\Validation\Validator\StringLength as StringLength;
+
 class PeriodoSolicitudForm extends Form {
     /**
      * Initialize the products form
@@ -23,8 +25,7 @@ class PeriodoSolicitudForm extends Form {
         $periodoSolicitudDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la solicitud de turnos.'
-            )),
-            new DateValidator()
+            ))
         ));
         $this->add($periodoSolicitudDesde);
 
@@ -33,6 +34,10 @@ class PeriodoSolicitudForm extends Form {
         $periodoSolicitudHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la solicitud de turnos.'
+            )),
+            new DateValidator(array(
+                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea mayor que la fecha  <strong>"DESDE"</strong>.',
+                'desde' =>$periodoSolicitudDesde->getValue()// valida qeu periodoSOlicitudHasta>periodoSolicitudDesde
             ))
         ));
         $this->add($periodoSolicitudHasta);
@@ -43,6 +48,10 @@ class PeriodoSolicitudForm extends Form {
         $periodoAtencionDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la atención de turnos.'
+            )),
+            new DateValidator(array(
+                'mensajeError' => 'Verifique que el <strong>Período de Atención </strong> sea mayor que el <strong>Período de Solicitud</strong>.',
+                'desde' =>$periodoSolicitudHasta->getValue()
             ))
         ));
         $this->add($periodoAtencionDesde);
@@ -52,6 +61,10 @@ class PeriodoSolicitudForm extends Form {
         $periodoAtencionHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la atención de turnos.'
+            )),
+            new DateValidator(array(
+                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea mayor que la fecha  <strong>"DESDE"</strong>.',
+                'desde' =>$periodoAtencionDesde->getValue()
             ))
         ));
         $this->add($periodoAtencionHasta);
@@ -70,7 +83,8 @@ class PeriodoSolicitudForm extends Form {
                     array(
                         'message' => 'La <strong>cantidad de días</strong> debe ser un número.'
                     )
-                )
+                ),
+                new NumberValidator()
             )
         );
         $this->add($cantidadDias);
@@ -91,7 +105,8 @@ class PeriodoSolicitudForm extends Form {
                     array(
                         'message' => 'La <strong>cantidad de turnos</strong> debe ser un número.'
                     )
-                )
+                ),
+                new NumberValidator()
             )
         );
         $this->add($cantidadTurnos);
@@ -104,8 +119,7 @@ class PeriodoSolicitudForm extends Form {
         $cadena= "";
         if ($this->hasMessagesFor($name)) {
             foreach ($this->getMessagesFor($name) as $message) {
-                //$this->flash->error($message);
-                $cadena.= $message ."<br>";//para mostrar con tooltip
+                $cadena.= "<div class='problema'>".$message ."</div>";//para mostrar con tooltip
             }
         }
         return $cadena;
