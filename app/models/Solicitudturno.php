@@ -23,6 +23,12 @@ class Solicitudturno extends \Phalcon\Mvc\Model
 
     /**
      *
+     * @var integer
+     */
+    public $solicitudTurno_documento;
+
+    /**
+     *
      * @var string
      */
     public $solicitudTurno_email;
@@ -31,7 +37,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $solicitudTurno_numCelular;
+    public $solicitudTurno_numTelefono;
 
     /**
      *
@@ -44,6 +50,12 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      * @var string
      */
     public $solicitudTurno_estado;
+
+    /**
+     *
+     * @var string
+     */
+    public $solicitudTurno_nickUsuario;
 
     /**
      *
@@ -68,6 +80,42 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      * @var string
      */
     public $solicitudTurno_fechaRespuestaEnviada;
+
+    /**
+     *
+     * @var integer
+     */
+    public $solicitudTurno_montoMax;
+
+    /**
+     *
+     * @var integer
+     */
+    public $solicitudTurno_montoPosible;
+
+    /**
+     *
+     * @var integer
+     */
+    public $solicitudTurno_cantCuotas;
+
+    /**
+     *
+     * @var integer
+     */
+    public $solicitudTurno_valorCuota;
+
+    /**
+     *
+     * @var string
+     */
+    public $solicitudTurno_observaciones;
+
+    /**
+     *
+     * @var integer
+     */
+    public $solicitudTurno_manual;
 
     /**
      * Returns table name mapped in the model.
