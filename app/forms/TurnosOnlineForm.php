@@ -20,9 +20,30 @@ class TurnosOnlineForm  extends Form {
     public function initialize($entity = null, $options = array())
     {
         /*=================== Nro Legajo ==========================*/
-        $legajo = new Text("legajo",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE SU LEGAJO'));
+        $nombre = new Text("nombreApe",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'APELLIDO Y NOMBRE'));
 
-        $legajo->setLabel("Legajo ");
+        $nombre->setLabel("<strong>(*)</strong> Apellido y Nombre ");
+        $nombre->setFilters(array('string'));
+        $nombre->addValidators(
+            array(
+                new PresenceOf(
+                    array(
+                        'message' => 'Ingrese su <strong>Apellido y Nombre</strong>.'
+                    )
+                ),
+                new StringLength(array(
+                    'min' => 6,
+                    'messageMinimum' => 'Nombre demasiado corto',
+                    'max' => 30,
+                    'messageMaximun' => 'Nombre demasiado largo',
+                )),
+            )
+        );
+        $this->add($nombre);
+        /*=================== Nro Legajo ==========================*/
+        $legajo = new Text("legajo",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'LEGAJO'));
+
+        $legajo->setLabel("<strong>(*)</strong> Legajo ");
         $legajo->setFilters(array('int'));
         $legajo->addValidators(
             array(
@@ -47,8 +68,8 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($legajo);
         /*=================== Nro Documento ==========================*/
-        $dni = new Text("dni",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE SU NRO DOCUMENTO'));
-        $dni->setLabel("Nro Documento ");
+        $dni = new Text("dni",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'NRO DOCUMENTO'));
+        $dni->setLabel("<strong>(*)</strong> Nro Documento ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
             array(
@@ -73,19 +94,41 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($dni);
         /*=================== Fecha Nacimiento ==========================*/
-        $fechaNacimiento= new Date('fechaNacimiento');
-        $fechaNacimiento->setLabel('Fecha Nacimiento');
+        $fechaNacimiento= new Date('fechaNacimiento',array('style'=>'text-align:right !important'));
+        $fechaNacimiento->setLabel('<strong>(*)</strong> Fecha Nacimiento');
         $fechaNacimiento->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Nacimiento</strong>.'
             ))
         ));
         $this->add($fechaNacimiento);
+        /*=================== Nro Legajo ==========================*/
+        $telefono = new Text("telefono",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'TELEFONO'));
+
+        $telefono->setLabel("Telefono ");
+        $telefono->setFilters(array('int'));
+        $telefono->addValidators(
+            array(
+                new Numericality(
+                    array(
+                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                    )
+                ),
+                new NumberValidator(),
+                new StringLength(array(
+                    'min' => 4,
+                    'messageMinimum' => 'Minimo 4 digitos',
+                    'max' => 12,
+                    'messageMaximun' => 'Maximo 12 digitos',
+                )),
+            )
+        );
+        $this->add($telefono);
         /*=================== Correo Electronico ==========================*/
         $email = new Text('email', array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;',
-            'placeholder' => 'Ingrese el Email'
+            'placeholder' => 'EMAIL'
         ));
-
+        $email->setLabel('<strong>(*)</strong> Email');
         $email->addValidators(array(
             new PresenceOf(array(
                 'message' => 'El Email es requerido'
@@ -98,9 +141,9 @@ class TurnosOnlineForm  extends Form {
         $this->add($email);
         /*=================== Repita su Correo Electronico ==========================*/
         $email = new Text('emailRepetido', array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;',
-            'placeholder' => 'Ingrese nuevamente el Email'
+            'placeholder' => 'REPITA EL EMAIL'
         ));
-
+        $email->setLabel('<strong>(*)</strong> Repetir Email');
         $email->addValidators(array(
             new PresenceOf(array(
                 'message' => 'El Email es requerido'
