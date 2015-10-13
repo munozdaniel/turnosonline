@@ -25,14 +25,14 @@ class Seguridad extends \Phalcon\Mvc\User\Plugin
         $allowed = $acl->isAllowed($role, $controller, $action);
 
         //si el usuario no tiene acceso a la zona que intenta acceder
-        //le mostramos el contenido de la función index del controlador index
+        //se lo redirecciona a login. (o habria que enviarlo al index? )
         //con un mensaje flash
         if ($allowed != \Phalcon\Acl::ALLOW)
         {
             $this->flash->message('problema',"<p>ZONA RESTRINGIDA, NO TIENES PERMISO PARA ACCEDER A LA SECCIÓN SOLICITADA</p>");
             $dispatcher->forward(
                 array(
-                    'controller' => 'index',
+                    'controller' => 'sesion',
                     'action' => 'index'
                 )
             );
