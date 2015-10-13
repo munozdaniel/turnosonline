@@ -22,10 +22,9 @@
                     <!--  <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo"></a> -->
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul id="top-menu" class="nav navbar-nav navbar-right main_nav">
+                    <ul id="top-menu-admin" class="nav navbar-nav navbar-right main_nav">
                         <li class="active">{{ link_to('index/index','INICIO') }}</li>
-                        <li>{{ link_to('turnos/index','TURNOS ONLINE') }}</li>
-                        <li>{{ link_to('administrar/verUsuarios','GESTION USUARIOS') }}</li>
+                        <li>{{ link_to('administrar/index','PANEL DE CONTROL') }}</li>
                         <li>{{ link_to('sesion/cerrar','SALIR') }}</li>
                     </ul>
                 </div><!--/.nav-collapse -->

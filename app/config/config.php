@@ -5,17 +5,17 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
-        'host'        => '192.168.42.14',
+        'host'        => 'localhost',
         'username'    => 'root',
-        'password'    => 'infoimps',
+        'password'    => '',
         'dbname'      => 'impsorg_web',
         'charset'     => 'utf8',
     ),
     'gestionusuarios' => array(
         'adapter'     => 'Mysql',
-        'host'        => '192.168.42.14',
+        'host'        => 'localhost',
         'username'    => 'root',
-        'password'    => 'infoimps',
+        'password'    => '',
         'dbname'      => 'gestionusuarios',
         'charset'     => 'utf8',
     ),

@@ -299,7 +299,11 @@ class pdf_parser {
         		if (count($data) != 2) {
 	 			// mPDF 4.0
            			$this->success = false;
+<<<<<<< HEAD
             		$this->errormsg = sprintf("Unexpected data in xref table Fuckk!!");
+=======
+            		$this->errormsg = sprintf("Unexpected data in xref table");
+>>>>>>> 749825738b20a486391a179872b785ab39b4659b
 				return;
         		}
 		    }

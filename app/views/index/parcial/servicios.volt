@@ -30,7 +30,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <!-- BEGAIN SINGLE SERVICE -->
                             <div class="single_service wow fadeInRight">
-                                {{ link_to('','class':'puntero',' <div class="service_iconarea">
+                                {{ link_to('turnos/index','class':'puntero',' <div class="service_iconarea">
                                     <span class="fa fa-ticket service_icon"></span>
                                 </div>
                                 <h3 class="service_title">Turnos Online</h3>') }}
