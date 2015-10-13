@@ -9,8 +9,7 @@ class AdministrarController extends ControllerBase
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
-        $this->assets
-            ->collection('footer')->addJs('js/tooltip.js');
+
         parent::initialize();
 
     }
