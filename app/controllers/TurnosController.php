@@ -16,6 +16,12 @@ class TurnosController extends ControllerBase
 
     public function indexAction()
     {
+        $this->view->formulario = new TurnosOnlineForm();
+
+    }
+    public function guardarSolicitudTurnoAction()
+    {
+
 
     }
 
