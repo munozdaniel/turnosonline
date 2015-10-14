@@ -28,7 +28,7 @@
 
                 <!-- START SOLICITUD TURNOS CONTENT -->
                 <div class="about_content wow bounceInUp ">
-                    {{ form('turnos/guardarSolicitudTurno','method':'post','style':'','class':'') }}
+                    {{ form('turnos/index','method':'post','style':'','class':'') }}
 
                     {% set name = 1 %}
                     {% for elto in formulario %}

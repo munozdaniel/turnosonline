@@ -20,9 +20,30 @@ class TurnosOnlineForm  extends Form {
     public function initialize($entity = null, $options = array())
     {
         /*=================== Nombre y Apellido ==========================*/
-        $nombre = new Text("solicitudTurno_nomApe",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'APELLIDO Y NOMBRE'));
+        $apellido = new Text("solicitudTurno_ape",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'APELLIDO'));
 
-        $nombre->setLabel("<strong>(*)</strong> Apellido y Nombre ");
+        $apellido->setLabel("<strong>(*)</strong> Apellido ");
+        $apellido->setFilters(array('string'));
+        $apellido->addValidators(
+            array(
+                new PresenceOf(
+                    array(
+                        'message' => 'Ingrese su <strong>Apellido </strong>.'
+                    )
+                ),
+                new StringLength(array(
+                    'min' => 4,
+                    'messageMinimum' => 'Nombre demasiado corto',
+                    'max' => 30,
+                    'messageMaximun' => 'Nombre demasiado largo',
+                )),
+            )
+        );
+        $this->add($apellido);
+        /*=================== Nombre y Apellido ==========================*/
+        $nombre = new Text("solicitudTurno_nom",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'NOMBRE'));
+
+        $nombre->setLabel("<strong>(*)</strong> Nombre ");
         $nombre->setFilters(array('string'));
         $nombre->addValidators(
             array(
@@ -32,7 +53,7 @@ class TurnosOnlineForm  extends Form {
                     )
                 ),
                 new StringLength(array(
-                    'min' => 6,
+                    'min' => 4,
                     'messageMinimum' => 'Nombre demasiado corto',
                     'max' => 30,
                     'messageMaximun' => 'Nombre demasiado largo',
