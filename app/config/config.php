@@ -27,6 +27,14 @@ return new \Phalcon\Config(array(
         'dbname'      => 'sujypweb',
         'charset'     => 'utf8',
     ),
+    'siprea' => array(
+        'adapter'     => 'Mysql',
+        'host'        => 'localhost',
+        'username'    => 'root',
+        'password'    => '',
+        'dbname'      => 'siprea2',
+        'charset'     => 'utf8',
+    ),
     'application' => array(
         'controllersDir' => APP_PATH . '/app/controllers/',
         'modelsDir'      => APP_PATH . '/app/models/',
@@ -36,7 +44,7 @@ return new \Phalcon\Config(array(
         'formsDir'       => APP_PATH . '/app/forms/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'mpdfDir'        => APP_PATH . '/app/library/mpdf/',
-        'phpmailerDir'        => APP_PATH . '/app/library/phpmailer/',
+        'phpmailerDir'   => APP_PATH . '/app/library/phpmailer/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
     ),
