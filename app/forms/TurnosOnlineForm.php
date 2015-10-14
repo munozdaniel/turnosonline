@@ -19,8 +19,8 @@ class TurnosOnlineForm  extends Form {
      */
     public function initialize($entity = null, $options = array())
     {
-        /*=================== Nro Legajo ==========================*/
-        $nombre = new Text("nombreApe",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'APELLIDO Y NOMBRE'));
+        /*=================== Nombre y Apellido ==========================*/
+        $nombre = new Text("solicitudTurno_nomApe",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'APELLIDO Y NOMBRE'));
 
         $nombre->setLabel("<strong>(*)</strong> Apellido y Nombre ");
         $nombre->setFilters(array('string'));
@@ -41,7 +41,7 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($nombre);
         /*=================== Nro Legajo ==========================*/
-        $legajo = new Text("legajo",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'LEGAJO'));
+        $legajo = new Text("solicitudTurno_legajo",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'LEGAJO'));
 
         $legajo->setLabel("<strong>(*)</strong> Legajo ");
         $legajo->setFilters(array('int'));
@@ -68,7 +68,7 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($legajo);
         /*=================== Nro Documento ==========================*/
-        $dni = new Text("dni",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'NRO DOCUMENTO'));
+        $dni = new Text("solicitudTurno_documento",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'NRO DOCUMENTO'));
         $dni->setLabel("<strong>(*)</strong> Nro Documento ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
@@ -94,7 +94,7 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($dni);
         /*=================== Fecha Nacimiento ==========================*/
-        $fechaNacimiento= new Date('fechaNacimiento',array('style'=>'text-align:right !important'));
+        $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',array('style'=>'text-align:right !important'));
         $fechaNacimiento->setLabel('<strong>(*)</strong> Fecha Nacimiento');
         $fechaNacimiento->addValidators(array(
             new PresenceOf(array(
@@ -103,7 +103,7 @@ class TurnosOnlineForm  extends Form {
         ));
         $this->add($fechaNacimiento);
         /*=================== Nro Legajo ==========================*/
-        $telefono = new Text("telefono",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'TELEFONO'));
+        $telefono = new Text("solicitudTurno_numTelefono",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'TELEFONO'));
 
         $telefono->setLabel("Telefono ");
         $telefono->setFilters(array('int'));
@@ -125,7 +125,7 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($telefono);
         /*=================== Correo Electronico ==========================*/
-        $email = new Text('email', array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;',
+        $email = new \Phalcon\Forms\Element\Email('solicitudTurno_email', array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;',
             'placeholder' => 'EMAIL'
         ));
         $email->setLabel('<strong>(*)</strong> Email');
@@ -140,20 +140,22 @@ class TurnosOnlineForm  extends Form {
 
         $this->add($email);
         /*=================== Repita su Correo Electronico ==========================*/
-        $email = new Text('emailRepetido', array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;',
+        $confirmarEmail = new \Phalcon\Forms\Element\Email('emailRepetido', array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;',
             'placeholder' => 'REPITA EL EMAIL'
         ));
-        $email->setLabel('<strong>(*)</strong> Repetir Email');
-        $email->addValidators(array(
+
+        $confirmarEmail->setLabel('<strong>(*)</strong> Repetir Email');
+        $confirmarEmail->addValidators(array(
             new PresenceOf(array(
                 'message' => 'El Email es requerido'
             )),
             new Email(array(
                 'message' => 'El Email no es valido.'
-            ))
+            )),
+            new ComprobarEmailValidator(array('email'=>$email))
         ));
 
-        $this->add($email);
+        $this->add($confirmarEmail);
 
     }
     /**
