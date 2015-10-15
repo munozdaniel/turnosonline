@@ -55,7 +55,7 @@ class PeriodoSolicitudForm extends Form {
             ))
         ));
         $this->add($periodoAtencionDesde);
-
+        /* Eliminado
         $periodoAtencionHasta= new Date('periodoAtencionHasta');
         $periodoAtencionHasta->setLabel('Hasta');
         $periodoAtencionHasta->addValidators(array(
@@ -67,8 +67,8 @@ class PeriodoSolicitudForm extends Form {
                 'desde' =>$periodoAtencionDesde->getValue()
             ))
         ));
-        $this->add($periodoAtencionHasta);
-        /*=================== CANTIDAD DE TURNOS ==========================*/
+        $this->add($periodoAtencionHasta);*/
+        /*=================== CANTIDAD DE DIAS ==========================*/
         $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE CANT. DÍAS'));
         $cantidadDias->setLabel("Cantidad de días para confirmar el mensaje ");
         $cantidadDias->setFilters(array('int'));

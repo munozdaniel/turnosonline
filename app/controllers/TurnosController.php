@@ -143,22 +143,24 @@ class TurnosController extends ControllerBase
 
     /**
      * Verifica con los datos del afiliado si ya solicito un turno en este periodo.
-     *
+     * MJE ERROR: SUS DATOS YA FUERON INGRESADO, NO PUEDE SACAR MÁS DE UN TURNO POR PERÍODO
      * @return boolean devuelve si encontro o no.
      */
     private function tieneTurnoSolicitado($legajo, $email)
     {
         try {
-            $ultimo = (int)Fechasturnos::count() - 1;//Obtengo el ultimo indice
-            $fechasTurnos = Fechasturnos::find();//Obtengo todos las instancias de Fechasturnos.
+            //$ultimo = (int)Fechasturnos::count() - 1;//Obtengo el ultimo indice
+            $fechasTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo (campo nuevo).
             $consulta = "SELECT * FROM solicitudTurno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND (ST.solicitudTurno_legajo=:legajo:) AND (ST.solicitudTurno_email LIKE  :email:))";
+
             $solicitudTurno = $this->modelsManager->executeQuery($consulta,
                 array(
-                    'inicioSolicitud' => $fechasTurnos[$ultimo]->fechasTurnos_inicioSolicitud,
-                    'finSolicitud' => $fechasTurnos[$ultimo]->fechasTurnos_finSolicitud,
+                    'inicioSolicitud' => $fechasTurnos->fechasTurnos_inicioSolicitud,
+                    'finSolicitud' => $fechasTurnos->fechasTurnos_finSolicitud,
                     'legajo' => $legajo,
                     'email' => $email));
             //Si no encontro datos, es porque no solicito un turno en este periodo.
+
             if (count($solicitudTurno) == 0)
                 return false;
         } catch (Exception $e) {
@@ -204,12 +206,21 @@ class TurnosController extends ControllerBase
                 $fechasTurnos->assign(array(
                     'fechasTurnos_inicioSolicitud' => $this->request->getPost('periodoSolicitudDesde'),
                     'fechasTurnos_finSolicitud' => $this->request->getPost('periodoSolicitudHasta'),
-                    'fechasTurnos_inicioAtencion' => $this->request->getPost('periodoAtencionDesde'),
-                    'fechasTurnos_finAtencion' => $this->request->getPost('periodoAtencionHasta'),
-                    'fechasTurnos_cantidadDeTurnos' => $this->request->getPost('cantidadDias', 'int'),
-                    'fechasTurnos_cantidadAutorizados' => $this->request->getPost('cantidadTurnos', 'int'),
+                    'fechasTurnos_diaAtencion' => $this->request->getPost('periodoAtencionDesde'),
+                    'fechasTurnos_cantidadDeTurnos' => $this->request->getPost('cantidadTurnos', 'int'),
+                    'fechasTurnos_cantidadAutorizados' => 0,
+                    'fechasTurnos_cantidadDiasConfirmacion' => $this->request->getPost('cantidadDias', 'int'),
+                    'fechasTurnos_activo' => 1,
                 ));
                 if ($fechasTurnos->save()) {
+                    //Si ya habia un periodo, lo desactivamos.
+                    if($fechasTurnos->fechasTurnos_id>1){
+                        $phql = "UPDATE Fechasturnos SET fechasTurnos_activo = :valor: WHERE fechasTurnos_id = :id:";
+                        $this->modelsManager->executeQuery($phql, array(
+                            'id' => $fechasTurnos->fechasTurnos_id-1,
+                            'valor' => 0
+                        ));
+                    }
                     $this->flash->message('exito', 'La configuración de los períodos se ha realizado satisfactoriamente.');
                     $periodoSolicitudForm->clear();
                 }

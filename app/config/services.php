@@ -79,6 +79,10 @@ $di->set('dbSiprea', function () use ($config) {
 /**=========================================================================================
  *
  ===========================================================================================*/
+/*Esto hace falta? ??? ?? ?? */
+$di->set('modelsManager', function(){
+    return new Phalcon\Mvc\Model\Manager();
+});
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
