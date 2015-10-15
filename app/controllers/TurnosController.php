@@ -79,7 +79,7 @@ class TurnosController extends ControllerBase
                             if ($solicitudTurno->save()) {
                                 $this->flash->message('exito', 'La configuración de los períodos se ha realizado satisfactoriamente.');
                                 $turnosOnlineForm->clear();
-                                $this->redireccionar('turnos/turnoSolicitado');
+                                $this->redireccionar('turnos/turnoSolicitadoExitoso');
                             }
                         } else
                             $this->flash->message('problema', 'SUS DATOS YA FUERON INGRESADO, NO PUEDE SACAR MÁS DE UN TURNO POR PERÍODO');
