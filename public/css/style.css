@@ -14,7 +14,7 @@ Tags: light, white, landing page,single page,Multipurpose,custom-colors,Bootstra
 	#BASIC TYPOGRAPHY
 	#HEADER
 	#ABOUT,#admin SECTION
-	#SERVICE SECTION
+	#SERVICE,#onepage SECTION
 	#Works SECTION
 	#TEAM SECTION
 	#PRICING SECTION
@@ -655,7 +655,7 @@ div[data-dimension] {
 /*--------------------*/
 
 
-#service {
+#service,#onepage {
   display: inline;
   float: left;
   padding: 80px 0 70px;
@@ -2436,6 +2436,7 @@ textarea .form-control {
 	.og-close {z-index: 999;}
 	#about,#admin {padding: 50px 0;}
 	#service {padding: 50px 0 50px;}
+	#onepage {padding: 80px 0 50px;}
 	#works {padding: 0 0 50px;}
 	#team {padding: 50px 0;}
 	#pricing {padding: 50px 0;}
