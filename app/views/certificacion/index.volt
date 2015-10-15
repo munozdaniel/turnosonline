@@ -5,7 +5,7 @@
                 <div class="about_area">
                     <!-- START CERTIFICACION HEADING -->
                     <div class="heading">
-                        <h2 class="wow fadeInLeftBig">Certificación de Supervivencia</h2>
+                        <h2 class="wow fadeInLeftBig">Certificación Negativa</h2>
 
                         <div class="pull-right">{{ link_to('index/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                         <p>A través de este servicio, Ud. podrá obtener el comprobante de Certificación Negativa que
