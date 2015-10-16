@@ -61,19 +61,28 @@ $di->setShared('view', function () use ($config) {
 $di->set('db', function () use ($config) {
     return new DbAdapter($config->database->toArray());
 });
-// This service returns a MySQL database
+//GESTIONUSUARIOS
 $di->set('dbUsuarios', function () use ($config) {
     return new DbAdapter($config->gestionusuarios->toArray());
 
 });
-// This service returns a MySQL database
+//SUJYPWEB
 $di->set('dbSujypweb', function () use ($config) {
     return new DbAdapter($config->sujypweb->toArray());
+
+});
+//SIPREA
+$di->set('dbSiprea', function () use ($config) {
+    return new DbAdapter($config->siprea->toArray());
 
 });
 /**=========================================================================================
  *
  ===========================================================================================*/
+/*Esto hace falta? ??? ?? ?? */
+$di->set('modelsManager', function(){
+    return new Phalcon\Mvc\Model\Manager();
+});
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */

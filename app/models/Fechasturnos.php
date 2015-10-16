@@ -25,13 +25,7 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $fechasTurnos_inicioAtencion;
-
-    /**
-     *
-     * @var string
-     */
-    public $fechasTurnos_finAtencion;
+    public $fechasTurnos_diaAtencion;
 
     /**
      *
@@ -50,6 +44,12 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $fechasTurnos_cantidadDiasConfirmacion;
+
+    /**
+     *
+     * @var integer
+     */
+    public $fechasTurnos_activo;
 
     /**
      * Returns table name mapped in the model.
