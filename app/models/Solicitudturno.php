@@ -149,4 +149,20 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public static function accionVerSolicitudesOnline()
+    {
+       /* $condiciones = "solicitudTurno_manual=?1";
+        $parametros = array(1=>0);
+        return Solicitudturno::find(array($condiciones,"bind"=>$parametros));*/
+
+       $solicitudes = Solicitudturno::find();
+        $solicitudesOnline= array();
+
+        foreach($solicitudes as $unaSolicitud)
+        {
+            if($unaSolicitud->solicitudTurno_manual == 0)
+                $solicitudesOnline[]= (array)$unaSolicitud;
+        }
+        return $solicitudesOnline;
+    }
 }
