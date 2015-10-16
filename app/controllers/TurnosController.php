@@ -1,5 +1,6 @@
 <?php
-
+//obtenemos el adaptador que crea la paginación en Phalcon
+use \Phalcon\Paginator\Adapter\Model as Paginacion;
 class TurnosController extends ControllerBase
 {
     /**
@@ -227,6 +228,29 @@ class TurnosController extends ControllerBase
                 $this->flash->error($fechasTurnos->getMessages());
             }
         }
+    }
+    /*================================ ADMINISTRADOR =======================================*/
+    /**
+     * Muestra una grilla con todos los periodos y permite la edicion de los campos:
+     * fechasTurnos_cantidadDeTurnos
+     * fechasTurnos_diaAtencion
+     */
+    public function verPeriodosAction()
+    {
+        //Crea un paginador, muestra 3 filas por página
+        $paginator = new Paginacion(
+            array(
+                //obtenemos los productos
+                "data" => Fechasturnos::find(),
+                //limite por página
+                "limit"=> 6,
+                //variable get page convertida en un integer
+                "page" => $this->request->getQuery('page', 'int')
+            )
+        );
+
+        //pasamos el objeto a la vista con el nombre de $page
+        $this->view->tabla = $paginator->getPaginate();
     }
 
 
