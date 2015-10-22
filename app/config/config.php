@@ -29,9 +29,9 @@ return new \Phalcon\Config(array(
     ),
     'siprea' => array(
         'adapter'     => 'Mysql',
-        'host'        => 'localhost',
+        'host'        => '192.168.42.14',
         'username'    => 'root',
-        'password'    => '',
+        'password'    => 'infoimps',
         'dbname'      => 'siprea2',
         'charset'     => 'utf8',
     ),
@@ -58,5 +58,15 @@ return new \Phalcon\Config(array(
         'charset'     => 'UTF-8',
         'email'     => 'dmunioz@imps.org.ar',
         'name'     => 'dmunioz@imps.org.ar',
+    ),
+    'mailInformatica' => array(
+        'host'     => 'mail.imps.org.ar',
+        'username' => 'informatica@imps.org.ar',
+        'password' => 'tecno$%&--logia',
+        'security' => '',
+        'port'     => '26',
+        'charset'  => 'UTF-8',
+        'email'    => 'informatica@imps.org.ar',
+        'name'     => 'informatica@imps.org.ar',
     )
 ));

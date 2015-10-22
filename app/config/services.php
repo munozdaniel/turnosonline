@@ -71,6 +71,7 @@ $di->set('dbSujypweb', function () use ($config) {
     return new DbAdapter($config->sujypweb->toArray());
 
 });
+
 //SIPREA
 $di->set('dbSiprea', function () use ($config) {
     return new DbAdapter($config->siprea->toArray());
@@ -100,6 +101,7 @@ $di->setShared('session', function () {
     return $session;
 });
 
+//servicios de correos electronicos
 
 $di->set('mail', function () use ($config) {
     //sleep(2);
@@ -121,6 +123,32 @@ $di->set('mail', function () use ($config) {
 
     return $mail;
 });
+
+$di->set('mailInformatica', function () use ($config) {
+
+    $mailInformatica = new PHPMailer;
+    $mailInformatica->isSMTP();
+    $mailInformatica->isHTML(true);
+
+    $mailInformatica->CharSet      = $config->mailInformatica->charset;
+    $mailInformatica->Host         = $config->mailInformatica->host;
+    $mailInformatica->SMTPAuth     = true;
+    $mailInformatica->Username     = $config->mailInformatica->username;
+    $mailInformatica->Password     = $config->mailInformatica->password;
+    $mailInformatica->SMTPSecure   = $config->mailInformatica->security;
+    $mailInformatica->Port         = $config->mailInformatica->port;
+    $mailInformatica->From         = $config->mailInformatica->email;
+    $mailInformatica->FromName     = $config->mailInformatica->name;
+
+    return $mailInformatica;
+});
+
+
+
+
+
+
+
 /**
  * Register the flash service with custom CSS classes
  */
