@@ -35,7 +35,7 @@
                                 </div>
                                 <h3 class="service_title">Turnos Online</h3>') }}
 
-                                <p>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación, las fechas para solicitarlos se publicarán <strong><a style="color:#286090; cursor: pointer !important;">aquí</a></strong>. En caso de no poseer un correo electronico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p>
+                                <p>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación, las fechas para solicitarlos se publicarán <strong><a style="color:#286090; cursor: pointer !important;">aquí</a></strong>. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
