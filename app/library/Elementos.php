@@ -1,74 +1,29 @@
 <?php
 class Elementos extends \Phalcon\Mvc\User\Component
 {
-    private $_menu = array(
-        'inicio'     =>  array(
-                'class'     =>  'scroll',
-                'titulo'    =>'Inicio',
-                'controlador'=>'',
-                'accion'    =>'#home'
-        ),
-        'contacto'  =>  array(
-                'class'     =>  'scroll',
-                'titulo'    =>'Contacto',
-                'controlador'=>'contacto',
-                'accion'    =>'index'
-        )
-    );
-    private $_sesion = array(
-
-        'login'     =>  array(
-            'class'     =>  '',
-            'titulo'    =>'Ingresar',
-            'controlador'=>'sesion',
-            'accion'    =>'index'
-        )
-    );
     /**
-     * Armar el menu de la cabecera
-     *
-     * @return string
+     * Si no esta logueado muestra el link "INGRESAR"
+     * Si esta logueado muestra el link "SALIR" mas los datos del usuario.
      */
-    public function getMenu()
-    {
-
+    public function getItemMenu(){
         $auth = $this->session->get('auth');
-        if ($auth) {
-            $this->_sesion = array(
-                'estadisticas'     =>  array(
-                    'class'     =>  '',
-                    'titulo'    =>'Estadisticas',
-                    'controlador'=>'estadistica',
-                    'accion'    =>'index'
-                )
-            );
-            $this->_sesion['login']= array(
-                'class'     =>  '',
-                'titulo'    =>'Salir',
-                'controlador'=>'sesion',
-                'accion'    =>'cerrar'
-            );
-        }
-        else
-        {
-
-        }
-        $nombreDelControlador = $this->view->getControllerName();
-        foreach($this->_menu as $contenido => $item)
-        {
-            //if ($nombreDelControlador == $item['controlador'])
-              //  $activo = "active";
-            //else
-              //  $activo ="";
-            echo "<li class='".$item['class']." "."'>";
-             echo $this->tag->linkTo($item['controlador'] . '/' . $item['accion'], $item['titulo']), '</li>';
-            //echo "<a href='".$item['controlador']."".$item['accion']."'>".$item['titulo']."</a></li>";
-        }
-        foreach($this->_sesion as $contenido => $item)
-        {
+        if(!$auth){
             echo "<li>";
-            echo $this->tag->linkTo($item['controlador'] . '/' . $item['accion'], $item['titulo']), '</li>';
-            //echo "<li><a href='".$item['controlador']."/".$item['accion']."'>".$item['titulo']."</a></li>";
+            echo  $this->tag->linkTo('sesion/index', '<i class="fa fa-sign-in"></i>  Ingresar');
+            echo "</li>";
+        }
+        else{
+
+            echo "<li>";
+            echo  $this->tag->linkTo('', 'Usuario: '.$auth['usuario_nombreCompleto']);
+            echo "</li>";
+            echo "<li>";
+            echo  $this->tag->linkTo('', 'Rol: '.$auth['rol_nombre']);
+            echo "</li>";
+            echo "<li>";
+            echo  $this->tag->linkTo('sesion/cerrar', '<i class="fa fa-sign-out"></i>  Salir');
+            echo "</li>";
         }
     }
+
 }

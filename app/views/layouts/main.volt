@@ -38,7 +38,8 @@
                                 <li><a href="#contact" class="si_recorrer">Contactanos</a></li>
                                 <li><a href="#contactFeature" class="si_recorrer">Acerca de Nosotros</a></li>
                                 <li><a href="#clients" class="si_recorrer">Información de Contacto</a></li>
-                                <li><a href="http://localhost/impsweb/sesion"><i class="fa fa-sign-in"></i>  Ingresar</a></li>
+                                {{ elemento.getItemMenu() }}
+
                             </ul>
                         </li>
                     </ul>
