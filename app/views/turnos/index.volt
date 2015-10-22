@@ -1,5 +1,6 @@
 <section id="certificacion">
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="about_area">
@@ -12,13 +13,15 @@
 
                         <p><i class="fa fa-info-circle"
                               style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
-                            <em>Por favor, llene los siguientes campos para solicitar un turno con el departamento de
-                                Préstamos .</em>
+                            <em>Por favor, llene los siguientes campos para solicitar un turno con el departamento de Préstamos .</em>
+                            <br/>
+                            <em style="color:tomato"> (*) Campos obligatorios.</em>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row formulario-turnos">
             <div class="col-md-12">
                 {{ content() }}
@@ -33,13 +36,17 @@
                     {% set name = 1 %}
                     {% for elto in formulario %}
                     <div class="row">
-                        <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
-                        {{ elto.label(['class': 'control-label']) }}</div>
-                            <div class="col-lg-9  col-md-9  col-sm-6 col-xs-12" >
-                                {{ elto }}
-                                {{ formulario.messages(elto.getName()) }}
-                            </div>
-                    </div><br>
+
+                        <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 col-md-offset-2">
+                        {{ elto.label(['class': 'control-label']) }}
+                        </div>
+
+                        <div class="col-lg-9  col-md-9  col-sm-6 col-xs-12 col-md-offset-5">
+                            {{ elto }}
+                            {{ formulario.messages(elto.getName()) }}
+                        </div>
+
+                    </div><br/>
 
                     {% endfor %}
 
