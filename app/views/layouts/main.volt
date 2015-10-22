@@ -25,12 +25,22 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul id="top-menu" class="nav navbar-nav navbar-right main_nav">
-                        <li class="active"><a href="#">Inicio</a></li>
-                        <li><a href="#about">Información</a></li>
-                        <li><a href="#service">Servicios</a></li>
-                        <li><a href="#works">Guía de Tramites</a></li>
-                        <li><a href="#team">Prestaciones</a></li>
-                        <li><a href="#contact">Contacto</a></li>
+                        <li class="active "><a href="#" class="si_recorrer">Inicio</a></li>
+                        <li><a href="#about" class="si_recorrer">Información</a></li>
+                        <li><a href="#service" class="si_recorrer">Servicios</a></li>
+                        <li><a href="#works" class="si_recorrer">Guía de Tramites</a></li>
+                        <li><a href="#team" class="si_recorrer">Prestaciones</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                Institución <span class="caret"></span>
+                            </a>
+                            <ul id="miSubMenu" class="dropdown-menu nav navbar-nav navbar-right main_nav">
+                                <li><a href="#contact" class="si_recorrer">Contactanos</a></li>
+                                <li><a href="#contactFeature" class="si_recorrer">Acerca de Nosotros</a></li>
+                                <li><a href="#clients" class="si_recorrer">Información de Contacto</a></li>
+                                <li><a href="http://localhost/impsweb/sesion"><i class="fa fa-sign-in"></i>  Ingresar</a></li>
+                            </ul>
+                        </li>
                     </ul>
 
                 </div><!--/.nav-collapse -->

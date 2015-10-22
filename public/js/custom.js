@@ -394,7 +394,7 @@ jQuery(function ($) {
         topMenu = $("#top-menu"),
         topMenuHeight = topMenu.outerHeight() + 13,
     // All list items
-        menuItems = topMenu.find("a"),
+        menuItems = topMenu.find("a.si_recorrer"),
     // Anchors corresponding to menu items
         scrollItems = menuItems.map(function () {
             var item = $($(this).attr("href"));
