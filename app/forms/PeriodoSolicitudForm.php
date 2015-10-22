@@ -12,7 +12,8 @@ use \Phalcon\Forms\Element\Date;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\StringLength as StringLength;
 
-class PeriodoSolicitudForm extends Form {
+class PeriodoSolicitudForm extends Form
+{
     /**
      * Initialize the products form
      */
@@ -69,7 +70,7 @@ class PeriodoSolicitudForm extends Form {
         ));
         $this->add($periodoAtencionHasta);*/
         /*=================== CANTIDAD DE DIAS ==========================*/
-        $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE CANT. DÍAS'));
+        $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'CANTIDAD DÍAS'));
         $cantidadDias->setLabel("Cantidad de días para confirmar el mensaje ");
         $cantidadDias->setFilters(array('int'));
         $cantidadDias->addValidators(
