@@ -1,9 +1,13 @@
 <section id="certificacion">
+    <style>
+        .heading h2 {font-size: 35px;line-height: 35px;}
+    </style>
+
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="about_area">
-                    <!-- START PERIODO SOLICITUD HEADING -->
                     <div class="heading">
                         <h2 class="wow fadeInLeftBig">Período de Solicitud de Turnos</h2>
 
@@ -16,6 +20,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row formulario-turnos">
                 <div class="col-md-12">
                     {{ content() }}
@@ -23,7 +28,6 @@
 
             <div class="col-lg-8 col-md-8 col-md-offset-2">
 
-                <!-- START PERIODO SOLICITUD CONTENT -->
                 <div class="about_content wow bounceInUp ">
                     {{ form('turnos/guardarPeriodoSolicitud','method':'post','style':'text-align:left') }}
 
