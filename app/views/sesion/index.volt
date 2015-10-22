@@ -23,10 +23,12 @@
                         {{ password_field('sesion_contrasena',"class":"form-control","placeholder":"Contraseña",'required':'') }}
                         {{ submit_button('Ingresar','class':'btn btn-lg btn-primary btn-block') }}
                         {{ link_to('index/index','<i class="fa fa-home "></i> Salir','class':'btn btn-lg btn-primary btn-block') }}
+
                         <a href="#recuperar" data-toggle="modal" class="pull-right need-help"
                            style="color: #FFFFFF; text-decoration: none;">
-                            Olvidó su contraseña?
+                            ¿Olvidó su contraseña?
                         </a>
+
                         <span class="clearfix"></span>
                     {{ end_form() }}
                 </div>
