@@ -86,7 +86,7 @@
                                     <div class="panel-heading" style="border-color: #5cb;color: #fff;background-color: #5cb;">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                {{ link_to('turnos/verPeriodos','<i class="fa fa-list-alt fa-5x"></i>','class':'font-blanco') }}
+                                                {{ link_to('turnos/verPeriodos','<i class="fa fa-calendar-check-o fa-5x"></i>','class':'font-blanco') }}
                                             </div>
                                             <div class="col-xs-9 text-right">
                                                 <div class="huge">Rol</div>
@@ -109,7 +109,7 @@
                                     <div class="panel-heading" style="border-color: lightcoral;color: #fff;background-color: lightcoral;">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                {{ link_to('turnos/solicitudManual','<i class="fa fa-paper-plane-o fa-5x"></i>','class':'font-blanco','class':'font-blanco') }}
+                                                {{ link_to('turnos/solicitudManual','<i class="fa fa-ticket fa-5x"></i>','class':'font-blanco','class':'font-blanco') }}
                                             </div>
                                             <div class="col-xs-9 text-right">
                                                 <div class="huge">Rol</div>

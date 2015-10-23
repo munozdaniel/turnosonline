@@ -15,11 +15,9 @@ class Elementos extends \Phalcon\Mvc\User\Component
         else{
 
             echo "<li>";
-            echo  $this->tag->linkTo('', 'Usuario: '.$auth['usuario_nombreCompleto']);
+            echo  $this->tag->linkTo('', '<i class="fa fa-user"></i> '.$auth['usuario_nombreCompleto']);
             echo "</li>";
-            echo "<li>";
-            echo  $this->tag->linkTo('', 'Rol: '.$auth['rol_nombre']);
-            echo "</li>";
+
             echo "<li>";
             echo  $this->tag->linkTo('sesion/cerrar', '<i class="fa fa-sign-out"></i>  Salir');
             echo "</li>";
