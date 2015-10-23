@@ -9,7 +9,7 @@ class Elementos extends \Phalcon\Mvc\User\Component
         $auth = $this->session->get('auth');
         if(!$auth){
             echo "<li>";
-            echo  $this->tag->linkTo('sesion/index', '<i class="fa fa-sign-in"></i>  Ingresar');
+            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-sign-in"></i>  Ingresar');
             echo "</li>";
         }
         else{

@@ -36,10 +36,8 @@
                             </a>
                             <ul id="miSubMenu" class="dropdown-menu nav navbar-nav navbar-right main_nav">
                                 <li><a href="#contact" class="si_recorrer">Contactanos</a></li>
-                                <li><a href="#contactFeature" class="si_recorrer">Acerca de Nosotros</a></li>
                                 <li><a href="#clients" class="si_recorrer">Información de Contacto</a></li>
                                 {{ elemento.getItemMenu() }}
-
                             </ul>
                         </li>
                     </ul>
