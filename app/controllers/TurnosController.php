@@ -135,17 +135,21 @@ class TurnosController extends ControllerBase
      */
     private function verificarDisponibilidad()
     {
-        $ultimo = (int)Fechasturnos::count() - 1;//Obtengo el ultimo indice
-        $fechasTurnos = Fechasturnos::find();//Obtengo todos las instancias de Fechasturnos.
-        if ($fechasTurnos[$ultimo]->fechasTurnos_inicioSolicitud <= date('Y-m-d')
-            && date('Y-m-d')<=$fechasTurnos[$ultimo]->fechasTurnos_finSolicitud
-        )
-            if ($fechasTurnos[$ultimo]->fechasTurnos_cantidadDeTurnos == $fechasTurnos[$ultimo]->fechasTurnos_cantidadAutorizados)
-                return "LO SENTIMOS, NO HAY CUPOS DISPONIBLES.";
+        if(Fechasturnos::count()!=0){
+            $ultimo = (int)Fechasturnos::count() - 1;//Obtengo el ultimo indice
+            $fechasTurnos = Fechasturnos::find();//Obtengo todos las instancias de Fechasturnos.
+            if ($fechasTurnos[$ultimo]->fechasTurnos_inicioSolicitud <= date('Y-m-d')
+                && date('Y-m-d')<=$fechasTurnos[$ultimo]->fechasTurnos_finSolicitud
+            )
+                if ($fechasTurnos[$ultimo]->fechasTurnos_cantidadDeTurnos == $fechasTurnos[$ultimo]->fechasTurnos_cantidadAutorizados)
+                    return "LO SENTIMOS, NO HAY CUPOS DISPONIBLES.";
+                else
+                    return "";
             else
-                return "";
-        else
-            return "NO ES POSIBLE SOLICITAR TURNOS EN LA FECHA ACTUAL. VERIFIQUE LAS FECHAS EN NUESTRA PAGINA WEB.";
+                return "NO ES POSIBLE SOLICITAR TURNOS EN LA FECHA ACTUAL. VERIFIQUE LAS FECHAS EN NUESTRA PAGINA WEB.";
+        }
+        return "NO HAY FECHAS DISPONIBLES PARA SOLICITAR TURNOS. VERIFIQUE LOS PERIODOS DE SOLICITUD EN LA PAGINA WEB.";
+
     }
 
     /**
@@ -327,20 +331,22 @@ class TurnosController extends ControllerBase
      */
     public function verPeriodosAction()
     {
-        //Crea un paginador, muestra 3 filas por página
-        $paginator = new Paginacion(
-            array(
-                //obtenemos los productos
-                "data" => Fechasturnos::find(),
-                //limite por página
-                "limit"=> 6,
-                //variable get page convertida en un integer
-                "page" => $this->request->getQuery('page', 'int')
-            )
-        );
+        //if ($this->request->isPost()) {
+            //Crea un paginador, muestra 3 filas por página
+            $paginator = new Paginacion(
+                array(
+                    //obtenemos los productos
+                    "data" => Fechasturnos::find(),
+                    //limite por página
+                    "limit" => 6,
+                    //variable get page convertida en un integer
+                    "page" => $this->request->getQuery('page', 'int')
+                )
+            );
 
-        //pasamos el objeto a la vista con el nombre de $page
-        $this->view->tabla = $paginator->getPaginate();
+            //pasamos el objeto a la vista con el nombre de $page
+            $this->view->tabla = $paginator->getPaginate();
+       // }
     }
 
 
