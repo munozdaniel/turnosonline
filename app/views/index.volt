@@ -12,8 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
-
+        <link rel="shortcut icon" type="image/png" href="{{ url('img/favicon.ico') }}">
         <!-- CSS
         ================================================== -->
         <!-- Bootstrap css file-->
