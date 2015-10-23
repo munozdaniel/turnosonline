@@ -63,29 +63,17 @@ class Seguridad extends \Phalcon\Mvc\User\Plugin
                 //Recupero todas las paginas de cada rol
                 $query = $this->modelsManager->createQuery("SELECT pagina.* FROM acceso,pagina,rol WHERE rol.rol_id=".$rol->rol_id." and rol.rol_id=acceso.rol_id and acceso.pagina_id=pagina.pagina_id");
                 $listaPaginasPorRol = $query->execute();
+
                 foreach($listaPaginasPorRol as $pagina)
                 {
-                    //Recupero todas las acciones de cada pagina
-                    $query = $this->modelsManager->createQuery("SELECT pagina.pagina_nombreAccion FROM pagina WHERE pagina.pagina_nombreControlador='".$pagina->pagina_nombreControlador."'");
-                    $arregloAcciones= $query->execute();
-                    $recursos = array();
-                    foreach($arregloAcciones as $accion)
-                    {
-                        $recursos[] = $accion->pagina_nombreAccion;//convierto las acciones en un arreglo para pasar por parametro al addResource.
-                    }
-                    $acl->addResource(new Resource($pagina->pagina_nombreControlador),$recursos);
-                    foreach($arregloAcciones as $accion)
-                    {
-                        $acl->allow($rol->rol_nombre,$pagina->pagina_nombreControlador,$accion['pagina_nombreAccion']);//No se puede dar permisos (allow) antes de agregar el recurso (addResource)
-                    }
+                    $acl->addResource(new Resource($pagina->pagina_nombreControlador),$pagina->pagina_nombreAccion);
+                    $acl->allow($rol->rol_nombre,$pagina->pagina_nombreControlador,$pagina->pagina_nombreAccion);
                 }
             }
             //El acl queda almacenado en sesión
             $this->persistent->acl = $acl;
-
         }
 
         return $this->persistent->acl;
     }
-
 }
