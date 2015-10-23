@@ -6,15 +6,10 @@ class SesionController extends ControllerBase
     {
         $this->tag->setTitle('Iniciar Sesión');
         parent::initialize();
-
     }
 
-    /**
-     *
-     */
     public function indexAction()
     {
-
     }
 
     /**
@@ -29,6 +24,7 @@ class SesionController extends ControllerBase
                 //Obtengo los datos ingresado en el form.
                 $nombre  = $this->request->getPost('sesion_nombre','string');
                 $pass   = $this->request->getPost('sesion_contrasena','alphanum');
+
                 //Busco el usuario en la bd a partir de los datos ingresados.
                 $usuarios =  Usuarios::findFirst(array(
                     "(usuario_nick = :usuario_nick:) AND (usuario_contrasenia = :usuario_contrasenia:) AND (usuario_activo = 1)",
@@ -37,20 +33,22 @@ class SesionController extends ControllerBase
 
                 if($usuarios!=false)
                 {
-                    if($this->_registrarSesion($usuarios)) {
+                    if($this->_registrarSesion($usuarios))
+                    {
                         $miSesion = $this->session->get('auth');
                         $this->flash->message('exito', "Bienvenido/a " . $miSesion['usuario_nombreCompleto'] . " - Rol: " . $miSesion['rol_nombre']);
                         //Redireccionar la ejecución si el usuario es valido
                         return $this->redireccionar('administrar/index');
                     }
-                    else{
-                        return $this->redireccionar('index/index');
+                    else
+                    {
+                        $this->flash->message('aviso',"<p>EL USUARIO NO TIENE LOS ROLES NECESARIOS PARA ADMINISTRAR</p>");
+                        return $this->redireccionar('sesion/index');
                     }
-
                 }
-                else{
+                else
+                {
                     $this->flash->message('problema',"<p>No se encontro el Usuario, verifique contraseña/nick</p>");
-
                 }
             }
             catch(\Phalcon\Annotations\Exception $ex)
@@ -61,21 +59,20 @@ class SesionController extends ControllerBase
         }
         return $this->redireccionar('sesion/index');
     }
+
     private function _registrarSesion($usuario)
     {
-
         $idRol = Usuarioporrol::findFirst(array(
             "usuario_id     =       :usuario:",
             'bind'          =>      array('usuario'=>$usuario->usuario_id)
         ));
-        if(!$idRol)
-        {//No se encontro el rol asignado al usuario
-           $this->flash->message('aviso',"<p>EL USUARIO NO TIENE LOS ROLES NECESARIOS PARA ADMINISTRAR</p>");
+
+        if(!$idRol)//No se encontro el rol asignado al usuario
            return false;
-        }
         else
         {
             $rol = Rol::findFirstByRolId($idRol->rol_id);
+
             $this->session->set('auth',array('usuario_id'   =>  $usuario->usuario_id,
                 'usuario_nombreCompleto'  =>  $usuario->usuario_nombreCompleto,
                 'usuario_nick'  =>  $usuario->usuario_nick,

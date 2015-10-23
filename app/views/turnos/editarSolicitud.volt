@@ -1,4 +1,9 @@
+
 <section id="certificacion">
+
+    <style>
+        .heading h2 {font-size: 30px;line-height: 35px;}
+    </style>
 
     <div class="container">
         <div class="row">
@@ -18,50 +23,69 @@
 
             <div class="col-lg-8 col-md-8 col-md-offset-2">
 
-                <!-- START PERIODO SOLICITUD CONTENT -->
+                <!-- CONTENT -->
                 <div class="about_content wow bounceInUp ">
 
                     {{ form('turnos/guardarDatosEdicion', 'method': 'post') }}
 
-                    <div class="row" >
+                    <div class="row">
 
+                            {#id#}
                             {{hidden_field("idSolicitud", "value":idSolicitud)}}
 
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <label for="estado">Estado</label>
-                                {{ select("estado",'id':'idEstado','value':'pendiente',{'autorizado':'autorizado','denegado':'denegado','pendiente':'pendiente','revision':'revision','denegado por falta de turnos':'denegado por falta de turnos'},'class':'btn-lg btn-block') }} <br/>
-                                <br/>
+                            {#estado#}
+                            <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
+                                <label for="estado">Estado:</label>
                             </div>
+                            <div class="col-lg-5  col-md-5  col-sm-6 col-xs-12" >
+                                {{ select("estado",'value':estado,lista,'class':'btn-lg btn-block') }}
+                            </div>
+                            <br/><br/><br/><br/><br/>
 
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <label for="montoM">Monto maximo</label>
-                                {{ text_field("montoM",'value':0,'class':'btn-lg btn-block') }}<br/>
-                                <br/>
+                            {#monto max#}
+                            <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
+                                <label for="montoM">Monto m&aacute;ximo:</label>
                             </div>
+                            <div class="col-lg-5  col-md-5  col-sm-6 col-xs-12" >
+                                {{ text_field("montoM",'value':montoM,'class':'btn-lg btn-block') }}
+                            </div>
+                            <br/><br/><br/><br/><br/>
 
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <label for="montoP">Monto posible</label>
-                                {{ text_field("montoP",'value':0,'class':'btn-lg btn-block') }}<br/>
-                                <br/>
+                            {#monto posible#}
+                            <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
+                                <label for="montoP">Monto posible:</label>
                             </div>
+                            <div class="col-lg-5  col-md-5  col-sm-6 col-xs-12" >
+                                {{ text_field("montoP",'value':montoP,'class':'btn-lg btn-block') }}
+                            </div>
+                            <br/><br/><br/><br/><br/>
 
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <label for="cantCuotas">Cantidad de cuotas</label>
-                                {{ text_field("cantCuotas",'value':0,'class':'btn-lg btn-block') }}<br/>
-                                <br/>
+                            {#cant cuotas#}
+                            <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
+                                <label for="cantCuotas">Cantidad de cuotas:</label>
                             </div>
+                            <div class="col-lg-5  col-md-5  col-sm-6 col-xs-12" >
+                                {{ text_field("cantCuotas",'value':cantCuotas,'class':'btn-lg btn-block') }}
+                            </div>
+                            <br/><br/><br/><br/><br/>
 
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <label for="valorCuota">Valor de la cuota</label>
-                                {{ text_field("valorCuota",'value':0,'class':'btn-lg btn-block') }}<br/>
-                                <br/>
+                            {#valor cuotas#}
+                            <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
+                                <label for="valorCuota">Valor de la cuota:</label>
                             </div>
+                            <div class="col-lg-5  col-md-5  col-sm-6 col-xs-12" >
+                                {{ text_field("valorCuota",'value':valorCuota,'class':'btn-lg btn-block') }}
+                            </div>
+                            <br/><br/><br/><br/><br/>
 
-                            <div class="col-lg-5 col-lg-offset-3">
-                                <label for="obs">Observaciones</label>
-                                {{ text_field("obs",'value':'-','class':'btn-lg btn-block') }}<br/>
-                                <br/>
+                            {#observaciones#}
+                            <div class="col-lg-3  col-md-3  col-sm-6 col-xs-12 pull-left">
+                                <label for="obs">Observaciones:</label>
                             </div>
+                            <div class="col-lg-5  col-md-5  col-sm-6 col-xs-12" >
+                                {{ text_area("obs",'value':obs,'class':'btn-lg btn-block') }}
+                            </div>
+                            <br/><br/><br/><br/><br/>
                     </div>
 
                     <div class="row">

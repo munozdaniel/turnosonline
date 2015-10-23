@@ -1,28 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Daniel
- * Date: 12/10/2015
- * Time: 08:34 PM
- */
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Date;
+use Phalcon\Forms\Element\Select;
+
 use Phalcon\Validation\Validator\PresenceOf;
-use \Phalcon\Forms\Element\Date;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\StringLength as StringLength;
-use Phalcon\Validation\Validator\Email;
 
-class TurnosOnlineForm  extends Form {
-    /**
-     * Initialize the products form
-     */
+class TurnoManualForm extends Form
+{
     public function initialize($entity = null, $options = array())
     {
         /*=================== Apellido ==========================*/
-        $apellido = new Text("solicitudTurno_ape",array('style'=>'text-align:right !important;height: 40px !important; width: 300px !important; font-size: 18px;','placeholder'=>'APELLIDO'));
-
-        $apellido->setLabel("<strong>(*)</strong> Apellido:");
+        $apellido = new Text("solicitudTurno_ape",array('style'=>'text-align:right !important;height: 40px !important; width: 300px !important; font-size: 18px;'));
+        $apellido->setLabel("<strong>(*)</strong> Apellido: ");
         $apellido->setFilters(array('string'));
         $apellido->addValidators(
             array(
@@ -40,9 +32,9 @@ class TurnosOnlineForm  extends Form {
             )
         );
         $this->add($apellido);
-        /*=================== Nombre ==========================*/
-        $nombre = new Text("solicitudTurno_nom",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;','placeholder'=>'NOMBRE'));
 
+        /*=================== Nombre ==========================*/
+        $nombre = new Text("solicitudTurno_nom",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
         $nombre->setLabel("<strong>(*)</strong> Nombre: ");
         $nombre->setFilters(array('string'));
         $nombre->addValidators(
@@ -62,8 +54,7 @@ class TurnosOnlineForm  extends Form {
         );
         $this->add($nombre);
         /*=================== Nro Legajo ==========================*/
-        $legajo = new Text("solicitudTurno_legajo",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;','placeholder'=>'LEGAJO'));
-
+        $legajo = new Text("solicitudTurno_legajo",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
         $legajo->setLabel("<strong>(*)</strong> Legajo: ");
         $legajo->setFilters(array('int'));
         $legajo->addValidators(
@@ -75,7 +66,7 @@ class TurnosOnlineForm  extends Form {
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>Legajo</strong> debe ser un nÃºmero sin puntos ni coma.'
+                        'message' => 'El <strong>Legajo</strong> debe ser un número sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -88,8 +79,9 @@ class TurnosOnlineForm  extends Form {
             )
         );
         $this->add($legajo);
+
         /*=================== Nro Documento ==========================*/
-        $dni = new Text("solicitudTurno_documento",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;','placeholder'=>'NRO DOCUMENTO'));
+        $dni = new Text("solicitudTurno_documento",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
         $dni->setLabel("<strong>(*)</strong> Nro Documento: ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
@@ -101,7 +93,7 @@ class TurnosOnlineForm  extends Form {
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>DNI</strong> debe ser un nÃºmero sin puntos ni coma.'
+                        'message' => 'El <strong>DNI</strong> debe ser un número sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -114,6 +106,7 @@ class TurnosOnlineForm  extends Form {
             )
         );
         $this->add($dni);
+
         /*=================== Fecha Nacimiento ==========================*/
         $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',array('style'=>'text-align:right !important;width: 300px !important;'));
         $fechaNacimiento->setLabel('<strong>(*)</strong> Fecha Nacimiento:');
@@ -123,20 +116,18 @@ class TurnosOnlineForm  extends Form {
             ))
         ));
         $this->add($fechaNacimiento);
-        /*=================== Nro Legajo ==========================*/
-        $telefono = new Text("solicitudTurno_numTelefono",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;','placeholder'=>'TELEFONO'));
+
+        /*=================== Nro Telefono ==========================*/
+        $telefono = new Text("solicitudTurno_numTelefono",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
         $telefono->setLabel("<strong>(*)</strong> N&uacute;mero de telefono/celular (c&oacute;digo de &aacute;rea y n&uacute;mero):");
         $telefono->setFilters(array('int'));
         $telefono->addValidators(
             array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Ingrese el <strong>n&uacute;mero de telefono/celular.</strong>.'
-                    )
-                ),
-                new Numericality(
-                    array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un nÃºmero sin puntos ni coma.'
+                new PresenceOf(array(
+                    'message' => 'El telefono  es requerido.'
+                )),
+                new Numericality( array(
+                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -149,38 +140,43 @@ class TurnosOnlineForm  extends Form {
             )
         );
         $this->add($telefono);
-        /*=================== Correo Electronico ==========================*/
-        $email = new \Phalcon\Forms\Element\Email('solicitudTurno_email', array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;',
-            'placeholder' => 'EMAIL'
-        ));
-        $email->setLabel('<strong>(*)</strong> Email:');
-        $email->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'El Email es requerido.'
-            )),
-            new Email(array(
-                'message' => 'El Email no es vÃ¡lido.'
-            ))
-        ));
 
-        $this->add($email);
-        /*=================== Repita su Correo Electronico ==========================*/
-        $confirmarEmail = new \Phalcon\Forms\Element\Email('emailRepetido', array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;',
-            'placeholder' => 'REPITA EL EMAIL'
-        ));
+        /*=================== Repita su telefono  ==========================*/
 
-        $confirmarEmail->setLabel('<strong>(*)</strong> Repita el Email:');
-        $confirmarEmail->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'El Email es requerido'
-            )),
-            new Email(array(
-                'message' => 'El Email no es vÃ¡lido.'
-            )),
-            new ComprobarEmailValidator(array('email'=>$email))
-        ));
+        $telefonoBis = new Text("telefonoRepetido",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
+        $telefonoBis->setLabel("<strong>(*)</strong> Repita su n&uacute;mero de telefono/celular:");
+        $telefonoBis->setFilters(array('int'));
+        $telefonoBis->addValidators(
+            array(
+                new PresenceOf(array(
+                    'message' => 'El telefono  es requerido.'
+                )),
+                new Numericality( array(
+                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                    )
+                ),
+                new NumberValidator(),
+                new StringLength(array(
+                    'min' => 6,
+                    'messageMinimum' => 'Minimo 6 digitos.',
+                    'max' => 14,
+                    'messageMaximun' => 'Maximo 14 digitos.',
+                )),
+                new ComprobarTelefonoValidator(array('telefono'=>$telefono))
+            )
+        );
+        $this->add($telefonoBis);
 
-        $this->add($confirmarEmail);
+        /*=================== Estado ==========================*/
+         $estado = new Select("solicitudTurno_estado",array(''=>'','autorizado'=>'autorizado','denegado'=>'denegado'));
+         $estado->setLabel('Estado de la solicitud:');
+         $estado->addValidators(array(
+             new PresenceOf(array(
+                 'message' => 'El estado es requerido.'
+             ))
+         ));
+
+         $this->add($estado);
     }
 
     //muestra un mensaje por cada elemento
@@ -196,5 +192,4 @@ class TurnosOnlineForm  extends Form {
         }
         return $cadena;
     }
-
 }

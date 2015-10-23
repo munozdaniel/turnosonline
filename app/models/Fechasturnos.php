@@ -83,4 +83,21 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public static function incrementarCantAutorizados()
+    {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $autorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados+1;
+
+        if ($ultimoPeriodo->save())
+            return true;
+        else
+        {
+            foreach ($ultimoPeriodo->getMessages() as $message)
+            {
+                echo $message, "<br>";
+            }
+            return false;
+        }
+    }
 }

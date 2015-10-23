@@ -8,6 +8,7 @@
 use Phalcon\Validation\Validator,
     Phalcon\Validation\ValidatorInterface,
     Phalcon\Validation\Message;
+
 class ComprobarEmailValidator extends Validator implements ValidatorInterface
 {
 

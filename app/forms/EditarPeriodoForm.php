@@ -1,28 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Daniel
- * Date: 12/10/2015
- * Time: 08:40 AM
- */
+
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Validation\Validator\PresenceOf;
 use \Phalcon\Forms\Element\Date;
 use Phalcon\Validation\Validator\Numericality;
-use Phalcon\Validation\Validator\StringLength as StringLength;
+use \Phalcon\Forms\Element\Hidden;
 
-class PeriodoSolicitudForm extends Form
+class EditarPeriodoForm extends Form
 {
-    /**
-     * Initialize the products form
-     */
-    public function initialize($entity = null, $options = array())
+    public function initialize(Fechasturnos $fecha, $options = array())
     {
-        /*=================== PERIODO DE SOLICITUD DE TURNOS ==========================*/
+        $id = $fecha->fechasTurnos_id;
+        $iniPeriodo =$fecha->fechasTurnos_inicioSolicitud;
+        $fPeriodo = $fecha->fechasTurnos_finSolicitud;
+        $diaAten = $fecha->fechasTurnos_diaAtencion;
+        $cantTurnos = $fecha->fechasTurnos_cantidadDeTurnos;
+        $cantDiasConf = $fecha->fechasTurnos_cantidadDiasConfirmacion;
+
+      /*  $idFechaTurno = new Hidden();
+        $idFechaTurno->setDefault($id);
+        $this->add($idFechaTurno);*/
 
         $periodoSolicitudDesde= new Date('periodoSolicitudDesde');
         $periodoSolicitudDesde->setLabel('Desde');
+        $periodoSolicitudDesde->setDefault($iniPeriodo);
         $periodoSolicitudDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la solicitud de turnos.'
@@ -32,6 +34,7 @@ class PeriodoSolicitudForm extends Form
 
         $periodoSolicitudHasta= new Date('periodoSolicitudHasta');
         $periodoSolicitudHasta->setLabel('Hasta');
+        $periodoSolicitudHasta->setDefault($fPeriodo);
         $periodoSolicitudHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la solicitud de turnos.'
@@ -45,44 +48,33 @@ class PeriodoSolicitudForm extends Form
         /*=================== PERIODO DE ATENCION DE TURNOS ==========================*/
 
         $periodoAtencionDesde= new Date('periodoAtencionDesde');
-        $periodoAtencionDesde->setLabel('Desde');
+        $periodoAtencionDesde->setDefault($diaAten);
         $periodoAtencionDesde->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la atenciÃ³n de turnos.'
+                'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que el <strong>PerÃ­odo de AtenciÃ³n </strong> sea mayor que el <strong>PerÃ­odo de Solicitud</strong>.',
+                'mensajeError' => 'Verifique que el <strong>Período de Atención </strong> sea mayor que el <strong>Período de Solicitud</strong>.',
                 'desde' =>$periodoSolicitudHasta->getValue()
             ))
         ));
         $this->add($periodoAtencionDesde);
-        /* Eliminado
-        $periodoAtencionHasta= new Date('periodoAtencionHasta');
-        $periodoAtencionHasta->setLabel('Hasta');
-        $periodoAtencionHasta->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha Final</strong> para la atenciÃ³n de turnos.'
-            )),
-            new DateValidator(array(
-                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea mayor que la fecha  <strong>"DESDE"</strong>.',
-                'desde' =>$periodoAtencionDesde->getValue()
-            ))
-        ));
-        $this->add($periodoAtencionHasta);*/
+
         /*=================== CANTIDAD DE DIAS ==========================*/
-        $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'CANTIDAD DÃAS'));
-        $cantidadDias->setLabel("Cantidad de dÃ­as para confirmar el mensaje ");
+        $cantidadDias = new Text("cantidadDias",array('style'=>'height: 40px !important;font-size: 18px;'));
+        $cantidadDias->setLabel("Cantidad de d&iacute;as para confirmar el mensaje ");
+        $cantidadDias->setDefault($cantDiasConf);
         $cantidadDias->setFilters(array('int'));
         $cantidadDias->addValidators(
             array(
                 new PresenceOf(
                     array(
-                        'message' => 'Ingrese la <strong>cantidad de dÃ­as</strong> para confirmar el mensaje.'
+                        'message' => 'Ingrese la <strong>cantidad de días</strong> para confirmar el mensaje.'
                     )
                 ),
                 new Numericality(
                     array(
-                        'message' => 'La <strong>cantidad de dÃ­as</strong> debe ser un nÃºmero.'
+                        'message' => 'La <strong>cantidad de días</strong> debe ser un número.'
                     )
                 ),
                 new NumberValidator()
@@ -91,8 +83,8 @@ class PeriodoSolicitudForm extends Form
         $this->add($cantidadDias);
 
         /*=================== CANTIDAD DE TURNOS ==========================*/
-        $cantidadTurnos = new Text("cantidadTurnos",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE CANT. TURNOS'));
-        $cantidadTurnos->setDefault(70);
+        $cantidadTurnos = new Text("cantidadTurnos",array('style'=>'height: 40px !important;font-size: 18px;'));
+        $cantidadTurnos->setDefault($cantTurnos);
         $cantidadTurnos->setLabel("Cantidad de Turnos");
         $cantidadTurnos->setFilters(array('int'));
         $cantidadTurnos->addValidators(
@@ -104,7 +96,7 @@ class PeriodoSolicitudForm extends Form
                 ),
                 new Numericality(
                     array(
-                        'message' => 'La <strong>cantidad de turnos</strong> debe ser un nÃºmero.'
+                        'message' => 'La <strong>cantidad de turnos</strong> debe ser un número.'
                     )
                 ),
                 new NumberValidator()
