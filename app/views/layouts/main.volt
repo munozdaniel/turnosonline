@@ -30,15 +30,16 @@
                         <li><a href="#service" class="si_recorrer">Servicios</a></li>
                         <li><a href="#works" class="si_recorrer">Guía de Tramites</a></li>
                         <li><a href="#team" class="si_recorrer">Prestaciones</a></li>
-                        <li class="dropdown">
+                        <li class="dropdown" style="cursor: pointer; cursor: hand;">
                             <a class="dropdown-toggle" data-toggle="dropdown">
                                 Institución <span class="caret"></span>
                             </a>
                             <ul id="miSubMenu" class="dropdown-menu nav navbar-nav navbar-right main_nav">
                                 <li><a href="#contact" class="si_recorrer">Contactanos</a></li>
                                 <li><a href="#clients" class="si_recorrer">Información de Contacto</a></li>
+                                <li role="separator" class="divider" style="width: 100%;"></li>
                                 {{ elemento.getItemMenu() }}
-                            </ul>
+                             </ul>
                         </li>
                     </ul>
 
