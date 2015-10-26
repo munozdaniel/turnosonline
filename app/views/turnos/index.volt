@@ -8,7 +8,7 @@
                     <div class="heading">
                         <h2 class="wow fadeInLeftBig">Solicite turnos para préstamos personales</h2>
 
-                        <div class="pull-right">{{ link_to('index/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+
                         <br>
 
                         <p><i class="fa fa-info-circle"
@@ -17,6 +17,10 @@
                             <br/>
                             <em style="color:tomato"> (*) Campos obligatorios.</em>
                         </p>
+                    </div>
+                    <div class="pull-right">
+                        {{ link_to('index/index','class':'btn btn-lg btn-default btn-block btn-volver',
+                        '<i class="fa fa-undo"></i> VOLVER') }}
                     </div>
                 </div>
             </div>
