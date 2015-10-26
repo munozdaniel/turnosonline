@@ -15,6 +15,10 @@ class Elementos extends \Phalcon\Mvc\User\Component
         else{
 
             echo "<li>";
+            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-cogs"></i> '."PANEL DE CONTROL");
+            echo "</li>";
+
+            echo "<li>";
             echo  $this->tag->linkTo('', '<i class="fa fa-user"></i> '.$auth['usuario_nombreCompleto']);
             echo "</li>";
 
