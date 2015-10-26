@@ -61,7 +61,7 @@ class Seguridad extends \Phalcon\Mvc\User\Plugin
                 $acl->addRole(new \Phalcon\Acl\Role($rol->rol_nombre));
 
                 //Recupero todas las paginas de cada rol
-                $query = $this->modelsManager->createQuery("SELECT pagina.* FROM acceso,pagina,rol WHERE rol.rol_id=".$rol->rol_id." and rol.rol_id=acceso.rol_id and acceso.pagina_id=pagina.pagina_id");
+                $query = $this->modelsManager->createQuery("SELECT pagina.* FROM Acceso AS acceso,Pagina AS pagina,Rol AS rol WHERE rol.rol_id=".$rol->rol_id." and rol.rol_id=acceso.rol_id and acceso.pagina_id=pagina.pagina_id");
                 $listaPaginasPorRol = $query->execute();
                 foreach($listaPaginasPorRol as $pagina)
                 {
