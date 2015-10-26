@@ -7,7 +7,7 @@
                     <div class="heading">
                         <h2 class="wow fadeInLeftBig">Certificación Negativa</h2>
 
-                        <div class="pull-right">{{ link_to('index/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+
                         <p>A través de este servicio, Ud. podrá obtener el comprobante de Certificación Negativa que
                             acredita que
                             no registra antecedentes de Jubilación y/o Pensión del Instituto Municipal de Previsión
@@ -15,7 +15,10 @@
                             Ciudad de Neuquén.
                         </p>
                     </div>
-
+                    <div class="pull-right">
+                        {{ link_to('index/index','class':'btn btn-lg btn-default btn-block btn-volver',
+                        '<i class="fa fa-undo"></i> VOLVER') }}
+                    </div>
                     <!-- START CERTIFICACION CONTENT -->
                     <div class="about_content wow bounceInUp">
                         <div class="row">
