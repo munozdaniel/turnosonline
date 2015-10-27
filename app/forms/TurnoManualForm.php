@@ -66,7 +66,7 @@ class TurnoManualForm extends Form
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>Legajo</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>Legajo</strong> debe ser un nï¿½mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -93,7 +93,7 @@ class TurnoManualForm extends Form
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>DNI</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>DNI</strong> debe ser un nï¿½mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -127,7 +127,7 @@ class TurnoManualForm extends Form
                     'message' => 'El telefono  es requerido.'
                 )),
                 new Numericality( array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>Telefono</strong> debe ser un nï¿½mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -152,7 +152,7 @@ class TurnoManualForm extends Form
                     'message' => 'El telefono  es requerido.'
                 )),
                 new Numericality( array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>Telefono</strong> debe ser un nï¿½mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -168,7 +168,7 @@ class TurnoManualForm extends Form
         $this->add($telefonoBis);
 
         /*=================== Estado ==========================*/
-         $estado = new Select("solicitudTurno_estado",array(''=>'','autorizado'=>'autorizado','denegado'=>'denegado'));
+         $estado = new Select("solicitudTurno_estado",array(''=>'','AUTORIZADO'=>'AUTORIZADO','DENEGADO'=>'DENEGADO'));
          $estado->setLabel('Estado de la solicitud:');
          $estado->addValidators(array(
              new PresenceOf(array(
