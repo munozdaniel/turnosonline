@@ -222,7 +222,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             'solicitudTurno_email' => $email,
             'solicitudTurno_numTelefono' =>$numTelefono,
             'solicitudTurno_fechaPedido'=>date('Y-m-d'),
-            'solicitudTurno_estado'=>'pendiente',
+            'solicitudTurno_estado'=>'PENDIENTE',
             'solicitudTurno_nickUsuario'=>'-',
             'solicitudTurno_respuestaEnviada'=>'NO',
             'solicitudTurno_respuestaChequeada'=>0,
