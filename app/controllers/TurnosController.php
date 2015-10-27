@@ -108,7 +108,7 @@ class TurnosController extends ControllerBase
 
                             if ($seGuardo)//la solicitud se ingreso con exito.
                             {
-                                if ($estado == 'autorizado')
+                                if ($estado == 'AUTORIZADO')
                                     Fechasturnos::incrementarCantAutorizados();
 
                                 $turnoManualForm->clear();
@@ -263,6 +263,11 @@ class TurnosController extends ControllerBase
         }
     }
 
+    /**
+     * Muestra una grilla paginada con los datos de los afiliados que solicitaron turnos.
+     *
+     *
+     */
     public function turnosSolicitadosAction()
     {
 
@@ -280,8 +285,18 @@ class TurnosController extends ControllerBase
         );
         $this->view->page = $paginator->getPaginate();
 
+        $this->view->autorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
+        $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
+        $this->view->cantidadDeTurnos   = $fechaTurnos->fechasTurnos_cantidadDeTurnos;
+        //$this->view->formularioSimple = new EditarSolicitudTurnoForm();
+        //$this->view->formulario = new EditarSolicitudTurnoForm(null,array('revision'=>'true'));
     }
-
+    public function editAction($idSolicitud)
+    {
+        echo "ENTRAAAA";
+        //deshabilitamos la vista para peticiones ajax
+        $this->view->disable();
+    }
     public function turnosRespondidosAction()
     {
         $paginator = new PaginatorArray
@@ -294,7 +309,6 @@ class TurnosController extends ControllerBase
                 "page" => $this->request->getQuery('page', 'int')
             )
         );
-
         $this->view->page = $paginator->getPaginate();
     }
 
@@ -306,9 +320,8 @@ class TurnosController extends ControllerBase
             $fI = $fechaTurnos->fechasTurnos_inicioSolicitud;
             $fF = $fechaTurnos->fechasTurnos_finSolicitud;
 
-            $sql = "SELECT count(*) as cantidad FROM solicitudTurno WHERE (DATE(solicitudTurno_fechaPedido) BETWEEN '.$fI.' and '.$fF.'
-                     and solicitudTurno_respuestaEnviada='SI' and solicitudTurno_estado='autorizado')";
-
+            $sql = "SELECT count(*) as cantidad FROM solicitudTurno WHERE (DATE(solicitudTurno_fechaPedido) BETWEEN '$fI' and '$fF'
+                     and solicitudTurno_respuestaEnviada='SI' and solicitudTurno_estado='AUTORIZADO')";
             $result = $this->db->query($sql);
 
             if ($result->numRows() != 0) {
@@ -491,8 +504,8 @@ class TurnosController extends ControllerBase
 
     public function enviarRespuestasAction()
     {
-        $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('autorizado');
-        $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('denegado');
+        $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO');
+        $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO');
         $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('denegado por falta de turnos');
 
         if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0) {
