@@ -69,12 +69,17 @@
                                 {{ fechaModif }}
                             </td>
                             <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nickUsuario }}</td>
-                            <td width="7%"><!--en el evento onclick pasamos el post en formato json-->
-                                <!--en el evento onclick pasamos el post en formato json-->
-                                <a href="#" class="btn btn-info editar"
-                                   onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
-                                    Editar
-                                </a>
+                            <td width="7%">
+                                {% if ((item.solicitudTurno_nickUsuario ==  session.get('auth')['usuario_nick'])
+                                OR (session.get('auth')['rol_nombre']== "ADMIN") OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
+                                    <!--en el evento onclick pasamos el post en formato json-->
+                                    <a href="#" class="btn btn-info editar"
+                                       onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
+                                        Editar
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="btn btn-gris editar">Editar </a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -139,94 +144,122 @@
             crudPhalcon.edit = function (post) {
                 //en post tenemos todos los datos del post parseado
                 var json = crudPhalcon.parse(post), html = "";
-                $("#modalCrudPhalcon .modal-title").html("LEGAJO: " + json.solicitudTurno_legajo + " - " + json.solicitudTurno_nomApe);
-                /*============================ ESTADOS =============================*/
+                $("#modalCrudPhalcon .modal-title").html("<strong>" + json.solicitudTurno_legajo + "</strong> |   <strong>NOMBRE:</strong> " + json.solicitudTurno_nomApe + " ESTADO: " +json.solicitudTurno_estado );
 
+
+                /*============================ LOS ESTADOS =============================*/
+
+                var lista, editable = false, autorizacion = false;
                 var cantidadDeTurnos = {{ cantidadDeTurnos }},
                         autorizadosEnviados = {{ autorizadosEnviados }};
-
-                //Creacion de las lista de estados.
-                var listaUno    = ['PENDIENTE'];
-                var listaDos    = ['PENDIENTE', 'REVISION'];
-                var listaTres   = ['PENDIENTE', 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
-                var listaCuatro = ['DENEGADO POR FALTA DE TURNOS'];
-                var lista, editable = true;
-                //Verificamos si se acabaron los turnos
-                if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos)) {
-                    lista = listaCuatro;
-                    editable =false;
-                } else {
-                    if (json.solicitudTurno_estado == "PENDIENTE") {
-                        lista = listaDos;
-                    }
+                if (json.solicitudTurno_estado == "PENDIENTE") {
+                    //Si es PENDIENTE cualquier usuario puede pasar a REVISION, salvo que no hayan turnos.
+                    if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos))
+                        lista = ['DENEGADO POR FALTA DE TURNOS'];
                     else {
-                        if (json.solicitudTurno_estado == "REVISION" || json.solicitudTurno_estado == "AUTORIZADO" || json.solicitudTurno_estado == "DENEGADO" ||
-                                json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS") {
-                            lista = listaTres;
+                        lista = ['PENDIENTE', 'REVISION'];
+                    }
+                } else {
+                    if (json.solicitudTurno_estado == "REVISION"
+                            || json.solicitudTurno_estado == "AUTORIZADO"){
+                        lista = ['PENDIENTE', 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                        editable =true;
+                    }else {
+                        if (json.solicitudTurno_estado == "DENEGADO"
+                                || json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS") {
+                            lista = ['PENDIENTE', 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+
                         } else {
                             if (json.solicitudTurno_estado != 'PENDIENTE' || json.solicitudTurno_estado != 'REVISION'
                                     || json.solicitudTurno_estado != 'AUTORIZADO' || json.solicitudTurno_estado != 'DENEGADO') {
-                                lista = listaUno ;
+                                lista = ['PENDIENTE'];
                             }
                         }
                     }
                 }
+                /*============================ ARMANDO EL SELECT =============================*/
 
                 //Creacion del div que contiene el select de los estados.
                 var div = document.createElement("div");
-                div.setAttribute("id","Estados");
+                div.setAttribute("id", "Estados");
+
                 var selectList = document.createElement("select");
                 selectList.setAttribute("id", "solicitudTurno_estado");
+                selectList.setAttribute("name", "solicitudTurno_estado");
                 selectList.setAttribute("style", "width:100%;");
+                selectList.setAttribute("onchange", "crudPhalcon.habilitarDeshabilitarSegunElEstado()");
                 div.appendChild(selectList);
-                //document.body.appendChild(div);
+                //document.body.appendChild(div);//agrega el div al body. no me sirve.
                 //Agrego los elementos al select
                 for (var i = 0; i < lista.length; i++) {
                     var option = document.createElement("option");
                     option.setAttribute("value", lista[i]);
                     option.text = lista[i];
                     //Pregunto si es el estado anterior para que quede seleccionado.
-                    if(lista[i]==json.solicitudTurno_estado)
-                        option.setAttribute("selected","true");
+                    if (lista[i] == json.solicitudTurno_estado)
+                        option.setAttribute("selected", "true");
                     selectList.appendChild(option);
                 }
-                //FORMULARIO
+                /*=========================== FORMULARIO ==============================*/
+
                 html += '<div class="row formulario-turnos" style="padding: 20px;">'
-                html += '<?php echo $this->tag->form(array("index/edit", "method" => "post", "id" => "form")); ?>';
+                html += '<?php echo $this->tag->form(array("turnos/edit", "method" => "post", "id" => "form")); ?>';
                 //Agrego el div creado con el select al modal.
                 html += '<div><label for="solicitudTurno_estado"> ESTADO </label></div>';
                 html += div.innerHTML;//Muestra el codigo html.
-               /*=========================================================*/
-                if(editable) {
-                    if (json.solicitudTurno_estado == "AUTORIZADO") {
-                        html += '<div> <label>Monto Máximo</label>';
-                        html += '<input type="text" name="solicitudTurno_montoMaximo" value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
-                        html += '<div> <label>Monto Posible</label>';
-                        html += '<input type="text" name="solicitudTurno_montoPosible" value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
-                        html += '<div> <label>Cantidad de Cuotas</label>';
-                        html += '<input type="text" name="solicitudTurno_cantCuotas" value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
-                        html += '<div> <label>Valor de las Cuotas</label>';
-                        html += '<input type="text" name="solicitudTurno_valorCuota" value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
-                        html += '<div> <label>Observaciones</label>';
-                        html += '<textarea class="form-control" name="content" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
-                    }
-                }                html += '<?php echo $this->tag->endForm() ?>';
-                html+='</div>';
+
+                /*============================ COMPONENTES DINAMICOS SEGUN EL ESTADO =============================*/
+                html += '<div id="campos_editables">';
+                if (editable) {
+
+
+                    html += '<div> <label for="solicitudTurno_montoMaximo">Monto Máximo</label>';
+                    html += '<input type="text" id="solicitudTurno_montoMaximo" name="solicitudTurno_montoMaximo" value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
+                    html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
+                    html += '<input type="text" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible" value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
+                    html += '<div> <label for="solicitudTurno_cantCuotas">Cantidad de Cuotas</label>';
+                    html += '<input type="text" id="solicitudTurno_cantCuotas" name="solicitudTurno_cantCuotas" value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
+                    html += '<div> <label for="solicitudTurno_valorCuota">Valor de las Cuotas</label>';
+                    html += '<input type="text" id="solicitudTurno_valorCuota" name="solicitudTurno_valorCuota" value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
+                    html += '<div> <label for="solicitudTurno_observaciones">Observaciones</label>';
+                    html += '<textarea id="solicitudTurno_observaciones" class="form-control" name="solicitudTurno_observaciones" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
+                    html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control"></div>';
+                    html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control"></div>';
+                    html += '<input id="editable" name="editable" value="1" type="hidden" class="form-control">';//1 Editable / 0 No editable
+                }
+                 else {
+                    html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
+                 }
+                html += '</div>';
+                html += '<?php echo $this->tag->endForm() ?>';
+                html += '</div>';//fin row
+
                 $("#onclickBtn").attr("onclick", "crudPhalcon.editPost()").text("Editar").show();
-                $("#modalCrudPhalcon .cuerpo-modal ").html(html);
+                $("#modalCrudPhalcon .modal-body ").html(html);
                 $("#modalCrudPhalcon").modal("show");
             },
+                    crudPhalcon.habilitarDeshabilitarSegunElEstado = function () {
+                        //Si esta autorizado puede modificar todos los campos, el div editor debe aparecer.
+                        var solicitudTurno_estado = document.getElementById("solicitudTurno_estado");
+                        var panel = document.getElementById("editor");
+                        if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
+                                || solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "REVISION") {
+                            $("#campos_editables").removeClass('ocultar');
+                        }
+                        else {
+                            $("#campos_editables").addClass('ocultar');
+                        }
 
-
+                    },
                 //hacemos la petición ajax para editar un post
                     crudPhalcon.editPost = function ()//procesamos la edición
                     {
                         $.ajax({
-                            url: "<?php echo $this->url->get('index/edit') ?>",
+                            url: "<?php echo $this->url->get('turnos/edit') ?>",
                             data: $("#form").serialize(),
                             method: "POST",
                             success: function (data) {
-                                alert("cerrabdi");
+
                                 $("#modalCrudPhalcon .modal-body").html("").html(
                                         "<p >Post actualizado correctamente.</p>"
                                 );
