@@ -7,9 +7,15 @@
                 <div class="about_area">
                     <div class="heading">
                         <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
-
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
+
+                    Periodo de solicitud de turnos: {{ fechaI }} - {{ fechaF }}
+                    <br/>
+                    Dia de atenci&oacute;n: {{ diaA }}
+                    <br/>
+                    Cantidad de solicitudes autorizadas: {{ cantA }}
+
                 </div>
             </div>
         </div>
@@ -37,13 +43,7 @@
                         <th style="text-align: center;color:#2da2c8">EDITAR</th>
                     </tr>
                     </thead>
-
-                    <tbody>
-                    <br>
-                    <span class="fuente-16"><strong>CANTIDAD DE SOLICITUDES
-                            AUTORIZADAS:</strong> {{ autorizadosEnviados }}</span>
-                    <br>
-                    <span class="fuente-16"><strong>CANTIDAD DE TURNOS:</strong> {{ cantidadDeTurnos }}</span>
+                        <tbody>
 
                     {% for item in page.items %}
                         <tr>
@@ -114,27 +114,6 @@
         {{ end_form() }}
     </div>
     <!-- ==========================MODALES============================= -->
-    <!-- Modal Info Optica -->
-    <div id="info-optica" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Óptica y Contactología</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Fin: Modal Info Optica -->
     <script type="text/javascript">
         //objeto javascript al que le añadimos toda la funcionalidad del crud

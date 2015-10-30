@@ -1,12 +1,10 @@
-<section id="certificacion">
+<section id="onepage">
 
     <div class="container">
         <div class="row edicion">
             <div class="col-md-12">
-                Gracias por su confirmacion.
-
-                <!--- falta trabajar mas aqui-->
-
+                <h3 style="text-align: center;">Gracias por su confirmaci&oacute;n.</h3>
+                    {# {{ content() }} #}
             </div>
         </div>
     </div>
