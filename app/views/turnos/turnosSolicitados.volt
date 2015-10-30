@@ -18,7 +18,7 @@
 
         <div class="row edicion">
 
-            <div class="col-lg-16 col-md-16 table-responsive">
+            <div id="solicitudes" class="col-lg-16 col-md-16 table-responsive">
 
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
@@ -213,8 +213,8 @@
                 if (editable) {
 
 
-                    html += '<div> <label for="solicitudTurno_montoMaximo">Monto Máximo</label>';
-                    html += '<input type="text" id="solicitudTurno_montoMaximo" name="solicitudTurno_montoMaximo" value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
+                    html += '<div> <label for="solicitudTurno_montoMax">Monto Máximo</label>';
+                    html += '<input type="text" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax" value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
                     html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
                     html += '<input type="text" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible" value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
                     html += '<div> <label for="solicitudTurno_cantCuotas">Cantidad de Cuotas</label>';
@@ -224,12 +224,13 @@
                     html += '<div> <label for="solicitudTurno_observaciones">Observaciones</label>';
                     html += '<textarea id="solicitudTurno_observaciones" class="form-control" name="solicitudTurno_observaciones" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
                     html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control"></div>';
-                    html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control"></div>';
-                    html += '<input id="editable" name="editable" value="1" type="hidden" class="form-control">';//1 Editable / 0 No editable
+
+                    html += '<input id="editable" name="editable" value="1" type="text" class="form-control">';//1 Editable / 0 No editable
                 }
                  else {
-                    html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
+                    html += '<input id="editable" name="editable" value="0" type="text" class="form-control">';//1 Editable / 0 No editable
                  }
+                html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control"></div>';
                 html += '</div>';
                 html += '<?php echo $this->tag->endForm() ?>';
                 html += '</div>';//fin row
@@ -259,7 +260,7 @@
                             data: $("#form").serialize(),
                             method: "POST",
                             success: function (data) {
-
+                                $('#solicitudes').load(document.URL +  ' #solicitudes');
                                 $("#modalCrudPhalcon .modal-body").html("").html(
                                         "<p >Post actualizado correctamente.</p>"
                                 );
