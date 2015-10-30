@@ -6,6 +6,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         {{ getTitle() }}
+        <!-- Bootstrap js -->
+        <!-- initialize jQuery Library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
         <!-- Mobile Specific Metas
         ================================================== -->
@@ -53,15 +56,13 @@
     <!-- Javascript Files
        ================================================== -->
 
-    <!-- initialize jQuery Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {{ javascript_include('js/bootstrap.min.js') }}
     <!-- Google map -->
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     {{ javascript_include('js/jquery.ui.map.js') }}
     <!-- For smooth animatin  -->
     {{ javascript_include('js/wow.min.js') }}
-    <!-- Bootstrap js -->
-    {{ javascript_include('js/bootstrap.min.js') }}
+
     <!-- superslides slider -->
     {{ javascript_include('js/jquery.superslides.min.js') }}
     <!-- slick slider -->
