@@ -17,23 +17,15 @@ class EditarSolicitudTurnoForm extends Form
      */
     public function initialize($entity = null, $options = array())
     {
+        /*=================== ESTADO ==========================*/
+       // $select = new SelectElement('miSelect', array('pendiente' => 'PENDIENTE', 'revision' => 'REVISION', 'autorizado' => 'AUTORIZADO', 'denegado' => 'DENEGADO', 'faltaTurno' => 'DENEGADO POR FALTA DE TURNOS'));
+        //$select->setLabel('MI SELECT');
+        //$this->add($select);
 
-        $select = new SelectElement('miSelect',array('pendiente'=>'PENDIENTE','revision'=>'REVISION','denegado'=>'DENEGADO'));
-        $select->setLabel('MI SELECT');
-        $this->add($select);
-
-            /*=================== ESTADO ==========================
-            $motivoDeEleccion = new \Phalcon\Forms\Element\Select('estado', array(
-                'pendiente' => 'PENDIENTE',
-                'revision' => 'REVISION'
-            ));
-            $motivoDeEleccion->setLabel('Porque eligió este destino?');
-            $this->add($motivoDeEleccion);*/
-        if (!isset($options['revision'])) {
             /*=================== MONTO MAXIMO ==========================*/
             $montoMaximo = new Text("montoMaximo",
                 array('style' => 'text-align:right !important;height: 40px !important;font-size: 18px;',
-                    'placeholder' => 'Ingrese un número'));
+                    'placeholder' => 'INGRESE EL MONTO MAXIMO'));
             $montoMaximo->setLabel("<span class='problema'>(*)</span> Monto Máximo");
             $montoMaximo->setFilters(array('int'));
             $montoMaximo->addValidators(
@@ -55,7 +47,7 @@ class EditarSolicitudTurnoForm extends Form
             /*=================== MONTO POSIBLE ==========================*/
             $montoPosible = new Text("montoPosible",
                 array('style' => 'text-align:right !important;height: 40px !important;font-size: 18px;',
-                    'placeholder' => 'Ingrese un número'));
+                    'placeholder' => 'INGRESE EL MONTO POSIBLE'));
             $montoPosible->setLabel("<span class='problema'>(*)</span> Monto Posible");
             $montoPosible->setFilters(array('int'));
             $montoPosible->addValidators(
@@ -77,7 +69,7 @@ class EditarSolicitudTurnoForm extends Form
             /*=================== CANTIDAD DE CUOTAS ==========================*/
             $cantCuotas = new Text("cantCuotas",
                 array('style' => 'text-align:right !important;height: 40px !important;font-size: 18px;',
-                    'placeholder' => 'Ingrese un número'));
+                    'placeholder' => 'INGRESE LA CANTIDAD DE CUOTAS'));
             $cantCuotas->setLabel("<span class='problema'>(*)</span> Cantidad de Cuotas");
             $cantCuotas->setFilters(array('int'));
             $cantCuotas->addValidators(
@@ -96,39 +88,39 @@ class EditarSolicitudTurnoForm extends Form
                 )
             );
             $this->add($cantCuotas);
-        }
-        /*=================== VALOR DE CUOTAS ==========================*/
-        $valorCuotas = new Text("valorCuotas",
-            array('style' => 'text-align:right !important;height: 40px !important;font-size: 18px;',
-                'placeholder' => 'Ingrese un número'));
-        $valorCuotas->setLabel("<span class='problema'>(*)</span> Valor de Cuotas");
-        $valorCuotas->setFilters(array('int'));
-        $valorCuotas->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'El <strong>Valor de las Cuotas</strong> es obligatorio.'
-                    )
-                ),
-                new Numericality(
-                    array(
-                        'message' => 'Debe ser un valor númerico.'
-                    )
-                ),
-                new NumberValidator()
-            )
-        );
-        $this->add($valorCuotas);
-        /*=================== OBSERVACIONES ==========================*/
-        $comentarios = new \Phalcon\Forms\Element\TextArea("observacion",
-            array(
-                'maxlength' => 245,
-                'placeholder' => 'Ingrese su observacion...',
-                'rows' => '4', 'cols' => '50'
-            ));
-        $comentarios->setLabel('Observaciones');
-        $comentarios->setFilters(array('string'));
-        $this->add($comentarios);
+
+            /*=================== VALOR DE CUOTAS ==========================*/
+            $valorCuotas = new Text("valorCuotas",
+                array('style' => 'text-align:right !important;height: 40px !important;font-size: 18px;',
+                    'placeholder' => 'INGRESE EL VALOR DE LAS CUOTAS'));
+            $valorCuotas->setLabel("<span class='problema'>(*)</span> Valor de Cuotas");
+            $valorCuotas->setFilters(array('int'));
+            $valorCuotas->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'El <strong>Valor de las Cuotas</strong> es obligatorio.'
+                        )
+                    ),
+                    new Numericality(
+                        array(
+                            'message' => 'Debe ser un valor númerico.'
+                        )
+                    ),
+                    new NumberValidator()
+                )
+            );
+            $this->add($valorCuotas);
+            /*=================== OBSERVACIONES ==========================*/
+            $comentarios = new \Phalcon\Forms\Element\TextArea("observacion",
+                array(
+                    'maxlength' => 245,
+                    'placeholder' => 'ESCRIBIR AQUI...',
+                    'rows' => '4', 'cols' => '50'
+                ));
+            $comentarios->setLabel('Observaciones');
+            $comentarios->setFilters(array('string'));
+            $this->add($comentarios);
     }
 
     /**
