@@ -3,6 +3,7 @@
 use \Phalcon\Paginator\Adapter\Model as Paginacion;
 use \Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
 use \Phalcon\Paginator\Adapter\QueryBuilder as PaginacionBuilder;
+
 class TurnosController extends ControllerBase
 {
     /**
@@ -271,7 +272,7 @@ class TurnosController extends ControllerBase
     public function turnosSolicitadosAction()
     {
 
-       $solicitudTurnos = $this->modelsManager->createBuilder()
+        $solicitudTurnos = $this->modelsManager->createBuilder()
             ->from('Solicitudturno');
         $paginator = new PaginacionBuilder
         (
@@ -287,16 +288,61 @@ class TurnosController extends ControllerBase
 
         $this->view->autorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
         $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-        $this->view->cantidadDeTurnos   = $fechaTurnos->fechasTurnos_cantidadDeTurnos;
+        $this->view->cantidadDeTurnos = $fechaTurnos->fechasTurnos_cantidadDeTurnos;
         //$this->view->formularioSimple = new EditarSolicitudTurnoForm();
         //$this->view->formulario = new EditarSolicitudTurnoForm(null,array('revision'=>'true'));
     }
-    public function editAction($idSolicitud)
+
+    /**
+     * @desc - permitimos editar un
+     * @return json
+     */
+    public function editAction()
     {
-        echo "ENTRAAAA";
         //deshabilitamos la vista para peticiones ajax
         $this->view->disable();
+
+        //si es una petición post
+        if ($this->request->isPost() == true) {
+            //si es una petición ajax
+            if ($this->request->isAjax() == true) {
+
+                //si existe el token del formulario y es correcto(evita csrf)
+
+
+                //si existe el token del formulario y es correcto(evita csrf)
+
+
+                $solicitudTurno = Solicitudturno::findFirstBySolicitudTurno_id($this->request->getPost('solicitudTurno_id'));
+                $solicitudTurno->solicitudTurno_estado          = $this->request->getPost('solicitudTurno_estado');
+                if($this->request->getPost('editable')==1){
+                    $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
+               }
+
+                if ($solicitudTurno->update()) {
+
+                    $this->response->setJsonContent(array(
+                        "res" => "success"
+                    ));
+                    //devolvemos un 200, todo ha ido bien
+                    $this->response->setStatusCode(200, "OK");
+                } else {
+                    $this->response->setJsonContent(array(
+                        "res" => "error"
+                    ));
+                    //devolvemos un 500, error
+                    $this->response->setStatusCode(500, "Error Interno del Servidor.".$this->request->getPost('solicitudTurno_id'));
+                }
+                $this->response->send();
+            }
+        }
+
     }
+
     public function turnosRespondidosAction()
     {
         $paginator = new PaginatorArray
