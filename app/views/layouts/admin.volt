@@ -25,7 +25,7 @@
                     <ul id="top-menu-admin" class="nav navbar-nav navbar-right main_nav">
                         <li class="active">{{ link_to('index/index','INICIO') }}</li>
                         <li>{{ link_to('administrar/index','PANEL DE CONTROL') }}</li>
-                        <li>{{ link_to('sesion/cerrar','SALIR') }}</li>
+                        {{ elemento.getItemMenu() }}
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

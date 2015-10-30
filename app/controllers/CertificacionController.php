@@ -50,8 +50,6 @@ class CertificacionController extends ControllerBase
 
                 //GENERAR PDF
                 $this->view->disable();
-                // Get all the data from the database
-                $data = Novedades::find();
                 // Get the view data
                 $html = $this->view->getRender('certificacion', 'generar', array(
                     'nroDocumento' => $dni,

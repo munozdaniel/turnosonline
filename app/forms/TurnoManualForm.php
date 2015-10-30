@@ -14,7 +14,7 @@ class TurnoManualForm extends Form
     {
         /*=================== Apellido ==========================*/
         $apellido = new Text("solicitudTurno_ape",array('style'=>'text-align:right !important;height: 40px !important; width: 300px !important; font-size: 18px;'));
-        $apellido->setLabel("<strong>(*)</strong> Apellido: ");
+        $apellido->setLabel("<strong style='color:red'>*</strong> Apellido: ");
         $apellido->setFilters(array('string'));
         $apellido->addValidators(
             array(
@@ -35,7 +35,7 @@ class TurnoManualForm extends Form
 
         /*=================== Nombre ==========================*/
         $nombre = new Text("solicitudTurno_nom",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $nombre->setLabel("<strong>(*)</strong> Nombre: ");
+        $nombre->setLabel("<strong style='color:red'>*</strong> Nombre: ");
         $nombre->setFilters(array('string'));
         $nombre->addValidators(
             array(
@@ -46,16 +46,16 @@ class TurnoManualForm extends Form
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Nombre demasiado corto',
+                    'messageMinimum' => 'Nombre demasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'Nombre demasiado largo',
+                    'messageMaximun' => 'Nombre demasiado largo.',
                 )),
             )
         );
         $this->add($nombre);
         /*=================== Nro Legajo ==========================*/
         $legajo = new Text("solicitudTurno_legajo",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $legajo->setLabel("<strong>(*)</strong> Legajo: ");
+        $legajo->setLabel("<strong style='color:red'>*</strong> Legajo: ");
         $legajo->setFilters(array('int'));
         $legajo->addValidators(
             array(
@@ -66,7 +66,7 @@ class TurnoManualForm extends Form
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>Legajo</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>Legajo</strong> debe ser un n&uacute;mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -82,7 +82,7 @@ class TurnoManualForm extends Form
 
         /*=================== Nro Documento ==========================*/
         $dni = new Text("solicitudTurno_documento",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $dni->setLabel("<strong>(*)</strong> Nro Documento: ");
+        $dni->setLabel("<strong style='color:red'>*</strong> Nro Documento: ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
             array(
@@ -93,7 +93,7 @@ class TurnoManualForm extends Form
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>DNI</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>DNI</strong> debe ser un n&uacute;mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -109,7 +109,7 @@ class TurnoManualForm extends Form
 
         /*=================== Fecha Nacimiento ==========================*/
         $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',array('style'=>'text-align:right !important;width: 300px !important;'));
-        $fechaNacimiento->setLabel('<strong>(*)</strong> Fecha Nacimiento:');
+        $fechaNacimiento->setLabel("<strong style='color:red'>*</strong> Fecha Nacimiento:");
         $fechaNacimiento->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Nacimiento</strong>.'
@@ -119,7 +119,7 @@ class TurnoManualForm extends Form
 
         /*=================== Nro Telefono ==========================*/
         $telefono = new Text("solicitudTurno_numTelefono",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $telefono->setLabel("<strong>(*)</strong> N&uacute;mero de telefono/celular (c&oacute;digo de &aacute;rea y n&uacute;mero):");
+        $telefono->setLabel("<strong style='color:red'>*</strong> N&uacute;mero de telefono/celular (c&oacute;digo de &aacute;rea y n&uacute;mero):");
         $telefono->setFilters(array('int'));
         $telefono->addValidators(
             array(
@@ -127,7 +127,7 @@ class TurnoManualForm extends Form
                     'message' => 'El telefono  es requerido.'
                 )),
                 new Numericality( array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>Telefono</strong> debe ser un n&uacute;mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -144,7 +144,7 @@ class TurnoManualForm extends Form
         /*=================== Repita su telefono  ==========================*/
 
         $telefonoBis = new Text("telefonoRepetido",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $telefonoBis->setLabel("<strong>(*)</strong> Repita su n&uacute;mero de telefono/celular:");
+        $telefonoBis->setLabel("<strong style='color:red'>*</strong> Repita su n&uacute;mero de telefono/celular:");
         $telefonoBis->setFilters(array('int'));
         $telefonoBis->addValidators(
             array(
@@ -152,7 +152,7 @@ class TurnoManualForm extends Form
                     'message' => 'El telefono  es requerido.'
                 )),
                 new Numericality( array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>Telefono</strong> debe ser un n&uacute;mero sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
@@ -168,7 +168,7 @@ class TurnoManualForm extends Form
         $this->add($telefonoBis);
 
         /*=================== Estado ==========================*/
-         $estado = new Select("solicitudTurno_estado",array(''=>'','autorizado'=>'autorizado','denegado'=>'denegado'));
+         /*$estado = new Select("solicitudTurno_estado",array(''=>'','autorizado'=>'autorizado','denegado'=>'denegado'),array('style'=>'width: 300px !important;height: 40px !important;'));
          $estado->setLabel('Estado de la solicitud:');
          $estado->addValidators(array(
              new PresenceOf(array(
@@ -176,7 +176,7 @@ class TurnoManualForm extends Form
              ))
          ));
 
-         $this->add($estado);
+         $this->add($estado);*/
     }
 
     //muestra un mensaje por cada elemento

@@ -32,7 +32,7 @@
                     <!-- SECOND SLIDE CAPTION-->
                     <div class="slider_caption">
                         <h2 class="borde-bottom">Solicitud de Turnos Online</h2>
-                        <p>Para solicitar o consultar sobre los prestamos puedes sacar tu turno a traves de la web.</p>
+                        <p>Para solicitar o consultar sobre los prestamos puedes sacar tu turno a través de la web.</p>
                         <a href="#service" class="slider_btn slow">Ver Servicios</a>
                     </div>
                 </a>

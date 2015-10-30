@@ -50,7 +50,6 @@
                         <h4><label>Día de atención de turnos </label></h4><br>
 
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
-                            {{ formulario.label('periodoAtencionDesde',['class': 'control-label']) }}
                             {{ formulario.render('periodoAtencionDesde',['class': 'btn-block']) }}
                             {{ formulario.messages('periodoAtencionDesde') }}
                         </div>

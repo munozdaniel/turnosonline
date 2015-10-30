@@ -394,7 +394,7 @@ jQuery(function ($) {
         topMenu = $("#top-menu"),
         topMenuHeight = topMenu.outerHeight() + 13,
     // All list items
-        menuItems = topMenu.find("a"),
+        menuItems = topMenu.find("a.si_recorrer"),
     // Anchors corresponding to menu items
         scrollItems = menuItems.map(function () {
             var item = $($(this).attr("href"));
@@ -406,12 +406,15 @@ jQuery(function ($) {
     // Bind click handler to menu items
     // so we can get a fancy scroll animation
     menuItems.click(function (e) {
-        var href = $(this).attr("href"),
-            offsetTop = href === "#" ? 0 : $(href).offset().top - topMenuHeight + 1;
-        $('html, body').stop().animate({
-            scrollTop: offsetTop
-        }, 900);
-        e.preventDefault();
+        // Consulto si el elemento tiene el atributo href. porque el submenu no lo tiene.
+        if ( $(this).attr('href') ) {
+            var href = $(this).attr("href"),
+                offsetTop = href === "#" ? 0 : $(href).offset().top - topMenuHeight + 1;
+            $('html, body').stop().animate({
+                scrollTop: offsetTop
+            }, 900);
+            e.preventDefault();
+        }
     });
 
     // Bind to scroll

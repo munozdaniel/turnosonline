@@ -14,6 +14,13 @@
                         <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos con respuesta enviada</h2>
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
+
+                    Periodo de solicitud de turnos: {{ fechaI }} - {{ fechaF }}
+                    <br/>
+                    Dia de atenci&oacute;n: {{ diaA }}
+                    <br/>
+                    Cantidad de solicitudes autorizadas: {{ cantA }}
+
                 </div>
             </div>
         </div>
@@ -54,14 +61,17 @@
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.next,'Siguiente','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'Ultima','class':'btn') }}
-
-                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
+                                 P&aacute;gina {{ page.current }} de {{ page.total_pages }}
                             </div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+
+            {{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3">
+                                                <div class="btn btn-blue btn-lg btn-block">
+                                                     VER LISTADO EN PDF</div></div>') }}
         </div>
     </div>
 </section>

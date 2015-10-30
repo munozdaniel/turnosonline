@@ -72,8 +72,10 @@ class Seguridad extends \Phalcon\Mvc\User\Plugin
             }
             //El acl queda almacenado en sesión
             $this->persistent->acl = $acl;
+
         }
 
         return $this->persistent->acl;
     }
+
 }

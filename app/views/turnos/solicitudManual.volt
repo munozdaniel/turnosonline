@@ -1,7 +1,24 @@
 <section id="certificacion">
+
     <style>
         .heading h2 {font-size: 35px;line-height: 35px;}
     </style>
+
+    <script type="text/javascript">
+
+        function otro()
+        {
+            var estadoSeleccionado = document.getElementById('miselect').value;
+
+            if (estadoSeleccionado === 'AUTORIZADO' || estadoSeleccionado === '')
+            {
+               if( {{ cantAutorizados }} === {{ cantTurnos }} )
+                alert('No hay mas turnos disponibles en este periodo. Se debe denegar la solicitud.')
+            }
+        }
+
+    </script>
+
 
     <div class="container">
 
@@ -17,7 +34,7 @@
                         <p><i class="fa fa-info-circle"
                               style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
                             <em>Por favor, llene los siguientes campos para ingresar una solicitud de turno.</em> <br/>
-                            <em style="color:tomato"> (*) Campos obligatorios.</em>
+                            <em style="color:tomato">* Campos obligatorios.</em>
                         </p>
                     </div>
                 </div>
@@ -25,6 +42,7 @@
         </div>
 
         <div class="row formulario-turnos">
+
             <div class="col-md-12">
                 {{ content() }}
             </div>
@@ -33,7 +51,7 @@
 
                 <!-- START SOLICITUD TURNOS CONTENT -->
                 <div class="about_content wow bounceInUp ">
-                    {{ form('turnos/solicitudManual','method':'post','style':'','class':'') }}
+                    {{ form('turnos/guardaDatosSolicitudManual','method':'post','style':'','class':'') }}
 
                         {% for elto in formulario %}
                             <div class="row">
@@ -48,8 +66,20 @@
                                 </div>
 
                             </div><br/>
-
                         {% endfor %}
+
+                        <div class="col-lg-7 col-md-7 col-md-offset-2">
+                            <b style="color: red">*</b></b><b>Estado de la solicitud:</b>
+                                 <select id="miselect" name="estado" onchange="otro()" class="col-lg-7 col-md-7 col-md-offset-5" style="width: 300px !important;height: 40px !important;">
+                                     <option value=""></option>
+                                     <option value="AUTORIZADO">AUTORIZADO</option>
+                                     <option value="DENEGADO" >DENEGADO</option>
+                                 </select>
+                            <br/><br/><br/>
+                        </div>
+
+                        <br/><br/><br/><br/><br/>
+
                         {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
                     {{ end_form() }}
                 </div>
