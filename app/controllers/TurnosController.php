@@ -335,7 +335,7 @@ class TurnosController extends ControllerBase
 
         $solicitudTurnos = $this->modelsManager->createBuilder()
             ->from('Solicitudturno');
-        $paginator = new PaginatorArray
+        $paginator = new PaginacionBuilder
         (
             array(
                 "builder" => $solicitudTurnos,
