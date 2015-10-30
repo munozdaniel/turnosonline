@@ -323,16 +323,12 @@ class TurnosController extends ControllerBase
      */
     public function turnosSolicitadosAction()
     {
-        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-        $fechaInicio = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
-        $fechaFin = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
-        $diaAtencion = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-        $cantAut = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
-        $this->view->fechaI=$fechaInicio;
-        $this->view->fechaF=$fechaFin;
-        $this->view->diaA=$diaAtencion;
-        $this->view->cantA=$cantAut;
-
+        $ultimoPeriodo                  = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $this->view->fechaInicio        = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
+        $this->view->fechaFin           = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
+        $this->view->diaAtencion        = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+        $this->view->cantAutorizado     = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $this->view->cantidadDeTurnos   = $ultimoPeriodo->fechasTurnos_cantidadDeTurnos;
         $solicitudTurnos = $this->modelsManager->createBuilder()
             ->from('Solicitudturno');
         $paginator = new PaginacionBuilder
@@ -346,12 +342,6 @@ class TurnosController extends ControllerBase
             )
         );
         $this->view->page = $paginator->getPaginate();
-
-        $this->view->autorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
-        $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-        $this->view->cantidadDeTurnos = $fechaTurnos->fechasTurnos_cantidadDeTurnos;
-        //$this->view->formularioSimple = new EditarSolicitudTurnoForm();
-        //$this->view->formulario = new EditarSolicitudTurnoForm(null,array('revision'=>'true'));
     }
 
     /**
@@ -370,33 +360,63 @@ class TurnosController extends ControllerBase
 
                 //si existe el token del formulario y es correcto(evita csrf)
 
-
-                //si existe el token del formulario y es correcto(evita csrf)
-
-
                 $solicitudTurno = Solicitudturno::findFirstBySolicitudTurno_id($this->request->getPost('solicitudTurno_id'));
-                $solicitudTurno->solicitudTurno_estado          = $this->request->getPost('solicitudTurno_estado');
-                if($this->request->getPost('editable')==1){
-                    $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
-               }
+                if($solicitudTurno ){
+                    $estadoAntiguo  = $solicitudTurno->solicitudTurno_estado;
+                    $estadoNuevo    = $this->request->getPost('solicitudTurno_estado');
+                    //Actualizando la instancia de solicitudTurno
+                    $solicitudTurno->solicitudTurno_estado = $estadoNuevo;
+                    //Comprobando la transiccion de estados.
+                    if($estadoAntiguo=="AUTORIZADO" && $estadoNuevo!="AUTORIZADO")
+                        Fechasturnos::decrementarCantAutorizados();
+                    else{
+                        if($estadoAntiguo!="AUTORIZADO" && $estadoNuevo=="AUTORIZADO")
+                            Fechasturnos::incrementarCantAutorizados();
+                        else{
+                            if($estadoAntiguo!="PENDIENTE" && $estadoNuevo=="PENDIENTE"){
+                                //Vaciar solicitudTurno
+                                $solicitudTurno->solicitudTurno_montoMax        = 0;
+                                $solicitudTurno->solicitudTurno_montoPosible    = 0;
+                                $solicitudTurno->solicitudTurno_cantCuotas      = 0;
+                                $solicitudTurno->solicitudTurno_valorCuota      = 0;
+                                $solicitudTurno->solicitudTurno_observaciones   = "";
 
-                if ($solicitudTurno->update()) {
+                            }else{
+                                //Verificamos si se puede editar todos los campos.
+                                if($this->request->getPost('editable')==1){
+                                    $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
+                                    $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
+                                    $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
+                                    $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
+                                    $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
+                                }
+
+                            }
+                        }
+                    }
+                    if ($solicitudTurno->update()) {
+
+                        $this->response->setJsonContent(array(
+                            "res" => "success"
+                        ));
+                        //devolvemos un 200, todo ha ido bien
+                        $this->response->setStatusCode(200, "OK".$estadoAntiguo . " - ".$estadoNuevo);
+                    } else {
+                        $this->response->setJsonContent(array(
+                            "res" => "error"
+                        ));
+                        //devolvemos un 500, error
+                        $this->response->setStatusCode(500, "Error Interno del Servidor.".$estadoAntiguo . " - ".$estadoNuevo);
+                    }
+
+                }else{
 
                     $this->response->setJsonContent(array(
-                        "res" => "success"
-                    ));
-                    //devolvemos un 200, todo ha ido bien
-                    $this->response->setStatusCode(200, "OK");
-                } else {
-                    $this->response->setJsonContent(array(
-                        "res" => "error"
+                        "res" => "warning"
                     ));
                     //devolvemos un 500, error
-                    $this->response->setStatusCode(500, "Error Interno del Servidor.".$this->request->getPost('solicitudTurno_id'));
+                    $this->response->setStatusCode(500, "Ocurrio un error, no se pudieron guardar los datos. Comunicarse con Soporte Tecnico.");
+
                 }
                 $this->response->send();
             }

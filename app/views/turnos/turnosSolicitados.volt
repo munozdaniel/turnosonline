@@ -10,22 +10,29 @@
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
 
-                    Periodo de solicitud de turnos: {{ fechaI }} - {{ fechaF }}
-                    <br/>
-                    Dia de atenci&oacute;n: {{ diaA }}
-                    <br/>
-                    Cantidad de solicitudes autorizadas: {{ cantA }}
+
 
                 </div>
             </div>
         </div>
         {{ content() }}
+
         {{ form('turnos/enviarRespuestas') }}
 
         <div class="row edicion">
 
             <div id="solicitudes" class="col-lg-16 col-md-16 table-responsive">
+                <div >
+                    <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaInicio }} - {{ fechaFin }}
+                    </div>
+                    <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaAtencion }}
+                    </div>
+                    <div id="#datos" class="fuente-16">
+                        <strong><ins>Cantidad de solicitudes autorizadas</ins>: </strong> {{ cantAutorizado }}
+                    </div>
+                    <br>
 
+                </div>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
@@ -130,7 +137,7 @@
 
                 var lista, editable = false, autorizacion = false;
                 var cantidadDeTurnos = {{ cantidadDeTurnos }},
-                        autorizadosEnviados = {{ autorizadosEnviados }};
+                        autorizadosEnviados = {{ cantAutorizado }};
                 if (json.solicitudTurno_estado == "PENDIENTE") {
                     //Si es PENDIENTE cualquier usuario puede pasar a REVISION, salvo que no hayan turnos.
                     if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos))
@@ -204,10 +211,10 @@
                     html += '<textarea id="solicitudTurno_observaciones" class="form-control" name="solicitudTurno_observaciones" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
                     html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control"></div>';
 
-                    html += '<input id="editable" name="editable" value="1" type="text" class="form-control">';//1 Editable / 0 No editable
+                    html += '<input id="editable" name="editable" value="1" type="hidden" class="form-control">';//1 Editable / 0 No editable
                 }
                  else {
-                    html += '<input id="editable" name="editable" value="0" type="text" class="form-control">';//1 Editable / 0 No editable
+                    html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
                  }
                 html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control"></div>';
                 html += '</div>';
@@ -239,13 +246,16 @@
                             data: $("#form").serialize(),
                             method: "POST",
                             success: function (data) {
+                                //$('#solicitudes, #datos').load(document.URL +  ' #solicitudes',document.URL +  ' #datos');
                                 $('#solicitudes').load(document.URL +  ' #solicitudes');
                                 $("#modalCrudPhalcon .modal-body").html("").html(
                                         "<p >Post actualizado correctamente.</p>"
                                 );
                                 $("#onclickBtn").hide();
+                                console.log(data);
                             },
                             error: function (error) {
+                                alert(error.statusText);
                                 console.log(error);
                             }
                         })
