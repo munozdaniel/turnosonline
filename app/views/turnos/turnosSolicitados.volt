@@ -27,6 +27,10 @@
                     </div>
                     <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaA }}
                     </div>
+                    <br/>
+                    <div id="#datos" class="fuente-16">
+                        <strong><ins>Turnos autorizados:</ins>: </strong> {{ cantidadDeTurnos }}
+                    </div>
                     <div id="#datos" class="fuente-16">
                         <strong><ins>Cantidad de solicitudes autorizadas</ins>: </strong> {{ autorizadosEnviados }}
                     </div>
@@ -85,7 +89,7 @@
                                         Editar
                                     </a>
                                 {% else %}
-                                    <a href="#" class="btn btn-gris editar">Editar </a>
+                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">Editar </a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -123,6 +127,13 @@
     <!-- ==========================MODALES============================= -->
     <!-- Fin: Modal Info Optica -->
     <script type="text/javascript">
+
+        function mensaje()
+        {
+            alert('Solo el usuario que esta revisando la solicitud puede modificarla.)');
+        }
+
+
         //objeto javascript al que le añadimos toda la funcionalidad del crud
         var crudPhalcon = {};
         $(document).ready(function () {
