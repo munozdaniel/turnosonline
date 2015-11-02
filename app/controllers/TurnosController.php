@@ -349,9 +349,20 @@ class TurnosController extends ControllerBase
                         }
                     }
 
-                    if ($estadoAntiguo != "PENDIENTE" && ($estadoNuevo == "PENDIENTE"
-                            || $estadoNuevo == "DENEGADO" || $estadoNuevo == "DENEGADO POR FALTA DE TURNOS")) {
-                        //Si vuelve a pendiente Vaciar solicitudTurno
+                    //Verificamos si se puede editar todos los campos.
+                    //if ($this->request->getPost('editable') == 1) {
+                    if($estadoNuevo == "REVISION" || $estadoNuevo == "AUTORIZADO")
+                    {
+                        $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
+                        $solicitudTurno->solicitudTurno_nickUsuario     = $this->session->get('auth')['usuario_nick'];
+                        $solicitudTurno->solicitudTurno_fechaProcesamiento = Date('y-m-d');
+
+                    }
+                    else{
                         $solicitudTurno->solicitudTurno_montoMax = 0;
                         $solicitudTurno->solicitudTurno_montoPosible = 0;
                         $solicitudTurno->solicitudTurno_cantCuotas = 0;
@@ -360,24 +371,10 @@ class TurnosController extends ControllerBase
                             $solicitudTurno->solicitudTurno_observaciones = $this->request->getPost('causa');
                         else
                             $solicitudTurno->solicitudTurno_observaciones = "-";
-                        $solicitudTurno->solicitudTurno_nickUsuario = "-";
-                        $solicitudTurno->solicitudTurno_fechaProcesamiento = null;
-
-
-                    } else {
-                        //Verificamos si se puede editar todos los campos.
-                        if ($this->request->getPost('editable') == 1) {
-                            $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
-                            $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
-                            $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
-                            $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
-                            $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
-                            $solicitudTurno->solicitudTurno_nickUsuario     = $this->session->get('auth')['usuario_nick'];
-                            $solicitudTurno->solicitudTurno_fechaProcesamiento = Date('y-m-d');
-
-                        }
-
+                        $solicitudTurno->solicitudTurno_nickUsuario     = $this->session->get('auth')['usuario_nick'];
+                        $solicitudTurno->solicitudTurno_fechaProcesamiento = Date('y-m-d');
                     }
+
                     if ($solicitudTurno->update()) {
 
                         $this->response->setJsonContent(array(

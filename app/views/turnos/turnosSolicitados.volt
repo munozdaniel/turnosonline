@@ -143,17 +143,17 @@
                     if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos))
                         lista = ['DENEGADO POR FALTA DE TURNOS'];
                     else {
-                        lista = ['PENDIENTE', 'REVISION'];
+                        lista = ['REVISION'];
                     }
                 } else {
                     if (json.solicitudTurno_estado == "REVISION"
                             || json.solicitudTurno_estado == "AUTORIZADO"){
-                        lista = ['PENDIENTE', 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                        lista = ['REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
                         editable =true;
                     }else {
                         if (json.solicitudTurno_estado == "DENEGADO"
                                 || json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS") {
-                            lista = ['PENDIENTE', 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                            lista = [ 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
 
                         } else {
                             if (json.solicitudTurno_estado != 'PENDIENTE' || json.solicitudTurno_estado != 'REVISION'
@@ -252,7 +252,7 @@
                         var panel = document.getElementById("editor");
 
                         if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
-                                || solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "REVISION") {
+                                ) {
                             $("#campos_editables").removeClass('ocultar');
                             $("#causaDenegado").addClass('ocultar');
                         }
