@@ -354,46 +354,72 @@ class TurnosController extends ControllerBase
     {
         //deshabilitamos la vista para peticiones ajax
         $this->view->disable();
-
         //si es una petición post
         if ($this->request->isPost() == true) {
             //si es una petición ajax
             if ($this->request->isAjax() == true) {
-
                 //si existe el token del formulario y es correcto(evita csrf)
-
-
-                //si existe el token del formulario y es correcto(evita csrf)
-
-
                 $solicitudTurno = Solicitudturno::findFirstBySolicitudTurno_id($this->request->getPost('solicitudTurno_id'));
-                $solicitudTurno->solicitudTurno_estado          = $this->request->getPost('solicitudTurno_estado');
-                if($this->request->getPost('editable')==1){
-                    $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
-               }
-
-                if ($solicitudTurno->update()) {
-
-                    $this->response->setJsonContent(array(
-                        "res" => "success"
-                    ));
-                    //devolvemos un 200, todo ha ido bien
-                    $this->response->setStatusCode(200, "OK");
+                if ($solicitudTurno) {
+                    $estadoAntiguo = $solicitudTurno->solicitudTurno_estado;
+                    $estadoNuevo = $this->request->getPost('solicitudTurno_estado');
+                    //Actualizando la instancia de solicitudTurno
+                    $solicitudTurno->solicitudTurno_estado = $estadoNuevo;
+                    //Si deja de estar autorizado se decrementa.
+                    if ($estadoAntiguo == "AUTORIZADO" && $estadoNuevo != "AUTORIZADO") {
+                        Fechasturnos::decrementarCantAutorizados();
+                    } else {//Si se autoriza se incrementa.
+                        if ($estadoAntiguo != "AUTORIZADO" && $estadoNuevo == "AUTORIZADO") {
+                            Fechasturnos::incrementarCantAutorizados();
+                        }
+                    }
+                    //Verificamos si se puede editar todos los campos.
+                    //if ($this->request->getPost('editable') == 1) {
+                    if($estadoNuevo == "REVISION" || $estadoNuevo == "AUTORIZADO")
+                    {
+                        $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
+                        $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
+                        $solicitudTurno->solicitudTurno_nickUsuario     = $this->session->get('auth')['usuario_nick'];
+                        $solicitudTurno->solicitudTurno_fechaProcesamiento = Date('y-m-d');
+                    }
+                    else{
+                        $solicitudTurno->solicitudTurno_montoMax = 0;
+                        $solicitudTurno->solicitudTurno_montoPosible = 0;
+                        $solicitudTurno->solicitudTurno_cantCuotas = 0;
+                        $solicitudTurno->solicitudTurno_valorCuota = 0;
+                        if($estadoNuevo == "DENEGADO")
+                            $solicitudTurno->solicitudTurno_observaciones = $this->request->getPost('causa');
+                        else
+                            $solicitudTurno->solicitudTurno_observaciones = "-";
+                        $solicitudTurno->solicitudTurno_nickUsuario     = $this->session->get('auth')['usuario_nick'];
+                        $solicitudTurno->solicitudTurno_fechaProcesamiento = Date('y-m-d');
+                    }
+                    if ($solicitudTurno->update()) {
+                        $this->response->setJsonContent(array(
+                            "res" => "success"
+                        ));
+                        //devolvemos un 200, todo ha ido bien
+                        $this->response->setStatusCode(200, "OK");
+                    } else {
+                        $this->response->setJsonContent(array(
+                            "res" => "error"
+                        ));
+                        //devolvemos un 500, error
+                        $this->response->setStatusCode(500,"OPS! HAY UN PROBLEMA, POR FAVOR VERIFIQUE QUE TODOS LOS CAMPOS SEAN INGRESADOS.");
+                    }
                 } else {
                     $this->response->setJsonContent(array(
-                        "res" => "error"
+                        "res" => "warning"
                     ));
                     //devolvemos un 500, error
-                    $this->response->setStatusCode(500, "Error Interno del Servidor.".$this->request->getPost('solicitudTurno_id'));
+                    $this->response->setStatusCode(500, "Ocurrio un error, no se pudieron guardar los datos. Comunicarse con Soporte Tecnico.");
                 }
                 $this->response->send();
             }
         }
-
     }
 
     public function turnosRespondidosAction()
