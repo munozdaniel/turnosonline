@@ -133,7 +133,7 @@
                 $("#modalCrudPhalcon .modal-title").html("<strong>" + json.solicitudTurno_legajo + "</strong> |   <strong>NOMBRE:</strong> " + json.solicitudTurno_nomApe + " ESTADO: " +json.solicitudTurno_estado );
 
 
-                /*============================ LOS ESTADOS =============================*/
+                /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA =============================*/
 
                 var lista, editable = false, autorizacion = false;
                 var cantidadDeTurnos = {{ cantidadDeTurnos }},
@@ -163,7 +163,7 @@
                         }
                     }
                 }
-                /*============================ ARMANDO EL SELECT =============================*/
+                /*============================ ARMANDO EL SELECT DE LOS ESTADOS SEGUN EL PUNTO ANTERIOR =============================*/
 
                 //Creacion del div que contiene el select de los estados.
                 var div = document.createElement("div");
@@ -186,7 +186,7 @@
                         option.setAttribute("selected", "true");
                     selectList.appendChild(option);
                 }
-                /*=========================== FORMULARIO ==============================*/
+                /*=========================== COMENZANDO A ARMAR EL FORMULARIO ==============================*/
 
                 html += '<div class="row formulario-turnos" style="padding: 20px;">'
                 html += '<?php echo $this->tag->form(array("turnos/edit", "method" => "post", "id" => "form")); ?>';
@@ -194,30 +194,50 @@
                 html += '<div><label for="solicitudTurno_estado"> ESTADO </label></div>';
                 html += div.innerHTML;//Muestra el codigo html.
 
-                /*============================ COMPONENTES DINAMICOS SEGUN EL ESTADO =============================*/
-                html += '<div id="campos_editables">';
-                if (editable) {
 
 
-                    html += '<div> <label for="solicitudTurno_montoMax">Monto Máximo</label>';
-                    html += '<input type="text" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax" value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
-                    html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
-                    html += '<input type="text" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible" value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
-                    html += '<div> <label for="solicitudTurno_cantCuotas">Cantidad de Cuotas</label>';
-                    html += '<input type="text" id="solicitudTurno_cantCuotas" name="solicitudTurno_cantCuotas" value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
-                    html += '<div> <label for="solicitudTurno_valorCuota">Valor de las Cuotas</label>';
-                    html += '<input type="text" id="solicitudTurno_valorCuota" name="solicitudTurno_valorCuota" value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
-                    html += '<div> <label for="solicitudTurno_observaciones">Observaciones</label>';
-                    html += '<textarea id="solicitudTurno_observaciones" class="form-control" name="solicitudTurno_observaciones" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
-                    html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control"></div>';
+                /*============================ MOSTRAR/OCULTAR EL FORMULARIO SEGUN EL ESTADO =============================*/
 
+                if (editable) {//SI ES AUTORIZADO O REVISION, MOSTRAR FORM
+                    html += '<div id="campos_editables" >';
                     html += '<input id="editable" name="editable" value="1" type="hidden" class="form-control">';//1 Editable / 0 No editable
                 }
-                 else {
+                 else {//SI ES DENEGADO, DENEGADO POR FALTA DE TURNOS, PENDIENTE OCULTAR FORM
+                    html += '<div id="campos_editables" class="ocultar">';
+                    //ADEMAS SI ES DENEGADO, DEBE MOSTRAR LA LISTA DE CAUSAS
                     html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
                  }
-                html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control"></div>';
+                html += '<div> <label for="solicitudTurno_montoMax">Monto Máximo</label>';
+                html += '<input type="number" min="0" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax"  required  value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
+                html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
+                html += '<input type="number" min="0" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible"  required value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
+                html += '<div> <label for="solicitudTurno_cantCuotas">Cantidad de Cuotas</label>';
+                html += '<input type="number" min="0" id="solicitudTurno_cantCuotas" name="solicitudTurno_cantCuotas"  required value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
+                html += '<div> <label for="solicitudTurno_valorCuota">Valor de las Cuotas</label>';
+                html += '<input type="number" min="0" id="solicitudTurno_valorCuota" name="solicitudTurno_valorCuota"  required value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
+                html += '<div id="observacion" >';
+                html += '<label for="solicitudTurno_observaciones">Observaciones</label>';
+                html += '<textarea id="solicitudTurno_observaciones" maxlength="150"class="form-control" name="solicitudTurno_observaciones" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
                 html += '</div>';
+                html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control">';
+
+                html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control">';
+                html += '</div>';//fin campos_editables
+                if(json.solicitudTurno_estado == "DENEGADO") {
+                    html += '<div id="causaDenegado" >';
+                }
+                else{
+                    html += '<div id="causaDenegado" class="ocultar">';
+                }
+                html += '<label for="causa">SELECCIONAR CAUSA</label><br>';
+                html += '<select id="causa" name="causa" >';
+                html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO">No cumple con el 50% capital adeudado</option>';
+                html += '<option value="SE ENCUENTRA EN ROJO">Se encuentra en rojo</option>';
+                html += '<option value="NO CUMPLE CON LA ANTIGUEDAD">No cumple con la antiguedad</option>';
+                html += '<option value="REFINANCIACION TOTAL">Refinanciacion total</option>';
+                html += '</select>';
+                html += '</div>';
+
                 html += '<?php echo $this->tag->endForm() ?>';
                 html += '</div>';//fin row
 
@@ -225,16 +245,24 @@
                 $("#modalCrudPhalcon .modal-body ").html(html);
                 $("#modalCrudPhalcon").modal("show");
             },
+                    // Evento onChange del select estado.
                     crudPhalcon.habilitarDeshabilitarSegunElEstado = function () {
                         //Si esta autorizado puede modificar todos los campos, el div editor debe aparecer.
                         var solicitudTurno_estado = document.getElementById("solicitudTurno_estado");
                         var panel = document.getElementById("editor");
+
                         if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
                                 || solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "REVISION") {
                             $("#campos_editables").removeClass('ocultar');
+                            $("#causaDenegado").addClass('ocultar');
                         }
                         else {
+                            if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "DENEGADO")
+                                $("#causaDenegado").removeClass('ocultar');
+                            else
+                                $("#causaDenegado").addClass('ocultar');
                             $("#campos_editables").addClass('ocultar');
+
                         }
 
                     },
