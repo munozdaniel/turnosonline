@@ -63,7 +63,7 @@ class TurnosController extends ControllerBase
 
                     if ($nombreCompleto != "")
                     {
-                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto))
+                        if (!$this->tieneTurnoSolicitado($legajo,$nombreCompleto,$email))
                         {
                             $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo,$nombreCompleto,$documento,$email,$numTelefono);
 
@@ -80,7 +80,7 @@ class TurnosController extends ControllerBase
                             $this->flash->message('problema', 'SUS DATOS YA FUERON INGRESADOS, NO PUEDE OBTENER MÁS DE UN TURNO POR PERÍODO');
                     }
                     else
-                        $this->flash->message('problema', 'USTED NO SE ENCUENTRA REGISTRADO EN EL SISTEMA, PARA MAS INFORMACIÓN DIRÍJASE A NUESTRAS OFICINAS.');
+                        $this->flash->message('problema', 'USTED NO SE ENCUENTRA REGISTRADO EN EL SISTEMA, PARA OBTENER MAS INFORMACIÓN DIRÍJASE A NUESTRAS OFICINAS.');
                 }
                 else
                     $this->flash->message('problema', $razonNoDisponible);
@@ -129,7 +129,7 @@ class TurnosController extends ControllerBase
 
                     if ($nombreCompleto != "")
                     {
-                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto))
+                        if (!$this->tieneTurnoSolicitado($legajo,$nombreCompleto,null))
                         {
                             $seGuardo= Solicitudturno::accionAgregarUnaSolicitudManual($legajo,$nombreCompleto,$documento,$numTelefono,$estado,$nickActual);
 
@@ -185,12 +185,7 @@ class TurnosController extends ControllerBase
         return "";
     }
 
-   /* public function guardarSolicitudTurnoAction()
-    {
-    }*/
-
-    /**
-     * Se encarga de realizar 2 verificaciones:
+    /**Se encarga de realizar 2 verificaciones:
      * 1. que la fecha de hoy se encuentra entre el periodo ingresado por los supervisores.
      * INICIO <= ACTUAL <= FINAL.
      * 2. Que existan cupos disponibles.
@@ -215,26 +210,37 @@ class TurnosController extends ControllerBase
 
     }
 
-    /**
-     * Verifica con los datos del afiliado si ya solicito un turno en este periodo.
+    /**Verifica con los datos del afiliado si ya solicito un turno en este periodo.
      * MJE ERROR: SUS DATOS YA FUERON INGRESADO, NO PUEDE SACAR MÁS DE UN TURNO POR PERÍODO
      * @return boolean devuelve si encontro o no.
      */
-    private function tieneTurnoSolicitado($legajo, $nomApe)
+    private function tieneTurnoSolicitado($legajo, $nomApe,$email)
     {
         try
         {
-            //$ultimo = (int)Fechasturnos::count() - 1;//Obtengo el ultimo indice
             $fechasTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo (campo nuevo).
-            $consulta = "SELECT * FROM solicitudTurno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE  :nomApe:)))";
 
-            $solicitudTurno = $this->modelsManager->executeQuery($consulta,
-                array(
-                    'inicioSolicitud' => $fechasTurnos->fechasTurnos_inicioSolicitud,
-                    'finSolicitud' => $fechasTurnos->fechasTurnos_finSolicitud,
-                    'legajo' => $legajo,
-                    'nomApe' => $nomApe));
-
+            if (is_null($email))
+            {
+                $consulta = "SELECT * FROM solicitudTurno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE :nomApe:)))";
+                $solicitudTurno = $this->modelsManager->executeQuery($consulta,
+                    array(
+                        'inicioSolicitud' => $fechasTurnos->fechasTurnos_inicioSolicitud,
+                        'finSolicitud' => $fechasTurnos->fechasTurnos_finSolicitud,
+                        'legajo' => $legajo,
+                        'nomApe' => $nomApe));
+            }
+            else
+            {
+                $consulta = "SELECT * FROM solicitudTurno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE :nomApe:) OR (ST.solicitudTurno_email like :email:)))";
+                $solicitudTurno = $this->modelsManager->executeQuery($consulta,
+                    array(
+                        'inicioSolicitud' => $fechasTurnos->fechasTurnos_inicioSolicitud,
+                        'finSolicitud' => $fechasTurnos->fechasTurnos_finSolicitud,
+                        'legajo' => $legajo,
+                        'nomApe' => $nomApe,
+                        'email' => $email));
+            }
             //Si no encontro datos, es porque no solicito un turno en este periodo.
             if (count($solicitudTurno) == 0)
                 return false;
@@ -291,23 +297,10 @@ class TurnosController extends ControllerBase
                     //Si ya habia un periodo, lo desactivamos.
                     if($fechasTurnos->fechasTurnos_id>1)
                     {
-                        $phql = "UPDATE Fechasturnos SET fechasTurnos_activo = :valor: WHERE fechasTurnos_id = :id:";
-                        $this->modelsManager->executeQuery($phql, array(
-                            'id' => $fechasTurnos->fechasTurnos_id-1,
-                            'valor' => 0
-                        ));
+                        $id = $fechasTurnos->fechasTurnos_id-1;
+                        $phql = "UPDATE Fechasturnos SET fechasTurnos_activo=0 WHERE fechasTurnos_id = :id:";
+                        $this->modelsManager->executeQuery($phql,array('id'=>$id));
                     }
-
-                    //aqui deberia ver como hago para ver si se confirmaron los emails en el tiempo establecido.
-
-                    $queue = new Phalcon\Queue\Beanstalk(
-                        array(
-                            'host' => '127.0.0.1',
-                            'port' => '11300'
-                        )
-                    );
-                    //-----------------------------------------------------
-
                     $this->flash->message('exito', 'La configuración de las fechas se ha realizado satisfactoriamente.');
                     $periodoSolicitudForm->clear();
                 }
@@ -316,222 +309,23 @@ class TurnosController extends ControllerBase
         }
     }
 
-    /**
-     * Muestra una grilla paginada con los datos de los afiliados que solicitaron turnos.
-     *
-     *
-     */
-    public function turnosSolicitadosAction()
+    // Muestra una grilla con todos los periodos
+    public function verPeriodosAction()
     {
-        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-        $fechaInicio = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
-        $fechaFin = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
-        $diaAtencion = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-        $cantAut = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
-        $this->view->fechaI=$fechaInicio;
-        $this->view->fechaF=$fechaFin;
-        $this->view->diaA=$diaAtencion;
-        $this->view->cantA=$cantAut;
-
-        $solicitudTurnos = $this->modelsManager->createBuilder()
-            ->from('Solicitudturno');
-        $paginator = new PaginacionBuilder
-        (
+        //Crea un paginador, muestra 3 filas por página
+        $paginator = new Paginacion(
             array(
-                "builder" => $solicitudTurnos,
+                //obtenemos los productos
+                "data" => Fechasturnos::find(),
                 //limite por página
-                "limit"=> 10,
-                //variable get page convertida en un integer
-                "page" => $this->request->getQuery('page', 'int')
-            )
-        );
-        $this->view->page = $paginator->getPaginate();
-
-        $this->view->autorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
-        $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-        $this->view->cantidadDeTurnos = $fechaTurnos->fechasTurnos_cantidadDeTurnos;
-        //$this->view->formularioSimple = new EditarSolicitudTurnoForm();
-        //$this->view->formulario = new EditarSolicitudTurnoForm(null,array('revision'=>'true'));
-    }
-
-    /**
-     * @desc - permitimos editar un
-     * @return json
-     */
-    public function editAction()
-    {
-        //deshabilitamos la vista para peticiones ajax
-        $this->view->disable();
-
-        //si es una petición post
-        if ($this->request->isPost() == true) {
-            //si es una petición ajax
-            if ($this->request->isAjax() == true) {
-
-                //si existe el token del formulario y es correcto(evita csrf)
-
-
-                //si existe el token del formulario y es correcto(evita csrf)
-
-
-                $solicitudTurno = Solicitudturno::findFirstBySolicitudTurno_id($this->request->getPost('solicitudTurno_id'));
-                $solicitudTurno->solicitudTurno_estado          = $this->request->getPost('solicitudTurno_estado');
-                if($this->request->getPost('editable')==1){
-                    $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
-                    $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
-               }
-
-                if ($solicitudTurno->update()) {
-
-                    $this->response->setJsonContent(array(
-                        "res" => "success"
-                    ));
-                    //devolvemos un 200, todo ha ido bien
-                    $this->response->setStatusCode(200, "OK");
-                } else {
-                    $this->response->setJsonContent(array(
-                        "res" => "error"
-                    ));
-                    //devolvemos un 500, error
-                    $this->response->setStatusCode(500, "Error Interno del Servidor.".$this->request->getPost('solicitudTurno_id'));
-                }
-                $this->response->send();
-            }
-        }
-
-    }
-
-    public function turnosRespondidosAction()
-    {
-        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-        $fechaInicio = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
-        $fechaFin = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
-        $diaAtencion = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-        $cantAut = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
-        $this->view->fechaI=$fechaInicio;
-        $this->view->fechaF=$fechaFin;
-        $this->view->diaA=$diaAtencion;
-        $this->view->cantA=$cantAut;
-
-        $paginator = new PaginatorArray
-        (
-            array(
-                "data" => Solicitudturno::accionVerSolicitudesConRespuestaEnviada(),
-                //limite por página
-                "limit"=> 10,
+                "limit"=> 6,
                 //variable get page convertida en un integer
                 "page" => $this->request->getQuery('page', 'int')
             )
         );
 
-        $this->view->page = $paginator->getPaginate();
-    }
-
-    public function cantRtasAutorizadasEnviadas()
-    {
-        try
-        {
-            $cant = 0;
-            $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-            $fI = $fechaTurnos->fechasTurnos_inicioSolicitud;
-            $fF =$fechaTurnos->fechasTurnos_finSolicitud;
-
-            $sql = "SELECT count(*) as cantidad FROM solicitudTurno WHERE (DATE(solicitudTurno_fechaPedido) BETWEEN '$fI' and '$fF'
-                     and solicitudTurno_respuestaEnviada='SI' and solicitudTurno_estado='AUTORIZADO')";
-            $result = $this->db->query($sql);
-
-            if ($result->numRows() != 0)
-            {
-                $respuesta = $result->fetch();
-                $cant =  $respuesta['cantidad'];
-            }
-        }
-        catch (Phalcon\Db\Exception $e)
-        {
-            echo $e->getMessage(), PHP_EOL;
-        }
-        return $cant;
-    }
-
-    public function editarSolicitudAction($idSolicitud)
-    {
-        //falta preguntar por el rol de usuario...
-        // (EL ROL DE SUPERVISOR SOLAMENTE PUEDE MODIFCAR LOS TURNOS??? O EL ROL BASICO DE EMPLEADOS DE IMPS TAMBIEN ???)
-
-
-        //LO QUE ESTA HECHO ES PARA LOS ROLES DE ADMIN Y SUPERVISOR.
-
-        $unaSolicitud = Solicitudturno::findFirstBySolicitudTurno_id($idSolicitud);
-
-        if($unaSolicitud)
-        {
-            $soloLectura=''; //coomo puedo hacer para que esta variable me permita ponerle al atributo readonly????
-
-            $estado = $unaSolicitud->solicitudTurno_estado;
-            $montoMax = $unaSolicitud->solicitudTurno_montoMax;
-            $montoPos = $unaSolicitud->solicitudTurno_montoPosible;
-            $cantCuotas = $unaSolicitud->solicitudTurno_cantCuotas;
-            $valorCuota = $unaSolicitud->solicitudTurno_valorCuota;
-            $obs = $unaSolicitud->solicitudTurno_observaciones;
-
-            $nickAnterior = $unaSolicitud->solicitudTurno_nickUsuario;// usuario viejo
-            $miSesion = $this->session->get('auth');
-            $nickActual = $miSesion['usuario_nick'];
-
-            $cantAutorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
-            $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-            $cantTurnos = $fechaTurnos->fechasTurnos_cantidadDeTurnos;
-            $todosAutEnviados = false;
-
-            $listaUno = array('pendiente'=>'pendiente');
-            $listaDos = array('pendiente'=>'pendiente','revision'=>'revision');
-            $listaTres = array("pendiente"=> "pendiente", "revision"=> "revision", "autorizado"=> "autorizado", "denegado"=> "denegado", "denegado por falta de turnos"=> "denegado por falta de turnos");
-            $listaCuatro = array('denegado por falta de turnos'=>'denegado por falta de turnos');
-
-            if(($cantAutorizadosEnviados > 0) && ($cantAutorizadosEnviados == $cantTurnos))
-                $todosAutEnviados=true;
-
-            if($todosAutEnviados)
-            {
-                $this->view->lista = $listaCuatro;
-               // $this->view->soloLectura; //no se pueden editar los montos, cantidad, valor,observacion
-            }
-            else
-            {
-                if ($estado == 'pendiente')
-                {
-                    $this->view->lista = $listaDos;
-                    $this->view->soloLectura='readonly';
-                }
-                else
-                {
-                    if($estado == 'revision' or $estado =='autorizado' or $estado=='denegado' or $estado=='denegado por falta de turnos')
-                    {
-                        $this->view->lista=$listaTres;
-                        $this->view->soloLectura='';
-                    }
-                    else
-                    {
-                        if($estado !='pendiente' or $estado !='revision' or $estado!='autorizado' or $estado!='denegado')
-                        {
-                            $this->view->lista=$listaUno;
-                          //  $this->view->soloLectura;
-                        }
-                    }
-                }
-            }
-
-            $this->view->idSolicitud= $idSolicitud;
-            $this->view->estado = $estado;
-            $this->view->montoM = $montoMax;
-            $this->view->montoP = $montoPos;
-            $this->view->cantCuotas = $cantCuotas;
-            $this->view->valorCuota = $valorCuota;
-            $this->view->obs = $obs;
-        }
+        //pasamos el objeto a la vista con el nombre de $page
+        $this->view->tabla = $paginator->getPaginate();
     }
 
     public function editarPeriodoAction($idFechaTurno)
@@ -571,54 +365,131 @@ class TurnosController extends ControllerBase
         }
     }
 
-    public function guardarDatosEdicionAction()
+    //Muestra una grilla paginada con los datos de los afiliados que solicitaron turnos.
+
+    public function turnosSolicitadosAction()
     {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $fechaInicio = $ultimoPeriodo->fechasTurnos_inicioSolicitud;
+        $fechaFin = $ultimoPeriodo->fechasTurnos_finSolicitud;
+
+        $this->view->fechaI = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
+        $this->view->fechaF = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
+        $this->view->diaA = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+        $this->view->cantA = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $this->view->cantidadDeTurnos = $ultimoPeriodo->fechasTurnos_cantidadDeTurnos;
+        $this->view->autorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
+
+        $solicitudes = $this->modelsManager->createBuilder()->from('Solicitudturno');
+
+        $solicitudes->where("solicitudTurno_manual = 0 and (solicitudTurno_fechaPedido between :fI: and :fF:) and solicitudTurno_respuestaEnviada='NO'",
+            array('fI' =>$fechaInicio,'fF'=>$fechaFin));
+
+        $paginator = new PaginacionBuilder
+        (
+            array
+            (
+                "builder" => $solicitudes,
+                "limit"=> 10,
+                "page" => $this->request->getQuery('page', 'int')
+            )
+        );
+        $this->view->page = $paginator->getPaginate();
+
+        //$this->view->formularioSimple = new EditarSolicitudTurnoForm();
+        //$this->view->formulario = new EditarSolicitudTurnoForm(null,array('revision'=>'true'));
+    }
+
+    /**
+     * @desc - permitimos editar una solicitud.
+     * @return json
+     */
+    public function editAction()
+    {
+        //deshabilitamos la vista para peticiones ajax
+        $this->view->disable();
+
         if ($this->request->isPost())
         {
-            $id = $this->request->getPost('idSolicitud');
-            $estado = $this->request->getPost('estado');
-            $montoP = $this->request->getPost('montoP');
-            $montoM = $this->request->getPost('montoM');
-            $cantCuotas = $this->request->getPost('cantCuotas');
-            $valorCuota = $this->request->getPost('valorCuota');
-            $obs = $this->request->getPost('obs');
-
-            $unaSolicitud = Solicitudturno::findFirst(array("solicitudTurno_id=?1","bind"=>array(1=>$id)));
-
-            if($unaSolicitud)
+            //si es una petición ajax
+            if ($this->request->isAjax())
             {
-                $estadoAnterior = $unaSolicitud->solicitudTurno_estado;
-                $unaSolicitud->solicitudTurno_estado= $estado;
-                $unaSolicitud->solicitudTurno_montoPosible=$montoP;
-                $unaSolicitud->solicitudTurno_montoMax=$montoM;
-                $unaSolicitud->solicitudTurno_cantCuotas=$cantCuotas;
-                $unaSolicitud->solicitudTurno_valorCuota=$valorCuota;
-                $unaSolicitud->solicitudTurno_observaciones=$obs;
-                $unaSolicitud->solicitudTurno_fechaProcesamiento=date('Y-m-d');
+                //si existe el token del formulario y es correcto(evita csrf) ????
 
-                $miSesion = $this->session->get('auth');
-                $unaSolicitud->solicitudTurno_nickUsuario= $miSesion['usuario_nick'];
+                $solicitudTurno = Solicitudturno::findFirstBySolicitudTurno_id($this->request->getPost('solicitudTurno_id'));
+                $solicitudTurno->solicitudTurno_estado = $this->request->getPost('solicitudTurno_estado');
 
-                if ($estado == 'autorizado' && $estadoAnterior!='autorizado')
-                    Fechasturnos::incrementarCantAutorizados();
-
-                if ($unaSolicitud->save())
+                if($this->request->getPost('editable')==1)
                 {
-                    $this->flash->message('exito',"Los datos se guardaron correctamente!");
-                    return $this->dispatcher->forward(array("action" => "vuelta"));
+                    $solicitudTurno->solicitudTurno_montoMax        = $this->request->getPost('solicitudTurno_montoMax', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_montoPosible    = $this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_cantCuotas      = $this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_valorCuota      = $this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim'));
+                    $solicitudTurno->solicitudTurno_observaciones   = $this->request->getPost('solicitudTurno_observaciones', array('string'));
+                    $solicitudTurno->solicitudTurno_fechaProcesamiento = date('Y-m-d');
+                }
+
+                if ($solicitudTurno->update())
+                {
+                    $this->response->setJsonContent(array( "res" => "success"));
+                    $this->response->setStatusCode(200, "OK");
                 }
                 else
                 {
-                    $this->flash->message('problema',"Ocurrio un error, no se pudieron guardar los datos.");
-                    return $this->dispatcher->forward(array("action" => "vuelta"));
+                    $this->response->setJsonContent(array("res" => "error"));
+                    $this->response->setStatusCode(500, "Error Interno del Servidor.".$this->request->getPost('solicitudTurno_id'));
                 }
-            }
-            else
-            {
-                $this->flash->message('problema',"Los cambios a la solicitud no se pudieron guardar.");
-                return $this->dispatcher->forward(array("action" => "vuelta"));
+                $this->response->send();
             }
         }
+    }
+
+    public function turnosRespondidosAction()
+    {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $this->view->fechaI = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
+        $this->view->fechaF = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
+        $this->view->diaA = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+        $this->view->cantA = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $this->view->cantidadDeTurnos= $ultimoPeriodo->fechasTurnos_cantidadDeTurnos;
+
+        $paginator = new PaginatorArray
+        (
+            array
+            (
+                "data" => Solicitudturno::accionVerSolicitudesConRespuestaEnviada(),
+                "limit"=> 10,
+                "page" => $this->request->getQuery('page', 'int')
+            )
+        );
+
+        $this->view->page = $paginator->getPaginate();
+    }
+
+    public function cantRtasAutorizadasEnviadas()
+    {
+        try
+        {
+            $cant = 0;
+            $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
+            $fI = $fechaTurnos->fechasTurnos_inicioSolicitud;
+            $fF = $fechaTurnos->fechasTurnos_finSolicitud;
+
+            $sql = "SELECT count(*) as cantidad FROM solicitudTurno WHERE (DATE(solicitudTurno_fechaPedido) BETWEEN '$fI' and '$fF'
+                     and solicitudTurno_respuestaEnviada='SI' and solicitudTurno_estado='AUTORIZADO')";
+            $result = $this->db->query($sql);
+
+            if ($result->numRows() != 0)
+            {
+                $respuesta = $result->fetch();
+                $cant =  $respuesta['cantidad'];
+            }
+        }
+        catch (Phalcon\Db\Exception $e)
+        {
+            echo $e->getMessage(), PHP_EOL;
+        }
+        return $cant;
     }
 
     public function vueltaAction()
@@ -626,35 +497,11 @@ class TurnosController extends ControllerBase
         //no hace nada, esta solo para que vaya a la vista.
     }
 
-    /*================================ ADMINISTRADOR =======================================*/
-    /**
-     * Muestra una grilla con todos los periodos y permite la edicion de los campos:
-     * fechasTurnos_cantidadDeTurnos
-     * fechasTurnos_diaAtencion
-     */
-    public function verPeriodosAction()
-    {
-        //Crea un paginador, muestra 3 filas por página
-        $paginator = new Paginacion(
-            array(
-                //obtenemos los productos
-                "data" => Fechasturnos::find(),
-                //limite por página
-                "limit"=> 6,
-                //variable get page convertida en un integer
-                "page" => $this->request->getQuery('page', 'int')
-            )
-        );
-
-        //pasamos el objeto a la vista con el nombre de $page
-        $this->view->tabla = $paginator->getPaginate();
-    }
-
     public function enviarRespuestasAction()
     {
         $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO');
         $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO');
-        $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('denegado por falta de turnos');
+        $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO POR FALTA DE TURNOS');
 
         if(count($solicitudesAutorizadas)==0 && count($solicitudesDenegadas)==0 && count($solicitudesDenegadasFaltaTurnos)==0)
         {
@@ -738,6 +585,7 @@ class TurnosController extends ControllerBase
 
         $send=$this->mailInformatica->send();
     }
+
     public function confirmaEmailAction()
     {
         $idSolicitud = $this->request->get('id');
