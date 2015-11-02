@@ -18,9 +18,11 @@
                     Periodo de solicitud de turnos: {{ fechaI }} - {{ fechaF }}
                     <br/>
                     Dia de atenci&oacute;n: {{ diaA }}
+                    <br/> <br/>
+                    Total de turnos: {{ cantidadDeTurnos }}
                     <br/>
-                    Cantidad de solicitudes autorizadas: {{ cantA }}
-
+                    Turnos autorizados: {{ cantA }}
+                    <br/><br/><br/>
                 </div>
             </div>
         </div>
@@ -60,8 +62,8 @@
                                 {{ link_to("/turnos/turnosRespondidos/?page=1",'Primera','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.next,'Siguiente','class':'btn') }}
-                                {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'Ultima','class':'btn') }}
-                                 P&aacute;gina {{ page.current }} de {{ page.total_pages }}
+                                {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'&Uacute;ltima','class':'btn') }}
+                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
                             </div>
                         </td>
                     </tr>

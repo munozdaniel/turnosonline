@@ -80,7 +80,12 @@
 
                         <br/><br/><br/><br/><br/>
 
-                        {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                    <div class="row">
+                        <div class="col-lg-9 col-lg-offset-2">
+                            {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                        </div>
+                    </div>
+
                     {{ end_form() }}
                 </div>
             </div>

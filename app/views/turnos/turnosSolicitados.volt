@@ -23,12 +23,16 @@
 
             <div id="solicitudes" class="col-lg-16 col-md-16 table-responsive">
                 <div >
-                    <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaInicio }} - {{ fechaFin }}
+                    <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaI }} - {{ fechaF }}
                     </div>
-                    <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaAtencion }}
+                    <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaA }}
+                    </div>
+                    <br/>
+                    <div id="#datos" class="fuente-16">
+                        <strong><ins>Turnos autorizados:</ins>: </strong> {{ cantidadDeTurnos }}
                     </div>
                     <div id="#datos" class="fuente-16">
-                        <strong><ins>Cantidad de solicitudes autorizadas</ins>: </strong> {{ cantAutorizado }}
+                        <strong><ins>Cantidad de solicitudes autorizadas</ins>: </strong> {{ autorizadosEnviados }}
                     </div>
                     <br>
 
@@ -50,7 +54,7 @@
                         <th style="text-align: center;color:#2da2c8">EDITAR</th>
                     </tr>
                     </thead>
-                        <tbody>
+                    <tbody>
 
                     {% for item in page.items %}
                         <tr>
@@ -85,7 +89,7 @@
                                         Editar
                                     </a>
                                 {% else %}
-                                    <a href="#" class="btn btn-gris editar">Editar </a>
+                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">Editar </a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -123,6 +127,13 @@
     <!-- ==========================MODALES============================= -->
     <!-- Fin: Modal Info Optica -->
     <script type="text/javascript">
+
+        function mensaje()
+        {
+            alert('Solo el usuario que esta revisando la solicitud puede modificarla.)');
+        }
+
+
         //objeto javascript al que le añadimos toda la funcionalidad del crud
         var crudPhalcon = {};
         $(document).ready(function () {
@@ -137,7 +148,7 @@
 
                 var lista, editable = false, autorizacion = false;
                 var cantidadDeTurnos = {{ cantidadDeTurnos }},
-                        autorizadosEnviados = {{ cantAutorizado }};
+                        autorizadosEnviados = {{ autorizadosEnviados }};
                 if (json.solicitudTurno_estado == "PENDIENTE") {
                     //Si es PENDIENTE cualquier usuario puede pasar a REVISION, salvo que no hayan turnos.
                     if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos))
@@ -202,11 +213,11 @@
                     html += '<div id="campos_editables" >';
                     html += '<input id="editable" name="editable" value="1" type="hidden" class="form-control">';//1 Editable / 0 No editable
                 }
-                 else {//SI ES DENEGADO, DENEGADO POR FALTA DE TURNOS, PENDIENTE OCULTAR FORM
+                else {//SI ES DENEGADO, DENEGADO POR FALTA DE TURNOS, PENDIENTE OCULTAR FORM
                     html += '<div id="campos_editables" class="ocultar">';
                     //ADEMAS SI ES DENEGADO, DEBE MOSTRAR LA LISTA DE CAUSAS
                     html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
-                 }
+                }
                 html += '<div> <label for="solicitudTurno_montoMax">Monto Máximo</label>';
                 html += '<input type="number" min="0" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax"  required  value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
                 html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
@@ -245,14 +256,14 @@
                 $("#modalCrudPhalcon .modal-body ").html(html);
                 $("#modalCrudPhalcon").modal("show");
             },
-                    // Evento onChange del select estado.
+                // Evento onChange del select estado.
                     crudPhalcon.habilitarDeshabilitarSegunElEstado = function () {
                         //Si esta autorizado puede modificar todos los campos, el div editor debe aparecer.
                         var solicitudTurno_estado = document.getElementById("solicitudTurno_estado");
                         var panel = document.getElementById("editor");
 
                         if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
-                                ) {
+                        ) {
                             $("#campos_editables").removeClass('ocultar');
                             $("#causaDenegado").addClass('ocultar');
                         }
@@ -326,7 +337,6 @@
 
 
 </section>
-
 
 
 

@@ -15,7 +15,7 @@
                               style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
                             <em>Por favor, llene los siguientes campos para solicitar un turno con el departamento de Préstamos .</em>
                             <br/>
-                            <em style="color:tomato"> (*) Campos obligatorios.</em>
+                            <em style="color:tomato">* Campos obligatorios.</em>
                         </p>
                     </div>
                     <div class="pull-right">
