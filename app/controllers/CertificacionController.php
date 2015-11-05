@@ -12,8 +12,6 @@ class CertificacionController extends ControllerBase
         parent::initialize();
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
-        $this->assets
-            ->collection('footer')->addJs('js/tooltip.js');
     }
 
     public function indexAction()
