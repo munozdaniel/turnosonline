@@ -16,11 +16,9 @@
                     </div>
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
-                        <a href="#in-estructura" data-toggle="modal" class="" >
-                            <div class="single_contact_feaured wow fadeInUp">
-                                <i class="fa fa-sitemap" style=" color:#2da2c8;"></i><h4>Estructura</h4><p><br></p>
-                            </div>
-                        </a>
+                        {{ link_to('public/files/sector/estructura.pdf','target':'_blank','<div class="single_contact_feaured wow fadeInUp">
+                                <i class="fa fa-sitemap" style=" color:#2da2c8;"></i><h4>Estructura</h4><p>Abrir PDF</p>
+                            </div>' )}}
                     </div>
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
@@ -69,28 +67,6 @@
         </div>
     </div>
     <!--=========== FIN:Historia ================-->
-    <!--=========== Estructura ================-->
-    <div id="in-estructura" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Estructura</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12 fuente-16">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--=========== FIN:Estructura ================-->
     <!--=========== Historia ================-->
     <div id="in-autoridad" class="modal fade">
         <div class="modal-dialog">
