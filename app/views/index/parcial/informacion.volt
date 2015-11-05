@@ -185,24 +185,33 @@
                                     </div>
                                     <!-- BEGAIN FEATURED SLIDER -->
                                     <div class="featured_slider">
-                                        <!-- SINGLE SLIDE IN THE SLIDER -->
+                                        <!-- PROMO FARMACIA OESTE 1 -->
                                         <div class="single_iteam">
                                             <a href="#farmacia-promo" data-toggle="modal">
                                                 {{ image('img/novedades/promo.jpg','alt':'Promocion Farmacia Oeste') }}
                                             </a>
                                         </div>
-                                        <!-- SINGLE SLIDE IN THE SLIDER -->
+                                        <!-- PROMO FARMACIA OESTE 2-->
+                                        <div class="single_iteam">
+                                            {{ link_to('public/img/novedades/promo2.jpg','target':'_blank', image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1') ) }}
+                                        </div>
+                                        <!-- PROMO FARMACIA OESTE 3 -->
+                                        <div class="single_iteam">
+                                            {{ link_to('public/img/novedades/promo3.jpg','target':'_blank', image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1') ) }}
+
+                                        </div>
+                                        <!-- AVISTAJE -->
                                         <div class="single_iteam">
                                             <a href="#novedades-ave" data-toggle="modal">
                                                 {{ image('img/novedades/feature_img2.jpg','alt':'Avistaje Fauna Marina') }}
                                             </a>
                                         </div>
-                                        <!-- SINGLE SLIDE IN THE SLIDER -->
+                                        <!-- EMPRENDIMIENTO -->
                                         <div class="single_iteam">
                                             {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/novedades/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
                                         </div>
 
-                                        <!-- SINGLE SLIDE IN THE SLIDER -->
+                                        <!-- FECHAS TURNOS -->
                                         <div class="single_iteam">
                                             <a href="#novedades-fechaTurnos" data-toggle="modal">
                                                 {{ image('img/novedades/feature_img3.jpg','alt':'Fecha Turnos Online') }}
