@@ -3014,3 +3014,6 @@ textarea .form-control {
 .ocultar{
     display: none;
 }
+.slick-next,.slick-prev{
+    z-index: 1000;
+}
