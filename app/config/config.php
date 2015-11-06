@@ -69,5 +69,15 @@ return new \Phalcon\Config(array(
         'charset'  => 'UTF-8',
         'email'    => 'informatica@imps.org.ar',
         'name'     => 'informatica@imps.org.ar',
+    ),
+    'mailDesarrollo' => array(
+        'host'     => 'mail.imps.org.ar',
+        'username' => 'desarrollo@imps.org.ar',
+        'password' => 'sis$%&--temas',
+        'security' => '',
+        'port'     => '26',
+        'charset'  => 'UTF-8',
+        'email'    => 'desarrollo@imps.org.ar',
+        'name'     => 'desarrollo@imps.org.ar',
     )
 ));
