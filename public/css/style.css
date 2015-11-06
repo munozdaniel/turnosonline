@@ -2494,7 +2494,7 @@ textarea .form-control {
 	.slider_caption {margin-top: 28%;}
 	.slider_caption > a {margin-top: 10px;}
 	.slides-navigation h3 {display: none;}
-	.slider_caption > h2 {font-size: 18px;line-height: 20px;}
+	.slider_caption >a> h2 {font-size: 18px !important;line-height: 20px;}
 	.panel-title {font-size: 17px;}
 	.about_area {padding-bottom: 0px;}
 	.about_slider{height: auto;}
@@ -2519,7 +2519,7 @@ textarea .form-control {
 }
 
 @media(max-width:320px ){
-	.slider_caption > h2 {font-size: 15px;line-height: 18px;}
+	.slider_caption > a> h2 {font-size: 15px !important;line-height: 18px;}/*original: .slider_caption>h2*/
 	.single_service > .service_title:after {left: 29%;}
 	.blog_slider .slick-prev {left: 70.5%;}
 	.subscr_btn {font-size: 11px;}
