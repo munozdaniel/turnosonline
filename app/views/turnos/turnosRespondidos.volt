@@ -1,5 +1,7 @@
 <section id="certificacion">
 
+    <meta http-equiv="refresh" content="15">
+
     <style>
         a {color: #2da2c8}
         .heading h2 {font-size: 30px;line-height: 35px;}
@@ -14,15 +16,31 @@
                         <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos con respuesta enviada</h2>
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
+                    {{ content() }}
 
-                    Periodo de solicitud de turnos: {{ fechaI }} - {{ fechaF }}
+                    <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaI }} - {{ fechaF }}
+                    </div>
+                    <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaA }}
+                    </div>
                     <br/>
-                    Dia de atenci&oacute;n: {{ diaA }}
-                    <br/> <br/>
-                    Total de turnos: {{ cantidadDeTurnos }}
+
+                    {% if (cantidadDeTurnos == cantA) %}
+                        <div class="fuente-16" style="color:red;">
+                            <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
+                        </div>
+                        <div class="fuente-16" style="color:red;">
+                            <strong><ins>Turnos autorizados :</ins> </strong> {{ cantA }}
+                        </div>
+                    {% else %}
+                        <div class="fuente-16">
+                            <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
+                        </div>
+                        <div class="fuente-16">
+                            <strong><ins>Turnos autorizados :</ins> </strong> {{ cantA }}
+                        </div>
+                    {% endif %}
                     <br/>
-                    Turnos autorizados: {{ cantA }}
-                    <br/><br/><br/>
+
                 </div>
             </div>
         </div>
