@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row edicion">
-            <div class="col-md-12">
+            <div class="col-md-9 col-md-offset-2">
                 {{ content() }}
             </div>
        </div>
