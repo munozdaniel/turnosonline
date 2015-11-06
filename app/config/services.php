@@ -143,11 +143,24 @@ $di->set('mailInformatica', function () use ($config) {
     return $mailInformatica;
 });
 
+$di->set('mailDesarrollo',function() use ($config)
+{
+    $mailDesarrollo = new PHPMailer;
+    $mailDesarrollo->isSMTP();
+    $mailDesarrollo->isHTML(true);
 
+    $mailDesarrollo->CharSet      = $config->mailInformatica->charset;
+    $mailDesarrollo->Host         = $config->mailInformatica->host;
+    $mailDesarrollo->SMTPAuth     = true;
+    $mailDesarrollo->Username     = $config->mailInformatica->username;
+    $mailDesarrollo->Password     = $config->mailInformatica->password;
+    $mailDesarrollo->SMTPSecure   = $config->mailInformatica->security;
+    $mailDesarrollo->Port         = $config->mailInformatica->port;
+    $mailDesarrollo->From         = $config->mailInformatica->email;
+    $mailDesarrollo->FromName     = $config->mailInformatica->name;
 
-
-
-
+    return $mailDesarrollo;
+});
 
 /**
  * Register the flash service with custom CSS classes
