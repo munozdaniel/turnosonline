@@ -176,10 +176,24 @@ img{
 	font-weight: bolder;
 	font-family: 'Varela', sans-serif;
 }
-
-
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
+/*Dropdown menu*/
+.btn-menu{
+    color: #FFF !important;
+    background-color: transparent !important;
+    text-transform: uppercase;
+    font-weight: bold !important;
+}
+#miSubMenu > li > a {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+#opciones-institucion > .btn {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   background-color: transparent;
 }
@@ -198,7 +212,7 @@ img{
 }
 
 
-.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   background-color: transparent;
   color: #fff;
@@ -2984,7 +2998,6 @@ textarea .form-control {
     padding: 5px 0;
     margin: 2px 0 0;
     font-size: 14px;
-    text-align: left;
     list-style: none;
     background-color: rgba(16, 17, 19, 0.92);
     -webkit-background-clip: padding-box;

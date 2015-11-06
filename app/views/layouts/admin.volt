@@ -28,17 +28,19 @@
                         <li>{{ link_to('index/index#service','class':'si_recorrer','Servicios') }}</li>
                         <li>{{ link_to('index/index#works','class':'si_recorrer','Guía de Tramites') }}</li>
                         <li>{{ link_to('index/index#team','class':'si_recorrer','Prestaciones' )}}</li>
-                        <li class="dropdown" style="cursor: pointer; cursor: hand;">
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                Institución <span class="caret"></span>
-                            </a>
-                            <ul id="miSubMenu" class="dropdown-menu nav navbar-nav navbar-right main_nav">
-                                <li>{{ link_to('index/index#contact','class':'si_recorrer','Contactanos') }}</li>
-                                <li>{{ link_to('index/index#contact','class':'si_recorrer','Información de Contacto') }}</li>
+                        <li id="opciones-institucion" class="dropdown">
+                            <button class="btn btn-menu dropdown-toggle" type="button" id="desplegar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Institución
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="miSubMenu" class="dropdown-menu main_nav" aria-labelledby="desplegar" style="color: #FFF !important;;">
+                                <li>{{ link_to('index/index#contact','class':'si_recorrer','CONTACTANOS') }}</li>
+                                <li>{{ link_to('index/index#contact','class':'si_recorrer','INFORMACIÓN DE CONTACTO') }}</li>
                                 <li role="separator" class="divider" style="width: 100%;"></li>
                                 {{ elemento.getItemMenu() }}
                             </ul>
                         </li>
+
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
