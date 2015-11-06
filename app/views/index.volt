@@ -4,6 +4,9 @@
         <!-- Basic Page Needs
    ================================================== -->
         <meta charset="utf-8">
+        <meta name="description"
+              content="El I.M.P.S. les ofrece a sus afiliados la posibilidad de informarse y de realizar sus
+               operaciones online desde la comodidad de su hogar.">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         {{ getTitle() }}
         <!-- Bootstrap js -->
