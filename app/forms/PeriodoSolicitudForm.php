@@ -37,7 +37,7 @@ class PeriodoSolicitudForm extends Form
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la solicitud de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea posterior que la fecha  <strong>"DESDE"</strong>.',
+                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea posterior a la fecha  <strong>"DESDE"</strong>.',
                 'desde' =>$periodoSolicitudDesde->getValue()// valida qeu periodoSOlicitudHasta>periodoSolicitudDesde
             ))
         ));

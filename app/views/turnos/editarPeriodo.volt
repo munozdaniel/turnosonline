@@ -1,4 +1,5 @@
 <section id="certificacion">
+
     <style>
         .heading h2 {font-size: 30px;line-height: 35px;}
     </style>
@@ -15,6 +16,7 @@
             </div>
         </div>
         <div class="row formulario-turnos">
+
             <div class="col-md-12">
                 {{ content() }}
             </div>

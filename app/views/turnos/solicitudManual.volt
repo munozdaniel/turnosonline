@@ -1,5 +1,7 @@
 <section id="certificacion">
 
+    <meta http-equiv="refresh" content="35">
+
     <style>
         .heading h2 {font-size: 35px;line-height: 35px;}
     </style>
@@ -31,11 +33,31 @@
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                         <br>
 
-                        <p><i class="fa fa-info-circle"
-                              style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
-                            <em>Por favor, llene los siguientes campos para ingresar una solicitud de turno.</em> <br/>
-                            <em style="color:tomato">* Campos obligatorios.</em>
+                        <p><i class="fa fa-info-circle" style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
+                            <em>Por favor, llene los siguientes campos para ingresar una solicitud de turno.</em> <br/><br/>
                         </p>
+
+                        <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaI }} - {{ fechaF }}</div>
+                        <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaA }}</div>
+                        <br/>
+
+                        {% if (cantTurnos == cantAutorizados) %}
+                            <div class="fuente-16" style="color:red;">
+                                <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
+                            </div>
+                            <div class="fuente-16" style="color:red;">
+                                <strong><ins>Turnos autorizados :</ins> </strong> {{ cantAutorizados }}
+                            </div>
+                        {% else %}
+                            <div class="fuente-16">
+                                <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
+                            </div>
+                            <div class="fuente-16">
+                                <strong><ins>Turnos autorizados :</ins> </strong> {{ cantAutorizados }}
+                            </div>
+                        {% endif %}
+                        <br/>
+
                     </div>
                 </div>
             </div>
@@ -49,9 +71,9 @@
 
             <div class="col-lg-8 col-md-8 col-md-offset-2">
 
-                <!-- START SOLICITUD TURNOS CONTENT -->
                 <div class="about_content wow bounceInUp ">
-                    {{ form('turnos/guardaDatosSolicitudManual','method':'post','style':'','class':'') }}
+                    {{ form('turnos/solicitudManual','method':'post','style':'','class':'') }}
+                         <em style="color:tomato">* Campos obligatorios.</em> <br/><br/>
 
                         {% for elto in formulario %}
                             <div class="row">

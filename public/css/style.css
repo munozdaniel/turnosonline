@@ -188,6 +188,9 @@ img{
     font-weight: 600;
     text-transform: uppercase;
 }
+#miSubMenu > li > a:hover {
+    background-color: rgba(45, 162, 200, 0.53);
+}
 #opciones-institucion > .btn {
     padding-top: 15px;
     padding-bottom: 15px;
