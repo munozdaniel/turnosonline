@@ -2,7 +2,7 @@
 <header id="header">
     <!-- BEGIN MENU -->
     <div class="menu_area">
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <!-- FOR MOBILE VIEW COLLAPSED BUTTON -->
