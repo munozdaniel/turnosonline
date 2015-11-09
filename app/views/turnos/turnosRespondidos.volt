@@ -54,8 +54,8 @@
                         <th style="text-align: center;color:#2da2c8">Legajo</th>
                         <th style="text-align: center;color:#2da2c8">Apellido y nombre</th>
                         <th style="text-align: center;color:#2da2c8">Estado</th>
-                        <th style="text-align: center;color:#2da2c8">Usuario</th>
                         <th style="text-align: center;color:#2da2c8">Fecha respuesta enviada</th>
+                        <th style="text-align: center;color:#2da2c8">Usuario</th>
                         <th style="text-align: center;color:#2da2c8">Respuesta chequeada</th>
                     </tr>
                     </thead>
@@ -66,8 +66,8 @@
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_legajo'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nomApe'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_estado'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_fechaRespuestaEnviadaDate'] }}</td>
+                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_respChequedaTexto'] }}</td>
                         </tr>
                     {% endfor %}
