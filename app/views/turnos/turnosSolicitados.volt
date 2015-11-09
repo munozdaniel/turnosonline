@@ -28,8 +28,8 @@
                              <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
                          </div>
                          <div class="fuente-16" id="idCantA" style="color:red;">
-                             <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados"></p>
-                         </div>
+                             <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados">{{ cantA }}</p>
+                        </div>
                      {% else %}
                         <div class="fuente-16">
                             <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
@@ -39,6 +39,7 @@
                         </div>
                     {% endif %}
                     <br/>
+
                 </div>
             </div>
         </div>
@@ -59,7 +60,7 @@
                             <th style="text-align: center;color:#2da2c8">Máximo de cuotas</th>
                             <th style="text-align: center;color:#2da2c8">Valor cuota</th>
                             <th style="text-align: center;color:#2da2c8">Observaciones</th>
-                            <th style="text-align: center;color:#2da2c8">Fecha revision</th>
+                            <th style="text-align: center;color:#2da2c8">Fecha revisión</th>
                             <th style="text-align: center;color:#2da2c8">Usuario</th>
                             <th style="text-align: center;color:#2da2c8">EDITAR</th>
                         </tr>
@@ -71,7 +72,7 @@
                                 <td style="text-align: center;width: 180px">{{ item.solicitudTurno_legajo }}</td>
                                 <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nomApe }}</td>
                                 <td style="text-align: center;width: 180px">
-                                    {% set fechaModif =  date('d-m-Y',(item.solicitudTurno_fechaPedido) | strtotime) %}
+                                    {% set fechaModif =  date('d/m/Y',(item.solicitudTurno_fechaPedido) | strtotime) %}
                                     {{ fechaModif }}
                                 </td>
                                 <td style="text-align: center;width: 180px">{{ item.solicitudTurno_estado }}</td>
@@ -82,7 +83,7 @@
                                 <td style="text-align: center;width: 180px">{{ item.solicitudTurno_observaciones }}</td>
                                 <td style="text-align: center;width: 180px">
                                     {% if(item.solicitudTurno_fechaProcesamiento != null) %}
-                                        {% set fechaModif = date('d-m-Y',(item.solicitudTurno_fechaProcesamiento) | strtotime) %}
+                                        {% set fechaModif = date('d/m/Y',(item.solicitudTurno_fechaProcesamiento) | strtotime) %}
                                     {% else %}
                                         {% set fechaModif = '-' %}
                                     {% endif %}
@@ -143,7 +144,6 @@
 
         function myTimer()
         {
-           // var d =  Math.random().toPrecision(2).fontcolor('blue');
             $('#cantAutorizados').load(document.URL +  ' #cantAutorizados');
         }
 
