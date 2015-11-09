@@ -117,4 +117,11 @@ class Fechasturnos extends \Phalcon\Mvc\Model
             return false;
         }
     }
+
+    public static function cantAutorizadosDelPeriodoActual()
+    {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $cantAutorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        return $cantAutorizados;
+    }
 }
