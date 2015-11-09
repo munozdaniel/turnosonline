@@ -708,7 +708,7 @@ class TurnosController extends ControllerBase
         $html = $this->view->getRender('turnos','listadoEnPdf',array('listado' => $listado,'fechaI'=>$fechaInicio,'fechaF'=>$fechaFin,'diaA'=>$diaAtencion,'cantAut' =>$cantAut,'cantTurnos'=>$cantTurnos));
         $pdf = new mPDF();
 
-        $pdf->SetHeader(date('d-m-Y'));
+        $pdf->SetHeader(date('d/m/Y'));
 
         $pdf->pagenumPrefix = 'P&aacute;gina ';
         $pdf->nbpgPrefix = ' de ';
