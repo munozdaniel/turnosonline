@@ -35,7 +35,7 @@
                             <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
                         </div>
                         <div class="fuente-16" id="idCantA">
-                            <strong><ins>Turnos autorizados :</ins></strong> <p id="cantAutorizados"></p>
+                            <strong><ins>Turnos autorizados :</ins></strong> <p id="cantAutorizados">{{ cantA }}</p>
                         </div>
                     {% endif %}
                     <br/>
@@ -143,9 +143,8 @@
 
         function myTimer()
         {
-            var d = {{ cantA }} ;
            // var d =  Math.random().toPrecision(2).fontcolor('blue');
-            document.getElementById("cantAutorizados").innerHTML = d;
+            $('#cantAutorizados').load(document.URL +  ' #cantAutorizados');
         }
 
         //objeto javascript al que le añadimos toda la funcionalidad del crud
