@@ -1,6 +1,6 @@
 <section id="onepage">
 
-     <meta http-equiv="refresh" content="35">
+   {# <meta http-equiv="refresh" content="35"> #}
 
     <style>
         a {color: #2da2c8}
@@ -28,14 +28,14 @@
                              <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
                          </div>
                          <div class="fuente-16" id="idCantA" style="color:red;">
-                             <strong><ins>Turnos autorizados :</ins> </strong> {{ cantA }}
+                             <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados"></p>
                          </div>
                      {% else %}
                         <div class="fuente-16">
                             <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
                         </div>
                         <div class="fuente-16" id="idCantA">
-                            <strong><ins>Turnos autorizados :</ins> </strong>{{ cantA }}
+                            <strong><ins>Turnos autorizados :</ins></strong> <p id="cantAutorizados"></p>
                         </div>
                     {% endif %}
                     <br/>
@@ -139,8 +139,18 @@
 
     <script type="text/javascript">
 
+       var myVar = setInterval(function(){ myTimer() }, 1000);
+
+        function myTimer()
+        {
+            var d = {{ cantA }} ;
+           // var d =  Math.random().toPrecision(2).fontcolor('blue');
+            document.getElementById("cantAutorizados").innerHTML = d;
+        }
+
         //objeto javascript al que le añadimos toda la funcionalidad del crud
         var crudPhalcon = {};
+
         $(document).ready(function ()
         {
             //mostramos la modal para editar un post con sus datos
