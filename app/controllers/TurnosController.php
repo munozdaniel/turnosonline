@@ -595,7 +595,7 @@ class TurnosController extends ControllerBase
         else
         {
             $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-            $fechaAtencion = date('d-m-Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+            $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->fechasTurnos_diaAtencion);//date('d-m-Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
 
             $textoA="En respuesta a su solicitud, le informamos que podrá dirigirse al Instituto Municipal de Previsión Social el dia ".$fechaAtencion." para tramitar un préstamo personal.";
             $textoDxFdT="En respuesta a su solicitud, le informamos que no es posible otorgarle un turno para tramitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
@@ -697,6 +697,7 @@ class TurnosController extends ControllerBase
         $fechaInicio = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
         $fechaFin = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
         $diaAtencion = date('d/m/Y',strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+        $cantTurnos = $ultimoPeriodo->fechasTurnos_cantidadDeTurnos;
         $cantAut = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
 
         $this->tag->setTitle('');//Para que no muestre el titulo en el pdf.
@@ -704,7 +705,7 @@ class TurnosController extends ControllerBase
         //GENERAR PDF
         $this->view->disable();
         // Get the view data
-        $html = $this->view->getRender('turnos','listadoEnPdf',array('listado' => $listado,'fechaI'=>$fechaInicio,'fechaF'=>$fechaFin,'diaA'=>$diaAtencion,'cantAut' =>$cantAut));
+        $html = $this->view->getRender('turnos','listadoEnPdf',array('listado' => $listado,'fechaI'=>$fechaInicio,'fechaF'=>$fechaFin,'diaA'=>$diaAtencion,'cantAut' =>$cantAut,'cantTurnos'=>$cantTurnos));
         $pdf = new mPDF();
 
         $pdf->SetHeader(date('d-m-Y'));
