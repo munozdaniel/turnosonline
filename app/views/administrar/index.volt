@@ -1,5 +1,5 @@
 <!--=========== BEGAIN PRICING SECTION ================-->
-<section id="pricing" class="admin">
+<section id="onepage" class="admin">
     <div class="container">
         <div class="row col-lg-12 col-md-12">
             <!-- START ABOUT HEADING -->

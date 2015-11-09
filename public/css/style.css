@@ -58,8 +58,8 @@ h1,h2{
 	font-family: 'Montserrat', sans-serif; 
 }
 h3,h4,h5,h6{
-	/*font-family: 'Varela', sans-serif;*/
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Varela', sans-serif;
+	/*font-family: Arial, Helvetica, sans-serif;*/
 }
 
 h2 {
@@ -176,10 +176,27 @@ img{
 	font-weight: bolder;
 	font-family: 'Varela', sans-serif;
 }
-
-
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
+/*Dropdown menu*/
+.btn-menu{
+    color: #FFF !important;
+    background-color: transparent !important;
+    text-transform: uppercase;
+    font-weight: bold !important;
+}
+#miSubMenu > li > a {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+#miSubMenu > li > a:hover {
+    background-color: rgba(45, 162, 200, 0.53);
+}
+#opciones-institucion > .btn {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   background-color: transparent;
 }
@@ -198,7 +215,7 @@ img{
 }
 
 
-.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   background-color: transparent;
   color: #fff;
@@ -2494,7 +2511,7 @@ textarea .form-control {
 	.slider_caption {margin-top: 28%;}
 	.slider_caption > a {margin-top: 10px;}
 	.slides-navigation h3 {display: none;}
-	.slider_caption > h2 {font-size: 18px;line-height: 20px;}
+	.slider_caption >a> h2 {font-size: 18px !important;line-height: 20px;}
 	.panel-title {font-size: 17px;}
 	.about_area {padding-bottom: 0px;}
 	.about_slider{height: auto;}
@@ -2519,7 +2536,7 @@ textarea .form-control {
 }
 
 @media(max-width:320px ){
-	.slider_caption > h2 {font-size: 15px;line-height: 18px;}
+	.slider_caption > a> h2 {font-size: 15px !important;line-height: 18px;}/*original: .slider_caption>h2*/
 	.single_service > .service_title:after {left: 29%;}
 	.blog_slider .slick-prev {left: 70.5%;}
 	.subscr_btn {font-size: 11px;}
@@ -2984,7 +3001,6 @@ textarea .form-control {
     padding: 5px 0;
     margin: 2px 0 0;
     font-size: 14px;
-    text-align: left;
     list-style: none;
     background-color: rgba(16, 17, 19, 0.92);
     -webkit-background-clip: padding-box;
@@ -3013,4 +3029,7 @@ textarea .form-control {
 /*Para el editor de solicitud de prestamos*/
 .ocultar{
     display: none;
+}
+.slick-next,.slick-prev{
+    z-index: 1000;
 }

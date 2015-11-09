@@ -9,7 +9,7 @@ class Elementos extends \Phalcon\Mvc\User\Component
         $auth = $this->session->get('auth');
         if(!$auth){
             echo "<li>";
-            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-sign-in"></i>  Ingresar');
+            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-sign-in"></i>  INGRESAR');
             echo "</li>";
         }
         else{
@@ -19,11 +19,11 @@ class Elementos extends \Phalcon\Mvc\User\Component
             echo "</li>";
 
             echo "<li>";
-            echo  $this->tag->linkTo('', '<i class="fa fa-user"></i> '.$auth['usuario_nombreCompleto']);
+            echo  $this->tag->linkTo('', '<i class="fa fa-user"></i> '.strtoupper($auth['usuario_nombreCompleto']));
             echo "</li>";
 
             echo "<li>";
-            echo  $this->tag->linkTo('sesion/cerrar', '<i class="fa fa-sign-out"></i>  Salir');
+            echo  $this->tag->linkTo('sesion/cerrar', '<i class="fa fa-sign-out"></i>  SALIR');
             echo "</li>";
         }
     }

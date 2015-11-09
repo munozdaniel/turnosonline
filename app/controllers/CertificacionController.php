@@ -8,12 +8,10 @@ class CertificacionController extends ControllerBase
     public function initialize()
     {
         $this->tag->setTitle('Certificación Negativa');
-        $this->view->setTemplateAfter('main');
+        $this->view->setTemplateAfter('admin');
         parent::initialize();
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
-        $this->assets
-            ->collection('footer')->addJs('js/tooltip.js');
     }
 
     public function indexAction()

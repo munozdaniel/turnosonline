@@ -2,7 +2,7 @@
 <header id="header">
     <!-- BEGIN MENU -->
     <div class="menu_area">
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <!-- FOR MOBILE VIEW COLLAPSED BUTTON -->
@@ -15,8 +15,8 @@
                     <!-- LOGO -->
                     <!-- TEXT BASED LOGO -->
                     <a class="navbar-brand" href="#">
-                        {{ image('img/logo.png','id':'logo','alt':'logo imps','style':'top: 0%;left: 2%;display: inline-block !important; margin: -10% 0% 0% 0%;width: 30%;') }}
-                        IM<span>PS</span>
+                        {{ image('img/logoS.png','id':'logo','alt':'logo imps','style':'top: 0%;left: 2%;display: inline-block !important; margin: -10% 0% 0% 0%;width: 30%;') }}
+                        I.M.<span>P.S.</span>
                     </a>
                     <!-- IMG BASED LOGO  -->
                     <!--  <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo"></a> -->
@@ -28,17 +28,19 @@
                         <li>{{ link_to('index/index#service','class':'si_recorrer','Servicios') }}</li>
                         <li>{{ link_to('index/index#works','class':'si_recorrer','Guía de Tramites') }}</li>
                         <li>{{ link_to('index/index#team','class':'si_recorrer','Prestaciones' )}}</li>
-                        <li class="dropdown" style="cursor: pointer; cursor: hand;">
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                Institución <span class="caret"></span>
-                            </a>
-                            <ul id="miSubMenu" class="dropdown-menu nav navbar-nav navbar-right main_nav">
-                                <li>{{ link_to('index/index#contact','class':'si_recorrer','Contactanos') }}</li>
-                                <li>{{ link_to('index/index#contact','class':'si_recorrer','Información de Contacto') }}</li>
+                        <li id="opciones-institucion" class="dropdown">
+                            <button class="btn btn-menu dropdown-toggle" type="button" id="desplegar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Institución
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="miSubMenu" class="dropdown-menu main_nav" aria-labelledby="desplegar" style="color: #FFF !important;;">
+                                <li>{{ link_to('index/index#contact','class':'si_recorrer','CONTACTANOS') }}</li>
+                                <li>{{ link_to('index/index#contact','class':'si_recorrer','INFORMACIÓN DE CONTACTO') }}</li>
                                 <li role="separator" class="divider" style="width: 100%;"></li>
                                 {{ elemento.getItemMenu() }}
                             </ul>
                         </li>
+
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
