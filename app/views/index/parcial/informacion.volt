@@ -187,9 +187,7 @@
                                     <div class="featured_slider">
                                         <!-- PROMO FARMACIA OESTE 1 -->
                                         <div class="single_iteam">
-                                            <a href="#farmacia-promo" data-toggle="modal">
-                                                {{ image('img/novedades/promo.jpg','alt':'Promocion Farmacia Oeste') }}
-                                            </a>
+                                            {{ link_to('public/img/novedades/promo.jpg','target':'_blank', image('public/img/novedades/promo.jpg','alt':'Promo 1 - Img 1') ) }}
                                         </div>
                                         <!-- PROMO FARMACIA OESTE 2-->
                                         <div class="single_iteam">
@@ -200,12 +198,7 @@
                                             {{ link_to('public/img/novedades/promo3.jpg','target':'_blank', image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1') ) }}
 
                                         </div>
-                                        <!-- AVISTAJE -->
-                                        <div class="single_iteam">
-                                            <a href="#novedades-ave" data-toggle="modal">
-                                                {{ image('img/novedades/feature_img2.jpg','alt':'Avistaje Fauna Marina') }}
-                                            </a>
-                                        </div>
+
                                         <!-- EMPRENDIMIENTO -->
                                         <div class="single_iteam">
                                             {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/novedades/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
@@ -334,57 +327,7 @@
     </div>
     <!-- Fin: Modal Info Farmacia -->
     <!- ============================================= NOVEDADES ===========================================>
-    <!-- Farmacia Promo -->
-    <div id="farmacia-promo" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">PROMOCIÓN CICATRICURE </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ image('img/novedades/logoFarmacia.jpg', 'width':'250px') }}
-                        </div>
-                        <div class="col-md-8">
 
-                            <h3>
-                                <ins>Promoción Cicatricure:</ins>
-                            </h3>
-                            <ul class="fuente-16">
-                                <li><i class="fa fa-check"></i> 1- Cicatricure Anti-estrías x 400 ml.</li>
-                                <li><i class="fa fa-check"></i> 1- Solage FPS 30 Anti-edad x 50 gr.</li>
-                                <li><i class="fa fa-check"></i> 1- Solage FPS 50 Emul. x 180 ml.</li>
-
-                            </ul>
-                            <div class="col-sm-6">
-                                <h3 class="pull-right"  style="background-color: rgba(154, 205, 50, 0.5);"><strong> $250 </strong></h3>
-                            </div>
-
-                            <div class="col-md-12">
-                                <hr>
-                                <div class="col-sm-6 col-md-3">
-                                    {{ link_to('public/img/novedades/1.jpg','target':'_blank','class':'thumbnail', image('public/img/novedades/1.jpg','alt':'Promo 1 - Img 1') ) }}
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    {{ link_to('public/img/novedades/2b.jpg','target':'_blank','class':'thumbnail', image('public/img/novedades/2b.jpg','alt':'Promo 1 - Img 2') ) }}
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    {{ link_to('public/img/novedades/3.jpg','target':'_blank','class':'thumbnail', image('public/img/novedades/3.jpg','alt':'Promo 1 - Img 3') ) }}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin: Farmacia Promo -->
     <!-- Emprendimiento -->
     <div id="novedades-emprendimiento" class="modal fade">
         <div class="modal-dialog">
@@ -433,29 +376,8 @@
         </div>
     </div>
     <!-- Fin: Avistaje Fauna Marina -->
-    <!-- Avistaje Fauna Marina -->
-    <div id="novedades-ave" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Avistaje de Fauna Marina</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ image('img/informacion/avistaje-big.jpg') }}
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin: Avistaje Fauna Marina -->
-    <!-- Avistaje Fauna Marina -->
+
+    <!-- Fecha Turnos Online -->
     <div id="novedades-fechaTurnos" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -476,5 +398,5 @@
             </div>
         </div>
     </div>
-    <!-- Fin: Avistaje Fauna Marina -->
+    <!-- Fin: Fecha Turnos Online -->
 </section>
