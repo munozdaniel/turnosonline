@@ -1,12 +1,19 @@
 <section id="certificacion">
 
-    <meta http-equiv="refresh" content="35">
+   {# <meta http-equiv="refresh" content="35">#}
 
     <style>
         .heading h2 {font-size: 35px;line-height: 35px;}
     </style>
 
     <script type="text/javascript">
+
+        var myVar = setInterval(function(){ myTimer() }, 1000);
+
+        function myTimer()
+        {
+            $('#cantAutorizados').load(document.URL +  ' #cantAutorizados');
+        }
 
         function otro()
         {
@@ -20,7 +27,6 @@
         }
 
     </script>
-
 
     <div class="container">
 
@@ -46,14 +52,14 @@
                                 <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
                             </div>
                             <div class="fuente-16" style="color:red;">
-                                <strong><ins>Turnos autorizados :</ins> </strong> {{ cantAutorizados }}
+                                <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados">{{ cantAutorizados }}</p>
                             </div>
                         {% else %}
                             <div class="fuente-16">
                                 <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
                             </div>
                             <div class="fuente-16">
-                                <strong><ins>Turnos autorizados :</ins> </strong> {{ cantAutorizados }}
+                                <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados">{{ cantAutorizados }}</p>
                             </div>
                         {% endif %}
                         <br/>

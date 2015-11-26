@@ -28,7 +28,9 @@
                    <br/>
                     Dia de atenci&oacute;n de turnos: {{diaA}}
                     <br/><br/>
-                   Cantidad de solicitudes autorizadas:{{cantAut}}
+                    Cantidad de turnos: {{ cantTurnos }}
+                    <br/>
+                   Cantidad de solicitudes autorizadas: {{cantAut}}
                 </p>
 
                 <table class="layout" border="1">

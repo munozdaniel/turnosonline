@@ -17,8 +17,7 @@
                 <p style="font-size: 20px">
                     A continuación se visualizarán todos los períodos creados hasta la fecha.
                     <br><em style="color:tomato">
-                        <ins>Advertencia:</ins>
-                        La modificación del periodo activo queda bajo responsabilidad del usuario.</em>
+                        <ins>Advertencia:</ins> La modificación del periodo activo queda bajo responsabilidad del usuario.</em>
                 </p>
             </div>
 
@@ -50,15 +49,15 @@
                                 <tr style="background-color: rgba(154, 205, 50, 0.28); font-style: italic; font-weight: bold">
                             {% endif %}
                                 <td>
-                                    {% set fechaModif =  date('d-m-Y',(item.fechasTurnos_inicioSolicitud) | strtotime) %}
+                                    {% set fechaModif =  date('d/m/Y',(item.fechasTurnos_inicioSolicitud) | strtotime) %}
                                     {{ fechaModif }}
                                 </td>
                                 <td>
-                                    {% set fechaModif =  date('d-m-Y',(item.fechasTurnos_finSolicitud) | strtotime) %}
+                                    {% set fechaModif =  date('d/m/Y',(item.fechasTurnos_finSolicitud) | strtotime) %}
                                     {{ fechaModif }}
                                 </td>
                                 <td>
-                                    {% set fechaModif =  date('d-m-Y',(item.fechasTurnos_diaAtencion) | strtotime) %}
+                                    {% set fechaModif =  date('d/m/Y',(item.fechasTurnos_diaAtencion) | strtotime) %}
                                     {{ fechaModif }}
                                 </td>
                                 <td>{{ item.fechasTurnos_cantidadDeTurnos }}</td>

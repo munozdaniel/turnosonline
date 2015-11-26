@@ -49,8 +49,5 @@ class DateValidator  extends Validator implements ValidatorInterface {
         $validator->appendMessage(new Message($message, $attribute, 'Fechas Incorrectas'));
 
         return false;
-
     }
-
-
 }

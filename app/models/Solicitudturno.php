@@ -185,7 +185,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
 
             if($unaSolicitud->solicitudTurno_respuestaEnviada=='SI' and $ffPedido <= $ffF and $ffPedido >= $ffI)
             {
-                $unaSolicitud->solicitudTurno_fechaRespuestaEnviadaDate = date('d-m-Y',strtotime($unaSolicitud->solicitudTurno_fechaRespuestaEnviada));
+                $unaSolicitud->solicitudTurno_fechaRespuestaEnviadaDate = date('d/m/Y',strtotime($unaSolicitud->solicitudTurno_fechaRespuestaEnviada));
 
                 $resp = $unaSolicitud->solicitudTurno_respuestaChequeada;
 
