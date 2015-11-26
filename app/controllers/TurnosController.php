@@ -269,7 +269,7 @@ class TurnosController extends ControllerBase
         try
         {
             $fechasTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo (campo nuevo).
-            $consulta = "SELECT * FROM solicitudTurno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE  :nomApe:)))";
+            $consulta = "SELECT * FROM solicitudturno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE  :nomApe:)))";
 
             $solicitudTurno = $this->modelsManager->executeQuery($consulta,
                 array(
@@ -536,7 +536,7 @@ class TurnosController extends ControllerBase
             $fI = $fechaTurnos->fechasTurnos_inicioSolicitud;
             $fF =$fechaTurnos->fechasTurnos_finSolicitud;
 
-            $sql = "SELECT count(*) as cantidad FROM solicitudTurno WHERE (DATE(solicitudTurno_fechaPedido) BETWEEN '$fI' and '$fF'
+            $sql = "SELECT count(*) as cantidad FROM solicitudturno WHERE (DATE(solicitudTurno_fechaPedido) BETWEEN '$fI' and '$fF'
                      and solicitudTurno_respuestaEnviada='SI' and solicitudTurno_estado='AUTORIZADO')";
             $result = $this->db->query($sql);
 
