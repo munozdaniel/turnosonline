@@ -18,7 +18,11 @@
                 <!-- BEGAIN CONTACT FORM -->
                 <div class="col-lg-5 col-md-5 col-sm-5">
                     <div class="contact_form">
-
+                        <p>
+                            <strong>Si tienes alguna inquietud, estamos para ayudarte.
+                            <br> Completa el siguiente formulario y nos contactaremos a la brevedad.</strong>
+                        </p>
+                        <hr>
                         <!-- FOR CONTACT FORM MESSAGE -->
                         <div id="form-messages"></div>
 
@@ -26,7 +30,7 @@
                             <input class="form-control" type="text" placeholder="Nombre Completo">
                             <input class="form-control" type="email" placeholder="Email">
                             <input class="form-control" type="text" placeholder="Asunto">
-                            <textarea class="form-control" cols="30" rows="10" placeholder="Ingrese su mensaje"></textarea>
+                            <textarea class="form-control" cols="30" rows="6" placeholder="Ingrese su mensaje"></textarea>
                             <input class="submit_btn" type="submit" value="Enviar">
                         </form>
                     </div>
