@@ -200,7 +200,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
                 {
                     if($resp == 0)
                         $unaSolicitud->solicitudTurno_respChequedaTexto="NO";
-                    else //2
+                    else //2 (esta opcion quedo pendiente, hasta que se controle que el email se confirma dentro de los dias dados.)M. 09/11/15
                         $unaSolicitud->solicitudTurno_respChequedaTexto="NO (cancelado)";
                 }
 

@@ -190,7 +190,6 @@ $di->set('elemento', function(){
  */
 $di->set('dispatcher', function() use ($di)
 {
-
     $eventsManager = $di->getShared('eventsManager');
 
     $roles = new Seguridad($di);

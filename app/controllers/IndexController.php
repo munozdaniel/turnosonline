@@ -11,8 +11,7 @@ class IndexController extends ControllerBase
     }
     public function indexAction()
     {
-        $this->assets->collection('footer')
-            ->addJs('js/menu.js');
+        $this->assets->collection('footer')->addJs('js/menu.js');
      /*  $this->assets->collection('footerInline')
             ->addInlineJs("if(self.location=='http://192.168.42.149/impsweb/'){var timeoutId = setTimeout(\"self.location='#about'\",15000);}");
      */
