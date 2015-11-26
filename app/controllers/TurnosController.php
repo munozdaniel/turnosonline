@@ -721,28 +721,7 @@ class TurnosController extends ControllerBase
         $pdf->Output('listadoDeSolicitudes.pdf', "I"); //I:Es la opción por defecto, y lanza el archivo a que sea abierto en el navegador.
     }
 
-    public function emailContactoAction()
-    {
-        if($this->request->isPost())
-        {
-            $nombre = $this->request->getPost('nombre');
-            $email = $this->request->getPost('email');
-            $asunto = $this->request->getPost('asunto');
-            $mensaje = $this->request->getPost('mensaje');
 
-            $this->mailInformatica->addAddress('desarrollo@imps.org.ar','desarrollo');
-            $this->mailInformatica->Subject = "Mensaje enviado por la página web de IMPS.";
-            $texto = '<p style="color: #6C7A89; font-family:Arial;"> De: '.$nombre.'<br/><br/>Email: '.$email.'<br/><br/>Asunto: '.$asunto.'<br/><br/>Mensaje:   '.$mensaje.'</p>';
-            $this->mailInformatica->Body ='El siguiente mensaje  fue enviado por la página web de IMPS: <br/>'.$texto;
-
-            if($this->mailInformatica->send())
-                $mensaje='Gracias por contactarse con nosotros, en breve le daremos una respuesta.';
-            else
-                $mensaje="Ha sucedido un error. No es posible comunicarse con nosotros. Intente mas tarde.";
-
-            $this->view->mensaje = $mensaje;
-        }
-    }
 
     public function editarPeriodoAction($idFechaTurno)
     {
@@ -773,6 +752,7 @@ class TurnosController extends ControllerBase
             }
         }
     }
+
 }
 
 
