@@ -187,16 +187,21 @@
                                     <div class="featured_slider">
                                         <!-- PROMO FARMACIA OESTE 1 -->
                                         <div class="single_iteam">
-                                            {{ link_to('public/img/novedades/promo.jpg','target':'_blank', image('public/img/novedades/promo.jpg','alt':'Promo 1 - Img 1') ) }}
+                                            <a href="http://imps.org.ar/farmacia" target="_blank">
+                                                {{  image('public/img/novedades/promo.jpg','alt':'Promo 1 - Img 1')  }}
+                                            </a>
                                         </div>
                                         <!-- PROMO FARMACIA OESTE 2-->
                                         <div class="single_iteam">
-                                            {{ link_to('public/img/novedades/promo2.jpg','target':'_blank', image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1') ) }}
+                                            <a href="http://imps.org.ar/farmacia" target="_blank">
+                                                {{  image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1')  }}
+                                            </a>
                                         </div>
                                         <!-- PROMO FARMACIA OESTE 3 -->
                                         <div class="single_iteam">
-                                            {{ link_to('public/img/novedades/promo3.jpg','target':'_blank', image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1') ) }}
-
+                                            <a href="http://imps.org.ar/farmacia" target="_blank">
+                                                {{  image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1')  }}
+                                            </a>
                                         </div>
 
                                         <!-- EMPRENDIMIENTO -->
