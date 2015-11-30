@@ -53,12 +53,12 @@ return new \Phalcon\Config(array(
     'mail' => array(
         'host'     => 'mail.imps.org.ar',
         'username'        => 'plantilla@imps.org.ar',
-        'password'    => 'sis$%&--temas',
+        'password'    => 'consul',
         'security'    => '',
         'port'      => '26',
         'charset'     => 'UTF-8',
-        'email'     => 'desarrollo@imps.org.ar',
-        'name'     => 'sis$%&--temas',
+        'email'     => 'consultas@imps.org.ar',
+        'name'     => 'consul',
     ),
     'mailDesarrollo' => array(
         'host'     => 'mail.imps.org.ar',

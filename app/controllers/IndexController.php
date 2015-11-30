@@ -48,12 +48,12 @@ class IndexController extends ControllerBase
             $this->mail->CharSet = 'UTF-8';
             $this->mail->Host = 'mail.imps.org.ar';
             $this->mail->SMTPAuth = true;
-            $this->mail->Username = 'desarrollo@imps.org.ar';
-                $this->mail->Password = 'sis$%&--temas';
+            $this->mail->Username = 'consultas@imps.org.ar';
+            $this->mail->Password = 'consu';
             $this->mail->SMTPSecure = '';
             $this->mail->Port = 26;
 
-            $this->mail->addAddress('desarrollo@imps.org.ar');
+            $this->mail->addAddress('consultas@imps.org.ar');
 
 
             //Datos del Usuario Origen.
