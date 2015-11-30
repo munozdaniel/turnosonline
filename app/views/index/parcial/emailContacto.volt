@@ -32,9 +32,9 @@
                         <div id="form-messages"></div>
 
                         {{ form('index/emailContacto','method':'post') }}
-                        <input class="form-control" type="text" placeholder="Nombre Completo" name="nombre">
-                        <input class="form-control" type="email" placeholder="Email" name="email">
-                        <input class="form-control" type="text" placeholder="Asunto" name="asunto">
+                        <input class="form-control" type="text" placeholder="Nombre Completo" name="nombre" required="true">
+                        <input class="form-control" type="email" placeholder="Email" name="email"required="true">
+                        <input class="form-control" type="text" placeholder="Asunto" name="asunto"required="true">
                         <textarea class="form-control" cols="30" rows="5" placeholder="Ingrese su mensaje"
                                   name="mensaje"></textarea>
                         <input class="submit_btn" type="submit" value="Enviar">
