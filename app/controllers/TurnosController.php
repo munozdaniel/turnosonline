@@ -290,6 +290,7 @@ class TurnosController extends ControllerBase
         return true;
     }
 
+
     public function turnoSolicitadoExitosoAction()
     {
         //este action solo se utiliza para poder redireccionarse a la vista correspondiente.
@@ -675,18 +676,34 @@ class TurnosController extends ControllerBase
 
         $send=$this->mailInformatica->send();
     }
+    /**
+     * El afiliado ingresa al link enviado por email y se redirecciona a esta accion, el cual está
+     * encargado de controlar que la confirmacion del afiliado se realice dentro de los dias establecidos.
+     * En caso de que haya vencido o no el plazo se le mostrara un cartel al usuario informandolo.
+     * Si inicioSolicitud+cantidadDiaConfirmacion < hoy => ya venció el plazo.
+     * Si inicioSolicitud+cantidadDiaConfirmacion > hoy => está dentro del plazo de confirmación.
+     */
     public function confirmaEmailAction()
     {
+
         $idSolicitud = $this->request->get('id');
         $id = base64_decode($idSolicitud);
-
         $laSolicitud = Solicitudturno::findFirstBySolicitudTurno_id($id);
+
 
         if ( $laSolicitud->solicitudTurno_respuestaChequeada != 1)
         {
-            $laSolicitud->solicitudTurno_respuestaChequeada = 1;
+            $unPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+            $fechaVencimiento = strtotime ( '+'. $unPeriodo->fechasTurnos_cantidadDiasConfirmacion.' day' , strtotime ( $unPeriodo->fechasTurnos_inicioSolicitud ) ) ;
+            $fechaVencimiento = date ( 'Y-m-d' , $fechaVencimiento );
+            $fechaHoy = Date('Y-m-d');
+            if($fechaHoy<=$fechaVencimiento)
+                $laSolicitud->solicitudTurno_respuestaChequeada = 1;
+            else
+                $laSolicitud->solicitudTurno_respuestaChequeada = 2;//Vencio el plazo.
             $laSolicitud->save();
         }
+        $this->view->vencido = $laSolicitud->solicitudTurno_respuestaChequeada;
         //$this->view->setTemplateAfter('main'); //para cambiar el panel que sale en la pagina.
     }
 
