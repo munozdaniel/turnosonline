@@ -363,13 +363,13 @@
                             </p>
 
                             <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03.jpg','alt':'terreno 1') ) }}
+                                {{ link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03-mini.jpg','alt':'terreno 1') ) }}
                             </div>
                             <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02.jpg','alt':'terreno 2') ) }}
+                                {{ link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02-mini.jpg','alt':'terreno 2') ) }}
                             </div>
                             <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04.jpg','alt':'terreno 3') ) }}
+                                {{ link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04-mini.jpg','alt':'terreno 3') ) }}
                             </div>
                         </div>
                     </div>
