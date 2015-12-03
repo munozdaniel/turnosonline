@@ -44,11 +44,21 @@ return new \Phalcon\Config(array(
         'formsDir'       => APP_PATH . '/app/forms/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'mpdfDir'        => APP_PATH . '/app/library/mpdf/',
+        'vendorDir'        => APP_PATH . '/app/vendor/',
         'componentesDir'        => APP_PATH . '/app/library/componentes/',
         'phpmailerDir'   => APP_PATH . '/app/library/phpmailer/',
         'utilesDir'     => APP_PATH . '/app/library/utiles/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
+    ),
+    /**
+     * Config for datetime
+     */
+    'datetime' => array(
+        'production' => 'normal',
+        'staging' => 'normal',
+        'testing' => 'normal',
+        'development' => '2015-12-02 12:30:00'
     ),
     'mail' => array(
         'host'     => 'mail.imps.org.ar',
