@@ -60,6 +60,17 @@ class TipoFecha
         else return "";
     }
 
+    /**
+     * Suma los dias ingresados a la fecha y lo retorna en formato para base de datos.
+     * @param $dias
+     * @param $date
+     * @return bool|int|string
+     */
+    public static function sumarDiasAlDate($dias,$date){
+        $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $date ) ) ;
+        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+        return $nuevafecha;
+    }
    /* public function modificaFechaTimer()
     {
         $horaActual = date('H');
@@ -74,7 +85,7 @@ class TipoFecha
         //------------
        // $fechaFormat = new DateTime($date);
         //$anioQueViene = $fechaFormat->format('Y') + 1;
-        //$proxFechaVencimiento = Date("31-12-$anioQueViene"); //se inserta la proxima fecha de vencimiento, 1 año exacto mas a la fecha de entrega del certificado
+        //$proxFechaVencimiento = Date("31-12-$anioQueViene"); //se inserta la proxima fecha de vencimiento, 1 aï¿½o exacto mas a la fecha de entrega del certificado
         //return $proxFechaVencimiento;
     }*/
 }
