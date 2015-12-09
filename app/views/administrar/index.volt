@@ -9,6 +9,8 @@
             </div>
         </div>
         <div class="row col-lg-12 col-md-12">
+            {{ content() }}
+
             <div class="pricing_area">
                 <div class="row">
                     <!-- =================== TURNOS ONLINE ======================-->
