@@ -572,7 +572,7 @@ class TurnosController extends ControllerBase
                 //obtenemos los productos
                 "data" => Fechasturnos::find(),
                 //limite por página
-                "limit" => 6,
+                "limit" => 10,
                 //variable get page convertida en un integer
                 "page" => $this->request->getQuery('page', 'int')
             )
