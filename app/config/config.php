@@ -29,9 +29,9 @@ return new \Phalcon\Config(array(
     ),
     'siprea' => array(
         'adapter'     => 'Mysql',
-        'host'        => '192.168.42.14',
+        'host'        => '192.168.42.74',
         'username'    => 'root',
-        'password'    => 'infoimps',
+        'password'    => 'centosya',
         'dbname'      => 'siprea2',
         'charset'     => 'utf8',
     ),
