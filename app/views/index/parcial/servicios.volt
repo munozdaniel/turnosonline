@@ -42,7 +42,7 @@
                                     Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                     o llamarnos al (0299) 4479921<br><br>
                                 </p>
-                                {#
+
                                 {{ link_to('turnos/index','class':'puntero',' <div class="service_iconarea">
                                     <span class="fa fa-ticket service_icon"></span>
                                 </div>
@@ -50,7 +50,7 @@
 
                                 <p>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación, las fechas para solicitarlos se publicarán <strong><a style="color:#286090; cursor: pointer !important;">aquí</a></strong>. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p>
 
-                                #}
+
                             </div>
                         </div>
                         {#
