@@ -70,70 +70,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- START SINGLE FEATURED ITEAM #2 -->
-                                        <div class="panel panel-default wow fadeInLeft">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="#collapseTwo">
-                                                        <span class="fa fa-check-square-o"></span>Farmacia IMPS
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseTwo" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p>
-                                                    <hr>
-                                                    <strong>FARMACIA CENTRO:</strong>
-                                                    <a class="pull-right puntero" data-toggle="modal"
-                                                       data-target="#info-farmacia"><i class="fa fa-info-circle"></i><b>
-                                                            más info</b></a></p>
-                                                    <hr>
-                                                    </p>
 
-                                                    <p>
-                                                        <strong>HORARIO:</strong><br><br>
-                                                        <strong>Lunes a Viernes:</strong> 08:00 a 21:00 hs.<br>
-                                                        <strong>Sábados:</strong> 08:00 a 13:00 hs.<br>
-                                                        <strong>Domingos y Feriados:</strong> Farmacia Andina.<br>
-
-                                                    </p>
-
-                                                    <p><strong>CONTACTO:</strong></p>
-
-                                                    <p>
-                                                        <strong>Teléfono:</strong> +54 (0299) 442 - 5037<br>
-                                                        <strong>Dirección:</strong> Roca 698<br>
-                                                        <strong>E-Mail:</strong> farmacia@imps.org.ar<br>
-                                                        Neuquén Capital - Argentina<br>
-                                                    </p>
-
-                                                    <p>
-                                                    <hr>
-                                                    <strong>FARMACIA OESTE</strong>
-                                                    <hr>
-                                                    </p>
-
-                                                    <p>
-                                                        <strong>HORARIO:</strong><br><br>
-                                                        <strong>Lunes a Viernes:</strong> Horario corrido 9:00 a 19:00
-                                                        hs.<br>
-                                                        <strong>Sábados:</strong> 08:00 a 13:00 hs.<br>
-                                                        <strong>Domingos y Feriados:</strong> Farmacia Andina.<br>
-                                                    </p>
-
-                                                    <p><strong>CONTACTO:</strong></p>
-
-                                                    <p>
-                                                        <strong>Teléfono:</strong> +54 (0299) 446 - 5127<br>
-                                                        <strong>Dirección:</strong> Antártida Argentina 3411<br>
-                                                        <strong>E-Mail:</strong> farmaciaoeste@imps.org.ar<br>
-                                                        Neuquén Capital - Argentina<br>
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        </div>
                                         <!-- START SINGLE FEATURED ITEAM #3 -->
                                         <div class="panel panel-default wow fadeInLeft">
                                             <div class="panel-heading">
@@ -173,6 +110,18 @@
                                                     Neuquén Capital - Argentina<br>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <!-- START SINGLE FEATURED ITEAM #2 -->
+                                        <div class="panel panel-default wow fadeInLeft">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a
+                                                            href="http://imps.org.ar/farmacia/" target="_blank">
+                                                        <span class="fa fa-external-link "></span>Farmacia IMPS
+                                                    </a>
+                                                </h4>
+                                            </div>
+
                                         </div>
 
                                     </div>
