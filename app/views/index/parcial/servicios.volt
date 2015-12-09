@@ -30,18 +30,9 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <!-- BEGAIN SINGLE SERVICE -->
                             <div class="single_service wow fadeInRight">
-                                <a class="">
-                                    <div class="service_iconarea">
-                                        <span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span>
-                                    </div>
-                                    <h3 class="service_title">Turnos Online</h3>
-                                </a>
-                                <p>
-                                    <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
-                                    Las fechas se dispondrán a través de la pagina web y en nuestras oficinas.
-                                    Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                    o llamarnos al (0299) 4479921<br><br>
-                                </p>
+
+
+                                    {{ mensajePeriodo }}
                                 {#
                                 {{ link_to('turnos/index','class':'puntero',' <div class="service_iconarea">
                                     <span class="fa fa-ticket service_icon"></span>
