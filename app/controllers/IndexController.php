@@ -31,7 +31,6 @@ class IndexController extends ControllerBase
         $dateFin = date_create($puntoProgramado->getEnd());
         //Si el periodo  no esta habilitado todavia
         if ($puntoProgramado->isBefore()) {
-            $this->flash->message('problema','BEFORE!');
             $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
                                             <h3 class="service_title">Turnos Online</h3></a>' .
                 '<p> <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
@@ -44,7 +43,6 @@ class IndexController extends ControllerBase
         }
         //Si el periodo se encuentra
         if ($puntoProgramado->isActive()) {
-            $this->flash->message('problema','ACTIVE!');
             $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online</h3>', "class" => "")) .
                 '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                                 o llamarnos al (0299) 4479921</p>';
@@ -54,7 +52,6 @@ class IndexController extends ControllerBase
         }
         //Si el periodo para solicitar turnos ya termino.
         if ($puntoProgramado->isAfter()) {
-            $this->flash->message('problema','AFTER!');
             $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
                                             <h3 class="service_title">Turnos Online</h3></a>' .
                 ' <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
