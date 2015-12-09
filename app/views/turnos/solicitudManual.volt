@@ -21,8 +21,13 @@
 
             if (estadoSeleccionado === 'AUTORIZADO' || estadoSeleccionado === '')
             {
-               if( {{ cantAutorizados }} === {{ cantTurnos }} )
-                alert('No hay mas turnos disponibles en este periodo. Se debe denegar la solicitud.')
+                var cant= {{ cantAutorizados }};
+                if( cant > 0 )
+                {
+                    if( {{ cantAutorizados }} === {{ cantTurnos }} )
+                    alert('No hay mas turnos disponibles en este periodo. Se debe denegar la solicitud.')
+                }
+
             }
         }
 
@@ -52,14 +57,14 @@
                                 <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
                             </div>
                             <div class="fuente-16" style="color:red;">
-                                <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados">{{ cantAutorizados }}</p>
+                                <strong><ins>Turnos autorizados :</ins> </strong> <strong id="cantAutorizados">{{ cantAutorizados }}</strong>
                             </div>
                         {% else %}
                             <div class="fuente-16">
                                 <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
                             </div>
                             <div class="fuente-16">
-                                <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados">{{ cantAutorizados }}</p>
+                                <strong><ins>Turnos autorizados :</ins> </strong> <strong id="cantAutorizados" >{{ cantAutorizados }}</strong>
                             </div>
                         {% endif %}
                         <br/>
