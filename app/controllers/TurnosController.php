@@ -333,7 +333,7 @@ class TurnosController extends ControllerBase
                         //Si ya habia un periodo, lo desactivamos.
                         if ($fechasTurnos->fechasTurnos_id > 1) {
                             $id = $fechasTurnos->fechasTurnos_id - 1;
-                            $phql = "UPDATE Fechasturnos SET fechasTurnos_activo=0 WHERE fechasTurnos_id = :id:";
+                            $phql = "UPDATE fechasturnos SET fechasTurnos_activo=0 WHERE fechasTurnos_id = :id:";
                             $this->modelsManager->executeQuery($phql, array('id' => $id));
                         }
 

@@ -194,8 +194,9 @@ class Schedule extends \Phalcon\Mvc\Model
      */
     public function getStatus()
     {
-        $today = $this->getDI()->get('datetime')->datetime();
-        
+       // $today = $this->getDI()->get('datetime')->datetime(); // Sirve para realizar pruebas, en el config se establece una fecha.
+        $today = date("Y-m-d H:i:s");
+        //echo "$today STATUS: ". strtotime($this->getStart()) ." - ". strtotime($today);
         if(strtotime($this->getStart()) > strtotime($today))
             return 'before';
         
