@@ -1,6 +1,6 @@
 <section id="certificacion">
 
-    <meta http-equiv="refresh" content="15">
+    <meta http-equiv="refresh" content="20">
 
     <style>
         a {color: #2da2c8}
@@ -16,7 +16,6 @@
                         <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos con respuesta enviada</h2>
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
-                    {{ content() }}
 
                     <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaI }} - {{ fechaF }}
                     </div>
@@ -46,8 +45,10 @@
         </div>
 
         <div class="row edicion">
-
-            <div class="col-lg-16 col-md-16 ">
+            <div class="col-md-12">
+                {{ content() }}
+            </div>
+            <div class="col-lg-12 col-md-12">
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>

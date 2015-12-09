@@ -18,8 +18,8 @@
                     <!-- LOGO -->
                     <!-- TEXT BASED LOGO -->
                     <a class="navbar-brand" href="#">
-                        {{ image('img/logoS.png','id':'logo','alt':'logo imps','style':'top: 0%;left: 2%;display: inline-block !important; margin: -10% 0% 0% 0%;width: 30%;') }}
-                        I.M.<span>P.S.</span>
+                        {{ image('img/logoS.png','id':'logo','alt':'logo imps','style':'top: 0%;left: 2%;display: inline-block !important; margin: -5% 0% 0% 0%;width: 30%;') }}
+                        <span style="font-family: 'Archivo Black', sans-serif;font-weight: bolder;">IMPS</span>
                     </a>
                     <!-- IMG BASED LOGO  -->
                     <!--  <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo"></a> -->

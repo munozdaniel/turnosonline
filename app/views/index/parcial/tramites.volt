@@ -90,6 +90,9 @@
                         <p class="tramites-label">Excimer Láser<br></p>
                     </a>
                 </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+
+                </div>
 
             </div>
             <!-- FIN: GALERIA -->

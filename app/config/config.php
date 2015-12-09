@@ -44,31 +44,31 @@ return new \Phalcon\Config(array(
         'formsDir'       => APP_PATH . '/app/forms/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'mpdfDir'        => APP_PATH . '/app/library/mpdf/',
+        'vendorDir'        => APP_PATH . '/app/vendor/',
         'componentesDir'        => APP_PATH . '/app/library/componentes/',
         'phpmailerDir'   => APP_PATH . '/app/library/phpmailer/',
         'utilesDir'     => APP_PATH . '/app/library/utiles/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
     ),
+    /**
+     * Config for datetime
+     */
+    'datetime' => array(
+        'production' => 'normal',
+        'staging' => 'normal',
+        'testing' => 'normal',
+        'development' => '2015-12-02 12:30:00'
+    ),
     'mail' => array(
         'host'     => 'mail.imps.org.ar',
         'username'        => 'plantilla@imps.org.ar',
-        'password'    => 'dan$%&--iel',
+        'password'    => 'consul',
         'security'    => '',
         'port'      => '26',
         'charset'     => 'UTF-8',
-        'email'     => 'dmunioz@imps.org.ar',
-        'name'     => 'dmunioz@imps.org.ar',
-    ),
-    'mailInformatica' => array(
-        'host'     => 'mail.imps.org.ar',
-        'username' => 'informatica@imps.org.ar',
-        'password' => 'tecno$%&--logia',
-        'security' => '',
-        'port'     => '26',
-        'charset'  => 'UTF-8',
-        'email'    => 'informatica@imps.org.ar',
-        'name'     => 'informatica@imps.org.ar',
+        'email'     => 'consultas@imps.org.ar',
+        'name'     => 'consul',
     ),
     'mailDesarrollo' => array(
         'host'     => 'mail.imps.org.ar',

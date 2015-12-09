@@ -70,70 +70,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- START SINGLE FEATURED ITEAM #2 -->
-                                        <div class="panel panel-default wow fadeInLeft">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="#collapseTwo">
-                                                        <span class="fa fa-check-square-o"></span>Farmacia IMPS
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseTwo" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p>
-                                                    <hr>
-                                                    <strong>FARMACIA CENTRO:</strong>
-                                                    <a class="pull-right puntero" data-toggle="modal"
-                                                       data-target="#info-farmacia"><i class="fa fa-info-circle"></i><b>
-                                                            más info</b></a></p>
-                                                    <hr>
-                                                    </p>
 
-                                                    <p>
-                                                        <strong>HORARIO:</strong><br><br>
-                                                        <strong>Lunes a Viernes:</strong> 08:00 a 21:00 hs.<br>
-                                                        <strong>Sábados:</strong> 08:00 a 13:00 hs.<br>
-                                                        <strong>Domingos y Feriados:</strong> Farmacia Andina.<br>
-
-                                                    </p>
-
-                                                    <p><strong>CONTACTO:</strong></p>
-
-                                                    <p>
-                                                        <strong>Teléfono:</strong> +54 (0299) 442 - 5037<br>
-                                                        <strong>Dirección:</strong> Roca 698<br>
-                                                        <strong>E-Mail:</strong> farmacia@imps.org.ar<br>
-                                                        Neuquén Capital - Argentina<br>
-                                                    </p>
-
-                                                    <p>
-                                                    <hr>
-                                                    <strong>FARMACIA OESTE</strong>
-                                                    <hr>
-                                                    </p>
-
-                                                    <p>
-                                                        <strong>HORARIO:</strong><br><br>
-                                                        <strong>Lunes a Viernes:</strong> Horario corrido 9:00 a 19:00
-                                                        hs.<br>
-                                                        <strong>Sábados:</strong> 08:00 a 13:00 hs.<br>
-                                                        <strong>Domingos y Feriados:</strong> Farmacia Andina.<br>
-                                                    </p>
-
-                                                    <p><strong>CONTACTO:</strong></p>
-
-                                                    <p>
-                                                        <strong>Teléfono:</strong> +54 (0299) 446 - 5127<br>
-                                                        <strong>Dirección:</strong> Antártida Argentina 3411<br>
-                                                        <strong>E-Mail:</strong> farmaciaoeste@imps.org.ar<br>
-                                                        Neuquén Capital - Argentina<br>
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        </div>
                                         <!-- START SINGLE FEATURED ITEAM #3 -->
                                         <div class="panel panel-default wow fadeInLeft">
                                             <div class="panel-heading">
@@ -174,6 +111,18 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- START SINGLE FEATURED ITEAM #2 -->
+                                        <div class="panel panel-default wow fadeInLeft">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a
+                                                            href="http://imps.org.ar/farmacia/" target="_blank">
+                                                        <span class="fa fa-external-link "></span>Farmacia IMPS
+                                                    </a>
+                                                </h4>
+                                            </div>
+
+                                        </div>
 
                                     </div>
                                 </div>
@@ -187,25 +136,23 @@
                                     <div class="featured_slider">
                                         <!-- PROMO FARMACIA OESTE 1 -->
                                         <div class="single_iteam">
-                                            <a href="#farmacia-promo" data-toggle="modal">
-                                                {{ image('img/novedades/promo.jpg','alt':'Promocion Farmacia Oeste') }}
+                                            <a href="http://imps.org.ar/farmacia" target="_blank">
+                                                {{  image('public/img/novedades/promo.jpg','alt':'Promo 1 - Img 1')  }}
                                             </a>
                                         </div>
                                         <!-- PROMO FARMACIA OESTE 2-->
                                         <div class="single_iteam">
-                                            {{ link_to('public/img/novedades/promo2.jpg','target':'_blank', image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1') ) }}
+                                            <a href="http://imps.org.ar/farmacia" target="_blank">
+                                                {{  image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1')  }}
+                                            </a>
                                         </div>
                                         <!-- PROMO FARMACIA OESTE 3 -->
                                         <div class="single_iteam">
-                                            {{ link_to('public/img/novedades/promo3.jpg','target':'_blank', image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1') ) }}
-
-                                        </div>
-                                        <!-- AVISTAJE -->
-                                        <div class="single_iteam">
-                                            <a href="#novedades-ave" data-toggle="modal">
-                                                {{ image('img/novedades/feature_img2.jpg','alt':'Avistaje Fauna Marina') }}
+                                            <a href="http://imps.org.ar/farmacia" target="_blank">
+                                                {{  image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1')  }}
                                             </a>
                                         </div>
+
                                         <!-- EMPRENDIMIENTO -->
                                         <div class="single_iteam">
                                             {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/novedades/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
@@ -334,57 +281,7 @@
     </div>
     <!-- Fin: Modal Info Farmacia -->
     <!- ============================================= NOVEDADES ===========================================>
-    <!-- Farmacia Promo -->
-    <div id="farmacia-promo" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">PROMOCIÓN CICATRICURE </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ image('img/novedades/logoFarmacia.jpg', 'width':'250px') }}
-                        </div>
-                        <div class="col-md-8">
 
-                            <h3>
-                                <ins>Promoción Cicatricure:</ins>
-                            </h3>
-                            <ul class="fuente-16">
-                                <li><i class="fa fa-check"></i> 1- Cicatricure Anti-estrías x 400 ml.</li>
-                                <li><i class="fa fa-check"></i> 1- Solage FPS 30 Anti-edad x 50 gr.</li>
-                                <li><i class="fa fa-check"></i> 1- Solage FPS 50 Emul. x 180 ml.</li>
-
-                            </ul>
-                            <div class="col-sm-6">
-                                <h3 class="pull-right"  style="background-color: rgba(154, 205, 50, 0.5);"><strong> $250 </strong></h3>
-                            </div>
-
-                            <div class="col-md-12">
-                                <hr>
-                                <div class="col-sm-6 col-md-3">
-                                    {{ link_to('public/img/novedades/1.jpg','target':'_blank','class':'thumbnail', image('public/img/novedades/1.jpg','alt':'Promo 1 - Img 1') ) }}
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    {{ link_to('public/img/novedades/2b.jpg','target':'_blank','class':'thumbnail', image('public/img/novedades/2b.jpg','alt':'Promo 1 - Img 2') ) }}
-                                </div>
-                                <div class="col-sm-6 col-md-3">
-                                    {{ link_to('public/img/novedades/3.jpg','target':'_blank','class':'thumbnail', image('public/img/novedades/3.jpg','alt':'Promo 1 - Img 3') ) }}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin: Farmacia Promo -->
     <!-- Emprendimiento -->
     <div id="novedades-emprendimiento" class="modal fade">
         <div class="modal-dialog">
@@ -415,13 +312,13 @@
                             </p>
 
                             <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03.jpg','alt':'terreno 1') ) }}
+                                {{ link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03-mini.jpg','alt':'terreno 1') ) }}
                             </div>
                             <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02.jpg','alt':'terreno 2') ) }}
+                                {{ link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02-mini.jpg','alt':'terreno 2') ) }}
                             </div>
                             <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04.jpg','alt':'terreno 3') ) }}
+                                {{ link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04-mini.jpg','alt':'terreno 3') ) }}
                             </div>
                         </div>
                     </div>
@@ -433,29 +330,8 @@
         </div>
     </div>
     <!-- Fin: Avistaje Fauna Marina -->
-    <!-- Avistaje Fauna Marina -->
-    <div id="novedades-ave" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Avistaje de Fauna Marina</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ image('img/informacion/avistaje-big.jpg') }}
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin: Avistaje Fauna Marina -->
-    <!-- Avistaje Fauna Marina -->
+
+    <!-- Fecha Turnos Online -->
     <div id="novedades-fechaTurnos" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -476,5 +352,5 @@
             </div>
         </div>
     </div>
-    <!-- Fin: Avistaje Fauna Marina -->
+    <!-- Fin: Fecha Turnos Online -->
 </section>

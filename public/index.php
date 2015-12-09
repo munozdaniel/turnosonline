@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 
 define('APP_PATH', realpath('..'));
-
+define('APP_ENVIROMENT', 'development');
 try {
 
     /**

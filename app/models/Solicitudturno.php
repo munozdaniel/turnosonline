@@ -154,18 +154,20 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     public static function accionVerSolicitudesOnline()
     {
         $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo.
-        $ffI = $fechaTurnos->fechasTurnos_inicioSolicitud;
-        $ffF =$fechaTurnos->fechasTurnos_finSolicitud;
-
-        $solicitudes = Solicitudturno::find();
         $solicitudesOnline= array();
+        if(!empty($fechaTurnos)){
+            $ffI = $fechaTurnos->fechasTurnos_inicioSolicitud;
+            $ffF =$fechaTurnos->fechasTurnos_finSolicitud;
 
-        foreach($solicitudes as $unaSolicitud)
-        {
-            $ffPedido = date('Y-m-d',strtotime($unaSolicitud->solicitudTurno_fechaPedido));
-            if($unaSolicitud->solicitudTurno_manual == 0 and $unaSolicitud->solicitudTurno_respuestaEnviada=='NO'
-                and $ffPedido <= $ffF and $ffPedido >= $ffI)
-                $solicitudesOnline[]= (array)$unaSolicitud;
+            $solicitudes = Solicitudturno::find();
+
+            foreach($solicitudes as $unaSolicitud)
+            {
+                $ffPedido = date('Y-m-d',strtotime($unaSolicitud->solicitudTurno_fechaPedido));
+                if($unaSolicitud->solicitudTurno_manual == 0 and $unaSolicitud->solicitudTurno_respuestaEnviada=='NO'
+                    and $ffPedido <= $ffF and $ffPedido >= $ffI)
+                    $solicitudesOnline[]= (array)$unaSolicitud;
+            }
         }
         return $solicitudesOnline;
     }
@@ -173,41 +175,43 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     public static function accionVerSolicitudesConRespuestaEnviada()
     {
         $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo.
-        $ffI = $fechaTurnos->fechasTurnos_inicioSolicitud;
-        $ffF =$fechaTurnos->fechasTurnos_finSolicitud;
-
-        $solicitudes = Solicitudturno::find();
         $solicitudesOnline= array();
 
-        foreach($solicitudes as $unaSolicitud)
-        {
-            $ffPedido = date('Y-m-d',strtotime($unaSolicitud->solicitudTurno_fechaPedido));
+        if(!empty($fechaTurnos)){
+            $ffI = $fechaTurnos->fechasTurnos_inicioSolicitud;
+            $ffF =$fechaTurnos->fechasTurnos_finSolicitud;
 
-            if($unaSolicitud->solicitudTurno_respuestaEnviada=='SI' and $ffPedido <= $ffF and $ffPedido >= $ffI)
+            $solicitudes = Solicitudturno::find();
+
+            foreach($solicitudes as $unaSolicitud)
             {
-                $unaSolicitud->solicitudTurno_fechaRespuestaEnviadaDate = date('d/m/Y',strtotime($unaSolicitud->solicitudTurno_fechaRespuestaEnviada));
+                $ffPedido = date('Y-m-d',strtotime($unaSolicitud->solicitudTurno_fechaPedido));
 
-                $resp = $unaSolicitud->solicitudTurno_respuestaChequeada;
-
-                if($resp == 1)
+                if($unaSolicitud->solicitudTurno_respuestaEnviada=='SI' and $ffPedido <= $ffF and $ffPedido >= $ffI)
                 {
-                    if($unaSolicitud->solicitudTurno_manual == 1)
-                        $unaSolicitud->solicitudTurno_respChequedaTexto="SI (solicitud manual)";
+                    $unaSolicitud->solicitudTurno_fechaRespuestaEnviadaDate = date('d/m/Y',strtotime($unaSolicitud->solicitudTurno_fechaRespuestaEnviada));
+
+                    $resp = $unaSolicitud->solicitudTurno_respuestaChequeada;
+
+                    if($resp == 1)
+                    {
+                        if($unaSolicitud->solicitudTurno_manual == 1)
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="SI (solicitud manual)";
+                        else
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="SI";
+                    }
                     else
-                        $unaSolicitud->solicitudTurno_respChequedaTexto="SI";
-                }
-                else
-                {
-                    if($resp == 0)
-                        $unaSolicitud->solicitudTurno_respChequedaTexto="NO";
-                    else //2 (esta opcion quedo pendiente, hasta que se controle que el email se confirma dentro de los dias dados.)M. 09/11/15
-                        $unaSolicitud->solicitudTurno_respChequedaTexto="NO (cancelado)";
-                }
+                    {
+                        if($resp == 0)
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="NO";
+                        else //2 (esta opcion quedo pendiente, hasta que se controle que el email se confirma dentro de los dias dados.)M. 09/11/15
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="NO (cancelado)";
+                    }
 
-                $solicitudesOnline[]= (array)$unaSolicitud;
+                    $solicitudesOnline[]= (array)$unaSolicitud;
+                }
             }
         }
-
         return $solicitudesOnline;
     }
 
@@ -284,24 +288,25 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     {
         $lista = array();
         $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-        $fechaIniSol = $fechaTurnos->fechasTurnos_inicioSolicitud;
-        $fechaFinSol = $fechaTurnos->fechasTurnos_finSolicitud;
+        if(!empty($fechaTurnos)){
+            $fechaIniSol = $fechaTurnos->fechasTurnos_inicioSolicitud;
+            $fechaFinSol = $fechaTurnos->fechasTurnos_finSolicitud;
 
-        $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2 AND solicitudTurno_manual=?3";
-        $parametros = array(1=>$estado,2=>'NO',3=>0);
-        $solicitudes = Solicitudturno::find(array($condiciones,"bind"=>$parametros));
+            $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2 AND solicitudTurno_manual=?3";
+            $parametros = array(1=>$estado,2=>'NO',3=>0);
+            $solicitudes = Solicitudturno::find(array($condiciones,"bind"=>$parametros));
 
-        foreach($solicitudes as $unaSolicitud)
-        {
-            $fechaPedido = $unaSolicitud->solicitudTurno_fechaPedido;
-
-            if ($fechaIniSol <= $fechaPedido and $fechaPedido <= $fechaFinSol)
+            foreach($solicitudes as $unaSolicitud)
             {
-                $lista[] = (array)$unaSolicitud;
-                Solicitudturno::actualizarRespYFechaEnviada($unaSolicitud->solicitudTurno_id);
+                $fechaPedido = $unaSolicitud->solicitudTurno_fechaPedido;
+
+                if ($fechaIniSol <= $fechaPedido and $fechaPedido <= $fechaFinSol)
+                {
+                    $lista[] = (array)$unaSolicitud;
+                    Solicitudturno::actualizarRespYFechaEnviada($unaSolicitud->solicitudTurno_id);
+                }
             }
         }
-
         return $lista;
     }
 

@@ -31,7 +31,7 @@
                     {{ image('img/full-slider/full-slide2.jpg','alt':'servicios') }}
                     <!-- SECOND SLIDE CAPTION-->
                     <div class="slider_caption">
-                        <h2 class="borde-bottom">Solicitud de Turnos Online</h2>
+                            <h2 class="borde-bottom">Turnos Online</h2>
                         <p>Para solicitar o consultar sobre los prestamos puedes sacar tu turno a través de la web.</p>
                         <a href="#service" class="slider_btn slow">Ver Servicios</a>
                     </div>
@@ -47,9 +47,22 @@
                     {{ image('img/full-slider/full-slide7.jpg','alt':'tramites') }}
                     <!-- THIRD SLIDE CAPTION-->
                     <div class="slider_caption">
-                        <h2 class="borde-bottom">Necesitas ayuda para realizar los Trámites?</h2>
+                        <h2 class="borde-bottom">Guía de Trámites</h2>
                         <p>Te ofrecemos una guía detallada para que puedas realizar tus trámites sin problemas</p>
                         <a href="#works" class="slider_btn slow">Ver Guía de Tramites</a>
+                    </div>
+                </a>
+            </li>
+            <!-- CUARTO SLIDE -->
+            <li>
+                <a href="#service" class="slow" style="text-decoration: none;">
+                    <!-- THIRD SLIDE OVERLAY -->
+                    <div class="slider_overlay"></div>
+                    <!-- THIRD SLIDE MAIN IMAGE -->
+                    {{ image('img/full-slider/full-slide7.jpg','alt':'tramites') }}
+                    <!-- THIRD SLIDE CAPTION-->
+                    <div class="slider_caption">
+                        {{ mensajeSlider }}
                     </div>
                 </a>
             </li>

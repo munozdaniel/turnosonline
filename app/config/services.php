@@ -101,14 +101,16 @@ $di->setShared('session', function () {
     return $session;
 });
 
-//servicios de correos electronicos
 
+/**
+ * Configuracion inicial para enviar email con PHPMailer.
+ */
 $di->set('mail', function () use ($config) {
     //sleep(2);
     //require "../libraries/PHPMailer/PHPMailer.php";
     $mail = new PHPMailer;
     //Muestra Mensajes de error con detalles 3 o 4.
-    // $mail->SMTPDebug = 2;
+    //$mail->SMTPDebug = 2;
     $mail->isSMTP();
     $mail->isHTML(true);
 
@@ -119,29 +121,11 @@ $di->set('mail', function () use ($config) {
     $mail->Password     = $config->mail->password;
     $mail->SMTPSecure   = $config->mail->security;
     $mail->Port         = $config->mail->port;
-    $mail->addAddress($config->mail->email, $config->mail->name);
+//    $mail->addAddress($config->mail->email, $config->mail->name);
 
     return $mail;
 });
 
-$di->set('mailInformatica', function () use ($config) {
-
-    $mailInformatica = new PHPMailer;
-    $mailInformatica->isSMTP();
-    $mailInformatica->isHTML(true);
-
-    $mailInformatica->CharSet      = $config->mailInformatica->charset;
-    $mailInformatica->Host         = $config->mailInformatica->host;
-    $mailInformatica->SMTPAuth     = true;
-    $mailInformatica->Username     = $config->mailInformatica->username;
-    $mailInformatica->Password     = $config->mailInformatica->password;
-    $mailInformatica->SMTPSecure   = $config->mailInformatica->security;
-    $mailInformatica->Port         = $config->mailInformatica->port;
-    $mailInformatica->From         = $config->mailInformatica->email;
-    $mailInformatica->FromName     = $config->mailInformatica->name;
-
-    return $mailInformatica;
-});
 
 $di->set('mailDesarrollo',function() use ($config)
 {
@@ -160,6 +144,24 @@ $di->set('mailDesarrollo',function() use ($config)
     $mailDesarrollo->FromName     = $config->mailInformatica->name;
 
     return $mailDesarrollo;
+});
+$di->set('mailInformatica', function () use ($config) {
+
+    $mailInformatica = new PHPMailer;
+    $mailInformatica->isSMTP();
+    $mailInformatica->isHTML(true);
+
+    $mailInformatica->CharSet      = $config->mailInformatica->charset;
+    $mailInformatica->Host         = $config->mailInformatica->host;
+    $mailInformatica->SMTPAuth     = true;
+    $mailInformatica->Username     = $config->mailInformatica->username;
+    $mailInformatica->Password     = $config->mailInformatica->password;
+    $mailInformatica->SMTPSecure   = $config->mailInformatica->security;
+    $mailInformatica->Port         = $config->mailInformatica->port;
+    $mailInformatica->From         = $config->mailInformatica->email;
+    $mailInformatica->FromName     = $config->mailInformatica->name;
+
+    return $mailInformatica;
 });
 
 /**
@@ -204,3 +206,10 @@ $di->set('dispatcher', function() use ($di)
 
     return $dispatcher;
 });
+
+$di->set('datetime', function () use ($config) {
+    return new \Modules\Datetime($config->datetime);
+}, true);
+$di->set('schedule', function () {
+    return new \Modules\Schedule();
+}, true);

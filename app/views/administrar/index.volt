@@ -9,6 +9,8 @@
             </div>
         </div>
         <div class="row col-lg-12 col-md-12">
+            {{ content() }}
+
             <div class="pricing_area">
                 <div class="row">
                     <!-- =================== TURNOS ONLINE ======================-->
@@ -126,100 +128,6 @@
                             </div>
                             {# fin new #}
 
-                        </div>
-                    </div>
-                    <!-- =================== GESTION DE USUARIOS ======================-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><h3>Gestión de Usuarios</h3></div>
-                        <div class="panel-body">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="panel panel-primary  wow fadeInUp">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-child fa-5x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="huge">Rol</div>
-                                                <div>Administrador</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#">
-                                        <div class="panel-footer">
-                                            <span class="pull-left">Agregar Rol</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="panel panel-green  wow fadeInUp">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-magic fa-5x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="huge">Rol</div>
-                                                <div>Administrador</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#">
-                                        <div class="panel-footer">
-                                            <span class="pull-left">Agregar Permisos</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="panel panel-yellow  wow fadeInUp">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-list-ul fa-5x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="huge">Rol</div>
-                                                <div>Administrador</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#">
-                                        <div class="panel-footer">
-                                            <span class="pull-left">Listar Usuario</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="panel panel-red  wow fadeInUp">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-trash-o fa-5x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="huge">Rol</div>
-                                                <div>Administrador</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#">
-                                        <div class="panel-footer">
-                                            <span class="pull-left">Eliminar Permisos</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
                         <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
-                    {{ content() }}
+
 
                     <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos :</ins> </strong>{{ fechaI }} - {{ fechaF }}
                     </div>
@@ -28,14 +28,14 @@
                              <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
                          </div>
                          <div class="fuente-16" id="idCantA" style="color:red;">
-                             <strong><ins>Turnos autorizados :</ins> </strong> <p id="cantAutorizados">{{ cantA }}</p>
+                             <strong><ins>Turnos autorizados :</ins> </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
                         </div>
                      {% else %}
                         <div class="fuente-16">
                             <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
                         </div>
                         <div class="fuente-16" id="idCantA">
-                            <strong><ins>Turnos autorizados :</ins></strong> <p id="cantAutorizados">{{ cantA }}</p>
+                            <strong><ins>Turnos autorizados :</ins></strong> <strong id="cantAutorizados">{{ cantA }}</strong>
                         </div>
                     {% endif %}
                     <br/>
@@ -47,7 +47,10 @@
         {{ form('turnos/enviarRespuestas') }}
 
         <div class="row edicion">
-            <div id="solicitudes" class="col-lg-16 col-md-16 table-responsive">
+            <div class="col-md-12">
+                {{ content() }}
+            </div>
+            <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <tr>
