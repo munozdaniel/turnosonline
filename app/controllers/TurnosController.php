@@ -728,8 +728,10 @@ class TurnosController extends ControllerBase
             else
                 $laSolicitud->solicitudTurno_respuestaChequeada = 2;//Vencio el plazo.
             $laSolicitud->save();
-        }
-        $this->view->vencido = $laSolicitud->solicitudTurno_respuestaChequeada;
+            $this->view->vencido = $laSolicitud->solicitudTurno_respuestaChequeada;
+        }else
+            $this->view->vencido = -1;
+
         //$this->view->setTemplateAfter('main'); //para cambiar el panel que sale en la pagina.
     }
 

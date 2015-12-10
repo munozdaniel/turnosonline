@@ -7,15 +7,21 @@
         <div class="row ">
             <div class="col-md-12" style="text-align: center;">
                 {{ content() }}
+                <div class="box efecto3">
                 {% if vencido == 1 %}
-                    <h1 style="text-shadow: 2px 2px 9px rgb(219, 243, 255);margin-top: 100px;text-decoration: underline;">
+                    <h1 style="text-shadow: 2px 2px 9px rgb(219, 243, 255);margin-top: 100px;">
                         GRACIAS POR SU CONFIRMACIÓN
                     </h1>
                 {% elseif vencido == 2%}
-                    <h1 style="text-align: center;    text-shadow: 2px 2px 9px rgb(219, 243, 255);margin-top: 100px;text-decoration: underline;">
+                    <h1 style="text-align: center;    text-shadow: 2px 2px 9px rgb(219, 243, 255);margin-top: 100px;">
                         LAMENTABLEMENTE EL PLAZO DE CONFIRMACIÓN HA FINALIZADO, POR FAVOR VUELVA A SOLICITAR EL TURNO.
                     </h1>
+                    {% elseif vencido == -1 %}
+                        <h1 style="text-align: center;    text-shadow: 2px 2px 9px rgb(219, 243, 255);margin-top: 100px;">
+                           USTED YA HA CONFIRMADO EL TURNO.
+                        </h1>
                 {% endif %}
+                </div>
                 {{ link_to('index/index','<i class="fa fa-home"></i>INICIO','style':'font-size: xx-large;font-weight: bold;') }}
             </div>
         </div>
