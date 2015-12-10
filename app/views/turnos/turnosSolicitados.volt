@@ -148,6 +148,7 @@
         function myTimer()
         {
             $('#cantAutorizados').load(document.URL +  ' #cantAutorizados');
+            $('#solicitudes').load(document.URL +  ' #solicitudes');
         }
 
         //objeto javascript al que le añadimos toda la funcionalidad del crud
