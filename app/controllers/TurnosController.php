@@ -333,7 +333,7 @@ class TurnosController extends ControllerBase
                         //Si ya habia un periodo, lo desactivamos.
                         if ($fechasTurnos->fechasTurnos_id > 1) {
                             $id = $fechasTurnos->fechasTurnos_id - 1;
-                            $phql = "UPDATE fechasturnos SET fechasTurnos_activo=0 WHERE fechasTurnos_id = :id:";
+                            $phql = "UPDATE Fechasturnos SET fechasTurnos_activo=0 WHERE fechasTurnos_id = :id:";
                             $this->modelsManager->executeQuery($phql, array('id' => $id));
                         }
 
@@ -357,6 +357,22 @@ class TurnosController extends ControllerBase
 
             }
         }
+    }
+
+    /**
+     * Encargado de dehabilitar un periodo. Por lo general se deshabilitan automaticamente, pero tambien se
+     * podrá realizar manualmente.
+     */
+    public function deshabilitarAction($idPeriodo)
+    {
+
+        $periodo = Fechasturnos::findFirstByFechasTurnos_id($idPeriodo);
+        $periodo->fechasTurnos_activo = 0;
+        if($periodo->update())
+            $this->flash->success("EL PERIODO SE HA DESHABILITADO CORRECTAMENTE");
+        else
+            $this->flash->error("NO SE HA PODIDO DESHABILITAR EL PERIODO, INFORMAR AL SOPORTE TECNICO.");
+        $this->redireccionar('turnos/verPeriodos');
     }
 
     /**

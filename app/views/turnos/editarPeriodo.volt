@@ -23,6 +23,7 @@
 
             <div class="col-lg-8 col-md-8 col-md-offset-2">
 
+                {{ link_to('turnos/deshabilitar/'~idPeriodo,'DESHABILITAR PERIODO','class':'btn btn-danger btn-large pull-right') }}
                 <div class="about_content wow bounceInUp ">
                     {{ form('turnos/guardarDatosEdicionPeriodo','method':'post','style':'text-align:left') }}
 
