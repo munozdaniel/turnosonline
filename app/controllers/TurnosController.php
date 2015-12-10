@@ -643,6 +643,7 @@ class TurnosController extends ControllerBase
         }
     }
 
+
     private function enviarEmail($unaSolicitud, $mensaje, $tipoEstado)
     {
         $unPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
@@ -657,8 +658,18 @@ class TurnosController extends ControllerBase
         $valorCuota = $unaSolicitud['solicitudTurno_valorCuota'];
         $obs = $unaSolicitud['solicitudTurno_observaciones'];
 
-        $this->mailInformatica->addAddress($correo, $nomApe);
-        $this->mailInformatica->Subject = "Respuesta por solicitud de un turno en IMPS.";
+        $this->mailDesarrollo->CharSet = 'UTF-8';
+        $this->mailDesarrollo->Host = 'mail.imps.org.ar';
+        $this->mailDesarrollo->SMTPAuth = true;
+        $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
+        $this->mailDesarrollo->Password = 'sis$%&--temas';
+        $this->mailDesarrollo->SMTPSecure = '';
+        $this->mailDesarrollo->Port = 26;
+
+        $this->mailDesarrollo->addAddress($correo,$nomApe);
+        $this->mailDesarrollo->From ='desarrollo@imps.org.ar';
+        $this->mailDesarrollo->FromName = 'IMPS - Sector Prestamos';
+        $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS.";
 
         $idCodif = base64_encode($idSol);
 
@@ -676,20 +687,20 @@ class TurnosController extends ControllerBase
 
             $cadena .= "Recuerde que usted tiene " . $diasConfirmacion . " dias para confirmar el mensaje, de lo contrario el turno sera cancelado.<br/>";
 
-            $this->mailInformatica->Body = $texto . '<br/>' . $cadena . $textoFinal;
+            $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinal;
         } else {   //verificar si es denegado para recuperar el contenido de observaciones.
 
             if ($tipoEstado == 'D')
-                $this->mailInformatica->Body = $texto . ' ' . strtolower($obs) . '.<br/>' . $textoFinal;
+                $this->mailDesarrollo->Body = $texto . ' ' . strtolower($obs) . '.<br/>' . $textoFinal;
             else {
                 if ($obs != '-' && $obs != '')
                     $texto .= "Nota: " . $obs . "<br/>";
 
-                $this->mailInformatica->Body = $texto . '<br/>' . $textoFinal;
+                $this->mailDesarrollo->Body = $texto . '<br/>' . $textoFinal;
             }
         }
 
-        $send = $this->mailInformatica->send();
+        $send = $this->mailDesarrollo->send();
     }
 
     /**

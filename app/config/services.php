@@ -103,7 +103,7 @@ $di->setShared('session', function () {
 
 
 /**
- * Configuracion inicial para enviar email con PHPMailer.
+ * Configuracion inicial para enviar email con PHPMailer a la casilla de consultas.
  */
 $di->set('mail', function () use ($config) {
     //sleep(2);
@@ -125,26 +125,26 @@ $di->set('mail', function () use ($config) {
 
     return $mail;
 });
-
-
+/** Para enviar email a la casilla de Desarrollo */
 $di->set('mailDesarrollo',function() use ($config)
 {
     $mailDesarrollo = new PHPMailer;
     $mailDesarrollo->isSMTP();
     $mailDesarrollo->isHTML(true);
 
-    $mailDesarrollo->CharSet      = $config->mailInformatica->charset;
-    $mailDesarrollo->Host         = $config->mailInformatica->host;
+    $mailDesarrollo->CharSet      = $config->mailDesarrollo->charset;
+    $mailDesarrollo->Host         = $config->mailDesarrollo->host;
     $mailDesarrollo->SMTPAuth     = true;
-    $mailDesarrollo->Username     = $config->mailInformatica->username;
-    $mailDesarrollo->Password     = $config->mailInformatica->password;
-    $mailDesarrollo->SMTPSecure   = $config->mailInformatica->security;
-    $mailDesarrollo->Port         = $config->mailInformatica->port;
-    $mailDesarrollo->From         = $config->mailInformatica->email;
-    $mailDesarrollo->FromName     = $config->mailInformatica->name;
+    $mailDesarrollo->Username     = $config->mailDesarrollo->username;
+    $mailDesarrollo->Password     = $config->mailDesarrollo->password;
+    $mailDesarrollo->SMTPSecure   = $config->mailDesarrollo->security;
+    $mailDesarrollo->Port         = $config->mailDesarrollo->port;
+    $mailDesarrollo->From         = $config->mailDesarrollo->email;
+    $mailDesarrollo->FromName     = $config->mailDesarrollo->name;
 
     return $mailDesarrollo;
 });
+/* Usar mailDesarrollo para los turnos.
 $di->set('mailInformatica', function () use ($config) {
 
     $mailInformatica = new PHPMailer;
@@ -163,7 +163,7 @@ $di->set('mailInformatica', function () use ($config) {
 
     return $mailInformatica;
 });
-
+*/
 /**
  * Register the flash service with custom CSS classes
  */
