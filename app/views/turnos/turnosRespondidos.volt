@@ -92,7 +92,7 @@
 
             {{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3">
                                                 <div class="btn btn-blue btn-lg btn-block">
-                                                     VER LISTADO EN PDF</div></div>') }}
+                                                     VER LISTADO EN PDF</div></div>','target':'_blank') }}
         </div>
     </div>
 </section>
