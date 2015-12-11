@@ -369,7 +369,13 @@ class TurnosController extends ControllerBase
         $periodo = Fechasturnos::findFirstByFechasTurnos_id($idPeriodo);
         $periodo->fechasTurnos_activo = 0;
         if($periodo->update())
-            $this->flash->success("EL PERIODO SE HA DESHABILITADO CORRECTAMENTE");
+        {
+            $schedule = $this->getDi()->get('schedule');
+            $puntoProgramado = $schedule->getByType('plazo')->getLast();
+            $puntoProgramado->setEnd('00-00-0000');
+            if($puntoProgramado->update())
+                $this->flash->success("EL PERIODO SE HA DESHABILITADO CORRECTAMENTE");
+        }
         else
             $this->flash->error("NO SE HA PODIDO DESHABILITAR EL PERIODO, INFORMAR AL SOPORTE TECNICO.");
         $this->redireccionar('turnos/verPeriodos');
@@ -606,6 +612,9 @@ class TurnosController extends ControllerBase
         $this->view->tabla = $paginator->getPaginate();
     }
 
+    /**
+     * Envia el correo segun el estado en el que se encuentra serà el mensaje enviado.
+     */
     public function enviarRespuestasAction()
     {
         $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO');
@@ -666,7 +675,7 @@ class TurnosController extends ControllerBase
         $this->mailDesarrollo->SMTPSecure = '';
         $this->mailDesarrollo->Port = 26;
 
-        $this->mailDesarrollo->addAddress($correo,$nomApe);
+        $this->mailDesarrollo->AddBCC($correo,$nomApe);
         $this->mailDesarrollo->From ='desarrollo@imps.org.ar';
         $this->mailDesarrollo->FromName = 'IMPS - Sector Prestamos';
         $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS.";
