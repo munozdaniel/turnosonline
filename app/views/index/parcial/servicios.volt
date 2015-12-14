@@ -31,7 +31,6 @@
                             <!-- BEGAIN SINGLE SERVICE -->
                             <div class="single_service wow fadeInRight">
 
-
                                     {{ mensajePeriodo }}
                                 {#
                                 {{ link_to('turnos/index','class':'puntero',' <div class="service_iconarea">
