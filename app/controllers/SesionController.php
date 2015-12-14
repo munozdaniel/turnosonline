@@ -36,7 +36,7 @@ class SesionController extends ControllerBase
                     if($this->_registrarSesion($usuarios))
                     {
                         $miSesion = $this->session->get('auth');
-                        $this->flash->message('exito', "Bienvenido/a " . $miSesion['usuario_nombreCompleto'] . " - Rol: " . $miSesion['rol_nombre']);
+                        $this->flash->message('exito', "Bienvenido/a " . $miSesion['usuario_nombreCompleto']);
                         //Redireccionar la ejecución si el usuario es valido
                         return $this->redireccionar('administrar/index');
                     }
