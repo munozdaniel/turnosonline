@@ -46,30 +46,48 @@
 
                         <p><i class="fa fa-info-circle" style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
                             <em>Por favor, llene los siguientes campos para ingresar una solicitud de turno.</em> <br/><br/>
-                        </p>
-
-                        <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaI }} - {{ fechaF }}</div>
-                        <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaA }}</div>
-                        <br/>
-
-                        {% if (cantTurnos == cantAutorizados) %}
-                            <div class="fuente-16" style="color:red;">
-                                <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
-                            </div>
-                            <div class="fuente-16" style="color:red;">
-                                <strong><ins>Turnos autorizados :</ins> </strong> <strong id="cantAutorizados">{{ cantAutorizados }}</strong>
-                            </div>
-                        {% else %}
-                            <div class="fuente-16">
-                                <strong><ins>Total de turnos :</ins> </strong> {{ cantTurnos }}
-                            </div>
-                            <div class="fuente-16">
-                                <strong><ins>Turnos autorizados :</ins> </strong> <strong id="cantAutorizados" >{{ cantAutorizados }}</strong>
-                            </div>
-                        {% endif %}
-                        <br/>
-
+                            </p>
                     </div>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="fuente-14"> <strong><ins>PERIODO DE SOLICITUD DE TURNOS :</ins> </strong>{{ fechaI }} - {{ fechaF }}
+                                </div>
+                                <div class="fuente-14"> <strong><ins>DIA DE ATENCI&Oacute;N :</ins> </strong> {{ diaA }}
+                                </div>
+                            </td>
+
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                            <td>
+                                {% if (cantTurnos == cantAutorizados) %}
+                                    <div class="fuente-14" style="color:red;">
+                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantTurnos }}
+                                    </div>
+                                    <div class="fuente-14" id="idCantA" style="color:red;">
+                                        <strong><ins>TURNOS AUTORIZADOS :</ins> </strong> <strong id="cantAutorizados">{{ cantAutorizados }}</strong>
+                                    </div>
+                                {% else %}
+                                    <div class="fuente-14">
+                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantTurnos }}
+                                    </div>
+                                    <div class="fuente-14" id="idCantA">
+                                        <strong><ins>TURNOS AUTORIZADOS :</ins></strong> <strong id="cantAutorizados">{{ cantAutorizados }}</strong>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
