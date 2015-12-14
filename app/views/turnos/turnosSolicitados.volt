@@ -16,30 +16,45 @@
                         <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
                     </div>
 
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="fuente-14"> <strong><ins>PERIODO DE SOLICITUD DE TURNOS :</ins> </strong>{{ fechaI }} - {{ fechaF }}
+                                </div>
+                                <div class="fuente-14"> <strong><ins>DIA DE ATENCI&Oacute;N :</ins> </strong> {{ diaA }}
+                                </div>
+                            </td>
 
-                    <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos :</ins> </strong>{{ fechaI }} - {{ fechaF }}
-                    </div>
-                    <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n :</ins> </strong> {{ diaA }}
-                    </div>
-                    <br/>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                     {% if (cantidadDeTurnos == cantA) %}
-                         <div class="fuente-16" style="color:red;">
-                             <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
-                         </div>
-                         <div class="fuente-16" id="idCantA" style="color:red;">
-                             <strong><ins>Turnos autorizados :</ins> </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                        </div>
-                     {% else %}
-                        <div class="fuente-16">
-                            <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
-                        </div>
-                        <div class="fuente-16" id="idCantA">
-                            <strong><ins>Turnos autorizados :</ins></strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                        </div>
-                    {% endif %}
-                    <br/>
-
+                            <td>
+                                {% if (cantidadDeTurnos == cantA) %}
+                                    <div class="fuente-14" style="color:red;">
+                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantidadDeTurnos }}
+                                    </div>
+                                    <div class="fuente-14" id="idCantA" style="color:red;">
+                                        <strong><ins>TURNOS AUTORIZADOS :</ins> </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                                    </div>
+                                {% else %}
+                                    <div class="fuente-14">
+                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantidadDeTurnos }}
+                                    </div>
+                                    <div class="fuente-14" id="idCantA">
+                                        <strong><ins>TURNOS AUTORIZADOS :</ins></strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -54,18 +69,18 @@
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <tr>
-                            <th style="text-align: center;color:#2da2c8">Legajo</th>
-                            <th style="text-align: center;color:#2da2c8">Apellido y nombre</th>
-                            <th style="text-align: center;color:#2da2c8">Fecha solicitud</th>
-                            <th style="text-align: center;color:#2da2c8">Estado</th>
-                            <th style="text-align: center;color:#2da2c8">Monto maximo</th>
-                            <th style="text-align: center;color:#2da2c8">Monto posible</th>
-                            <th style="text-align: center;color:#2da2c8">Máximo de cuotas</th>
-                            <th style="text-align: center;color:#2da2c8">Valor cuota</th>
-                            <th style="text-align: center;color:#2da2c8">Observaciones</th>
-                            <th style="text-align: center;color:#2da2c8">Fecha revisión</th>
-                            <th style="text-align: center;color:#2da2c8">Usuario</th>
-                            <th style="text-align: center;color:#2da2c8">EDITAR</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Legajo</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Apellido y nombre</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Fecha solicitud</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Estado</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Monto maximo</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Monto posible</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Máximo de cuotas</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Valor cuota</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Observaciones</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Fecha revisión</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">Usuario</th>
+                            <th style="text-align: center;color:white;background-color:#006688;">EDITAR</th>
                         </tr>
                         </thead>
                         <tbody>
