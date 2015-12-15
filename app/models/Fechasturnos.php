@@ -50,6 +50,12 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $fechasTurnos_activo;
+    /**
+     * 1: No tiene turnos
+     * 2: Ya se hicieron turnos.
+     * @var integer
+     */
+    public $fechasTurnos_sinTurnos;
 
     /**
      * Returns table name mapped in the model.
