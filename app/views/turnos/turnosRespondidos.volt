@@ -52,6 +52,7 @@
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
+                        <th style="text-align: center;color:#2da2c8">Nº Turno</th>
                         <th style="text-align: center;color:#2da2c8">Legajo</th>
                         <th style="text-align: center;color:#2da2c8">Apellido y nombre</th>
                         <th style="text-align: center;color:#2da2c8">Estado</th>
@@ -64,6 +65,7 @@
                     <tbody>
                     {% for item in page.items %}
                         <tr>
+                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_numero'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_legajo'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nomApe'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_estado'] }}</td>
@@ -81,7 +83,7 @@
                                 {{ link_to("/turnos/turnosRespondidos/?page=1",'Primera','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.next,'Siguiente','class':'btn') }}
-                                {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'&Uacute;ltima','class':'btn') }}
+                                {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'Última','class':'btn') }}
                                 <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
                             </div>
                         </td>
@@ -89,10 +91,11 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="col-md-12">
             {{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3">
                                                 <div class="btn btn-blue btn-lg btn-block">
                                                      VER LISTADO EN PDF</div></div>','target':'_blank') }}
+            </div>
         </div>
     </div>
 </section>
