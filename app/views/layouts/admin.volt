@@ -15,7 +15,7 @@
                     <!-- LOGO -->
                     <!-- TEXT BASED LOGO -->
                     <a class="navbar-brand" href="#" >
-                        {{ image('img/logoS.png','id':'logo','alt':'logo imps','style':'top: 0%;left: 2%;display: inline-block !important; margin: -5% 0% 0% 0%;width: 30%;') }}
+                        {{ image('img/logoS.png','id':'logo','class':' visible-lg-inline','alt':'logo imps','style':'top: 0%;left: 2%;display: inline-block; margin: -5% 0% 0% 0%;width: 30%;') }}
                         <span style="font-family: 'Archivo Black', sans-serif;font-weight: bolder;">IMPS</span>
                     </a>
                     <!-- IMG BASED LOGO  -->
