@@ -6,9 +6,12 @@
     </style>
 
     <div class="container">
+        <div class="col-md-12 pull-right">{{ link_to('turnos/turnosSolicitados','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+
         <div class="box efecto3">
             {{ content() }}
-            <div class="pull-right">{{ link_to('turnos/turnosSolicitados','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+            <div class="col-xs-12 pull-right">
+                {{ link_to('turnos/turnosSolicitados','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
         </div>
     </div>
 </section>
