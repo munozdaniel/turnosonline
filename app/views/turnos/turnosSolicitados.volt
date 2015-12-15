@@ -248,13 +248,13 @@
                 }
 
                 html += '<div> <label for="solicitudTurno_montoMax">Monto Máximo</label>';
-                html += '<input type="number" min="0" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax"  required  value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
+                html += '<input type="number" min="0" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax"  required="true" title="Ingrese numeros unicamente"   value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
                 html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
-                html += '<input type="number" min="0" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible"  required value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
+                html += '<input type="number" min="0" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible"   title="Ingrese numeros unicamente" required="true" value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
                 html += '<div> <label for="solicitudTurno_cantCuotas">Máximo de Cuotas</label>';
-                html += '<input type="number" min="0" id="solicitudTurno_cantCuotas" name="solicitudTurno_cantCuotas"  required value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
+                html += '<input type="number" min="0" id="solicitudTurno_cantCuotas" name="solicitudTurno_cantCuotas"  required="true"  title="Ingrese numeros unicamente"  value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
                 html += '<div> <label for="solicitudTurno_valorCuota">Valor de las Cuotas</label>';
-                html += '<input type="number" min="0" id="solicitudTurno_valorCuota" name="solicitudTurno_valorCuota"  required value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
+                html += '<input type="number" min="0" id="solicitudTurno_valorCuota" name="solicitudTurno_valorCuota"  required="true"  title="Ingrese numeros unicamente"  value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
                 html += '<div id="observacion" >';
                 html += '<label for="solicitudTurno_observaciones">Observaciones</label>';
                 html += '<textarea id="solicitudTurno_observaciones" maxlength="150"class="form-control" name="solicitudTurno_observaciones" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
@@ -277,7 +277,7 @@
                 html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO">No cumple con el 50% capital adeudado</option>';
                 html += '<option value="SE ENCUENTRA EN ROJO">Se encuentra en rojo</option>';
                 html += '<option value="NO CUMPLE CON LA ANTIGUEDAD">No cumple con la antiguedad</option>';
-                html += '<option value="REFINANCIACION TOTAL">Refinanciación total</option>';
+                html += '<option value="REFINANCIACION TOTAL">Tiene refinanciación total</option>';
                 html += '</select>';
                 html += '</div>';
 
