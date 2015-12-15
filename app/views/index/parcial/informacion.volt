@@ -117,7 +117,7 @@
                                                 <h4 class="panel-title">
                                                     <a
                                                             href="http://imps.org.ar/farmacia/" target="_blank">
-                                                        <span class="fa fa-external-link "></span>Farmacia IMPS
+                                                        <span class="fa fa-external-link "></span>Farmacia IMPS <small>(Pagina Oficial)</small>
                                                     </a>
                                                 </h4>
                                             </div>

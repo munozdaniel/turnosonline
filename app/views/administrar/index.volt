@@ -27,7 +27,7 @@
                                             </div>
                                             <div class="col-xs-9 text-right">
                                                 <div class="huge">Rol</div>
-                                                <div>Supervisor</div>
+                                                <div>Empleado</div>
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                             </div>
                                             <div class="col-xs-9 text-right">
                                                 <div class="huge">Rol</div>
-                                                <div>Supervisor</div>
+                                                <div>Empleado</div>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,28 @@
                                         </div>') }}
                                 </div>
                             </div>
-
+                            {#nuevo 20/10 #}
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-yellow  wow fadeInUp" style="border-color:lightcoral;">
+                                    <div class="panel-heading" style="border-color: lightcoral;color: #fff;background-color: lightcoral;">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                {{ link_to('turnos/solicitudManual','<i class="fa fa-ticket fa-5x"></i>','class':'font-blanco','class':'font-blanco') }}
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">Rol</div>
+                                                <div>Empleado</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ link_to('turnos/solicitudManual','<div class="panel-footer">
+                                            <span class="pull-left">Solicitud Manual</span><br><br>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>') }}
+                                </div>
+                            </div>
+                            {# fin new #}
                             <div class="col-lg-3 col-md-6">
                                 <div class="panel panel-yellow  wow fadeInUp">
                                     <div class="panel-heading">
@@ -74,7 +95,7 @@
                                         </div>
                                     </div>
                                     {{ link_to('turnos/periodoSolicitud','<div class="panel-footer">
-                                            <span class="pull-left">Seleccionar Periodo para solicitud y atencion de turnos</span><br><br>
+                                            <span class="pull-left">Crear Periodo para solicitud y atencion de turnos</span><br><br>
                                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                             <div class="clearfix"></div>
                                         </div>') }}
@@ -105,28 +126,7 @@
                             </div>
                             {# fin new #}
 
-                            {#nuevo 20/10 #}
-                            <div class="col-lg-3 col-md-6">
-                                <div class="panel panel-yellow  wow fadeInUp" style="border-color:lightcoral;">
-                                    <div class="panel-heading" style="border-color: lightcoral;color: #fff;background-color: lightcoral;">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                {{ link_to('turnos/solicitudManual','<i class="fa fa-ticket fa-5x"></i>','class':'font-blanco','class':'font-blanco') }}
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="huge">Rol</div>
-                                                <div>Supervisor</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{ link_to('turnos/solicitudManual','<div class="panel-footer">
-                                            <span class="pull-left">Solicitud Manual</span><br><br>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>') }}
-                                </div>
-                            </div>
-                            {# fin new #}
+
 
                         </div>
                     </div>
