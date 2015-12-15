@@ -26,54 +26,59 @@ class IndexController extends ControllerBase
         */
         $schedule = $this->getDi()->get('schedule');
         $puntoProgramado = $schedule->getByType('plazo')->getLast();
-
-        $date = date_create($puntoProgramado->getStart());
-        $dateFin = date_create($puntoProgramado->getEnd());
-        //Si el periodo  no esta habilitado todavia
-        if ($puntoProgramado->isBefore()) {
-            $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
+        //MENSAJES PREDETERMINADOS:
+        $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
                                             <h3 class="service_title">Turnos Online</h3></a>' .
-                '<p> <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
+            ' <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
+                                            Las fechas se dispondrán a través de la pagina web y en nuestras oficinas.
+                                            Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
+                                            o llamarnos al (0299) 4479921<br><br>';
+        $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EL PERIODO PARA SOLICITAR TURNOS ONLINE NO SE ENCUENTRA HABILITADO POR EL MOMENTO </h2>
+                        <p> Por cualquier consulta puede llamarnos al (0299) 4479921</p> <a href="#service"> </a> ';
+        if (!empty($puntoProgramado)) {
+
+            $date = date_create($puntoProgramado->getStart());
+            $dateFin = date_create($puntoProgramado->getEnd());
+            //Si el periodo  no esta habilitado todavia
+            if ($puntoProgramado->isBefore()) {
+                $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
+                                            <h3 class="service_title">Turnos Online</h3></a>' .
+                    '<p> <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
                                                 Los turnos se podrán retirar a partir del : <strong>' . date_format($date, 'd/m/Y H:i:s') . '</strong><br>
                                                 Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                                 o llamarnos al (0299) 4479921<br><br>
                                             </p>';
-            $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EN EL PERIODO <br> '  . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . ' SE PODRÁN SOLICITAR TURNOS ONLINE  </h2>
+                $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EN EL PERIODO <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . ' SE PODRÁN SOLICITAR TURNOS ONLINE  </h2>
                         <p></p> <a href="#service"> </a> ';
-        }
-        //Si el periodo se encuentra
-        if ($puntoProgramado->isActive()) {
-            $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online</h3>', "class" => "")) .
-                '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
+            }
+            //Si el periodo se encuentra
+            if ($puntoProgramado->isActive()) {
+                $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online</h3>', "class" => "")) .
+                    '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                                 o llamarnos al (0299) 4479921</p>';
 
-            $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> PERIODO HABILITADO PARA SOLICITAR TURNOS ONLINE <br> '  . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . '  </h2>
-                        <p></p>'.$this->tag->linkTo(array("turnos/index",'Solicitar Turno', "class" => "slider_btn slow"));
-        }
-        //Si el periodo para solicitar turnos ya termino.
-        if ($puntoProgramado->isAfter()) {
-            $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
-                                            <h3 class="service_title">Turnos Online</h3></a>' .
-                ' <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
-                                            Las fechas se dispondrán a través de la pagina web y en nuestras oficinas.
-                                            Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                            o llamarnos al (0299) 4479921<br><br>';
-            $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EL PERIODO PARA SOLICITAR TURNOS ONLINE NO SE ENCUENTRA HABILITADO POR EL MOMENTO </h2>
-                        <p> Por cualquier consulta puede llamarnos al (0299) 4479921</p> <a href="#service"> </a> ';
-            $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-            if (!empty($ultimoPeriodo)) {
-                $solicitudes = Solicitudturno::findBySolicitudTurno_respuestaChequeada(0);
-                foreach ($solicitudes as $unaSolicitud) {
-                    $unaSolicitud->solicitudTurno_respuestaChequeada = 2;//Se los cancela porque se les vencieron el plazo.
-                    $unaSolicitud->save();
-                }
-                $ultimoPeriodo->fechasTurnos_activo = 0;
-                if (!$ultimoPeriodo->save()) {
-                    $this->flash->error("LOS PERIODOS PARA LA SOLICITUD DE TURNOS NO SE HAN DESHABILITADOS. ");
-                }
+                $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> PERIODO HABILITADO PARA SOLICITAR TURNOS ONLINE <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . '  </h2>
+                        <p></p>' . $this->tag->linkTo(array("turnos/index", 'Solicitar Turno', "class" => "slider_btn slow"));
             }
+            //Si el periodo para solicitar turnos ya termino.
+            if ($puntoProgramado->isAfter()) {
 
+                $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+                if (!empty($ultimoPeriodo)) {
+                    $solicitudes = Solicitudturno::findBySolicitudTurno_respuestaChequeada(0);
+                    foreach ($solicitudes as $unaSolicitud) {
+                        $unaSolicitud->solicitudTurno_respuestaChequeada = 2;//Se los cancela porque se les vencieron el plazo.
+                        $unaSolicitud->save();
+                    }
+                    $ultimoPeriodo->fechasTurnos_activo = 0;
+                    if (!$ultimoPeriodo->save()) {
+                        $this->flash->error("LOS PERIODOS PARA LA SOLICITUD DE TURNOS NO SE HAN DESHABILITADOS. ");
+                    }
+                }
+
+            }
         }
+
     }
 
     /**
