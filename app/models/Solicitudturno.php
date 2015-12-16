@@ -129,54 +129,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      */
     public $solicitudTurno_fechaComprobacion;
 
-    public  function comprobarRespuesta($laSolicitud)
-    {
-        $vencido = -1;
-        $nroTurno = 1;
-        try{
-        if ($laSolicitud->solicitudTurno_respuestaChequeada != 1) {
-            /*EL TURNO NUNCA FUE CHEQUEADO: */
-            $unPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-            $fechaVencimiento = strtotime('+' . $unPeriodo->fechasTurnos_cantidadDiasConfirmacion . ' day', strtotime($unPeriodo->fechasTurnos_inicioSolicitud));
-            $fechaVencimiento = date('Y-m-d', $fechaVencimiento);
-            $fechaHoy = Date('Y-m-d');
 
-            /*VERIFICA SI EL PLAZO ES VALIDO PARA CONFIRMAR*/
-            if ($fechaHoy <= $fechaVencimiento
-                && $fechaVencimiento < $unPeriodo->fechasTurnos_diaAtencion
-            ) {
-                $laSolicitud->solicitudTurno_respuestaChequeada = 1;//Is OKEY
-                $laSolicitud->solicitudTurno_fechaConfirmacion = $fechaHoy;
-                /* Se encarga de verificar si en el periodo ya se solicitaron turnos.
-                    En caso Negativo: el numero de turno comenzara en 1. En caso Positivo: el numero de turno aumentara en 1.*/
-                if ($unPeriodo->fechasTurnos_sinTurnos == 1) {//Va a ser el primer turno del periodo.
-                    $laSolicitud->solicitudTurno_numero = 1;
-                    $unPeriodo->fechasTurnos_sinTurnos = 0;
-                    if (!$unPeriodo->update())
-                        echo "Hubo un problema para generar el Nº de Turno";
-                } else {
-                    //Obtengo el mayor numero de turnos existente y le sumo 1.
-
-                    $query = "SELECT * FROM  Solicitudturno ORDER BY  solicitudTurno_numero DESC LIMIT 0 , 1";
-
-                    $solicitudAnterior = $this->getModelsManager()->executeQuery($query);
-                    $laSolicitud->solicitudTurno_numero = $solicitudAnterior[0]->solicitudTurno_numero + 1;
-                }
-            } else {
-                /*EL PLAZO NO ES VALIDO, YA VENCIO LA FECHA PARA CONFIRMAR*/
-                $laSolicitud->solicitudTurno_respuestaChequeada = 2;//Vencio el plazo.
-            }
-            if (!$laSolicitud->update())
-                echo "Ocurrio un problema al actualizar la solicitud.";
-            $vencido = $laSolicitud->solicitudTurno_respuestaChequeada;
-            $nroTurno = $laSolicitud->solicitudTurno_numero;
-        }
-        }
-        catch(Exception $e){
-            echo $e->getMessage();
-        }
-        return array('vencido'=> $vencido,'nroTurno'=>$nroTurno);
-    }
 
 
     /**
@@ -310,7 +263,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         }
     }
 
-    public static function accionAgregarUnaSolicitudManual($legajo,$nombreCompleto,$documento,$numTelefono,$estado,$nickActual)
+    public static function accionAgregarUnaSolicitudManual($legajo,$nombreCompleto,$documento,$numTelefono,$estado,$nickActual,$nroTurno=NULL)
     {
         $unaSolicitudManual = new Solicitudturno();
 
@@ -329,9 +282,10 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             'solicitudTurno_fechaProcesamiento' => date('Y-m-d'),
             'solicitudTurno_fechaPedido'=>date('Y-m-d'),
             'solicitudTurno_respuestaEnviada'=>'SI',
-            'solicitudTurno_fechaComprobacion'=>NULL,
+            'solicitudTurno_fechaComprobacion'=>date('Y-m-d'),
             'solicitudTurno_respuestaChequeada'=>1,
             'solicitudTurno_fechaRespuestaEnviada' => date('Y-m-d'),
+            'solicitudTurno_numero' => $nroTurno,
             'solicitudTurno_manual'=>1));
 
         if ($unaSolicitudManual->save())
@@ -344,6 +298,54 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             }
             return false;
         }
+    }
+
+    public  function comprobarRespuesta($laSolicitud)
+    {
+        $vencido = -1;
+        $nroTurno = 1;
+        try{
+            if ($laSolicitud->solicitudTurno_respuestaChequeada != 1) {
+                /*EL TURNO NUNCA FUE CHEQUEADO: */
+                $unPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+                $fechaVencimiento = strtotime('+' . $unPeriodo->fechasTurnos_cantidadDiasConfirmacion . ' day', strtotime($unPeriodo->fechasTurnos_inicioSolicitud));
+                $fechaVencimiento = date('Y-m-d', $fechaVencimiento);
+                $fechaHoy = Date('Y-m-d');
+
+                /*VERIFICA SI EL PLAZO ES VALIDO PARA CONFIRMAR*/
+                if ($fechaHoy <= $fechaVencimiento
+                    && $fechaVencimiento < $unPeriodo->fechasTurnos_diaAtencion
+                ) {
+                    $laSolicitud->solicitudTurno_respuestaChequeada = 1;//Is OKEY
+                    $laSolicitud->solicitudTurno_fechaConfirmacion = $fechaHoy;
+                    /* Se encarga de verificar si en el periodo ya se solicitaron turnos.
+                        En caso Negativo: el numero de turno comenzara en 1. En caso Positivo: el numero de turno aumentara en 1.*/
+                    if ($unPeriodo->fechasTurnos_sinTurnos == 1) {//Va a ser el primer turno del periodo.
+                        $laSolicitud->solicitudTurno_numero = 1;
+                        $unPeriodo->fechasTurnos_sinTurnos = 0;
+                        if (!$unPeriodo->update())
+                            echo "Hubo un problema para generar el Nº de Turno";
+                    } else {
+                        //Obtengo el mayor numero de turnos existente y le sumo 1.
+
+                        $query = "SELECT solicitudTurno_numero  FROM  Solicitudturno, Fechasturnos AS F WHERE F.fechasTurnos_activo=1 AND '".$laSolicitud->solicitudTurno_fechaPedido."' BETWEEN F.fechasTurnos_inicioSolicitud AND F.fechasTurnos_finSolicitud ORDER BY  solicitudTurno_numero DESC LIMIT 0 , 1";
+                        $solicitudAnterior = $this->getModelsManager()->executeQuery($query);
+                        $laSolicitud->solicitudTurno_numero = $solicitudAnterior[0]->solicitudTurno_numero + 1;
+                    }
+                } else {
+                    /*EL PLAZO NO ES VALIDO, YA VENCIO LA FECHA PARA CONFIRMAR*/
+                    $laSolicitud->solicitudTurno_respuestaChequeada = 2;//Vencio el plazo.
+                }
+                if (!$laSolicitud->update())
+                    echo "Ocurrio un problema al actualizar la solicitud.";
+                $vencido = $laSolicitud->solicitudTurno_respuestaChequeada;
+                $nroTurno = $laSolicitud->solicitudTurno_numero;
+            }
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+        }
+        return array('vencido'=> $vencido,'nroTurno'=>$nroTurno);
     }
 
     public static function recuperaSolicitudesSegunEstado($estado)
