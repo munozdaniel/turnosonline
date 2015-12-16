@@ -1,16 +1,16 @@
 <!--=========== BEGAIN PRICING SECTION ================-->
 <section id="onepage" class="admin">
     <div class="container">
+
+        {{ content() }} <br/>
+
         <div class="row col-lg-12 col-md-12">
-            <!-- START ABOUT HEADING -->
             <div class="heading">
-                <h2 class="wow fadeInLeftBig">Panel de Control</h2>
-                <p></p>
+                <h2>PANEL DE CONTROL</h2>
             </div>
         </div>
-        <div class="row col-lg-12 col-md-12">
-            {{ content() }}
 
+        <div class="row col-lg-12 col-md-12">
             <div class="pricing_area">
                 <div class="row">
                     <!-- =================== TURNOS ONLINE ======================-->

@@ -5,41 +5,61 @@
     <style>
         a {color: #2da2c8}
         .heading h2 {font-size: 30px;line-height: 35px;}
+        .btn-volver {margin-bottom: 15%;margin-top:-125%;margin-left:310%;}
     </style>
 
     <div class="container">
-
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="about_area">
+
                     <div class="heading">
                         <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos con respuesta enviada</h2>
-                        <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+
+                        <div class="col-md col-md-offset-8" style="width: 10%;margin-top: 5%;">
+                            {{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}
+                        </div>
                     </div>
 
-                    <div class="fuente-16"> <strong><ins>Periodo de solicitud de turnos</ins>: </strong>{{ fechaI }} - {{ fechaF }}
-                    </div>
-                    <div class="fuente-16"> <strong><ins>Dia de atenci&oacute;n</ins>: </strong> {{ diaA }}
-                    </div>
-                    <br/>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="fuente-14"> <strong><ins>PERIODO DE SOLICITUD DE TURNOS :</ins> </strong>{{ fechaI }} - {{ fechaF }}
+                                </div>
+                                <div class="fuente-14"> <strong><ins>DIA DE ATENCI&Oacute;N :</ins> </strong> {{ diaA }}
+                                </div>
+                            </td>
 
-                    {% if (cantidadDeTurnos == cantA) %}
-                        <div class="fuente-16" style="color:red;">
-                            <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
-                        </div>
-                        <div class="fuente-16" style="color:red;">
-                            <strong><ins>Turnos autorizados :</ins> </strong> {{ cantA }}
-                        </div>
-                    {% else %}
-                        <div class="fuente-16">
-                            <strong><ins>Total de turnos :</ins> </strong> {{ cantidadDeTurnos }}
-                        </div>
-                        <div class="fuente-16">
-                            <strong><ins>Turnos autorizados :</ins> </strong> {{ cantA }}
-                        </div>
-                    {% endif %}
-                    <br/>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
+                            <td>
+                                {% if (cantidadDeTurnos == cantA) %}
+                                    <div class="fuente-14" style="color:red;">
+                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantidadDeTurnos }}
+                                    </div>
+                                    <div class="fuente-14" id="idCantA" style="color:red;">
+                                        <strong><ins>TURNOS AUTORIZADOS :</ins> </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                                    </div>
+                                {% else %}
+                                    <div class="fuente-14">
+                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantidadDeTurnos }}
+                                    </div>
+                                    <div class="fuente-14" id="idCantA">
+                                        <strong><ins>TURNOS AUTORIZADOS :</ins></strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -48,7 +68,7 @@
             <div class="col-md-12">
                 {{ content() }}
             </div>
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12"> <!-- margin-top:-5%; -->
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>

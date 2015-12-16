@@ -210,6 +210,7 @@ $di->set('dispatcher', function() use ($di)
 $di->set('datetime', function () use ($config) {
     return new \Modules\Datetime($config->datetime);
 }, true);
+
 $di->set('schedule', function () {
     return new \Modules\Schedule();
 }, true);
