@@ -282,21 +282,21 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             'solicitudTurno_fechaProcesamiento' => date('Y-m-d'),
             'solicitudTurno_fechaPedido'=>date('Y-m-d'),
             'solicitudTurno_respuestaEnviada'=>'SI',
-            'solicitudTurno_fechaComprobacion'=>date('Y-m-d'),
+            'solicitudTurno_fechaConfirmacion'=>date('Y-m-d'),
             'solicitudTurno_respuestaChequeada'=>1,
             'solicitudTurno_fechaRespuestaEnviada' => date('Y-m-d'),
             'solicitudTurno_numero' => $nroTurno,
             'solicitudTurno_manual'=>1));
 
         if ($unaSolicitudManual->save())
-            return true;
+            return $unaSolicitudManual;
         else
         {
             foreach ($unaSolicitudManual->getMessages() as $message)
             {
                 echo $message, "<br>";
             }
-            return false;
+            return null;
         }
     }
 

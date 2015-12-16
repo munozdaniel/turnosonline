@@ -59,6 +59,7 @@
                         <th style="text-align: center;color:#2da2c8">Fecha respuesta enviada</th>
                         <th style="text-align: center;color:#2da2c8">Usuario</th>
                         <th style="text-align: center;color:#2da2c8">Respuesta chequeada</th>
+                        <th style="text-align: center;color:#2da2c8">Comprobante</th>
                     </tr>
                     </thead>
 
@@ -72,6 +73,8 @@
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_fechaRespuestaEnviadaDate'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_respChequedaTexto'] }}</td>
+                            <td style="text-align: center;width: 180px">{{ link_to('turnos/comprobanteTurno/'~ item['solicitudTurno_id'] ,'GENERAR ','class':'btn btn-info btn-large','target':'_blank') }}</td>
+
                         </tr>
                     {% endfor %}
                     </tbody>

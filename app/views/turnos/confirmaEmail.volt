@@ -26,7 +26,7 @@
                             </h1>
                         {% endif %}
                     <h3 class="login-title"> EL TURNO ES EL Nº {{ nroTurno }}</h3>
-                    <h3>  {{ link_to('turnos/comprobanteTurno/'~idSolicitud,'GENERAR COMPROBANTE DE TURNO','class':'btn btn-info btn-large','target':'_blank') }} </h3>
+                    <h3>  {{ link_to('turnos/comprobanteTurno/'~idSolicitud,'IMPRIMIR COMPROBANTE DE TURNO','class':'btn btn-info btn-large','target':'_blank') }} </h3>
                 {% endif %}
 
                 </div>

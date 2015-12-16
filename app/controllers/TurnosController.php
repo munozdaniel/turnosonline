@@ -138,7 +138,6 @@ class TurnosController extends ControllerBase
                                     }
                                     else{
                                         $query = "SELECT solicitudTurno_numero  FROM  Solicitudturno, Fechasturnos AS F WHERE F.fechasTurnos_activo=1 AND '".Date('Y-m-d')."' BETWEEN F.fechasTurnos_inicioSolicitud AND F.fechasTurnos_finSolicitud ORDER BY  solicitudTurno_numero DESC LIMIT 0 , 1";
-                                        $this->flash->warning($query);
 
                                         $result = $this->db->query($query);
                                         if ($result->numRows() != 0) {
@@ -147,19 +146,20 @@ class TurnosController extends ControllerBase
 
                                         }
                                     }
-                                    $this->flash->warning("NRO TURNO $nroTurno");
                                 }
 
-                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual,$nroTurno);
+                                $solicitud = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual,$nroTurno);
 
-                                if ($seGuardo)//la solicitud se ingreso con exito.
+                                if (!empty($solicitud))//la solicitud se ingreso con exito.
                                 {
 
                                     if ($estado == 'AUTORIZADO')
                                         Fechasturnos::incrementarCantAutorizados();
 
                                     $turnoManualForm->clear();
-                                    $this->flash->success('LA SOLICITUD DE TURNO SE INGRESO CON EXITO.');
+                                    $this->flash->notice($this->tag->linkTo(array('turnos/comprobanteTurno/'.$solicitud->solicitudTurno_id, "IMPRIMIR COMPROBANTE DE TURNO", "class" => "btn btn-info btn-large",'target'=>'_blank')));
+
+
                                 } else
                                     $this->flash->error('OCURRIO UN ERROR, INTENTE MAS TARDE.');
                             } else
