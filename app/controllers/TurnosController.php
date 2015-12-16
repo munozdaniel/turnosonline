@@ -128,10 +128,33 @@ class TurnosController extends ControllerBase
 
                         if ($nombreCompleto != "") {
                             if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto, null)) {
-                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual);
+                                $nroTurno = null;
+                                if($estado == 'AUTORIZADO'){
+                                    if($fechaTurno->fechasTurnos_sinTurnos==1){
+                                        $nroTurno = 1;
+                                        $fechaTurno->fechasTurnos_sinTurnos = 0;
+                                        if (!$fechaTurno->update())
+                                            $this->flash->error('OCURRIO UN ERROR AL GENERAR EL Nº DE TURNO.');
+                                    }
+                                    else{
+                                        $query = "SELECT solicitudTurno_numero  FROM  Solicitudturno, Fechasturnos AS F WHERE F.fechasTurnos_activo=1 AND '".Date('Y-m-d')."' BETWEEN F.fechasTurnos_inicioSolicitud AND F.fechasTurnos_finSolicitud ORDER BY  solicitudTurno_numero DESC LIMIT 0 , 1";
+                                        $this->flash->warning($query);
+
+                                        $result = $this->db->query($query);
+                                        if ($result->numRows() != 0) {
+                                            $solicitudAnterior = $result->fetch();
+                                            $nroTurno = $solicitudAnterior["solicitudTurno_numero"]+1;
+
+                                        }
+                                    }
+                                    $this->flash->warning("NRO TURNO $nroTurno");
+                                }
+
+                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual,$nroTurno);
 
                                 if ($seGuardo)//la solicitud se ingreso con exito.
                                 {
+
                                     if ($estado == 'AUTORIZADO')
                                         Fechasturnos::incrementarCantAutorizados();
 
