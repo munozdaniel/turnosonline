@@ -68,7 +68,7 @@ class TurnosController extends ControllerBase
 
                         if ($nombreCompleto != "") {
                             if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto, $email)) {
-                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo, $nombreCompleto, $documento, $email, $numTelefono);
+                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo, $nombreCompleto, $documento, $email, $numTelefono,$ultimoPeriodo->fechasTurnos_id);
 
                                 if ($seGuardo)//la solicitud se ingreso con exito.
                                 {
@@ -137,18 +137,12 @@ class TurnosController extends ControllerBase
                                             $this->flash->error('OCURRIO UN ERROR AL GENERAR EL Nº DE TURNO.');
                                     }
                                     else{
-                                        $query = "SELECT solicitudTurno_numero  FROM  Solicitudturno, Fechasturnos AS F WHERE F.fechasTurnos_activo=1 AND '".Date('Y-m-d')."' BETWEEN F.fechasTurnos_inicioSolicitud AND F.fechasTurnos_finSolicitud ORDER BY  solicitudTurno_numero DESC LIMIT 0 , 1";
-
-                                        $result = $this->db->query($query);
-                                        if ($result->numRows() != 0) {
-                                            $solicitudAnterior = $result->fetch();
-                                            $nroTurno = $solicitudAnterior["solicitudTurno_numero"]+1;
-
-                                        }
+                                        $solicitud = new Solicitudturno();
+                                        $nroTurno = $solicitud->obtenerUltimoNumero() +1;
                                     }
                                 }
 
-                                $solicitud = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual,$nroTurno);
+                                $solicitud = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual,$nroTurno,$ultimoPeriodo->fechasTurnos_id);
 
                                 if (!empty($solicitud))//la solicitud se ingreso con exito.
                                 {
@@ -294,12 +288,9 @@ class TurnosController extends ControllerBase
     {
         try {
             $fechasTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo (campo nuevo).
-            $consulta = "SELECT * FROM solicitudturno AS ST WHERE ((DATE(ST.solicitudTurno_fechaPedido) BETWEEN :inicioSolicitud: AND :finSolicitud:) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE  :nomApe:)))";
-
+            $consulta = "SELECT ST.* FROM solicitudturno AS ST, Fechasturnos AS F WHERE (fechasTurnos_activo = 1) AND (F.fechasTurnos_id= ST.solicitudTurnos_fechasTurnos) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE  :nomApe:))";
             $solicitudTurno = $this->modelsManager->executeQuery($consulta,
                 array(
-                    'inicioSolicitud' => $fechasTurnos->fechasTurnos_inicioSolicitud,
-                    'finSolicitud' => $fechasTurnos->fechasTurnos_finSolicitud,
                     'legajo' => $legajo,
                     'nomApe' => $nomApe));
 
@@ -749,9 +740,24 @@ class TurnosController extends ControllerBase
         $id = base64_decode($idSolicitud);
         $laSolicitud = Solicitudturno::findFirstBySolicitudTurno_id($id);
         if (!empty($laSolicitud)){
-            $this->view->idSolicitud = $laSolicitud->solicitudTurno_id;//Envio el id de solicitud para generar el pdf.
-            $solicitud = new Solicitudturno();
-            $resultado = $solicitud->comprobarRespuesta($laSolicitud);
+            $resultado = $laSolicitud->comprobarRespuesta();
+
+            if($resultado['vencido']==2){
+                $this->flash->message("","<h1>LAMENTABLEMENTE EL PLAZO DE CONFIRMACIÓN HA FINALIZADO, POR FAVOR VUELVA A SOLICITAR EL TURNO.</h1>");
+            }else{
+                if($resultado['vencido']==1){
+                    $this->flash->message("","<h1> GRACIAS POR SU CONFIRMACIÓN </h1>
+                                            <h3 class='login-title'> EL TURNO ES EL Nº ".$laSolicitud->solicitudTurno_numero."</h3>
+                                            <h3>".$this->tag->linkTo(array('turnos/comprobanteTurno/'.$laSolicitud->solicitudTurno_id,'IMPRIMIR COMPROBANTE DE TURNO',
+                                            'class'=>'btn btn-info btn-large','target'=>'_blank'))."</h3>");
+                }
+                else{
+                    $this->flash->message("","<h1> USTED YA HA CONFIRMADO EL TURNO </h1>
+                                            <h3 class='login-title'> EL TURNO ES EL Nº ".$laSolicitud->solicitudTurno_numero."</h3>
+                                            <h3>".$this->tag->linkTo(array('turnos/comprobanteTurno/'.$laSolicitud->solicitudTurno_id,'IMPRIMIR COMPROBANTE DE TURNO',
+                            'class'=>'btn btn-info btn-large','target'=>'_blank'))."</h3>");
+                }
+            }
             $this->view->vencido = $resultado['vencido'];
             $this->view->nroTurno = $resultado['nroTurno'];
         }else

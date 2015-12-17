@@ -6,29 +6,9 @@
     <div class="container">
         <div class="row ">
             <div class="col-md-12" style="text-align: center;">
-                {{ content() }}
+
                 <div class="box efecto3">
-                {% if vencido == 2 %}
-                    <h1>
-                        LAMENTABLEMENTE EL PLAZO DE CONFIRMACIÓN HA FINALIZADO, POR FAVOR VUELVA A SOLICITAR EL TURNO.
-                    </h1>
-                {% elseif vencido==1  %}
-
-                        <h1>
-                            GRACIAS POR SU CONFIRMACIÓN
-                        </h1>
-                        <h3 class="login-title"> EL TURNO ES EL Nº {{ nroTurno }}</h3>
-                    <h3>  {{ link_to('turnos/comprobanteTurno/'~idSolicitud,'GENERAR COMPROBANTE DE TURNO','class':'btn btn-info btn-large','target':'_blank') }} </h3>
-                    {% else%}
-                        {% if vencido ==-1 %}
-                            <h1 >
-                                USTED YA HA CONFIRMADO EL TURNO.
-                            </h1>
-                        {% endif %}
-                    <h3 class="login-title"> EL TURNO ES EL Nº {{ nroTurno }}</h3>
-                    <h3>  {{ link_to('turnos/comprobanteTurno/'~idSolicitud,'IMPRIMIR COMPROBANTE DE TURNO','class':'btn btn-info btn-large','target':'_blank') }} </h3>
-                {% endif %}
-
+                    {{ content() }}
                 </div>
                 {{ link_to('index/index','<i class="fa fa-home"></i>INICIO','style':'font-size: xx-large;font-weight: bold;') }}
             </div>

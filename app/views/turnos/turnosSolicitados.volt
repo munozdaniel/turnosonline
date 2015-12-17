@@ -1,60 +1,60 @@
 <section id="onepage">
 
-   {# <meta http-equiv="refresh" content="35"> #}
+    {# <meta http-equiv="refresh" content="35"> #}
 
     <style>
-        a {color: #2da2c8}
-        .heading h2 {font-size: 30px;line-height: 35px;}
+        a {
+            color: #2da2c8
+        }
+
+        .heading h2 {
+            font-size: 30px;
+            line-height: 35px;
+        }
     </style>
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="about_area">
-                    <div class="heading">
-                        <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
-                        <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+            <div class="col-lg-12 col-md-12" style="margin-bottom: 30px;">
+                <div class="heading">
+                    <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
+
+                    <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fuente-14"><strong>
+                            <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
+                        </strong>{{ fechaI }} - {{ fechaF }}
                     </div>
-
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="fuente-14"> <strong><ins>PERIODO DE SOLICITUD DE TURNOS :</ins> </strong>{{ fechaI }} - {{ fechaF }}
-                                </div>
-                                <div class="fuente-14"> <strong><ins>DIA DE ATENCI&Oacute;N :</ins> </strong> {{ diaA }}
-                                </div>
-                            </td>
-
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-
-                            <td>
-                                {% if (cantidadDeTurnos == cantA) %}
-                                    <div class="fuente-14" style="color:red;">
-                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantidadDeTurnos }}
-                                    </div>
-                                    <div class="fuente-14" id="idCantA" style="color:red;">
-                                        <strong><ins>TURNOS AUTORIZADOS :</ins> </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                                    </div>
-                                {% else %}
-                                    <div class="fuente-14">
-                                        <strong><ins>TOTAL DE TURNOS :</ins> </strong> {{ cantidadDeTurnos }}
-                                    </div>
-                                    <div class="fuente-14" id="idCantA">
-                                        <strong><ins>TURNOS AUTORIZADOS :</ins></strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                                    </div>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="fuente-14"><strong>
+                            <ins>DIA DE ATENCI&Oacute;N :</ins>
+                        </strong> {{ diaA }}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    {% if (cantidadDeTurnos == cantA) %}
+                        <div class="fuente-14" style="color:red;">
+                            <strong>
+                                <ins>TOTAL DE TURNOS :</ins>
+                            </strong> {{ cantidadDeTurnos }}
+                        </div>
+                        <div class="fuente-14" id="idCantA" style="color:red;">
+                            <strong>
+                                <ins>TURNOS AUTORIZADOS :</ins>
+                            </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                        </div>
+                    {% else %}
+                        <div class="fuente-14">
+                            <strong>
+                                <ins>TOTAL DE TURNOS :</ins>
+                            </strong> {{ cantidadDeTurnos }}
+                        </div>
+                        <div class="fuente-14" id="idCantA">
+                            <strong>
+                                <ins>TURNOS AUTORIZADOS :</ins>
+                            </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -66,80 +66,80 @@
                 {{ content() }}
             </div>
             <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
-                    <table class="table table-striped table-bordered table-condensed">
-                        <thead>
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;color:white;background-color:#006688;">Legajo</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Apellido y nombre</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Fecha solicitud</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Estado</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Monto maximo</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Monto posible</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Máximo de cuotas</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Valor cuota</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Observaciones</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Fecha revisión</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">Usuario</th>
+                        <th style="text-align: center;color:white;background-color:#006688;">EDITAR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for item in page.items %}
                         <tr>
-                            <th style="text-align: center;color:white;background-color:#006688;">Legajo</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Apellido y nombre</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Fecha solicitud</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Estado</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Monto maximo</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Monto posible</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Máximo de cuotas</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Valor cuota</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Observaciones</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Fecha revisión</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">Usuario</th>
-                            <th style="text-align: center;color:white;background-color:#006688;">EDITAR</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for item in page.items %}
-                            <tr>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_legajo }}</td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nomApe }}</td>
-                                <td style="text-align: center;width: 180px">
-                                    {% set fechaModif =  date('d/m/Y',(item.solicitudTurno_fechaPedido) | strtotime) %}
-                                    {{ fechaModif }}
-                                </td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_estado }}</td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_montoMax }}</td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_montoPosible }}</td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_cantCuotas }}</td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_valorCuota }}</td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_observaciones }}</td>
-                                <td style="text-align: center;width: 180px">
-                                    {% if(item.solicitudTurno_fechaProcesamiento != null) %}
-                                        {% set fechaModif = date('d/m/Y',(item.solicitudTurno_fechaProcesamiento) | strtotime) %}
-                                    {% else %}
-                                        {% set fechaModif = '-' %}
-                                    {% endif %}
-                                    {#Mostramos la variable seteada con los valores anteriores.#}
-                                    {{ fechaModif }}
-                                </td>
-                                <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nickUsuario }}</td>
-                                <td width="7%">
-                                    {% if ((item.solicitudTurno_nickUsuario ==  session.get('auth')['usuario_nick']) OR (item.solicitudTurno_nickUsuario == '-')
-                                    OR (session.get('auth')['rol_nombre']== "ADMIN") OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
-                                        <!--en el evento onclick pasamos el post en formato json-->
-                                        <a href="#" class="btn btn-info editar"
-                                           onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
-                                            Editar
-                                        </a>
-                                    {% else %}
-                                        <a href="#" class="btn btn-gris editar" onclick="mensaje()">Editar </a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-
-                        <tbody>
-                        <tr>
-                            <td colspan="12">
-                                <div align="center">
-                                    {{ link_to("/turnos/turnosSolicitados/?page=1",'Primera','class':'btn') }}
-                                    {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn') }}
-                                    {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn') }}
-                                    {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn') }}
-
-                                    <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
-                                </div>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_legajo }}</td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nomApe }}</td>
+                            <td style="text-align: center;width: 180px">
+                                {% set fechaModif =  date('d/m/Y',(item.solicitudTurno_fechaPedido) | strtotime) %}
+                                {{ fechaModif }}
+                            </td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_estado }}</td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_montoMax }}</td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_montoPosible }}</td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_cantCuotas }}</td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_valorCuota }}</td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_observaciones }}</td>
+                            <td style="text-align: center;width: 180px">
+                                {% if(item.solicitudTurno_fechaProcesamiento != null) %}
+                                    {% set fechaModif = date('d/m/Y',(item.solicitudTurno_fechaProcesamiento) | strtotime) %}
+                                {% else %}
+                                    {% set fechaModif = '-' %}
+                                {% endif %}
+                                {#Mostramos la variable seteada con los valores anteriores.#}
+                                {{ fechaModif }}
+                            </td>
+                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nickUsuario }}</td>
+                            <td width="7%">
+                                {% if ((item.solicitudTurno_nickUsuario ==  session.get('auth')['usuario_nick']) OR (item.solicitudTurno_nickUsuario == '-')
+                                OR (session.get('auth')['rol_nombre']== "ADMIN") OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
+                                    <!--en el evento onclick pasamos el post en formato json-->
+                                    <a href="#" class="btn btn-info editar"
+                                       onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
+                                        Editar
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">Editar </a>
+                                {% endif %}
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
+                    {% endfor %}
+                    </tbody>
+
+                    <tbody>
+                    <tr>
+                        <td colspan="12">
+                            <div align="center">
+                                {{ link_to("/turnos/turnosSolicitados/?page=1",'Primera','class':'btn') }}
+                                {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn') }}
+                                {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn') }}
+                                {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn') }}
+
+                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -158,58 +158,50 @@
 
     <script type="text/javascript">
 
-       var myVar = setInterval(function(){ myTimer() }, 1000);
+        var myVar = setInterval(function () {
+            myTimer()
+        }, 1000);
 
-        function myTimer()
-        {
-            $('#cantAutorizados').load(document.URL +  ' #cantAutorizados');
-            $('#solicitudes').load(document.URL +  ' #solicitudes');
+        function myTimer() {
+            $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
+            $('#solicitudes').load(document.URL + ' #solicitudes');
         }
 
         //objeto javascript al que le añadimos toda la funcionalidad del crud
         var crudPhalcon = {};
 
-        $(document).ready(function ()
-        {
+        $(document).ready(function () {
             //mostramos la modal para editar un post con sus datos
-            crudPhalcon.edit = function (post)
-            {
+            crudPhalcon.edit = function (post) {
                 //en post tenemos todos los datos del post parseado
                 var json = crudPhalcon.parse(post), html = "";
-                $("#modalCrudPhalcon .modal-title").html("<strong>" + json.solicitudTurno_legajo + "</strong> |   <strong>NOMBRE:</strong> " + json.solicitudTurno_nomApe + " <strong> ESTADO: </strong> " +json.solicitudTurno_estado );
+                $("#modalCrudPhalcon .modal-title").html("<strong>" + json.solicitudTurno_legajo + "</strong> |   <strong>NOMBRE:</strong> " + json.solicitudTurno_nomApe + " <strong> ESTADO: </strong> " + json.solicitudTurno_estado);
 
 
                 /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
 
                 var lista, editable = false, autorizacion = false;
-                var cantidadDeTurnos = {{ cantidadDeTurnos }},autorizadosEnviados = {{ autorizadosEnviados }};
+                var cantidadDeTurnos = {{ cantidadDeTurnos }}, autorizadosEnviados = {{ autorizadosEnviados }};
 
-                if (json.solicitudTurno_estado == "PENDIENTE")
-                {
+                if (json.solicitudTurno_estado == "PENDIENTE") {
                     //Si es PENDIENTE cualquier usuario puede pasar a REVISION, salvo que no hayan turnos.
                     if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos))
                         lista = ['DENEGADO POR FALTA DE TURNOS'];
                     else
                         lista = ['REVISION'];
                 }
-                else
-                {
-                    if (json.solicitudTurno_estado == "REVISION" || json.solicitudTurno_estado == "AUTORIZADO")
-                    {
+                else {
+                    if (json.solicitudTurno_estado == "REVISION" || json.solicitudTurno_estado == "AUTORIZADO") {
                         lista = ['REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
-                        editable =true;
+                        editable = true;
                     }
-                    else
-                    {
-                        if (json.solicitudTurno_estado == "DENEGADO" || json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS")
-                        {
-                            lista = [ 'REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                    else {
+                        if (json.solicitudTurno_estado == "DENEGADO" || json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS") {
+                            lista = ['REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
                         }
-                        else
-                        {
+                        else {
                             if (json.solicitudTurno_estado != 'PENDIENTE' || json.solicitudTurno_estado != 'REVISION'
-                                    || json.solicitudTurno_estado != 'AUTORIZADO' || json.solicitudTurno_estado != 'DENEGADO')
-                            {
+                                    || json.solicitudTurno_estado != 'AUTORIZADO' || json.solicitudTurno_estado != 'DENEGADO') {
                                 lista = ['PENDIENTE'];
                             }
                         }
@@ -232,8 +224,7 @@
                 //document.body.appendChild(div);//agrega el div al body. no me sirve.
 
                 //Agrego los elementos al select
-                for (var i = 0; i < lista.length; i++)
-                {
+                for (var i = 0; i < lista.length; i++) {
                     var option = document.createElement("option");
                     option.setAttribute("value", lista[i]);
                     option.text = lista[i];
@@ -278,12 +269,10 @@
 
                 html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control">';
                 html += '</div>';//fin campos_editables
-                if(json.solicitudTurno_estado == "DENEGADO")
-                {
+                if (json.solicitudTurno_estado == "DENEGADO") {
                     html += '<div id="causaDenegado" >';
                 }
-                else
-                {
+                else {
                     html += '<div id="causaDenegado" class="ocultar">';
                 }
 
@@ -303,65 +292,61 @@
                 $("#modalCrudPhalcon .modal-body ").html(html);
                 $("#modalCrudPhalcon").modal("show");
             },
-            // Evento onChange del select estado.
-            crudPhalcon.habilitarDeshabilitarSegunElEstado = function ()
-            {
-                //Si esta autorizado puede modificar todos los campos, el div editor debe aparecer.
-                var solicitudTurno_estado = document.getElementById("solicitudTurno_estado");
-                var panel = document.getElementById("editor");
+                // Evento onChange del select estado.
+                    crudPhalcon.habilitarDeshabilitarSegunElEstado = function () {
+                        //Si esta autorizado puede modificar todos los campos, el div editor debe aparecer.
+                        var solicitudTurno_estado = document.getElementById("solicitudTurno_estado");
+                        var panel = document.getElementById("editor");
 
-                if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
-                ) {
-                    $("#campos_editables").removeClass('ocultar');
-                    $("#causaDenegado").addClass('ocultar');
-                }
-                else {
-                    if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "DENEGADO")
-                        $("#causaDenegado").removeClass('ocultar');
-                    else
-                        $("#causaDenegado").addClass('ocultar');
-                    $("#campos_editables").addClass('ocultar');
+                        if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
+                        ) {
+                            $("#campos_editables").removeClass('ocultar');
+                            $("#causaDenegado").addClass('ocultar');
+                        }
+                        else {
+                            if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "DENEGADO")
+                                $("#causaDenegado").removeClass('ocultar');
+                            else
+                                $("#causaDenegado").addClass('ocultar');
+                            $("#campos_editables").addClass('ocultar');
 
-                }
+                        }
 
-            },
-            //hacemos la petición ajax para editar una solicitud
-            crudPhalcon.editPost = function ()//procesamos la edición
-            {
-                $.ajax({
-                    url: "<?php echo $this->url->get('turnos/edit') ?>",
-                    data: $("#form").serialize(),
-                    method: "POST",
-                    success: function (data) {
-                        //$('#solicitudes, #datos').load(document.URL +  ' #solicitudes',document.URL +  ' #datos');
-                        $('#solicitudes').load(document.URL +  ' #solicitudes');
-                        $("#modalCrudPhalcon .modal-body").html("").html(
-                                "<p >La solicitud se edito correctamente.</p>"
-                        );
-                        $("#onclickBtn").hide();
-                        console.log(data);
                     },
-                    error: function (error) {
-                        alert(error.statusText);
-                        console.log(error);
+                //hacemos la petición ajax para editar una solicitud
+                    crudPhalcon.editPost = function ()//procesamos la edición
+                    {
+                        $.ajax({
+                            url: "<?php echo $this->url->get('turnos/edit') ?>",
+                            data: $("#form").serialize(),
+                            method: "POST",
+                            success: function (data) {
+                                //$('#solicitudes, #datos').load(document.URL +  ' #solicitudes',document.URL +  ' #datos');
+                                $('#solicitudes').load(document.URL + ' #solicitudes');
+                                $("#modalCrudPhalcon .modal-body").html("").html(
+                                        "<p >La solicitud se edito correctamente.</p>"
+                                );
+                                $("#onclickBtn").hide();
+                                console.log(data);
+                            },
+                            error: function (error) {
+                                alert(error.statusText);
+                                console.log(error);
+                            }
+                        })
+                    },
+                //devuelve un json parseado para utilizar con javascript
+                    crudPhalcon.parse = function (post) {
+                        return JSON.parse(post);
+                    },
+                //devuelve el campo oculto para evitar csrf en phalcon
+                    crudPhalcon.csrfProtection = function () {
+                        return '<input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"' +
+                                'value="<?php echo $this->security->getToken() ?>"/>';
                     }
-                })
-            },
-            //devuelve un json parseado para utilizar con javascript
-            crudPhalcon.parse = function (post)
-            {
-                return JSON.parse(post);
-            },
-            //devuelve el campo oculto para evitar csrf en phalcon
-            crudPhalcon.csrfProtection = function ()
-            {
-                return '<input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"' +
-                        'value="<?php echo $this->security->getToken() ?>"/>';
-            }
         });
 
-        function mensaje()
-        {
+        function mensaje() {
             alert('Solo el usuario que esta revisando la solicitud puede modificar el estado de la misma.');
         }
 
