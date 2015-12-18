@@ -428,10 +428,13 @@ class TurnosController extends ControllerBase
             $this->view->autorizadosEnviados = '-';
             $this->flash->message('problema', 'NO HAY NINGÚN PERIODO HABILITADO PARA SOLICITAR TURNOS.');
         }
-        $solicitudes = $this->modelsManager->createBuilder()->from('Solicitudturno');
 
-        $solicitudes->where("solicitudTurno_manual = 0 and (solicitudTurno_fechaPedido between :fI: and :fF:) and solicitudTurno_respuestaEnviada='NO'",
-            array('fI' => $fechaInicio, 'fF' => $fechaFin));
+        $solicitudes = $this->modelsManager->createBuilder()
+            ->addFrom('Solicitudturno','S')
+            ->join('Fechasturnos', 'S.solicitudTurnos_fechasTurnos = F.fechasTurnos_id ','F')
+            ->where(" F.fechasTurnos_activo=1 AND S.solicitudTurno_manual = 0 and (S.solicitudTurno_fechaPedido between :fI: and :fF:) and S.solicitudTurno_respuestaEnviada='NO'",
+                array('fI' => $fechaInicio, 'fF' => $fechaFin));
+
 
         $paginator = new PaginacionBuilder
         (
