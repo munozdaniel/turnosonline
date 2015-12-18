@@ -194,7 +194,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             $ffI = $fechaTurnos->fechasTurnos_inicioSolicitud;
             $ffF =$fechaTurnos->fechasTurnos_finSolicitud;
 
-            $solicitudes = Solicitudturno::find();
+            $solicitudes = Solicitudturno::findBySolicitudTurnos_fechasTurnos($fechaTurnos->fechasTurnos_id);
 
             foreach($solicitudes as $unaSolicitud)
             {
