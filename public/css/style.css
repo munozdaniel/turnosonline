@@ -3078,3 +3078,58 @@ textarea .form-control {
     -moz-border-radius:100px / 10px;
     border-radius:100px / 10px;
 }
+/*Panel de Control */
+.mini-box {
+    min-height: 105px;
+    padding: 20px;
+}
+.panel {
+    margin-bottom: 18px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+.mini-box .box-icon {
+    display: block;
+    float: left;
+    margin: 0 10px 10px 0;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    line-height: 65px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 35px;
+}
+
+.bg-green-pl {
+    background-color: #138f2c;
+    color: #fff;
+}
+.bg-azul-pl {
+    background-color: #1b5a8f;
+    color: #fff;
+}
+.bg-red-pl {
+    background-color: #ff5332;
+    color: #fff;
+}
+.bg-yellow-pl {
+    background-color: #ffd35f;
+    color: #fff;
+}
+.bg-sky-pl {
+    background-color: #2cc1c8;
+    color: #fff;
+}
+.panel > .fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}
