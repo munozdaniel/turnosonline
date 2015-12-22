@@ -18,6 +18,7 @@ $loader->registerDirs(
         $config->application->libraryDir,
         $config->application->mpdfDir,
         $config->application->componentesDir,
+        $config->application->curriculumDir,
         $config->application->phpmailerDir,
         $config->application->utilesDir,
         $config->application->pluginsDir,
