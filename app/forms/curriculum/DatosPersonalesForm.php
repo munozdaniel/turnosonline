@@ -57,7 +57,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_fechaNacimiento);
         /*========================== ==========================*/
-        $persona_tipoDocumentoId = new Select('persona_tipoDocumentoId', Tipodoc::find(), array(
+        $persona_tipoDocumentoId = new Select('persona_tipoDocumentoId', Tipodocumento::find(), array(
             'using'      => array('tipodocumento_id', 'tipodocumento_descripcion'),
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
@@ -66,7 +66,7 @@ class DatosPersonalesForm  extends Form {
         $persona_tipoDocumentoId->setLabel('Tipo Documento');
         $this->add($persona_tipoDocumentoId);
         /*========================== ==========================*/
-        $persona_numeroDocumento = new Text('persona_numeroDocumento');
+        $persona_numeroDocumento = new Text('persona_numeroDocumento',array('placeholder'=>'SOLO NÚMEROS'));
         $persona_numeroDocumento->setLabel('Nro Documento');
         $persona_numeroDocumento->setFilters(array('int'));
         $persona_numeroDocumento->addValidators(array(
@@ -77,12 +77,20 @@ class DatosPersonalesForm  extends Form {
         $this->add($persona_numeroDocumento);
         /*========================== ==========================*/
         $persona_sexo = new Select('persona_sexo', array('Masculino','Femenino'));
-        $persona_tipoDocumentoId->setLabel('Sexo');
         $this->add($persona_sexo);
         /*========================== ==========================*/
         $persona_sexo = new Select('persona_sexo', array('Masculino','Femenino'));
-        $persona_tipoDocumentoId->setLabel('Sexo');
+        $persona_sexo->setLabel('Sexo');
         $this->add($persona_sexo);
+        /*========================== Estado Civil ==========================*/
+        $persona_estadoCivilId = new Select('persona_estadoCivilId', Estadocivil::find(), array(
+            'using'      => array('estadoCivil_id', 'estadoCivil_nombre'),
+            'useEmpty'   => true,
+            'emptyText'  => 'Seleccionar ',
+            'emptyValue' => ''
+        ));
+        $persona_estadoCivilId->setLabel('Estado Civil');
+        $this->add($persona_estadoCivilId);
         /*========================== ==========================*/
         $persona_nacionalidadId = new Select('persona_nacionalidadId', Nacionalidad::find(), array(
             'using'      => array('nacionalidad_id', 'nacionalidad_nombre'),
@@ -113,7 +121,12 @@ class DatosPersonalesForm  extends Form {
         $provincia->setLabel('Provincia');
         $this->add($provincia);
 
-        $ciudad =  new Select('ciudad_id',array());
+        $ciudad =  new Select('ciudad_id',array(), array(
+            'using'      => array('ciudad_id', 'ciudad_nombre'),
+            'useEmpty'   => true,
+            'emptyText'  => 'Seleccionar Provincia',
+            'emptyValue' => ''
+        ));
         $ciudad->setLabel('Ciudad');
         $this->add($ciudad);
 
@@ -128,7 +141,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($localidad_domicilio);
         /*========================== Telefono ==========================*/
-        $persona_telefono = new Text('persona_telefono');
+        $persona_telefono = new Text('persona_telefono',array('placeholder'=>'SOLO NÚMEROS'));
         $persona_telefono->setLabel('Teléfono <small>(Únicamente números)</small>');
         $persona_telefono->setFilters(array('int'));
         $persona_telefono->addValidators(array(
@@ -138,7 +151,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_telefono);
         /*========================== Celular ==========================*/
-        $persona_celular = new Text('persona_celular');
+        $persona_celular = new Text('persona_celular',array('placeholder'=>'SOLO NÚMEROS'));
         $persona_celular->setLabel('Celular <small>(Únicamente números)</small>');
         $persona_celular->setFilters(array('int'));
         $persona_celular->addValidators(array(
@@ -148,7 +161,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_celular);
         /*========================== Email ==========================*/
-        $persona_email = new Email('persona_email');
+        $persona_email = new Email('persona_email',array('placeholder'=>'ejemplo@imps.org.ar'));
         $persona_email->setLabel('Email');
         $persona_email->setFilters(array('email'));
         $persona_email->addValidators(array(
@@ -157,15 +170,7 @@ class DatosPersonalesForm  extends Form {
             ))
         ));
         $this->add($persona_email);
-        /*========================== Estado Civil ==========================*/
-        $persona_estadoCivilId = new Select('persona_estadoCivilId', Estadocivil::find(), array(
-            'using'      => array('estadoCivil_id', 'estadoCivil_nombre'),
-            'useEmpty'   => true,
-            'emptyText'  => 'Seleccionar ',
-            'emptyValue' => ''
-        ));
-        $persona_estadoCivilId->setLabel('Estado Civil');
-        $this->add($persona_estadoCivilId);
+
         /*========================== Script para los selects dependientes =============== */
         $script = new DataListScript('ciudad_provincia',array(
             'url' => '/impsweb/persona/buscarCiudades',
