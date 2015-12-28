@@ -60,7 +60,7 @@ class DatosPersonalesForm  extends Form {
         $persona_tipoDocumentoId = new Select('persona_tipoDocumentoId', Tipodoc::find(), array(
             'using'      => array('tipodocumento_id', 'tipodocumento_descripcion'),
             'useEmpty'   => true,
-            'emptyText'  => '...',
+            'emptyText'  => 'Seleccionar ',
             'emptyValue' => ''
         ));
         $persona_tipoDocumentoId->setLabel('Tipo Documento');
@@ -87,7 +87,7 @@ class DatosPersonalesForm  extends Form {
         $persona_nacionalidadId = new Select('persona_nacionalidadId', Nacionalidad::find(), array(
             'using'      => array('nacionalidad_id', 'nacionalidad_nombre'),
             'useEmpty'   => true,
-            'emptyText'  => '...',
+            'emptyText'  => 'Seleccionar ',
             'emptyValue' => ''
         ));
         $persona_nacionalidadId->setLabel('Nacionalidad');
@@ -107,7 +107,7 @@ class DatosPersonalesForm  extends Form {
         $provincia = new Select('provincia_id', Provincia::find(), array(
             'using'      => array('provincia_id', 'provincia_nombre'),
             'useEmpty'   => true,
-            'emptyText'  => '...',
+            'emptyText'  => 'Seleccionar ',
             'emptyValue' => ''
         ));
         $provincia->setLabel('Provincia');
@@ -161,7 +161,7 @@ class DatosPersonalesForm  extends Form {
         $persona_estadoCivilId = new Select('persona_estadoCivilId', Estadocivil::find(), array(
             'using'      => array('estadoCivil_id', 'estadoCivil_nombre'),
             'useEmpty'   => true,
-            'emptyText'  => '...',
+            'emptyText'  => 'Seleccionar ',
             'emptyValue' => ''
         ));
         $persona_estadoCivilId->setLabel('Estado Civil');
