@@ -1,4 +1,5 @@
 <?php
+namespace Curriculum;
 
 class Ciudad extends \Phalcon\Mvc\Model
 {

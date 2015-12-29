@@ -1,26 +1,27 @@
 <?php
+namespace Curriculum;
 
-class Estadocivil extends \Phalcon\Mvc\Model
+class Nacionalidad extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    public $estadoCivil_id;
+    public $nacionalidad_id;
 
     /**
      *
      * @var string
      */
-    public $estadoCivil_nombre;
+    public $nacionalidad_nombre;
 
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->hasMany('estadoCivil_id', 'Persona', 'persona_estadoCivilId', array('alias' => 'Persona'));
+        $this->hasMany('nacionalidad_id', 'Persona', 'persona_nacionalidadId', array('alias' => 'Persona'));
     }
 
     /**
@@ -30,14 +31,14 @@ class Estadocivil extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'estadocivil';
+        return 'nacionalidad';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Estadocivil[]
+     * @return Nacionalidad[]
      */
     public static function find($parameters = null)
     {
@@ -48,7 +49,7 @@ class Estadocivil extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Estadocivil
+     * @return Nacionalidad
      */
     public static function findFirst($parameters = null)
     {

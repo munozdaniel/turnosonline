@@ -1,26 +1,40 @@
 <?php
+namespace Curriculum;
 
-class Provincia extends \Phalcon\Mvc\Model
+class Localidad extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    public $provincia_id;
+    public $localidad_id;
+
+    /**
+     *
+     * @var integer
+     */
+    public $localidad_codigoPostal;
 
     /**
      *
      * @var string
      */
-    public $provincia_nombre;
+    public $localidad_domicilio;
+
+    /**
+     *
+     * @var integer
+     */
+    public $localidad_ciudadId;
 
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->hasMany('provincia_id', 'Ciudad', 'ciudad_provinciaId', array('alias' => 'Ciudad'));
+        $this->hasMany('localidad_id', 'Persona', 'persona_localidadId', array('alias' => 'Persona'));
+        $this->belongsTo('localidad_ciudadId', 'Ciudad', 'ciudad_id', array('alias' => 'Ciudad'));
     }
 
     /**
@@ -30,14 +44,14 @@ class Provincia extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'provincia';
+        return 'localidad';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Provincia[]
+     * @return Localidad[]
      */
     public static function find($parameters = null)
     {
@@ -48,7 +62,7 @@ class Provincia extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Provincia
+     * @return Localidad
      */
     public static function findFirst($parameters = null)
     {

@@ -1,5 +1,5 @@
 <?php
-
+namespace Curriculum;
 class Persona extends \Phalcon\Mvc\Model
 {
 
@@ -8,6 +8,12 @@ class Persona extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $persona_id;
+
+    /**
+     *
+     * @var integer
+     */
+    protected $persona_curriculumId;
 
     /**
      *
@@ -102,6 +108,19 @@ class Persona extends \Phalcon\Mvc\Model
     public function setPersonaId($persona_id)
     {
         $this->persona_id = $persona_id;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field persona_curriculumId
+     *
+     * @param integer $persona_curriculumId
+     * @return $this
+     */
+    public function setPersonaCurriculumid($persona_curriculumId)
+    {
+        $this->persona_curriculumId = $persona_curriculumId;
 
         return $this;
     }
@@ -299,6 +318,16 @@ class Persona extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field persona_curriculumId
+     *
+     * @return integer
+     */
+    public function getPersonaCurriculumid()
+    {
+        return $this->persona_curriculumId;
+    }
+
+    /**
      * Returns the value of field persona_apellido
      *
      * @return string
@@ -443,11 +472,11 @@ class Persona extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('persona_id', 'Curriculum', 'curriculum_personaId', array('alias' => 'Curriculum'));
-        $this->belongsTo('persona_estadoCivilId', 'Estadocivil', 'estadoCivil_id', array('alias' => 'Estadocivil'));
+        $this->belongsTo('persona_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
         $this->belongsTo('persona_tipoDocumentoId', 'Tipodocumento', 'tipodocumento_id', array('alias' => 'Tipodocumento'));
         $this->belongsTo('persona_nacionalidadId', 'Nacionalidad', 'nacionalidad_id', array('alias' => 'Nacionalidad'));
         $this->belongsTo('persona_localidadId', 'Localidad', 'localidad_id', array('alias' => 'Localidad'));
+        $this->belongsTo('persona_estadoCivilId', 'Estadocivil', 'estadoCivil_id', array('alias' => 'Estadocivil'));
     }
 
     /**

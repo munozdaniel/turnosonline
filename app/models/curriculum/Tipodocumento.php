@@ -1,39 +1,27 @@
 <?php
+namespace Curriculum;
 
-class Localidad extends \Phalcon\Mvc\Model
+class Tipodocumento extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    public $localidad_id;
-
-    /**
-     *
-     * @var integer
-     */
-    public $localidad_codigoPostal;
+    public $tipodocumento_id;
 
     /**
      *
      * @var string
      */
-    public $localidad_domicilio;
-
-    /**
-     *
-     * @var integer
-     */
-    public $localidad_ciudadId;
+    public $tipodocumento_descripcion;
 
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->hasMany('localidad_id', 'Persona', 'persona_localidadId', array('alias' => 'Persona'));
-        $this->belongsTo('localidad_ciudadId', 'Ciudad', 'ciudad_id', array('alias' => 'Ciudad'));
+        $this->hasMany('tipodocumento_id', 'Persona', 'persona_tipoDocumentoId', array('alias' => 'Persona'));
     }
 
     /**
@@ -43,14 +31,14 @@ class Localidad extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'localidad';
+        return 'tipodocumento';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Localidad[]
+     * @return Tipodocumento[]
      */
     public static function find($parameters = null)
     {
@@ -61,7 +49,7 @@ class Localidad extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Localidad
+     * @return Tipodocumento
      */
     public static function findFirst($parameters = null)
     {

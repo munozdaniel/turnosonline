@@ -1,26 +1,27 @@
 <?php
+namespace Curriculum;
 
-class Tipodocumento extends \Phalcon\Mvc\Model
+class Provincia extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    public $tipodocumento_id;
+    public $provincia_id;
 
     /**
      *
      * @var string
      */
-    public $tipodocumento_descripcion;
+    public $provincia_nombre;
 
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->hasMany('tipodocumento_id', 'Persona', 'persona_tipoDocumentoId', array('alias' => 'Persona'));
+        $this->hasMany('provincia_id', 'Ciudad', 'ciudad_provinciaId', array('alias' => 'Ciudad'));
     }
 
     /**
@@ -30,14 +31,14 @@ class Tipodocumento extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'tipodocumento';
+        return 'provincia';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Tipodocumento[]
+     * @return Provincia[]
      */
     public static function find($parameters = null)
     {
@@ -48,7 +49,7 @@ class Tipodocumento extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Tipodocumento
+     * @return Provincia
      */
     public static function findFirst($parameters = null)
     {
