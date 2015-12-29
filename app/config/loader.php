@@ -6,6 +6,7 @@ $loader = new \Phalcon\Loader();
 $loader->registerNamespaces(
     array(
         "Modules"    => "../app/vendor/schedule/",
+        "Curriculum"    => "../app/models/curriculum/",
     )
 );
 /**
