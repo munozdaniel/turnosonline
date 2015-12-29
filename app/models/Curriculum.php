@@ -44,6 +44,11 @@ class Curriculum extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $curriculum_habilitado;
+    /**
+     *
+     * @var integer
+     */
+    protected $curriculum_fechaCreacion;
 
     /**
      * Method to set the value of field curriculum_id
@@ -135,7 +140,18 @@ class Curriculum extends \Phalcon\Mvc\Model
 
         return $this;
     }
+    /**
+     * Method to set the value of field $curriculum_fechaCreacion
+     *
+     * @param integer $curriculum_fechaCreacion
+     * @return $this
+     */
+    public function setCurriculumFechaCreacion($curriculum_fechaCreacion)
+    {
+        $this->curriculum_fechaCreacion = $curriculum_fechaCreacion;
 
+        return $this;
+    }
     /**
      * Returns the value of field curriculum_id
      *
@@ -204,6 +220,16 @@ class Curriculum extends \Phalcon\Mvc\Model
     public function getCurriculumHabilitado()
     {
         return $this->curriculum_habilitado;
+    }
+
+    /**
+     * Returns the value of field curriculum_fechaCreacion
+     *
+     * @return integer
+     */
+    public function getCurriculumFechaCreacion()
+    {
+        return $this->curriculum_fechaCreacion;
     }
 
     /**
