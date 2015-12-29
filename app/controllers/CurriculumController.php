@@ -230,5 +230,59 @@ class CurriculumController extends ControllerBase
             "action" => "index"
         ));
     }
+    /**
+     * login action, Muestra un formulario para ingresar dni y email
+     */
+    public function loginAction()
+    {
+    }
 
+    /**
+     * Verifica si esta registrado. En caso afirmativo redireccionar al verAction. En caso negativo
+     * redireccion al new de Persona, para que se registre.
+     */
+    public function verificarDatosAction()
+    {
+
+        if (!$this->request->isPost()) {
+            return $this->redireccionar('persona/login');
+        }
+        $dni = $this->request->getPost('persona_numeroDocumento', array('int'));
+        $email = $this->request->getPost('persona_email', array('email'));
+        // Query robots binding parameters with string placeholders
+
+        $condiciones = "persona_email LIKE :email: AND persona_numeroDocumento = :dni:";
+
+        // Parameters whose keys are the same as placeholders
+        $parametros = array(
+            "email" => $email,
+            "dni" => $dni
+        );
+
+        $persona = Persona::find(
+            array(
+                $condiciones,
+                "bind" => $parametros
+            ));
+        if (count($persona) == 0) {
+            $this->view->formulario = new DatosPersonalesForm();
+
+            return $this->redireccionar('persona/new');
+        } else
+            $this->flash->message('exito', "(borrar mje) SE ENCONTRO, puede editar" . count($persona));
+        $idCurriculum = Curriculum::findFirstByCurriculum_personaId($persona->getPersonaId());
+        return $this->redireccionar("curriculum/ver/$idCurriculum");
+    }
+    /**
+     * Permite ver el curriculum completo
+     */
+    public function verAction($idCurriculum)
+    {
+        if($idCurriculum==null){
+            $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
+        }
+        $curriculum = Curriculum::findFirstByCurriculum_id($idCurriculum);
+        $this->view->personaForm = Persona::findFirstByPersona_id($curriculum->getCurriculumPersonaId());
+        $this->view->personaForm = Persona::findFirstByPersona_id($curriculum->getCurriculumPersonaId());
+    }
 }

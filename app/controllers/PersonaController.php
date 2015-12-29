@@ -23,44 +23,7 @@ class PersonaController extends ControllerBase
         $this->persistent->parameters = null;
     }
 
-    /**
-     * login action, Muestra un formulario para ingresar dni y email
-     */
-    public function loginAction()
-    {
-    }
 
-    public function verificarDatosAction()
-    {
-
-        if (!$this->request->isPost()) {
-            return $this->redireccionar('persona/login');
-        }
-        $dni = $this->request->getPost('persona_numeroDocumento', array('int'));
-        $email = $this->request->getPost('persona_email', array('email'));
-        // Query robots binding parameters with string placeholders
-
-        $condiciones = "persona_email LIKE :email: AND persona_numeroDocumento = :dni:";
-
-        // Parameters whose keys are the same as placeholders
-        $parametros = array(
-            "email" => $email,
-            "dni" => $dni
-        );
-
-        $persona = Persona::find(
-            array(
-                $condiciones,
-                "bind" => $parametros
-            ));
-        if (count($persona) == 0) {
-            $this->view->formulario = new DatosPersonalesForm();
-
-            return $this->redireccionar('persona/new');
-        } else
-            $this->flash->message('exito', "SE ENCONTRO, puede editar" . count($persona));
-        return $this->redireccionar('persona/login');
-    }
 
     /**
      * Searches for persona
@@ -107,8 +70,6 @@ class PersonaController extends ControllerBase
     public function newAction()
     {
         $this->view->formulario = new DatosPersonalesForm();
-        $this->view->provincia = Provincia::find();
-        $this->view->ciudad= array();
 
     }
 
@@ -152,6 +113,10 @@ class PersonaController extends ControllerBase
 
         }
     }
+
+    /**
+     * Permite cargar el combobox Ciudad segun la provincia que se seleccione.
+     */
     public function buscarCiudadesAction()
     {
         $this->view->disable();
@@ -160,8 +125,8 @@ class PersonaController extends ControllerBase
         {
             if($this->request->isAjax())
             {
-                $provinciaId= $this->request->getPost("provincia","int");
-                $ciudadesPorProvincia = Ciudad::find();
+                $id= $this->request->getPost("id","int");
+                $ciudadesPorProvincia = Ciudad::findByCiudad_provinciaId($id);
                 foreach ($ciudadesPorProvincia as $ciudad) {
                     $resData[]= array("ciudad_id"=>$ciudad->ciudad_id, "ciudad_nombre"=>$ciudad->ciudad_nombre);
                 }
@@ -195,16 +160,16 @@ class PersonaController extends ControllerBase
             /*==================== DATOS PERSONALES =========================*/
             $persona = new Persona();
 
-            $persona->setPersonaApellido($this->request->getPost("persona_apellido"));
-            $persona->setPersonaNombre($this->request->getPost("persona_nombre"));
+            $persona->setPersonaApellido($this->request->getPost("persona_apellido"),array('string'));
+            $persona->setPersonaNombre($this->request->getPost("persona_nombre",array('string')));
             $persona->setPersonaFechanacimiento($this->request->getPost("persona_fechaNacimiento"));
             $persona->setPersonaTipodocumentoid($this->request->getPost("persona_tipoDocumentoId"));
-            $persona->setPersonaNumerodocumento($this->request->getPost("persona_numeroDocumento"));
+            $persona->setPersonaNumerodocumento($this->request->getPost("persona_numeroDocumento",array('int')));
             $persona->setPersonaSexo($this->request->getPost("persona_sexo"));
             $persona->setPersonaNacionalidadid($this->request->getPost("persona_nacionalidadId"));
             $persona->setPersonaLocalidadid($this->request->getPost("persona_localidadId"));
-            $persona->setPersonaTelefono($this->request->getPost("persona_telefono"));
-            $persona->setPersonaCelular($this->request->getPost("persona_celular"));
+            $persona->setPersonaTelefono($this->request->getPost("persona_telefono",array('int')));
+            $persona->setPersonaCelular($this->request->getPost("persona_celular",array('int')));
             $persona->setPersonaEmail($this->request->getPost("persona_email"));
             $persona->setPersonaEstadocivilid($this->request->getPost("persona_estadoCivilId"));
             $persona->setPersonaHabilitado(1);
@@ -213,7 +178,7 @@ class PersonaController extends ControllerBase
 
             if (!$persona->save()) {
                 foreach ($persona->getMessages() as $message) {
-                    $this->flash->error($message);
+                    $this->flash->message('problema',$message);
                 }
                 $this->db->rollback();
                 return $this->redireccionar('persona/new');
@@ -222,21 +187,23 @@ class PersonaController extends ControllerBase
             /*==================== CURRICULUM =========================*/
             $curriculum = new Curriculum();
             $curriculum->setCurriculumPersonaid($persona->getPersonaId());
+            $curriculum->setCurriculumHabilitado(1);
+            $curriculum->setCurriculumFechaCreacion(date('Y-m-d'));
             if (!$curriculum->save()) {
                 foreach ($curriculum->getMessages() as $message) {
-                    $this->flash->error($message);
+                    $this->flash->message('problema',$message);
                 }
                 $this->db->rollback();
                 return $this->redireccionar('persona/new');
             }
             $this->flash->success("Los Datos Personales han sido cargados correctamente");
-
-            return $this->redireccionar('formacion/index');
+            $this->db->commit();
+            return $this->redireccionar('curriculum/ver');
 
         } catch (Phalcon\Mvc\Model\Transaction\Failed $e) {
-            $this->flash->error('Transaccion Fallida: ', $e->getMessage());
+            $this->flash->message('problema','Transaccion Fallida: ', $e->getMessage());
         } catch (\Exception $e) {
-            $this->flash->error('Transaccion Fallida2: ', $e->getMessage());
+            $this->flash->message('problema','Transaccion Fallida2: ', $e->getMessage());
         }
     }
 
