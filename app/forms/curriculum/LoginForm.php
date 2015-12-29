@@ -22,7 +22,7 @@ class LoginForm  extends Form
     {
         //añadimos el campo email
         $email = new Text('email', array(
-            'placeholder' => 'Email'
+            'placeholder' => 'ejemplo@imps.org.ar', 'class'=>'sr-only'
         ));
 
         //añadimos la validación para un campo de tipo email y como campo requerido
@@ -42,40 +42,27 @@ class LoginForm  extends Form
         $this->add($email);
 
         //añadimos el campo password
-        $password = new Password('password', array(
-            'placeholder' => 'Password'
+        $nroDocumento = new Text('nroDocumento', array(
+            'placeholder' => 'Ingrese su Documento', 'type'=>'number', 'class'=>'sr-only'
         ));
 
         //añadimos la validación como campo requerido al password
-        $password->addValidator(
+        $nroDocumento->addValidator(
             new PresenceOf(array(
-                'message' => 'El password es requerido'
+                'message' => 'El Nº de Documento es requerido'
             ))
         );
 
         //label para el Password
-        $password->setLabel('Password');
+        $nroDocumento->setLabel('Nro Documento');
 
         //hacemos que se pueda llamar a nuestro campo password
-        $this->add($password);
+        $this->add($nroDocumento);
 
-        //prevención de ataques csrf, genera un campo de este tipo
-        //<input value="dcf7192995748a80780b9cc99a530b58" name="csrf" id="csrf" type="hidden" />
-        $csrf = new Hidden('csrf');
 
-        //añadimos la validación para prevenir csrf
-        $csrf->addValidator(
-            new Identical(array(
-                'value' => $this->security->getSessionToken(),
-                'message' => '¡La validación CSRF ha fallado!'
-            ))
-        );
-
-        //hacemos que se pueda llamar a nuestro campo csrf
-        $this->add($csrf);
 
         //añadimos un botón de tipo submit
-        $submit = $this->add(new Submit('Login', array(
+        $submit = $this->add(new Submit('Ingresar', array(
             'class' => 'btn btn-success'
         )));
     }

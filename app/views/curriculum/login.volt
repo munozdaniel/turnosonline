@@ -1,10 +1,10 @@
 
 <div class="account-container ">
     {{ form("curriculum/verificarDatos", "method":"post", "autocomplete" : "off", 'class':'form-horizontal') }}
-    {{ content() }}
     <fieldset>
 
         <legend>INICIAR SESIÓN</legend>
+        {{ content() }}
 
         <div class="form-group">
             {{ form.label('nroDocumento',['class':'col-md-4 control-label']) }}
@@ -21,7 +21,6 @@
     </fieldset>
 
             {{ form.render('Ingresar') }}
-            {{ form.render('csrf', ['value': security.getToken()]) }}
             {{ link_to('persona/new','Registrarse','class':'btn btn-large btn-warning') }}
 
 </form>
