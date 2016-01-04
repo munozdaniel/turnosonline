@@ -16,6 +16,23 @@ class Provincia extends \Phalcon\Mvc\Model
      */
     public $provincia_nombre;
 
+    public function getProvinciaId()
+    {
+        return $this->provincia_id;
+    }
+    public function setProvinciaId($provincia_id)
+    {
+        return $this->provincia_id=$provincia_id;
+    }
+
+    public function getProvinciaNombre()
+    {
+        return $this->provincia_nombre;
+    }
+    public function setProvinciaNombre($provincia_nombre)
+    {
+        return $this->provincia_nombre=$provincia_nombre;
+    }
     /**
      * Initialize method for model.
      */
