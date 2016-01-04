@@ -8,12 +8,9 @@
  */
 use Phalcon\Forms\Form,
     Phalcon\Forms\Element\Text,
-    Phalcon\Forms\Element\Password,
     Phalcon\Forms\Element\Submit,
-    Phalcon\Forms\Element\Hidden,
     Phalcon\Validation\Validator\PresenceOf,
-    Phalcon\Validation\Validator\Email,
-    Phalcon\Validation\Validator\Identical;
+    Phalcon\Validation\Validator\Email;
 
 class LoginForm  extends Form
 {
@@ -62,8 +59,8 @@ class LoginForm  extends Form
 
 
         //añadimos un botón de tipo submit
-        $submit = $this->add(new Submit('Ingresar', array(
-            'class' => 'btn btn-success'
+        $submit = $this->add(new Submit('BUSCAR CURRICULUM', array(
+            'class' => 'btn btn-success btn-large'
         )));
     }
 
