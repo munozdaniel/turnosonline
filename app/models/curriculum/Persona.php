@@ -528,4 +528,27 @@ class Persona extends \Phalcon\Mvc\Model
             return false;
         }
     }
+
+    /**
+     * obtnerTipoDocumento
+     */
+    public function obtenerTipoDocumento($idTipoDocumento)
+    {
+        $tipoDocumento = \Curriculum\Tipodocumento::findFirstByTipodocumento_id($idTipoDocumento);
+        return $tipoDocumento->tipodocumento_descripcion;
+    }
+    /**
+     * obtenerNacionalidad
+     */
+    public function obtenerNacionalidad($nacionalidadId){
+        $nacionalidad = \Curriculum\Nacionalidad::findFirstByNacionalidad_id($nacionalidadId);
+        return $nacionalidad->nacionalidad_nombre;
+    }
+    /**
+     * obtenerEstadoCivil
+     */
+    public function obtenerEstadoCivil($estadoCivilId){
+        $estadoCivil = \Curriculum\Estadocivil::findFirstByEstadoCivil_id($estadoCivilId);
+        return $estadoCivil->estadoCivil_nombre;
+    }
 }
