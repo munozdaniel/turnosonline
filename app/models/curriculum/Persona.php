@@ -1,5 +1,7 @@
 <?php
 namespace Curriculum;
+use Phalcon\Mvc\Model\Validator\Uniqueness;
+
 class Persona extends \Phalcon\Mvc\Model
 {
 
@@ -511,4 +513,19 @@ class Persona extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+
+    public function validation()
+    {
+        $this->validate(new Uniqueness(array(
+            "field"   => "persona_email",
+            "message" => "El Email ya se encuentra registrado."
+        )));
+        $this->validate(new Uniqueness(array(
+            "field"   => "persona_numeroDocumento",
+            "message" => "El Nro de Documento ya se encuentra registrado."
+        )));
+        if ($this->validationHasFailed() == true) {
+            return false;
+        }
+    }
 }
