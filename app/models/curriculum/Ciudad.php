@@ -21,6 +21,36 @@ class Ciudad extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $ciudad_provinciaId;
+    /**
+     * Getters and Setters
+     */
+    public function getCiudadId()
+    {
+        return $this->ciudad_id;
+    }
+
+    public function setCiudadId($ciudad_id)
+    {
+        $this->ciudad_id=$ciudad_id;
+    }
+    public function getCiudadNombre()
+    {
+        return $this->ciudad_nombre;
+    }
+
+    public function setCiudadNombre($ciudad_nombre)
+    {
+        $this->ciudad_nombre=$ciudad_nombre;
+    }
+    public function getProvinciaid()
+    {
+        return $this->ciudad_provinciaId;
+    }
+
+    public function setProvinciaid($ciudad_provinciaId)
+    {
+        $this->ciudad_provinciaId=$ciudad_provinciaId;
+    }
 
     /**
      * Initialize method for model.
