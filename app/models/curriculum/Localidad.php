@@ -29,6 +29,41 @@ class Localidad extends \Phalcon\Mvc\Model
     public $localidad_ciudadId;
 
     /**
+     * GETTERS AND SETTERS
+     */
+    public function getLocalidadId()
+    {
+        return $this->localidad_id;
+    }
+    public function getLocalidadCodigopostal()
+    {
+        return $this->localidad_codigoPostal;
+    }
+    public function getLocalidadDomicilio()
+    {
+        return $this->localidad_domicilio;
+    }
+    public function getLocalidadCiudadid()
+    {
+        return $this->localidad_ciudadId;
+    }
+    public function setLocalidadId($localidad_id)
+    {
+         $this->localidad_id=$localidad_id;
+    }
+    public function setLocalidadCodigopostal($localidad_codigoPostal)
+    {
+         $this->localidad_codigoPostal=$localidad_codigoPostal;
+    }
+    public function setLocalidadDomicilio($localidad_domicilio)
+    {
+         $this->localidad_domicilio=$localidad_domicilio;
+    }
+    public function setLocalidadCiudadid($localidad_ciudadId)
+    {
+         $this->localidad_ciudadId=$localidad_ciudadId;
+    }
+    /**
      * Initialize method for model.
      */
     public function initialize()
