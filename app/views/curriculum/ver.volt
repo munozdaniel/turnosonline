@@ -32,18 +32,17 @@
                         <dt>Teléfono Fijo</dt>
                         <dd>{{ persona.getPersonaTelefono() }}</dd>
                         <dt>Codigo Postal</dt>
-                        <dd></dd>
+                        <dd>{{ arregloLocalidad['localidad_codigoPostal'] }}</dd>
                         <dt>Nacionalidad</dt>
                         <dd>{{ persona.obtenerNacionalidad(persona.getPersonaNacionalidadid()) }}</dd>
                         <dt>Provincia</dt>
-                        <dd></dd>
+                        <dd>{{ arregloLocalidad['provincia_nombre'] }}</dd>
                         <dt>Ciudad</dt>
-                        <dd></dd>
+                        <dd>{{ arregloLocalidad['ciudad_nombre'] }}</dd>
                         <dt>Direcciòn</dt>
-                        <dd></dd>
+                        <dd>{{ arregloLocalidad['localidad_domicilio'] }}</dd>
                         <dt>Estado Civil</dt>
                         <dd>{{ persona.obtenerEstadoCivil(persona.getPersonaEstadoCivilid() ) }}</dd>
-                        <dt>Dirección</dt>
                         <dt>E-Mail</dt>
                         <dd>{{ persona.getPersonaEmail() }}</dd>
                         <dt>Mi CV Adjunto</dt>

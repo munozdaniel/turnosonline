@@ -1,6 +1,6 @@
 <?php
- 
 use Phalcon\Mvc\Model\Criteria;
+use \Curriculum;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 
 class CurriculumController extends ControllerBase
@@ -289,20 +289,40 @@ class CurriculumController extends ControllerBase
                 $this->view->formulario = new DatosPersonalesForm();
                 return $this->redireccionar('persona/new');
             }else{
-                $idCurriculum = \Curriculum\Curriculum::findFirstByCurriculum_personaId($persona->getPersonaId());
-                return $this->redireccionar("curriculum/ver/$idCurriculum");
+                $this->view->persona = $persona[0];
+                return $this->redireccionar("curriculum/ver/".$persona[0]->getPersonaId());
             }
         }
     }
     /**
      * Permite ver el curriculum completo
      */
-    public function verAction($idCurriculum)
+    public function verAction($idPersona)
     {
-        if($idCurriculum==null){
+        if($idPersona==null){
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
+            return $this->redireccionar('curriculum/login');
         }
-        $curriculum = \Curriculum\Curriculum::findFirstByCurriculum_id($idCurriculum);
-        $this->view->personaForm = \Curriculum\Persona::findFirstByPersona_id($curriculum->getCurriculumPersonaId());
+        $persona = \Curriculum\Persona::findFirstByPersona_id($idPersona);
+        $arregloLocalidad = array();
+        $arregloLocalidad['localidad_codigoPostal'] = "Sin Especificar";
+        $arregloLocalidad['localidad_domicilio'] = "Sin Especificar";
+        $arregloLocalidad['ciudad_nombre'] = "Sin Especificar";
+        $arregloLocalidad['provincia_nombre'] = "Sin Especificar";
+        if(!empty($persona)){
+            $localidad = \Curriculum\Localidad::findFirstByLocalidadId($persona->getPersonaLocalidadid());
+            if(!empty($localidad)){
+                $arregloLocalidad['localidad_codigoPostal'] = $localidad->getLocalidadCodigopostal();
+                $arregloLocalidad['localidad_domicilio'] = $localidad->getLocalidadDomicilio();
+                $ciudad = \Curriculum\Ciudad::findFirstByCiudad_id($localidad->getLocalidadCiudadid());
+                if(!empty($ciudad)){
+                    $arregloLocalidad['ciudad_nombre'] = $ciudad->getCiudadNombre();
+                    $provincia = \Curriculum\Provincia::findFirstByProvincia_id($ciudad->getCiudadProvinciaid());
+                    if(!empty($provincia))
+                        $arregloLocalidad['provincia_nombre']=$provincia->getProvinciaNombre();
+                }
+            }
+        }
+        $this->view->arregloLocalidad = $arregloLocalidad;
     }
 }
