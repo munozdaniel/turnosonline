@@ -7,15 +7,15 @@
         {{ content() }}
 
         <div class="form-group">
-            {{ form.label('nroDocumento',['class':'col-md-4 control-label']) }}
+            {{ form.label('persona_numeroDocumento',['class':'col-md-4 control-label']) }}
             <div class="col-md-4">
-            {{ form.render('nroDocumento',['class':'form-control input-md']) }}
+            {{ form.render('persona_numeroDocumento',['class':'form-control input-md']) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form.label('email',['class':'col-md-4 control-label']) }}
+            {{ form.label('persona_email',['class':'col-md-4 control-label']) }}
             <div class="col-md-4">
-                {{ form.render('email',['class':'form-control input-md']) }}
+                {{ form.render('persona_email',['class':'form-control input-md']) }}
             </div>
         </div>
     </fieldset>

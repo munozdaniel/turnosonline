@@ -18,7 +18,7 @@ class LoginForm  extends Form
     public function initialize()
     {
         //añadimos el campo email
-        $email = new Text('email', array(
+        $email = new Text('persona_email', array(
             'placeholder' => 'ejemplo@imps.org.ar', 'class'=>'sr-only'
         ));
 
@@ -39,7 +39,7 @@ class LoginForm  extends Form
         $this->add($email);
 
         //añadimos el campo password
-        $nroDocumento = new Text('nroDocumento', array(
+        $nroDocumento = new Text('persona_numeroDocumento', array(
             'placeholder' => 'Ingrese su Documento', 'type'=>'number', 'class'=>'sr-only'
         ));
 
