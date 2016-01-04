@@ -5,6 +5,16 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 
 class CurriculumController extends ControllerBase
 {
+    public function initialize()
+    {
+        $this->tag->setTitle('Curriculum');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footerInline')
+            ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
+        parent::initialize();
+
+    }
 
     /**
      * Index action
@@ -34,7 +44,7 @@ class CurriculumController extends ControllerBase
         }
         $parameters["order"] = "curriculum_id";
 
-        $curriculum = Curriculum::find($parameters);
+        $curriculum = \Curriculum\Curriculum::find($parameters);
         if (count($curriculum) == 0) {
             $this->flash->notice("The search did not find any curriculum");
 
@@ -107,7 +117,7 @@ class CurriculumController extends ControllerBase
             ));
         }
 
-        $curriculum = new Curriculum();
+        $curriculum = new \Curriculum\Curriculum();
 
         $curriculum->setCurriculumPersonaid($this->request->getPost("curriculum_personaId"));
         $curriculum->setCurriculumExperienciaid($this->request->getPost("curriculum_experienciaId"));
@@ -153,7 +163,7 @@ class CurriculumController extends ControllerBase
 
         $curriculum_id = $this->request->getPost("curriculum_id");
 
-        $curriculum = Curriculum::findFirstBycurriculum_id($curriculum_id);
+        $curriculum = \Curriculum\Curriculum::findFirstBycurriculum_id($curriculum_id);
         if (!$curriculum) {
             $this->flash->error("curriculum does not exist " . $curriculum_id);
 
@@ -201,7 +211,7 @@ class CurriculumController extends ControllerBase
     public function deleteAction($curriculum_id)
     {
 
-        $curriculum = Curriculum::findFirstBycurriculum_id($curriculum_id);
+        $curriculum = \Curriculum\Curriculum::findFirstBycurriculum_id($curriculum_id);
         if (!$curriculum) {
             $this->flash->error("curriculum was not found");
 
@@ -235,6 +245,8 @@ class CurriculumController extends ControllerBase
      */
     public function loginAction()
     {
+        $this->tag->setTitle('Iniciar Sesión');
+        $this->view->form = new LoginForm();
     }
 
     /**
@@ -245,33 +257,42 @@ class CurriculumController extends ControllerBase
     {
 
         if (!$this->request->isPost()) {
-            return $this->redireccionar('persona/login');
+            return $this->redireccionar('curriculum/login');
         }
-        $dni = $this->request->getPost('persona_numeroDocumento', array('int'));
-        $email = $this->request->getPost('persona_email', array('email'));
-        // Query robots binding parameters with string placeholders
+        $formulario = new LoginForm();
+        //si el formulario no pasa la validación que le hemos impuesto
+        if ($formulario->isValid($this->request->getPost()) == false)
+        {
+            //mostramos los mensajes con la clase error que hemos personalizado en los mensajes flash
+            foreach ($formulario->getMessages() as $message)
+            {
+                $this->flash->message('problema',$message);
+            }
+            return $this->redireccionar('curriculum/login');
 
-        $condiciones = "persona_email LIKE :email: AND persona_numeroDocumento = :dni:";
-
-        // Parameters whose keys are the same as placeholders
-        $parametros = array(
-            "email" => $email,
-            "dni" => $dni
-        );
-
-        $persona = Persona::find(
-            array(
-                $condiciones,
-                "bind" => $parametros
-            ));
-        if (count($persona) == 0) {
-            $this->view->formulario = new DatosPersonalesForm();
-
-            return $this->redireccionar('persona/new');
-        } else
-            $this->flash->message('exito', "(borrar mje) SE ENCONTRO, puede editar" . count($persona));
-        $idCurriculum = Curriculum::findFirstByCurriculum_personaId($persona->getPersonaId());
-        return $this->redireccionar("curriculum/ver/$idCurriculum");
+        }else
+        {
+            $dni = $this->request->getPost('persona_numeroDocumento', array('int'));
+            $email = $this->request->getPost('persona_email', array('email'));
+            $condiciones = "persona_email LIKE :email: AND persona_numeroDocumento = :dni:";
+            // Parameters whose keys are the same as placeholders
+            $parametros = array(
+                "email" => $email,
+                "dni" => $dni
+            );
+            $persona = \Curriculum\Persona::find(
+                array(
+                    $condiciones,
+                    "bind" => $parametros
+                ));
+            if (count($persona) == 0) {
+                $this->view->formulario = new DatosPersonalesForm();
+                return $this->redireccionar('persona/new');
+            }else{
+                $idCurriculum = \Curriculum\Curriculum::findFirstByCurriculum_personaId($persona->getPersonaId());
+                return $this->redireccionar("curriculum/ver/$idCurriculum");
+            }
+        }
     }
     /**
      * Permite ver el curriculum completo
@@ -281,8 +302,7 @@ class CurriculumController extends ControllerBase
         if($idCurriculum==null){
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
         }
-        $curriculum = Curriculum::findFirstByCurriculum_id($idCurriculum);
-        $this->view->personaForm = Persona::findFirstByPersona_id($curriculum->getCurriculumPersonaId());
-        $this->view->personaForm = Persona::findFirstByPersona_id($curriculum->getCurriculumPersonaId());
+        $curriculum = \Curriculum\Curriculum::findFirstByCurriculum_id($idCurriculum);
+        $this->view->personaForm = \Curriculum\Persona::findFirstByPersona_id($curriculum->getCurriculumPersonaId());
     }
 }

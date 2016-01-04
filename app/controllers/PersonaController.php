@@ -83,7 +83,7 @@ class PersonaController extends ControllerBase
 
         if (!$this->request->isPost()) {
 
-            $persona = Persona::findFirstBypersona_id($persona_id);
+            $persona = Curriculum\Persona::findFirstBypersona_id($persona_id);
             if (!$persona) {
                 $this->flash->error("La persona no fue encontrada");
 
@@ -126,7 +126,7 @@ class PersonaController extends ControllerBase
             if($this->request->isAjax())
             {
                 $id= $this->request->getPost("id","int");
-                $ciudadesPorProvincia = Ciudad::findByCiudad_provinciaId($id);
+                $ciudadesPorProvincia = \Curriculum\Ciudad::findByCiudad_provinciaId($id);
                 foreach ($ciudadesPorProvincia as $ciudad) {
                     $resData[]= array("ciudad_id"=>$ciudad->ciudad_id, "ciudad_nombre"=>$ciudad->ciudad_nombre);
                 }
@@ -156,10 +156,33 @@ class PersonaController extends ControllerBase
             ));
         }
         try {
-            $this->db->begin();
-            /*==================== DATOS PERSONALES =========================*/
-            $persona = new Persona();
+            /*====================== VALIDAR FORMULARIOS ================*/
 
+            $formulario = new DatosPersonalesForm();
+            //si el formulario no pasa la validación que le hemos impuesto
+            if ($formulario->isValid($this->request->getPost()) == false) {
+                foreach ($formulario->getMessages() as $message) {
+                    $this->flash->message('problema',$message);
+                }
+                return $this->redireccionar('persona/new');
+            }
+
+            $this->db->begin();
+            /*==================== CURRICULUM =========================*/
+            $curriculum = new \Curriculum\Curriculum();
+            $curriculum->setCurriculumHabilitado(1);
+            $curriculum->setCurriculumFechaCreacion(date('Y-m-d'));
+            if (!$curriculum->save()) {
+                foreach ($curriculum->getMessages() as $message) {
+                    $this->flash->message('problema',$message);
+                }
+                $this->db->rollback();
+                return $this->redireccionar('persona/new');
+            }
+            /*==================== DATOS PERSONALES =========================*/
+            $persona = new \Curriculum\Persona();
+
+            $persona->setPersonaCurriculumid($curriculum->getCurriculumId());
             $persona->setPersonaApellido($this->request->getPost("persona_apellido"),array('string'));
             $persona->setPersonaNombre($this->request->getPost("persona_nombre",array('string')));
             $persona->setPersonaFechanacimiento($this->request->getPost("persona_fechaNacimiento"));
@@ -184,18 +207,7 @@ class PersonaController extends ControllerBase
                 return $this->redireccionar('persona/new');
 
             }
-            /*==================== CURRICULUM =========================*/
-            $curriculum = new Curriculum();
-            $curriculum->setCurriculumPersonaid($persona->getPersonaId());
-            $curriculum->setCurriculumHabilitado(1);
-            $curriculum->setCurriculumFechaCreacion(date('Y-m-d'));
-            if (!$curriculum->save()) {
-                foreach ($curriculum->getMessages() as $message) {
-                    $this->flash->message('problema',$message);
-                }
-                $this->db->rollback();
-                return $this->redireccionar('persona/new');
-            }
+
             $this->flash->success("Los Datos Personales han sido cargados correctamente");
             $this->db->commit();
             return $this->redireccionar('curriculum/ver');
@@ -223,7 +235,7 @@ class PersonaController extends ControllerBase
 
         $persona_id = $this->request->getPost("persona_id");
 
-        $persona = Persona::findFirstBypersona_id($persona_id);
+        $persona =  Curriculum\Persona::findFirstBypersona_id($persona_id);
         if (!$persona) {
             $this->flash->error("persona does not exist " . $persona_id);
 
@@ -279,7 +291,7 @@ class PersonaController extends ControllerBase
     public function deleteAction($persona_id)
     {
 
-        $persona = Persona::findFirstBypersona_id($persona_id);
+        $persona = Curriculum\Persona::findFirstBypersona_id($persona_id);
         if (!$persona) {
             $this->flash->error("Los Datos Personales no fueron encontrados");
 

@@ -3,7 +3,7 @@
     {{ form("curriculum/verificarDatos", "method":"post", "autocomplete" : "off", 'class':'form-horizontal') }}
     <fieldset>
 
-        <legend>INICIAR SESIÓN</legend>
+        <legend><i class="fa fa-search"></i> BUSCAR MI CURRICULUM</legend>
         {{ content() }}
 
         <div class="form-group">
@@ -20,8 +20,8 @@
         </div>
     </fieldset>
 
-            {{ form.render('Ingresar') }}
-            {{ link_to('persona/new','Registrarse','class':'btn btn-large btn-warning') }}
+            {{ form.render('BUSCAR CURRICULUM') }}
+            {{ link_to('persona/new','NUEVO CURRICULUM','class':'btn btn-large btn-info') }}
 
 </form>
 </div>

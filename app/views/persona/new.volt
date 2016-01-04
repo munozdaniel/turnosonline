@@ -40,8 +40,6 @@
                     {{ formulario.render('persona_email',['class':'form-control']) }}
                     <hr>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6">
                     {{ formulario.label('persona_tipoDocumentoId' )}}
                     {{ formulario.render('persona_tipoDocumentoId',['class':'form-control']) }}
