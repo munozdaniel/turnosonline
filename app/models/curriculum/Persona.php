@@ -1,5 +1,6 @@
 <?php
 namespace Curriculum;
+
 use Phalcon\Mvc\Model\Validator\Uniqueness;
 
 class Persona extends \Phalcon\Mvc\Model
@@ -100,6 +101,12 @@ class Persona extends \Phalcon\Mvc\Model
      * @var string
      */
     protected $persona_fechaCreacion;
+
+    /**
+     *
+     * @var string
+     */
+    protected $persona_foto;
 
     /**
      * Method to set the value of field persona_id
@@ -310,6 +317,19 @@ class Persona extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Method to set the value of field persona_foto
+     *
+     * @param string $persona_foto
+     * @return $this
+     */
+    public function setPersonaFoto($persona_foto)
+    {
+        $this->persona_foto = $persona_foto;
+
+        return $this;
+    }
+
+    /**
      * Returns the value of field persona_id
      *
      * @return integer
@@ -470,15 +490,25 @@ class Persona extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field persona_foto
+     *
+     * @return string
+     */
+    public function getPersonaFoto()
+    {
+        return $this->persona_foto;
+    }
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->belongsTo('persona_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
         $this->belongsTo('persona_tipoDocumentoId', 'Tipodocumento', 'tipodocumento_id', array('alias' => 'Tipodocumento'));
         $this->belongsTo('persona_nacionalidadId', 'Nacionalidad', 'nacionalidad_id', array('alias' => 'Nacionalidad'));
         $this->belongsTo('persona_localidadId', 'Localidad', 'localidad_id', array('alias' => 'Localidad'));
         $this->belongsTo('persona_estadoCivilId', 'Estadocivil', 'estadoCivil_id', array('alias' => 'Estadocivil'));
+        $this->belongsTo('persona_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
     }
 
     /**
@@ -512,7 +542,6 @@ class Persona extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
-
 
     public function validation()
     {

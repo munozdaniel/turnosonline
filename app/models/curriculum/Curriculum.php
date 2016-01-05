@@ -23,6 +23,18 @@ class Curriculum extends \Phalcon\Mvc\Model
     protected $curriculum_fechaCreacion;
 
     /**
+     *
+     * @var string
+     */
+    protected $curriculum_ultimaModificacion;
+
+    /**
+     *
+     * @var string
+     */
+    protected $curriculum_adjunto;
+
+    /**
      * Method to set the value of field curriculum_id
      *
      * @param integer $curriculum_id
@@ -62,6 +74,32 @@ class Curriculum extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Method to set the value of field curriculum_ultimaModificacion
+     *
+     * @param string $curriculum_ultimaModificacion
+     * @return $this
+     */
+    public function setCurriculumUltimamodificacion($curriculum_ultimaModificacion)
+    {
+        $this->curriculum_ultimaModificacion = $curriculum_ultimaModificacion;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field curriculum_adjunto
+     *
+     * @param string $curriculum_adjunto
+     * @return $this
+     */
+    public function setCurriculumAdjunto($curriculum_adjunto)
+    {
+        $this->curriculum_adjunto = $curriculum_adjunto;
+
+        return $this;
+    }
+
+    /**
      * Returns the value of field curriculum_id
      *
      * @return integer
@@ -89,6 +127,26 @@ class Curriculum extends \Phalcon\Mvc\Model
     public function getCurriculumFechacreacion()
     {
         return $this->curriculum_fechaCreacion;
+    }
+
+    /**
+     * Returns the value of field curriculum_ultimaModificacion
+     *
+     * @return string
+     */
+    public function getCurriculumUltimamodificacion()
+    {
+        return $this->curriculum_ultimaModificacion;
+    }
+
+    /**
+     * Returns the value of field curriculum_adjunto
+     *
+     * @return string
+     */
+    public function getCurriculumAdjunto()
+    {
+        return $this->curriculum_adjunto;
     }
 
     /**
