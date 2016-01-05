@@ -171,7 +171,8 @@ class PersonaController extends ControllerBase
             /*==================== CURRICULUM =========================*/
             $curriculum = new \Curriculum\Curriculum();
             $curriculum->setCurriculumHabilitado(1);
-            $curriculum->setCurriculumFechaCreacion(date('Y-m-d'));
+            $curriculum->setCurriculumFechacreacion(date('Y-m-d'));
+            $curriculum->setCurriculumUltimamodificacion(date('Y-m-d'));
             if (!$curriculum->save()) {
                 foreach ($curriculum->getMessages() as $message) {
                     $this->flash->message('problema',$message);
@@ -190,14 +191,28 @@ class PersonaController extends ControllerBase
             $persona->setPersonaNumerodocumento($this->request->getPost("persona_numeroDocumento",array('int')));
             $persona->setPersonaSexo($this->request->getPost("persona_sexo"));
             $persona->setPersonaNacionalidadid($this->request->getPost("persona_nacionalidadId"));
-            $persona->setPersonaLocalidadid($this->request->getPost("persona_localidadId"));
+            /*Agregar localidad*/
+            $localidad = new \Curriculum\Localidad();
+            $localidad->setLocalidadCodigopostal($this->request->getPost('localidad_codigoPostal','int'));
+            $localidad->setLocalidadDomicilio($this->request->getPost('localidad_domicilio','string'));
+            $localidad->setLocalidadDomicilio($this->request->getPost('ciudad_id','int'));
+            if (!$localidad->save()) {
+                foreach ($localidad->getMessages() as $message) {
+                    $this->flash->message('problema',$message);
+                }
+                $this->db->rollback();
+                return $this->redireccionar('persona/new');
+
+            }
+            /*Fin: Agregar localidad*/
+            $persona->setPersonaLocalidadid($localidad->getLocalidadId());
             $persona->setPersonaTelefono($this->request->getPost("persona_telefono",array('int')));
             $persona->setPersonaCelular($this->request->getPost("persona_celular",array('int')));
             $persona->setPersonaEmail($this->request->getPost("persona_email"));
             $persona->setPersonaEstadocivilid($this->request->getPost("persona_estadoCivilId"));
             $persona->setPersonaHabilitado(1);
             $persona->setPersonaFechacreacion(Date('Y-m-d'));
-
+            //FIXME: AGREGAR PATH DE LA FOTO.
 
             if (!$persona->save()) {
                 foreach ($persona->getMessages() as $message) {

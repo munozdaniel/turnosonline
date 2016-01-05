@@ -197,7 +197,7 @@ class DatosPersonalesForm  extends Form {
         $this->add($persona_email);
 
         /*========================== Script para los selects dependientes =============== */
-        $script = new DataListScript('ciudad_provincia',array(
+        $script = new DataListScript('script_ciudadProvincia',array(
             'url' => '/impsweb/persona/buscarCiudades',
             'idPrincipal'=>'provincia_id',
             'idSecundario'=>'ciudad_id',
