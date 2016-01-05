@@ -1,5 +1,5 @@
 
-<div class="account-container ">
+<div class="account-container "align="center">
     {{ form("curriculum/verificarDatos", "method":"post", "autocomplete" : "off", 'class':'form-horizontal') }}
     <fieldset>
 
@@ -19,9 +19,10 @@
             </div>
         </div>
     </fieldset>
-
+    <div >
             {{ form.render('BUSCAR CURRICULUM') }}
             {{ link_to('persona/new','NUEVO CURRICULUM','class':'btn btn-large btn-info') }}
+    </div>
 
 </form>
 </div>
