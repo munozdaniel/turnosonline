@@ -115,7 +115,7 @@ class IndexController extends ControllerBase
             $this->mail->Host = 'mail.imps.org.ar';
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'consultas@imps.org.ar';
-            $this->mail->Password = 'consu';
+            $this->mail->Password = 'consul';
             $this->mail->SMTPSecure = '';
             $this->mail->Port = 26;
 
