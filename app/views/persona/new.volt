@@ -1,113 +1,151 @@
-
 {{ form("persona/create", "method":"post", 'class':'form-horizontal') }}
 
 {{ content() }}
-
-
-<div align="center">
+<div class=" modal-header" align="left">
     <h1>Formá parte de IMPS / Trabajá con Nosotros</h1>
 
-    <h3>Ingresa tus datos personales para registrarte en el sistema</h3>
+    <h1>
+        <ins>Datos Personales</ins>
+    </h1>
 </div>
-
 <table width="100%">
     <tr>
-        <td align="left">{{ link_to("persona", "Volver",'class':'btn btn-large btn-warning') }}</td>
+        <td align="left">{{ link_to("curriculum/login", "Salir",'class':'btn btn-large btn-warning') }}</td>
     </tr>
 </table>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="row">
-                <div class="col-md-4">
-                    {{ formulario.label('persona_apellido' )}}
-                    {{ formulario.render('persona_apellido',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_nombre' )}}
-                    {{ formulario.render('persona_nombre',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4 ">
-                    {{ formulario.label('persona_fechaNacimiento' )}}
-                    {{ formulario.render('persona_fechaNacimiento',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_email' )}}
-                    {{ formulario.render('persona_email',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_tipoDocumentoId' )}}
-                    {{ formulario.render('persona_tipoDocumentoId',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_numeroDocumento' )}}
-                    {{ formulario.render('persona_numeroDocumento',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_sexo' )}}
-                    {{ formulario.render('persona_sexo',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_estadoCivilId' )}}
-                    {{ formulario.render('persona_estadoCivilId',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_nacionalidadId' )}}
-                    {{ formulario.render('persona_nacionalidadId',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('localidad_codigoPostal' )}}
-                    {{ formulario.render('localidad_codigoPostal',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('provincia_id' )}}
-                    {{ formulario.render('provincia_id',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('ciudad_id' )}}
-                    {{ formulario.render('ciudad_id',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-12">
-                    {{ formulario.label('localidad_domicilio' )}}
-                    {{ formulario.render('localidad_domicilio',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_telefono' )}}
-                    {{ formulario.render('persona_telefono',['class':'form-control']) }}
-                    <hr>
-                </div>
-                <div class="col-md-4">
-                    {{ formulario.label('persona_celular' )}}
-                    {{ formulario.render('persona_celular',['class':'form-control']) }}
-                    <hr>
-                </div>
+<div class="modal-body row">
+<div class="form-group col-sm-12 col-md-6">
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_apellido' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_apellido') }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_nombre' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_nombre') }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_fechaNacimiento' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_fechaNacimiento') }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_email' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_email') }}
+        </div>
+    </div>
 
-                <div class="col-md-4">
-                    {{ formulario.render('script_ciudadProvincia') }}
-                </div>
-            </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_tipoDocumentoId' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_tipoDocumentoId') }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_numeroDocumento' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_numeroDocumento') }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_sexo' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_sexo') }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-12 col-md-4 col-md-offset-0">
+            {{ formulario.label('persona_estadoCivilId' ) }}
+        </div>
+        <div class="col-sm-8">
+            {{ formulario.render('persona_estadoCivilId') }}
         </div>
     </div>
 </div>
+    <div class="modal-body  col-sm-12  col-md-6">
 
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('persona_nacionalidadId' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('persona_nacionalidadId') }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('localidad_codigoPostal' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('localidad_codigoPostal') }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('provincia_id' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('provincia_id') }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('ciudad_id' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('ciudad_id') }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('localidad_domicilio' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('localidad_domicilio') }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('persona_telefono' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('persona_telefono') }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-4 col-md-offset-0">
+                {{ formulario.label('persona_celular' ) }}
+            </div>
+            <div class="col-sm-8">
+                {{ formulario.render('persona_celular') }}
+            </div>
+        </div>
+        {{ formulario.render('script_ciudadProvincia') }}
 
-
+    </div>
+</div>
 
 <div class="col-md-12">
-{{ submit_button("Continuar >> ",'class':'btn btn-large btn-info') }}
+    {{ submit_button("Continuar >> ",'class':'btn btn-large btn-info') }}
 </div>
 
 </form>
