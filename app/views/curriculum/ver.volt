@@ -5,7 +5,7 @@
         <div class="heading">
             <h2 class="">Curriculum</h2>
             <div class="pull-right">
-                {{ link_to('index/index','class':'btn btn-lg btn-default btn-block btn-volver',
+                {{ link_to('curriculum/login','class':'btn btn-lg btn-default btn-block btn-volver',
                 '<i class="fa fa-undo"></i> VOLVER') }}
             </div>
 
@@ -39,7 +39,7 @@
                         <dd>{{ arregloLocalidad['provincia_nombre'] }}</dd>
                         <dt>Ciudad</dt>
                         <dd>{{ arregloLocalidad['ciudad_nombre'] }}</dd>
-                        <dt>Direcciòn</dt>
+                        <dt>Dirección</dt>
                         <dd>{{ arregloLocalidad['localidad_domicilio'] }}</dd>
                         <dt>Estado Civil</dt>
                         <dd>{{ persona.obtenerEstadoCivil(persona.getPersonaEstadoCivilid() ) }}</dd>
@@ -49,6 +49,8 @@
                         <dd></dd>
                         <dt>Última Modificación</dt>
                         <dd>18/dic/2015</dd>
+                        <dt></dt>
+                        {{ link_to('persona/edit' ~ persona.getPersonaId(), '<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }}
                     </dl>
                 </div>
             </div>
