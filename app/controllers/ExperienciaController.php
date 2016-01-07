@@ -5,7 +5,15 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 
 class ExperienciaController extends ControllerBase
 {
+    public function initialize()
+    {
+        $this->tag->setTitle('Experiencia');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footerInline')
+            ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
 
+        parent::initialize();
+    }
     /**
      * Index action
      */
@@ -54,18 +62,24 @@ class ExperienciaController extends ControllerBase
     }
 
     /**
-     * Displays the creation form
+     * Agregar experiencia al curriculum.
      */
-    public function newAction()
+    public function newAction($curriculum_id)
     {
+        //FIXME: Habilitar isPost
+        if(!$this->request->isPost() || $curriculum_id== null){
+             $this->flash->message('problema','Momentaneamente no es posible acceder a la url solicitada');
+             $this->response->redirect('curriculum/login');
+         }
+         $this->view->experienciaForm = new ExperienciaForm();
+         $this->view->curriculumId = $curriculum_id;
+     }
 
-    }
-
-    /**
-     * Edits a experiencia
-     *
-     * @param string $experiencia_id
-     */
+     /**
+      * Edits a experiencia
+      *
+      * @param string $experiencia_id
+      */
     public function editAction($experiencia_id)
     {
 
@@ -73,7 +87,7 @@ class ExperienciaController extends ControllerBase
 
             $experiencia = \Curriculum\Experiencia::findFirstByexperiencia_id($experiencia_id);
             if (!$experiencia) {
-                $this->flash->error("experiencia was not found");
+                $this->flash->message("problema","experiencia was not found");
 
                 return $this->dispatcher->forward(array(
                     "controller" => "experiencia",
@@ -103,31 +117,38 @@ class ExperienciaController extends ControllerBase
      */
     public function createAction()
     {
-
-        if (!$this->request->isPost()) {
+        //FIXME: Agregar
+         if (!$this->request->isPost()) {
             return $this->dispatcher->forward(array(
-                "controller" => "experiencia",
-                "action" => "index"
+                "controller" => "curriculum",
+                "action" => "login"
             ));
         }
 
-        $experiencia = new Experiencia();
+        $experiencia    = new Curriculum\Experiencia();
+        $curriculumId   = $this->request->getPost("curriculum_id");
 
-        $experiencia->setExperienciaCurriculumid($this->request->getPost("experiencia_curriculumId"));
+        $experiencia->setExperienciaCurriculumid($this->request->getPost("curriculum_id"));
         $experiencia->setExperienciaEmpresa($this->request->getPost("experiencia_empresa"));
         $experiencia->setExperienciaRubro($this->request->getPost("experiencia_rubro"));
         $experiencia->setExperienciaCargo($this->request->getPost("experiencia_cargo"));
         $experiencia->setExperienciaTareas($this->request->getPost("experiencia_tareas"));
         $experiencia->setExperienciaFechainicio($this->request->getPost("experiencia_fechaInicio"));
-        $experiencia->setExperienciaFechafinal($this->request->getPost("experiencia_fechaFinal"));
-        $experiencia->setExperienciaFechaactual($this->request->getPost("experiencia_fechaActual"));
-        $experiencia->setExperienciaHabilitado($this->request->getPost("experiencia_habilitado"));
+        if($this->request->hasPost('experiencia_fechaFinal'))
+        {
+            $experiencia->setExperienciaFechafinal($this->request->getPost("experiencia_fechaFinal"));
+            $experiencia->setExperienciaFechaactual(0);
+        }
+        else{
+            $experiencia->setExperienciaFechaactual($this->request->getPost("experiencia_fechaActual"));
+        }
+        $experiencia->setExperienciaHabilitado(1);
         $experiencia->setExperienciaProvinciaid($this->request->getPost("experiencia_provinciaId"));
         
 
         if (!$experiencia->save()) {
             foreach ($experiencia->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->message("problema",$message);
             }
 
             return $this->dispatcher->forward(array(
@@ -136,13 +157,15 @@ class ExperienciaController extends ControllerBase
             ));
         }
 
-        $this->flash->success("experiencia was created successfully");
 
-        return $this->dispatcher->forward(array(
-            "controller" => "experiencia",
-            "action" => "index"
-        ));
-
+        if (!empty($_POST['anadir'])) {
+            $this->flash->message('exito',"Experiencia agregada correctamente");
+            $this->view->experienciaForm   = new ExperienciaForm();
+             $this->view->curriculumId      = $curriculumId;
+             return $this->redireccionar('experiencia/new/'.$curriculumId);
+        }else{
+             return $this->redireccionar('formacion/new/'.$curriculumId);
+        }
     }
 
     /**
@@ -163,7 +186,7 @@ class ExperienciaController extends ControllerBase
 
         $experiencia = \Curriculum\Experiencia::findFirstByexperiencia_id($experiencia_id);
         if (!$experiencia) {
-            $this->flash->error("experiencia does not exist " . $experiencia_id);
+            $this->flash->message("problema","experiencia does not exist " . $experiencia_id);
 
             return $this->dispatcher->forward(array(
                 "controller" => "experiencia",
@@ -186,7 +209,7 @@ class ExperienciaController extends ControllerBase
         if (!$experiencia->save()) {
 
             foreach ($experiencia->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->message("problema",$message);
             }
 
             return $this->dispatcher->forward(array(
@@ -215,7 +238,7 @@ class ExperienciaController extends ControllerBase
 
         $experiencia = \Curriculum\Experiencia::findFirstByexperiencia_id($experiencia_id);
         if (!$experiencia) {
-            $this->flash->error("experiencia was not found");
+            $this->flash->message("problema","experiencia was not found");
 
             return $this->dispatcher->forward(array(
                 "controller" => "experiencia",
@@ -226,7 +249,7 @@ class ExperienciaController extends ControllerBase
         if (!$experiencia->delete()) {
 
             foreach ($experiencia->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->message("problema",$message);
             }
 
             return $this->dispatcher->forward(array(
