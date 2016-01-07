@@ -45,7 +45,7 @@ class PersonaController extends ControllerBase
         }
         $parameters["order"] = "persona_id";
 
-        $persona = Persona::find($parameters);
+        $persona = \Curriculum\Persona::find($parameters);
         if (count($persona) == 0) {
             $this->flash->notice("No se han encontrado resultados");
 
@@ -70,7 +70,9 @@ class PersonaController extends ControllerBase
     public function newAction()
     {
         $this->view->formulario = new DatosPersonalesForm();
-
+        $email = $this->request->get('email');
+        $email = base64_decode($email);
+        $this->tag->setDefault("persona_email", $email);
     }
 
     /**
@@ -225,7 +227,7 @@ class PersonaController extends ControllerBase
 
             $this->flash->success("Los Datos Personales han sido cargados correctamente");
             $this->db->commit();
-            return $this->redireccionar('curriculum/ver');
+            return $this->redireccionar('experiencia/new/'.$curriculum->getCurriculumId());
 
         } catch (Phalcon\Mvc\Model\Transaction\Failed $e) {
             $this->flash->message('problema','Transaccion Fallida: ', $e->getMessage());
