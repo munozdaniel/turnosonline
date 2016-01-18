@@ -81,7 +81,7 @@ class ExperienciaForm   extends Form {
         $elemento->setLabel('Fecha Final');
         $elemento->addValidators(array(
             new PresenceOf(array(
-                'message' => 'La fecha de inicio es requerida.'
+                'message' => 'La fecha final es requerida.'
             ))
         ));
         $this->add($elemento);
