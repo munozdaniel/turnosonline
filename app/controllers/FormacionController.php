@@ -162,7 +162,7 @@ class FormacionController extends ControllerBase
             $this->view->curriculumId = $curriculumId;
             return $this->redireccionar('formacion/new/' . $curriculumId);
         } else {
-            return $this->redireccionar('formacion/new/' . $curriculumId);
+            return $this->redireccionar('informacion/new/' . $curriculumId);
         }
 
 

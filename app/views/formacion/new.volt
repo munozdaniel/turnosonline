@@ -10,7 +10,7 @@
 <table width="100%">
     <tr>
         <td align="left">{{ link_to("curriculum/ver", "Finalizar",'class':'btn btn-large btn-warning') }}</td>
-        <td align="right">{{ link_to("informatica/new/curriculumId=?"~curriculumId, "Continuar sin guardar",'class':'btn btn-large btn-success') }}</td>
+        <td align="right">{{ link_to("informacion/new/"~curriculumId, "Continuar sin guardar",'class':'btn btn-large btn-success') }}</td>
     </tr>
 </table>
 <div class="modal-body col-md-12">
