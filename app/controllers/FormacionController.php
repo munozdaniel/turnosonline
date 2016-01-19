@@ -67,6 +67,11 @@ class FormacionController extends ControllerBase
      */
     public function newAction($curriculum_id)
     {
+        //FIXME: Habilitar isPost o isGet?
+        if($curriculum_id== null){
+            $this->flash->message('problema','Momentaneamente no es posible acceder a la url solicitada');
+            $this->response->redirect('curriculum/login');
+        }
         $this->view->experienciaForm = new FormacionForm();
         $this->view->curriculumId = $curriculum_id;
     }
