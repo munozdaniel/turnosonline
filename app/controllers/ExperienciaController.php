@@ -160,7 +160,9 @@ class ExperienciaController extends ControllerBase
 
         if (!empty($_POST['anadir'])) {
             $this->flash->message('exito',"Experiencia agregada correctamente");
-            $this->view->experienciaForm   = new ExperienciaForm();
+            $experienciaForm   = new ExperienciaForm();
+            $experienciaForm->clear();
+            $this->view->experienciaForm   = $experienciaForm;
              $this->view->curriculumId      = $curriculumId;
              return $this->redireccionar('experiencia/new/'.$curriculumId);
         }else{
