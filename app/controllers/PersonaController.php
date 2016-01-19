@@ -166,6 +166,7 @@ class PersonaController extends ControllerBase
                 foreach ($formulario->getMessages() as $message) {
                     $this->flash->message('problema',$message);
                 }
+                $formulario->clear(array('provincia_id','ciudad_id'));
                 return $this->redireccionar('persona/new');
             }
 
@@ -220,6 +221,7 @@ class PersonaController extends ControllerBase
                 foreach ($persona->getMessages() as $message) {
                     $this->flash->message('problema',$message);
                 }
+                $formulario->clear(array('provincia_id','ciudad_id'));
                 $this->db->rollback();
                 return $this->redireccionar('persona/new');
 
