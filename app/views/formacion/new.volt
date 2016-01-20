@@ -13,7 +13,7 @@
         <td align="right">{{ link_to("informacion/new/"~curriculumId, "Continuar sin guardar",'class':'btn btn-large btn-success') }}</td>
     </tr>
 </table>
-<div class="modal-body col-md-12">
+<div class="modal-body col-md-12 ">
     {{ hidden_field('curriculum_id','value':curriculumId) }}
     <div class="row form-group">
         <div class="col-sm-12 col-md-2 col-md-offset-2">
