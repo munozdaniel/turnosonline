@@ -3,6 +3,9 @@
  * Luego de 5 segundos cambiará al section about, siempre y cuando no se haya hecho un scroll > 100
  */
 $(window).load(function () {
+    setTimeout(function(){
+        //do what you need here
+
     //normally you'd wait for document.ready, but you'd likely to want to wait
     //for images to load in case they reflow the page
     var ScrollTop = parseInt($(window).scrollTop());
@@ -16,5 +19,5 @@ $(window).load(function () {
                 'scrollTop': $('#about').offset().top
             }, 900); //animate over 300ms, change this to however long you want it to animate for
     }
-
+    }, 2000);
 });
