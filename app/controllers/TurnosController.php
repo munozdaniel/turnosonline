@@ -534,9 +534,7 @@ class TurnosController extends ControllerBase
                         $this->response->setJsonContent(array("res" => "success"));
                         $this->response->setStatusCode(200, "OK");
                     } else {
-                        $this->response->setJsonContent(array("res" => "error"));
-                        $this->response->setStatusCode(500, "OPS! HAY UN PROBLEMA, POR FAVOR VERIFIQUE QUE TODOS LOS CAMPOS SEAN INGRESADOS.");
-                    }
+                        }
                 } else {
                     $this->response->setJsonContent(array("res" => "warning"));
                     $this->response->setStatusCode(500, "Ocurrio un error, no se pudieron guardar los datos. Comunicarse con Soporte Tecnico.");
@@ -788,6 +786,8 @@ class TurnosController extends ControllerBase
 
     public function listadoEnPdfAction()
     {
+        ini_set('max_execution_time', 300); //300 seconds = 5 minutes // si funciona pero la pagina anterior se corrompe
+
         $listado = Solicitudturno::accionVerSolicitudesConRespuestaEnviada();
         $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
         $fechaInicio = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
