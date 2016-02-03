@@ -20,26 +20,30 @@ class IdiomaForm extends Form {
     {
 
         /*========================== IDIOMA ==========================*/
-        $elemento = new Text('idiomas_nombre',array('class'=>'form-control','required'=>'true','placeholder'=>'Ingrese el Idioma'));
+        $elemento = new Text('idiomas_nombre',array('class'=>'form-control','placeholder'=>'Ingrese el Idioma'));
         $elemento->setLabel('Idioma');
         $elemento->setFilters(array('striptags', 'string'));
-
+        $elemento->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Ingrese el Idioma'
+            ))
+        ));
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new Select('idiomas_nivelId', \Curriculum\Nivel::find(), array(
+        $elemento2 = new Select('idiomas_nivelId', \Curriculum\Nivel::find(), array(
             'using'      => array('nivel_id', 'nivel_nombre'),
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',
             'class'      => 'form-control','required'=>'true'
         ));
-        $elemento->addValidators(array(
+        $elemento2->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Seleccione el Nivel'
             ))
         ));
-        $elemento->setLabel('Nivel');
-        $this->add($elemento);
+        $elemento2->setLabel('Nivel');
+        $this->add($elemento2);
 
     }
 

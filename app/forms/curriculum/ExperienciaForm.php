@@ -28,7 +28,7 @@ class ExperienciaForm   extends Form {
             $this->add(new \Phalcon\Forms\Element\Hidden("experiencia_id"));
         }
         /*========================== ==========================*/
-        $elemento = new Text('experiencia_empresa',array('maxlength'=>50,'class'=>'form-control'));
+        $elemento = new Text('experiencia_empresa',array('maxlength'=>50,'class'=>'form-control','required'=>''));
         $elemento->setLabel('<strong class="font-rojo "> * </strong>Empresa');
         $elemento->setFilters(array('striptags', 'string'));
         $elemento->addValidators(array(
@@ -38,7 +38,7 @@ class ExperienciaForm   extends Form {
         ));
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new Text('experiencia_rubro',array('maxlength'=>50,'class'=>'form-control'));
+        $elemento = new Text('experiencia_rubro',array('maxlength'=>50,'class'=>'form-control','required'=>''));
         $elemento->setLabel('<strong class="font-rojo "> * </strong>Rubro');
         $elemento->setFilters(array('striptags', 'string'));
         $elemento->addValidators(array(
@@ -48,7 +48,7 @@ class ExperienciaForm   extends Form {
         ));
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new Text('experiencia_cargo',array('maxlength'=>50,'class'=>'form-control'));
+        $elemento = new Text('experiencia_cargo',array('maxlength'=>50,'class'=>'form-control','required'=>''));
         $elemento->setLabel('<strong class="font-rojo "> * </strong>Cargo Ocupado');
         $elemento->setFilters(array('striptags', 'string'));
         $elemento->addValidators(array(
@@ -58,7 +58,7 @@ class ExperienciaForm   extends Form {
         ));
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new TextArea('experiencia_tareas',array('maxlength'=>150,'class'=>'form-control'));
+        $elemento = new TextArea('experiencia_tareas',array('maxlength'=>150,'class'=>'form-control','required'=>''));
         $elemento->setLabel('<strong class="font-rojo "> * </strong>Tareas Realizadas');
         $elemento->setFilters(array('striptags', 'string'));
         $elemento->addValidators(array(
@@ -68,7 +68,7 @@ class ExperienciaForm   extends Form {
         ));
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new Date('experiencia_fechaInicio',array('class'=>'form-control'));
+        $elemento = new Date('experiencia_fechaInicio',array('class'=>'form-control','required'=>''));
         $elemento->setLabel('<strong class="font-rojo "> * </strong>Fecha de Inicio');
         $elemento->addValidators(array(
             new PresenceOf(array(
@@ -77,7 +77,7 @@ class ExperienciaForm   extends Form {
         ));
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new Date('experiencia_fechaFinal',array('class'=>'form-control', 'disabled'=>''));
+        $elemento = new Date('experiencia_fechaFinal',array('class'=>'form-control', 'disabled'=>'','required'=>''));
         $elemento->setLabel('Fecha Final');
         $elemento->addValidators(array(
             new PresenceOf(array(
@@ -97,7 +97,7 @@ class ExperienciaForm   extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',
-            'class'=>'form-control'
+            'class'=>'form-control','required'=>''
         ));
         $provincia->addValidators(array(
             new PresenceOf(array(

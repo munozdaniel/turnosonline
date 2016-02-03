@@ -19,7 +19,7 @@ class LoginForm  extends Form
     {
         //añadimos el campo email
         $email = new Text('persona_email', array(
-            'placeholder' => 'ejemplo@imps.org.ar', 'class'=>'sr-only'
+            'placeholder' => 'ejemplo@imps.org.ar', 'class'=>'sr-only','required'=>''
         ));
 
         //añadimos la validación para un campo de tipo email y como campo requerido
@@ -40,7 +40,7 @@ class LoginForm  extends Form
 
         //añadimos el campo password
         $nroDocumento = new Text('persona_numeroDocumento', array(
-            'placeholder' => 'Ingrese su Documento', 'type'=>'number', 'class'=>'sr-only'
+            'placeholder' => 'Ingrese su Documento', 'type'=>'number', 'class'=>'sr-only','required'=>''
         ));
 
         //añadimos la validación como campo requerido al password

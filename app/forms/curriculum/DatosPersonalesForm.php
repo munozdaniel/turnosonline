@@ -27,7 +27,8 @@ class DatosPersonalesForm  extends Form {
             $this->add(new \Phalcon\Forms\Element\Hidden("persona_id"));
         }*/
         /*========================== ==========================*/
-        $persona_apellido = new Text('persona_apellido',array('class'=>'form-control','placeholder'=>'Ingrese su Apellido'));
+        $persona_apellido = new Text('persona_apellido',
+            array('class'=>'form-control','placeholder'=>'Ingrese su Apellido','required'=>'','maxlength'=>70));
         $persona_apellido->setLabel('<strong class="font-rojo "> * </strong>Apellido');
         $persona_apellido->setFilters(array('striptags', 'string'));
         $persona_apellido->addValidators(array(
@@ -37,7 +38,8 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_apellido);
         /*========================== ==========================*/
-        $persona_nombre = new Text('persona_nombre',array('class'=>'form-control','placeholder'=>'Ingrese su Nombre'));
+        $persona_nombre = new Text('persona_nombre',
+            array('class'=>'form-control','placeholder'=>'Ingrese su Nombre','required'=>'','maxlength'=>70));
         $persona_nombre->setLabel('<strong class="font-rojo "> * </strong>Nombre');
         $persona_nombre->setFilters(array('striptags', 'string'));
         $persona_nombre->addValidators(array(
@@ -47,7 +49,8 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_nombre);
         /*========================== ==========================*/
-        $persona_fechaNacimiento = new Date('persona_fechaNacimiento',array('class'=>'form-control'));
+        $persona_fechaNacimiento = new Date('persona_fechaNacimiento',
+            array('class'=>'form-control','required'=>''));
         $persona_fechaNacimiento->setLabel('<strong class="font-rojo "> * </strong>Fecha Nacimiento');
         $persona_fechaNacimiento->setFilters(array('striptags', 'string'));
         $persona_fechaNacimiento->addValidators(array(
@@ -62,7 +65,7 @@ class DatosPersonalesForm  extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Tipo ',
             'emptyValue' => '',
-            'class'      => 'form-control'
+            'class'      => 'form-control','required'=>''
         ));
         $persona_tipoDocumentoId->addValidators(array(
             new PresenceOf(array(
@@ -72,7 +75,8 @@ class DatosPersonalesForm  extends Form {
         $persona_tipoDocumentoId->setLabel('<strong class="font-rojo "> * </strong>Tipo Documento');
         $this->add($persona_tipoDocumentoId);
         /*========================== ==========================*/
-        $persona_numeroDocumento = new Text('persona_numeroDocumento',array('placeholder'=>'Solo Números','class'=> 'form-control'));
+        $persona_numeroDocumento = new \Phalcon\Forms\Element\Numeric('persona_numeroDocumento',
+            array('placeholder'=>'Solo Números','class'=> 'form-control','required'=>''));
         $persona_numeroDocumento->setLabel('<strong class="font-rojo "> * </strong>Nro Documento');
         $persona_numeroDocumento->setFilters(array('int'));
         $persona_numeroDocumento->addValidators(array(
@@ -82,7 +86,8 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_numeroDocumento);
         /*========================== ==========================*/
-        $persona_sexo = new Select('persona_sexo', array('Masculino','Femenino'),array('class'=>'form-control'));
+        $persona_sexo = new Select('persona_sexo', array('Masculino','Femenino'),
+            array('class'=>'form-control','required'=>''));
         $persona_sexo->setLabel('<strong class="font-rojo "> * </strong>Sexo');
         $this->add($persona_sexo);
         /*========================== Estado Civil ==========================*/
@@ -91,7 +96,7 @@ class DatosPersonalesForm  extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',
-            'class'      => 'form-control'
+            'class'      => 'form-control','required'=>''
         ));
         $persona_estadoCivilId->addValidators(array(
             new PresenceOf(array(
@@ -106,7 +111,7 @@ class DatosPersonalesForm  extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',
-            'class'      => 'form-control'
+            'class'      => 'form-control','required'=>''
         ));
         $persona_nacionalidadId->addValidators(array(
             new PresenceOf(array(
@@ -117,7 +122,7 @@ class DatosPersonalesForm  extends Form {
         $this->add($persona_nacionalidadId);
 
         /*========================== ==========================*/
-        $localidad_codigoPostal = new Text('localidad_codigoPostal',array('class'=> 'form-control','placeholder'=>'Ingrese su Codigo Postal'));
+        $localidad_codigoPostal = new Text('localidad_codigoPostal',array('class'=> 'form-control','required'=>'','placeholder'=>'Ingrese su Codigo Postal'));
         $localidad_codigoPostal->setLabel('<strong class="font-rojo "> * </strong>Codigo Postal');
         $localidad_codigoPostal->setFilters(array('int'));
         $localidad_codigoPostal->addValidators(array(
@@ -132,7 +137,7 @@ class DatosPersonalesForm  extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',
-            'class'      => 'form-control'
+            'class'      => 'form-control','required'=>''
         ));
         $provincia->addValidators(array(
             new PresenceOf(array(
@@ -147,7 +152,7 @@ class DatosPersonalesForm  extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar Provincia',
             'emptyValue' => '',
-            'class'      => 'form-control'
+            'class'      => 'form-control','required'=>''
         ));
         $ciudad->addValidators(array(
             new PresenceOf(array(
@@ -158,7 +163,7 @@ class DatosPersonalesForm  extends Form {
         $this->add($ciudad);
 
         /*========================== Domicilio ==========================*/
-        $localidad_domicilio = new Text('localidad_domicilio',array('class'=> 'form-control','placeholder'=>'Ingrese su Domicilio'));
+        $localidad_domicilio = new Text('localidad_domicilio',array('class'=> 'form-control','required'=>'','placeholder'=>'Ingrese su Domicilio'));
         $localidad_domicilio->setLabel('<strong class="font-rojo "> * </strong>Domicilio');
         $localidad_domicilio->setFilters(array('string'));
         $localidad_domicilio->addValidators(array(
@@ -168,7 +173,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($localidad_domicilio);
         /*========================== Telefono ==========================*/
-        $persona_telefono = new Text('persona_telefono',array('placeholder'=>'Solo Números','class'=> 'form-control'));
+        $persona_telefono = new Text('persona_telefono',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
         $persona_telefono->setLabel('<strong class="font-rojo "> * </strong>Teléfono ');
         $persona_telefono->setFilters(array('int'));
         $persona_telefono->addValidators(array(
@@ -178,7 +183,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_telefono);
         /*========================== Celular ==========================*/
-        $persona_celular = new Text('persona_celular',array('placeholder'=>'Solo Números','class'=> 'form-control'));
+        $persona_celular = new Text('persona_celular',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
         $persona_celular->setLabel('Celular ');
         $persona_celular->setFilters(array('int'));
         $persona_celular->addValidators(array(
@@ -188,7 +193,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_celular);
         /*========================== Email ==========================*/
-        $persona_email = new Email('persona_email',array('placeholder'=>'ejemplo@imps.org.ar','class'=> 'form-control'));
+        $persona_email = new Email('persona_email',array('placeholder'=>'ejemplo@imps.org.ar','required'=>'','class'=> 'form-control'));
         $persona_email->setLabel('<strong class="font-rojo "> * </strong>Email');
         $persona_email->setFilters(array('email'));
         $persona_email->addValidators(array(
