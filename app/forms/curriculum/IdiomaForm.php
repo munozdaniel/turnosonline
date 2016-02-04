@@ -21,7 +21,9 @@ class IdiomaForm extends Form {
 
         /*========================== IDIOMA ==========================*/
 
-        $elemento2 = new Select('idiomas_nombre', array('INGLÉS','FRANCÉS','ALEMÁN','RUSO','PORTUGUÉS','ÁRABE','BENGALÍ','INDOSTÁNICO','MANDARÍN'), array(
+        $elemento2 = new Select('idiomas_nombre',
+            array('INGLES'=>'INGLES','FRANCES'=>'FRANCÉS','ALEMAN'=>'ALEMÁN','RUSO'=>'RUSO','PORTUGUES'=>'PORTUGUÉS',
+                'ARABE'=>'ÁRABE','BENGALI'=>'BENGALÍ','INDOSTANICO'=>'INDOSTÁNICO','MANDARIN'=>'MANDARÍN'), array(
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',

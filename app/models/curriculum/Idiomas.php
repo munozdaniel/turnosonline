@@ -1,6 +1,7 @@
 <?php
 namespace Curriculum;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Validator\Uniqueness;
 
 class Idiomas extends \Phalcon\Mvc\Model
 {
@@ -192,16 +193,11 @@ class Idiomas extends \Phalcon\Mvc\Model
     }
     public function validation()
     {
-        $this->validate(
-            new PresenceOf(array(
-            "field" => 'idiomas_nombre',
-            "message" => 'El Idioma es requerido'
+        $this->validate(new Uniqueness(array(
+            "field"   => "idiomas_nombre",
+            "message" => "El Idioma seleccionado ya fue agregado"
         )));
-        $this->validate(
-            new PresenceOf(array(
-                "field" => '$idiomas_nivelId',
-                "message" => 'El Idioma es requerido'
-            )));
+
         if ($this->validationHasFailed() == true) {
             return false;
         }
