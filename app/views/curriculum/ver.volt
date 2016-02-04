@@ -56,22 +56,52 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <h3>EXPERIENCIA LABORAL</h3>
+                    <h3>EXPERIENCIA LABORAL <small>idCurriculum (borrar) ; {{ persona.getPersonaCurriculumid() }}</small></h3>
+                    {{ link_to('experiencia/edit' ~ persona.getPersonaCurriculumid(),
+                    '<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }}
+                    {{ link_to('experiencia/new' ~ persona.getPersonaCurriculumid(),
+                    '<i class="glyphicon glyphicon-edit"></i> Agregar', "class": "btn btn-info") }}
+                    {% if experiencias is defined %}
+                        {% for unaExperiencia in experiencias %}
+                                {{ unaExperiencia.getExperienciaEmpresa() }}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <h3>ESTUDIOS</h3>
+                    {{ link_to('formacion/edit' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }}
+                    {{ link_to('formacion/new' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Agregar', "class": "btn btn-info") }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <h3>IDIOMAS</h3>
+                    {{ link_to('idiomas/edit' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }}
+                    {{ link_to('idiomas/new' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Agregar', "class": "btn btn-info") }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <h3>CONOCIMIENTOS INFORMÁTICOS</h3>
+                    {{ link_to('informatica/edit' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }}
+                    {{ link_to('informatica/new' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Agregar', "class": "btn btn-info") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <h3>SECTOR DE INTERES</h3>
+                    {{ link_to('informatica/edit' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }}
+                    {{ link_to('informatica/new' ~ persona.getPersonaId(),
+                    '<i class="glyphicon glyphicon-edit"></i> Agregar', "class": "btn btn-info") }}
                 </div>
             </div>
         </div>

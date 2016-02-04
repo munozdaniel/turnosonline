@@ -64,10 +64,19 @@ class CurriculumController extends ControllerBase
     }
 
     /**
-     * Displays the creation form
+     * Muestra un formulario multi pasos para que el usuario ingrese todos los datos.
+     * Obtiene el email a traves del get cuando el usuario confirma su email.
      */
     public function newAction()
     {
+        $this->view->setTemplateAfter('menuCurriculum');
+        $this->assets->collection('headerCss')
+            ->addCss('css/curriculum/form-elements.css')
+            ->addCss('css/curriculum/style.css');
+        $this->assets->collection('footer')
+            ->addJs('js/curriculum/jquery.backstretch.min.js')
+            ->addJs('js/curriculum/retina-1.1.0.min.js')
+            ->addJs('js/curriculum/scripts.js');
 
     }
 
@@ -81,7 +90,7 @@ class CurriculumController extends ControllerBase
 
         if (!$this->request->isPost()) {
 
-            $curriculum = Curriculum::findFirstBycurriculum_id($curriculum_id);
+            $curriculum = Curriculum\Curriculum::findFirstBycurriculum_id($curriculum_id);
             if (!$curriculum) {
                 $this->flash->error("curriculum was not found");
 
@@ -286,8 +295,9 @@ class CurriculumController extends ControllerBase
                     "bind" => $parametros
                 ));
             if (count($persona) == 0) {
-                $this->view->formulario = new DatosPersonalesForm();
-                return $this->redireccionar('persona/new');
+                $this->view->form = new LoginForm();
+                $this->flash->message('problema','Usted no se encuentra registrado en el sistema');
+                return $this->redireccionar('curriculum/login');
             }else{
                 $this->view->persona = $persona[0];
                 return $this->redireccionar("curriculum/ver/".$persona[0]->getPersonaId());
@@ -295,7 +305,43 @@ class CurriculumController extends ControllerBase
         }
     }
     /**
+     * Curriculum: Enviar un correo para confirmar que el correo sea correcto.
+     *
+     */
+    public function confirmarCasillaAction()
+    {
+        if ($this->request->isPost()) {
+            $correo = $this->request->getPost('confirmar_email');
+            $this->mailDesarrollo->CharSet = 'UTF-8';
+            $this->mailDesarrollo->Host = 'mail.imps.org.ar';
+            $this->mailDesarrollo->SMTPAuth = true;
+            $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
+            $this->mailDesarrollo->Password = 'sis$%&--temas';
+            $this->mailDesarrollo->SMTPSecure = '';
+            $this->mailDesarrollo->Port = 26;
+            $this->mailDesarrollo->AddBCC($correo);
+            $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
+            $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN RRHH';
+            $this->mailDesarrollo->Subject = "Confirmación de correo";
+            $email = base64_encode($correo);
+            $this->mailDesarrollo->Body = "<h1>Confirmación de Correo Electronico</h1>
+            <p>Para continuar con tu registro, pulsa en el enlace abajo:</p>
+            <a href='http://192.168.42.149/impsweb/persona/new?email=$email' >  click aquí  </a>";
+
+            if ($this->mailDesarrollo->send()) {
+                $this->flash->message('exito',"Se ha enviado un correo de confirmación para continuar con el proceso");
+            } else
+                $this->flash->success("Ha sucedido un error. No es posible comunicarse con nuestras oficinas momentáneamente..");
+
+            $this->redireccionar('curriculum/login');
+        }
+    }
+    /**
      * Permite ver el curriculum completo
+     * La vista contendrá una persona enviada desde la accion anterior.
+     * Un arreglo localidad
+     * Un arreglo experiencia
+     * Un arreglo Formacion
      */
     public function verAction($idPersona)
     {
@@ -324,5 +370,8 @@ class CurriculumController extends ControllerBase
             }
         }
         $this->view->arregloLocalidad = $arregloLocalidad;
+        $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($persona->getPersonaCurriculumid());
+
     }
 }
