@@ -66,11 +66,7 @@ class ExperienciaController extends ControllerBase
      */
     public function newAction($curriculum_id)
     {
-        //FIXME: Habilitar isPost
-        if(!$this->request->isPost() || $curriculum_id== null){
-             $this->flash->message('problema','Momentaneamente no es posible acceder a la url solicitada');
-             $this->response->redirect('curriculum/login');
-         }
+
          $this->view->experienciaForm = new ExperienciaForm();
          $this->view->curriculumId = $curriculum_id;
      }
@@ -129,10 +125,10 @@ class ExperienciaController extends ControllerBase
         $curriculumId   = $this->request->getPost("curriculum_id");
 
         $experiencia->setExperienciaCurriculumid($this->request->getPost("curriculum_id"));
-        $experiencia->setExperienciaEmpresa($this->request->getPost("experiencia_empresa"));
-        $experiencia->setExperienciaRubro($this->request->getPost("experiencia_rubro"));
-        $experiencia->setExperienciaCargo($this->request->getPost("experiencia_cargo"));
-        $experiencia->setExperienciaTareas($this->request->getPost("experiencia_tareas"));
+        $experiencia->setExperienciaEmpresa(strtoupper($this->request->getPost("experiencia_empresa")));
+        $experiencia->setExperienciaRubro(strtoupper($this->request->getPost("experiencia_rubro")));
+        $experiencia->setExperienciaCargo(strtoupper($this->request->getPost("experiencia_cargo")));
+        $experiencia->setExperienciaTareas(strtoupper($this->request->getPost("experiencia_tareas")));
         $experiencia->setExperienciaFechainicio($this->request->getPost("experiencia_fechaInicio"));
         if($this->request->hasPost('experiencia_fechaFinal'))
         {

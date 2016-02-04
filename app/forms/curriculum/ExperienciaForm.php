@@ -92,7 +92,7 @@ class ExperienciaForm   extends Form {
         $this->add($elemento);
 
         /*========================== ==========================*/
-        $provincia = new Select('provincia_id',  \Curriculum\Provincia::find(), array(
+        $provincia = new Select('experiencia_provinciaId',  \Curriculum\Provincia::find(), array(
             'using'      => array('provincia_id', 'provincia_nombre'),
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',

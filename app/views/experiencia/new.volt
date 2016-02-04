@@ -47,6 +47,15 @@
         </div>
     </div>
     <div class="row form-group">
+        <div class="col-sm-12 col-md-2 col-md-offset-2">
+        </div>
+        <div class="col-sm-4">
+            {{ experienciaForm.label('experiencia_fechaActual' ) }}<br>
+
+            {{ experienciaForm.render('experiencia_fechaActual') }}
+        </div>
+    </div>
+    <div class="row form-group">
          <div class="col-sm-12 col-md-2 col-md-offset-2">
              {{ experienciaForm.label('experiencia_fechaFinal' ) }}
         </div>
@@ -55,12 +64,11 @@
         </div>
     </div>
     <div class="row form-group">
-         <div class="col-sm-12 col-md-2 col-md-offset-2">
+        <div class="col-sm-12 col-md-2 col-md-offset-2">
+            {{ experienciaForm.label('experiencia_provinciaId' ) }}
         </div>
         <div class="col-sm-4">
-            {{ experienciaForm.label('experiencia_fechaActual' ) }}<br>
-
-            {{ experienciaForm.render('experiencia_fechaActual') }}
+            {{ experienciaForm.render('experiencia_provinciaId') }}
         </div>
     </div>
     <div class="row form-group">
@@ -83,5 +91,6 @@
 <script type="text/javascript">
     document.getElementById('experiencia_fechaActual').onchange = function() {
         document.getElementById('experiencia_fechaFinal').disabled = this.checked;
+        document.getElementById('experiencia_fechaFinal').required = !this.checked;
     };
 </script>
