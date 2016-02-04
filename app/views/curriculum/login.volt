@@ -1,7 +1,7 @@
 
-<div class="account-container "align="center">
-    {{ form("curriculum/verificarDatos", "method":"post", "autocomplete" : "off", 'class':'form-horizontal') }}
-    <fieldset>
+<div class="account-container " style="    box-shadow: 0px 0px 2px #060606, inset 0px -3px 0px #e6e6e6;    border: 2px solid #FFFFFF;    width: 50%">
+        {{ form("curriculum/verificarDatos", "method":"post", "autocomplete" : "off", 'class':'form-horizontal ') }}
+        <fieldset>
 
         <legend><i class="fa fa-search"></i> BUSCAR MI CURRICULUM</legend>
         {{ content() }}
@@ -21,11 +21,24 @@
     </fieldset>
     <div >
             {{ form.render('BUSCAR CURRICULUM') }}
-        <a href="#registro" role="button" data-toggle="modal" tabindex="102" class="btn btn-large btn-info"><i class="fa  fa-plus-circle"></i> REGISTRARSE</a>
 
     </div>
 
 </form>
+</div>
+<div class="col-md-6 col-md-offset-3">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body margin-left-right-one"
+                 style="border-left: 0 !important; border-right: 0 !important;">
+                <a href="#registro" role="button" data-toggle="modal" tabindex="102" class="btn btn-large btn-block btn-info"><i class="fa  fa-plus-circle"></i> REGISTRARSE</a>
+
+            </div>
+
+
+        </div>
+    </div>
 </div>
 <!--=========== MODAL CREAR OPERADORA ================-->
 <div id="registro" class="modal fade " tabindex="-1">
