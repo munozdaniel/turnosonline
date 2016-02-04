@@ -20,7 +20,16 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
-        $this->assets->collection('footer')->addJs('js/menu.js')->addJs('js/redireccionarSeccion.js');
+        $this->assets->collection('headerCss')
+            ->addCss('css/slick.css');
+        $this->assets->collection('footer')
+            ->addJs('js/menu.js')
+            ->addJs('js/jquery.superslides.min.js')
+            ->addJs('js/slick.min.js')
+            ->addJs('js/jquery.ui.map.js')
+            ->addJs('https://maps.googleapis.com/maps/api/js',false)
+            ->addJs('js/customIndex.js')
+            ->addJs('js/redireccionarSeccion.js');
         /*  $this->assets->collection('footerInline')
                ->addInlineJs("if(self.location=='http://192.168.42.149/impsweb/'){var timeoutId = setTimeout(\"self.location='#about'\",15000);}");
         */
