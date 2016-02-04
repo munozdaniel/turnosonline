@@ -98,6 +98,7 @@ $di->set('modelsMetadata', function () {
  */
 $di->setShared('session', function () {
     $session = new SessionAdapter();
+    $session->setOptions(array('max_execution_time'=>300));//? no funciona
     $session->start();
 
     return $session;
