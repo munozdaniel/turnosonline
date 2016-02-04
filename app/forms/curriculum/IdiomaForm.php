@@ -29,10 +29,10 @@ class IdiomaForm extends Form {
         ));
         $elemento2->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Seleccione el Nivel'
+                'message' => 'Seleccione el Idioma'
             ))
         ));
-        $elemento2->setLabel('Nivel');
+        $elemento2->setLabel('Idioma');
         $this->add($elemento2);
         /*========================== ==========================*/
         $elemento2 = new Select('idiomas_nivelId', \Curriculum\Nivel::find(), array(

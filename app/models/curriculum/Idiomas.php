@@ -1,5 +1,6 @@
 <?php
 namespace Curriculum;
+use Phalcon\Mvc\Model\Validator\PresenceOf;
 
 class Idiomas extends \Phalcon\Mvc\Model
 {
@@ -32,7 +33,7 @@ class Idiomas extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    protected $nivel_habilitado;
+    protected $idiomas_habilitado;
 
     /**
      * Method to set the value of field idiomas_id
@@ -92,9 +93,9 @@ class Idiomas extends \Phalcon\Mvc\Model
      * @param integer $nivel_habilitado
      * @return $this
      */
-    public function setNivelHabilitado($nivel_habilitado)
+    public function setIdiomasHabilitado($idiomas_habilitado)
     {
-        $this->nivel_habilitado = $nivel_habilitado;
+        $this->idiomas_habilitado = $idiomas_habilitado;
 
         return $this;
     }
@@ -144,9 +145,9 @@ class Idiomas extends \Phalcon\Mvc\Model
      *
      * @return integer
      */
-    public function getNivelHabilitado()
+    public function getIdiomasHabilitado()
     {
-        return $this->nivel_habilitado;
+        return $this->idiomas_habilitado;
     }
 
     /**
@@ -189,5 +190,20 @@ class Idiomas extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
-
+    public function validation()
+    {
+        $this->validate(
+            new PresenceOf(array(
+            "field" => 'idiomas_nombre',
+            "message" => 'El Idioma es requerido'
+        )));
+        $this->validate(
+            new PresenceOf(array(
+                "field" => '$idiomas_nivelId',
+                "message" => 'El Idioma es requerido'
+            )));
+        if ($this->validationHasFailed() == true) {
+            return false;
+        }
+    }
 }
