@@ -299,9 +299,9 @@ class Formacion extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo('formacion_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
-        $this->belongsTo('formacion_gradoId', 'Grado', 'grado_id', array('alias' => 'Grado'));
-        $this->belongsTo('formacion_estadoId', 'Estado', 'estado_id', array('alias' => 'Estado'));
+        $this->belongsTo('formacion_curriculumId', 'Curriculum\Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
+        $this->belongsTo('formacion_gradoId', 'Curriculum\Grado', 'grado_id', array('alias' => 'Grado'));
+        $this->belongsTo('formacion_estadoId', 'Curriculum\Estado', 'estado_id', array('alias' => 'Estado'));
     }
 
     /**
