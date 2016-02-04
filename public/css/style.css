@@ -3147,10 +3147,13 @@ textarea .form-control {
 }
 /*Curriculum*/
 .curriculum-bg{
-    background: #f4f4f4 url(../img/curriculum/bg.gif) repeat top left;
+    background: #f4f4f4 url(../img/curriculum/bg.gif) repeat top left ;
+
 }
 .curriculum-bg-form{
     background: #ffffff;
+    padding-bottom: 20px;
+    padding-top: 30px;
 }
 .borde-top{
     border-top: 1px solid #C00;
@@ -3162,4 +3165,15 @@ textarea .form-control {
 .curriculum-titulo-form{
     margin-top: -5px;
     margin-bottom: 30px;
+}
+.btn-gris {
+    color: #fff;
+    background-color: #607D8B;
+    border-color: #607D8B;
+}
+.curriculum-bg-header{
+    box-shadow: 0 1px 2px rgba(0,0,0,0.45);background-color: #287bbc;background-image: -webkit-linear-gradient(top, #287bbc 0%,#23639a 100%); color:#FFF !important;
+}
+.has-error{
+     border-color: red !important;
 }

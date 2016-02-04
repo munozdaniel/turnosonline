@@ -27,8 +27,7 @@
         {{ stylesheet_link('css/font-awesome.css') }}
         <!-- Superslide css file-->
         {{ stylesheet_link('css/superslides.css') }}
-        <!-- Slick slider css file -->
-        {{ stylesheet_link('css/slick.css') }}
+
         <!-- smooth animate css file -->
         {{ stylesheet_link('css/animate.css') }}
         <!-- Elastic grid css file -->
@@ -38,6 +37,10 @@
         <!-- Default Theme css file -->
         {{ stylesheet_link('css/themes/default-theme.css') }}
         <!-- Main structure css file -->
+        {%  if (assets.collection("headerCss")) %}
+            {{  assets.outputJs("headerCss") }}
+        {% endif %}
+
         {{ stylesheet_link('css/style.css') }}
 
         <!-- Google fonts -->
@@ -60,23 +63,12 @@
        ================================================== -->
 
     {{ javascript_include('js/bootstrap.min.js') }}
-    <!-- Google map -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    {{ javascript_include('js/jquery.ui.map.js') }}
     <!-- For smooth animatin  -->
     {{ javascript_include('js/wow.min.js') }}
-
-    <!-- superslides slider -->
-    {{ javascript_include('js/jquery.superslides.min.js') }}
-    <!-- slick slider -->
-    {{ javascript_include('js/slick.min.js') }}
-    <!-- for circle counter -->
-    <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
     <!-- for portfolio filter gallery -->
     {{ javascript_include('js/modernizr.custom.js') }}
     {{ javascript_include('js/classie.js') }}
     {{ javascript_include('js/elastic_grid.min.js') }}
-    {# javascript_include('js/portfolio_slider.js') #}
     <!-- Custom js-->
     {{ javascript_include('js/custom.js') }}
     {%  if (assets.collection("footer")) %}
