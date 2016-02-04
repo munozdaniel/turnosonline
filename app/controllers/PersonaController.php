@@ -198,7 +198,7 @@ class PersonaController extends ControllerBase
             $localidad = new \Curriculum\Localidad();
             $localidad->setLocalidadCodigopostal($this->request->getPost('localidad_codigoPostal','int'));
             $localidad->setLocalidadDomicilio($this->request->getPost('localidad_domicilio','string'));
-            $localidad->setLocalidadDomicilio($this->request->getPost('ciudad_id','int'));
+            $localidad->setLocalidadCiudadid($this->request->getPost('ciudad_id','int'));
             if (!$localidad->save()) {
                 foreach ($localidad->getMessages() as $message) {
                     $this->flash->message('problema',$message);
