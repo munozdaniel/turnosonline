@@ -299,8 +299,7 @@ class CurriculumController extends ControllerBase
                 $this->flash->message('problema','Usted no se encuentra registrado en el sistema');
                 return $this->redireccionar('curriculum/login');
             }else{
-                $this->view->persona = $persona[0];
-                return $this->redireccionar("curriculum/ver/".$persona[0]->getPersonaId());
+                return $this->redireccionar("curriculum/ver/".$persona[0]->getPersonaCurriculumid());
             }
         }
     }
@@ -338,18 +337,19 @@ class CurriculumController extends ControllerBase
     }
     /**
      * Permite ver el curriculum completo
-     * La vista contendrá una persona enviada desde la accion anterior.
+     * La vista contendrá una persona.
      * Un arreglo localidad
      * Un arreglo experiencia
      * Un arreglo Formacion
      */
-    public function verAction($idPersona)
+    public function verAction($curriculumId)
     {
-        if($idPersona==null){
+        if($curriculumId==null){
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
             return $this->redireccionar('curriculum/login');
         }
-        $persona = \Curriculum\Persona::findFirstByPersona_id($idPersona);
+
+        $persona = \Curriculum\Persona::findFirstByPersona_curriculumId($curriculumId);
         $arregloLocalidad = array();
         $arregloLocalidad['localidad_codigoPostal'] = "Sin Especificar";
         $arregloLocalidad['localidad_domicilio'] = "Sin Especificar";
@@ -369,6 +369,7 @@ class CurriculumController extends ControllerBase
                 }
             }
         }
+        $this->view->persona = $persona;
         $this->view->arregloLocalidad = $arregloLocalidad;
         $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($persona->getPersonaCurriculumid());
         $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($persona->getPersonaCurriculumid());

@@ -1,48 +1,103 @@
 {{ content() }}
 
-<div class="curriculum-bg-form modal-header" align="left">
+<div class="curriculum-bg-header modal-header " align="left">
     <h1>
         <ins>Información General</ins>
-        <br>
+        <br><h3 class="">
+            <ins><small  style=" color:#FFF !important;">Idiomas / Aptitudes / Datos Adicionales / Preferencias</small></ins>
+        </h3>
     </h1>
     <table class="" width="100%">
         <tr>
-            <td align="right">{{ link_to("curriculum/ver", "Finalizar",'class':'btn btn-large btn-warning') }}</td>
+            <td align="right">{{ link_to("curriculum/ver"~curriculum_id, "<i class='fa fa-clone'></i> FINALIZAR ",'class':'btn btn-large btn-blue') }}</td>
         </tr>
     </table>
 </div>
 <hr>
-<div class="modal-body col-md-12 curriculum-bg-form borde-top">
-    <h3 class="curriculum-titulo-form">
-        <ins><small>Idiomas / Aptitudes / Datos Adicionales / Preferencias</small></ins>
-    </h3>
+<div class="modal-body col-md-12 ">
+
     {{ hidden_field('curriculum_id','value':curriculum_id) }}
-    {{ form("idiomas/create", "method":"post") }}
+    {{ form("idiomas/agregar","id":"agregarIdioma","method":"post", 'class':'curriculum-bg-form borde-top') }}
 
     <div class="row form-group">
+        <div id="idiomas_mensaje" class="col-md-8 col-md-offset-2  ">
+        </div>
+
         <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('idiomas_nombre' ) }}
+            {{ idiomaForm.label('idiomas_nombre' ) }}
         </div>
         <div class="col-sm-4">
-            {{ informacionForm.render('idiomas_nombre') }}
+            {{ idiomaForm.render('idiomas_nombre') }}
         </div>
 
     </div>
     <div class="row form-group">
+
         <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('idiomas_nivelId' ) }}
+            {{ idiomaForm.label('idiomas_nivelId' ) }}
         </div>
         <div class="col-sm-4">
-            {{ informacionForm.render('idiomas_nivelId') }}
+            {{ idiomaForm.render('idiomas_nivelId') }}
         </div>
-        <div class="col-sm-12 col-md-6 col-md-2" >
-            {{ submit_button("Añadir",'class':'btn btn-block btn-info') }}
+        <div class="col-md-12"><br></div>
+        <div class="col-md-10 col-md-offset-1">
+            <fieldset class="">
+                <legend class="legendStyle ">
+                    <a data-toggle="collapse" data-target="#idiomas"  class="btn btn-gris" onclick="cargarIdiomas()"><i class="fa fa-pencil"></i> Ver idiomas</a>
+                    <a class="btn  btn-info" onclick="agregarIdioma()"><i class="fa fa-plus"></i> Agregar idioma</a>
+                </legend>
+                <div class="row collapse " id="idiomas">
+                        hola
+                </div>
+            </fieldset>
         </div>
-
     </div>
+
     {{ end_form() }}
+    <script>
+        function agregarIdioma (event) {
+            var formData = {
+                'idiomas_nombre'    : document.getElementById('idiomas_nombre').value,
+                'idiomas_nivelId'   : document.getElementById('idiomas_nivelId').value,
+                'curriculum_id'   : document.getElementById('curriculum_id').value
+            };
+            $.ajax({
+                data: formData,
+                method: "POST", 'class':'curriculum-bg-form borde-top',
+                url: '/impsweb/idiomas/agregar',
+                success: function (response) {
+                    parsed = $.parseJSON(response);
+                    console.log(response);
+
+                    if(!parsed.success){
+                        alert("Nope");
+                        /*
+                        if(!parsed.save){
+                            alert("NOT SAVE");
+                        }
+                        var mensaje = "";
+                        for(var datos in parsed.errors)
+                        {
+                            $('#idiomas_mensaje').append('<div class="problema font-blanco">' + parsed.errors[datos] + '</div>'); // add the actual error message under our input
+                            $('#'+datos).addClass('has-error');
+                        }*/
+                    }
+                    else
+                    {
+                       // $('#idiomas_mensaje').append('<div class="exito font-blanco">' + response.message + '</div>'); // add the actual error message under our input
+                        //alert(response.message);
+                        alert("Operacion Exitosa");
+                    }
+                },
+                error: function (error) {
+                    alert("ERROR : "+error.statusText) ;
+                    console.log(error);
+                }
+            });
+        };
+    </script>
     <hr>
-    {{ form("conocimientos/create", "method":"post") }}
+    {{ form("conocimientos/create", "method":"post", 'class':'curriculum-bg-form borde-top') }}
 
     <div class="row form-group">
         <div class="col-sm-12 col-md-2 col-md-offset-2">
@@ -66,15 +121,20 @@
     </div>
     {{ end_form() }}
     <hr>
-    {{ form("empleo/create", "method":"post") }}
+    {{ form("empleo/create", "method":"post", 'class':'curriculum-bg-form borde-top') }}
 
+     <div class=" col-md-2 pull-right text-info">
+         {{ link_to('files/curriculum/puestos.pdf','<i class="fa fa-file-pdf-o"></i> VER ESTRUCTURA EN PDF','target':'_blank') }}
 
+     </div>
     <div class="row form-group">
         <div class="col-sm-12 col-md-2 col-md-offset-2">
             {{ informacionForm.label('dependencia_id' ) }}
         </div>
         <div class="col-sm-4">
             {{ informacionForm.render('dependencia_id') }}
+            {{ informacionForm.render('script_puestoDependencia') }}
+
         </div>
     </div>
 
@@ -106,13 +166,7 @@
         </div>
 
     </div>
-    <div class="row form-group">
-        <div class="col-sm-4">
-            {{ informacionForm.render('script_puestoDependencia') }}
-        </div>
-        <div class="col-sm-4">
-        </div>
-    </div>
+
     <div class="row form-group">
         <div class="col-sm-12 col-md-2 col-md-offset-2">
             {{ informacionForm.label('empleo_disponibilidad' ) }}
