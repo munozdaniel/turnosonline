@@ -551,7 +551,7 @@ class Persona extends \Phalcon\Mvc\Model
         )));
         $this->validate(new Uniqueness(array(
             "field"   => "persona_numeroDocumento",
-            "message" => "El Nro de Documento ya se encuentra registrado."
+            "message" => "El Nro de Documento ya se encuentra registrado"
         )));
         if ($this->validationHasFailed() == true) {
             return false;
