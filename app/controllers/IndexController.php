@@ -21,7 +21,8 @@ class IndexController extends ControllerBase
     public function indexAction()
     {
         $this->assets->collection('headerCss')
-            ->addCss('css/slick.css');
+            ->addCss('css/slick.css')
+            ->addCss('css/superslides.css');
         $this->assets->collection('footer')
             ->addJs('js/menu.js')
             ->addJs('js/jquery.superslides.min.js')

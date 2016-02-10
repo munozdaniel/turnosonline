@@ -24,21 +24,19 @@
         <!-- Bootstrap css file-->
         {{ stylesheet_link('css/bootstrap.min.css') }}
         <!-- Font awesome css file-->
-        {{ stylesheet_link('css/font-awesome.css') }}
-        <!-- Superslide css file-->
-        {{ stylesheet_link('css/superslides.css') }}
-
+        {{ stylesheet_link('css/font-awesome.min.css') }}
+        <!-- Superslide css file: Agregado en el indexController
+        {# stylesheet_link('css/superslides.css') #}
+        -->
         <!-- smooth animate css file -->
-        {{ stylesheet_link('css/animate.css') }}
+        {{ stylesheet_link('css/animate.min.css') }}
         <!-- Elastic grid css file -->
         {{ stylesheet_link('css/elastic_grid.css') }}
-        <!-- Circle counter cdn css file -->
-        <link rel='stylesheet prefetch' href='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/css/jquery.circliful.css'>
         <!-- Default Theme css file -->
         {{ stylesheet_link('css/themes/default-theme.css') }}
         <!-- Main structure css file -->
         {%  if (assets.collection("headerCss")) %}
-            {{  assets.outputJs("headerCss") }}
+            {{  assets.outputCss("headerCss") }}
         {% endif %}
 
         {{ stylesheet_link('css/style.css') }}
@@ -68,7 +66,8 @@
     <!-- for portfolio filter gallery -->
     {{ javascript_include('js/modernizr.custom.js') }}
     {{ javascript_include('js/classie.js') }}
-    {{ javascript_include('js/elastic_grid.min.js') }}
+    {# http://demo.phapsu.com/jquery.elastic_grid/ Para el portfolio#}
+    {# javascript_include('js/elastic_grid.min.js') #}
     <!-- Custom js-->
     {{ javascript_include('js/custom.js') }}
     {%  if (assets.collection("footer")) %}
