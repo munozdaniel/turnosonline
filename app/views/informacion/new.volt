@@ -72,9 +72,7 @@
                     var selectorIdioma = $('#idiomas_mensaje');
                     var idiomas = $('.idioma');
                     if(!parsed.success){
-                        for (var idioma in idiomas) {
-                            idiomas.remove();
-                        }
+                        $('#idiomas_mensaje').empty();
                         var mensaje = "";
                         for(var datos in parsed.errors)//Arma los mensajes con errores
                         {
@@ -83,9 +81,7 @@
                     }
                     else
                     {
-                        for (var idioma in idiomas) {//Elimina los mensajes ya publicados
-                            idiomas.remove();
-                        }
+                        $('#idiomas_mensaje').empty();
                         selectorIdioma.append('<div class="idioma exito font-blanco"> El Idioma se ha guardado correctamente</div>'); // add the actual error message under our input
                         document.getElementById('idiomas_nombre').value='';//Vacia los inputs una vez guardado
                         document.getElementById('idiomas_nivelId').value='';
