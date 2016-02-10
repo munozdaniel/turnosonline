@@ -1,5 +1,4 @@
 <?php
-namespace Curriculum;
 
 class Curriculum extends \Phalcon\Mvc\Model
 {
@@ -154,11 +153,13 @@ class Curriculum extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('curriculum_id', 'Experiencia', 'experiencia_curriculumId', array('alias' => 'Experiencia'));
-        $this->hasMany('curriculum_id', 'Formacion', 'formacion_curriculumId', array('alias' => 'Formacion'));
-        $this->hasMany('curriculum_id', 'Idiomas', 'idiomas_curriculumId', array('alias' => 'Idiomas'));
-        $this->hasMany('curriculum_id', 'Informatica', 'informatica_curriculumId', array('alias' => 'Informatica'));
-        $this->hasMany('curriculum_id', 'Persona', 'persona_curriculumId', array('alias' => 'Persona'));
+        $this->hasMany('curriculum_id', 'Curriculum\Conocimientos', 'conocimientos_curriculumId', array('alias' => 'Conocimientos'));
+        $this->hasMany('curriculum_id', 'Curriculum\Empleo', 'empleo_curriculumId', array('alias' => 'Empleo'));
+        $this->hasMany('curriculum_id', 'Curriculum\Experiencia', 'experiencia_curriculumId', array('alias' => 'Experiencia'));
+        $this->hasMany('curriculum_id', 'Curriculum\Formacion', 'formacion_curriculumId', array('alias' => 'Formacion'));
+        $this->hasMany('curriculum_id', 'Curriculum\Idiomas', 'idiomas_curriculumId', array('alias' => 'Idiomas'));
+        $this->hasMany('curriculum_id', 'Curriculum\Informatica', 'informatica_curriculumId', array('alias' => 'Informatica'));
+        $this->hasMany('curriculum_id', 'Curriculum\Persona', 'persona_curriculumId', array('alias' => 'Persona'));
     }
 
     /**

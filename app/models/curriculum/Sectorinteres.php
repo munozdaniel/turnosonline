@@ -96,7 +96,7 @@ class Sectorinteres extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('sectorInteres_id', 'Empleo', 'empleo_sectorInteresId', array('alias' => 'Empleo'));
+        $this->hasMany('sectorInteres_id', 'Curriculum\Empleo', 'empleo_sectorInteresId', array('alias' => 'Empleo'));
     }
 
     /**

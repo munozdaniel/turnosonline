@@ -212,9 +212,9 @@ class Empleo extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo('empleo_puestoId', 'Puesto', 'puesto_id', array('alias' => 'Puesto'));
-        $this->belongsTo('empleo_sectorInteresId', 'Sectorinteres', 'sectorInteres_id', array('alias' => 'Sectorinteres'));
-        $this->belongsTo('empleo_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
+        $this->belongsTo('empleo_puestoId', 'Curriculum\Puesto', 'puesto_id', array('alias' => 'Puesto'));
+        $this->belongsTo('empleo_sectorInteresId', 'Curriculum\Sectorinteres', 'sectorInteres_id', array('alias' => 'Sectorinteres'));
+        $this->belongsTo('empleo_curriculumId', 'Curriculum\Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
     }
 
     /**

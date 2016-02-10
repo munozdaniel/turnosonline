@@ -154,8 +154,8 @@ class Puesto extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('puesto_id', 'Empleo', 'empleo_puestoId', array('alias' => 'Empleo'));
-        $this->belongsTo('puesto_dependenciaId', 'Dependencia', 'dependencia_id', array('alias' => 'Dependencia'));
+        $this->hasMany('puesto_id', 'Curriculum\Empleo', 'empleo_puestoId', array('alias' => 'Empleo'));
+        $this->belongsTo('puesto_dependenciaId', 'Curriculum\Dependencia', 'dependencia_id', array('alias' => 'Dependencia'));
     }
 
     /**

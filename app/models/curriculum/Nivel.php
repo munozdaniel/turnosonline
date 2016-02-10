@@ -67,8 +67,8 @@ class Nivel extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('nivel_id', 'Idiomas', 'idiomas_nivelId', array('alias' => 'Idiomas'));
-        $this->hasMany('nivel_id', 'Informatica', 'informatica_nivelId', array('alias' => 'Informatica'));
+        $this->hasMany('nivel_id', 'Curriculum\Idiomas', 'idiomas_nivelId', array('alias' => 'Idiomas'));
+        $this->hasMany('nivel_id', 'Curriculum\Informatica', 'informatica_nivelId', array('alias' => 'Informatica'));
     }
 
     /**

@@ -21,7 +21,7 @@ class Tipodocumento extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('tipodocumento_id', 'Persona', 'persona_tipoDocumentoId', array('alias' => 'Persona'));
+        $this->hasMany('tipodocumento_id', 'Curriculum\Persona', 'persona_tipoDocumentoId', array('alias' => 'Persona'));
     }
 
     /**

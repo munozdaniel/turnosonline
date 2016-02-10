@@ -96,7 +96,7 @@ class Dependencia extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('dependencia_id', 'Puesto', 'puesto_dependenciaId', array('alias' => 'Puesto'));
+        $this->hasMany('dependencia_id', 'Curriculum\Puesto', 'puesto_dependenciaId', array('alias' => 'Puesto'));
     }
 
     /**

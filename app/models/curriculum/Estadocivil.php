@@ -21,7 +21,7 @@ class Estadocivil extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('estadoCivil_id', 'Persona', 'persona_estadoCivilId', array('alias' => 'Persona'));
+        $this->hasMany('estadoCivil_id', 'Curriculum\Persona', 'persona_estadoCivilId', array('alias' => 'Persona'));
     }
 
     /**

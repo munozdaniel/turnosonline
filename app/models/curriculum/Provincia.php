@@ -38,7 +38,7 @@ class Provincia extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('provincia_id', 'Ciudad', 'ciudad_provinciaId', array('alias' => 'Ciudad'));
+        $this->hasMany('provincia_id', 'Curriculum\Ciudad', 'ciudad_provinciaId', array('alias' => 'Ciudad'));
     }
 
     /**

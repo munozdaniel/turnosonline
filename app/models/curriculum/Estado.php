@@ -67,7 +67,7 @@ class Estado extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('estado_id', 'Formacion', 'formacion_estadoId', array('alias' => 'Formacion'));
+        $this->hasMany('estado_id', 'Curriculum\Formacion', 'formacion_estadoId', array('alias' => 'Formacion'));
     }
 
     /**
