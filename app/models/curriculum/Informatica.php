@@ -154,8 +154,8 @@ class Informatica extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo('informatica_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
-        $this->belongsTo('informatica_nivelId', 'Nivel', 'nivel_id', array('alias' => 'Nivel'));
+        $this->belongsTo('informatica_curriculumId', 'Curriculum\Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
+        $this->belongsTo('informatica_nivelId', 'Curriculum\Nivel', 'nivel_id', array('alias' => 'Nivel'));
     }
 
     /**

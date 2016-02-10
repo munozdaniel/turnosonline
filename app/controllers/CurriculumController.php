@@ -373,6 +373,9 @@ class CurriculumController extends ControllerBase
         $this->view->arregloLocalidad = $arregloLocalidad;
         $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($persona->getPersonaCurriculumid());
         $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->idiomas = Curriculum\Idiomas::findByIdiomas_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->informatica = Curriculum\Informatica::findByInformatica_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->empleo = Curriculum\Empleo::findByEmpleo_curriculumId($persona->getPersonaCurriculumid());
 
     }
 }

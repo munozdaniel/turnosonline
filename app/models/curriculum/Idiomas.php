@@ -156,8 +156,8 @@ class Idiomas extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo('idiomas_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
-        $this->belongsTo('idiomas_nivelId', 'Nivel', 'nivel_id', array('alias' => 'Nivel'));
+        $this->belongsTo('idiomas_curriculumId', 'Curriculum\Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
+        $this->belongsTo('idiomas_nivelId', 'Curriculum\Nivel', 'nivel_id', array('alias' => 'Nivel'));
     }
 
     /**
