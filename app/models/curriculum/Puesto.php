@@ -18,12 +18,6 @@ class Puesto extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
-     */
-    protected $puesto_otro;
-
-    /**
-     *
      * @var integer
      */
     protected $puesto_dependenciaId;
@@ -56,19 +50,6 @@ class Puesto extends \Phalcon\Mvc\Model
     public function setPuestoNombre($puesto_nombre)
     {
         $this->puesto_nombre = $puesto_nombre;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field puesto_otro
-     *
-     * @param string $puesto_otro
-     * @return $this
-     */
-    public function setPuestoOtro($puesto_otro)
-    {
-        $this->puesto_otro = $puesto_otro;
 
         return $this;
     }
@@ -117,16 +98,6 @@ class Puesto extends \Phalcon\Mvc\Model
     public function getPuestoNombre()
     {
         return $this->puesto_nombre;
-    }
-
-    /**
-     * Returns the value of field puesto_otro
-     *
-     * @return string
-     */
-    public function getPuestoOtro()
-    {
-        return $this->puesto_otro;
     }
 
     /**

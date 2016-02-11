@@ -52,7 +52,7 @@ class InformacionForm extends Form {
 
         $this->add($elemento);
         /*========================== ==========================*/
-        $elemento = new Select('empleo_carnet',  array('SI','NO'), array(
+        $elemento = new Select('empleo_carnet',  array('NO','SI'), array(
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar ',
             'emptyValue' => '',
@@ -94,7 +94,7 @@ class InformacionForm extends Form {
         $elemento->setLabel('<strong class="font-rojo "> * </strong>Puesto');
         $this->add($elemento);
         /*==========================  ==========================*/
-        $elemento = new Text('puesto_otro',array('class'=>'form-control','placeholder'=>'Especifique el Puesto'));
+        $elemento = new Text('empleo_puestoOtro',array('class'=>'form-control','placeholder'=>'Especifique el Puesto'));
         $elemento->setLabel('Otro Puesto');
         $elemento->setFilters(array('striptags', 'string'));
 

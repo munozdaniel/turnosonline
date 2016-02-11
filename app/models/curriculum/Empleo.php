@@ -39,6 +39,11 @@ class Empleo extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $empleo_puestoId;
+    /**
+     *
+     * @var integer
+     */
+    protected $empleo_puestoOtro;
 
     /**
      *
@@ -123,6 +128,18 @@ class Empleo extends \Phalcon\Mvc\Model
 
         return $this;
     }
+    /**
+     * Method to set the value of field empleo_puestoOtro
+     *
+     * @param integer $empleo_puestoOtro
+     * @return $this
+     */
+    public function setEmpleoPuestootro($empleo_puestoOtro)
+    {
+        $this->empleo_puestoOtro = $empleo_puestoOtro;
+
+        return $this;
+    }
 
     /**
      * Method to set the value of field empleo_habilitado
@@ -196,7 +213,15 @@ class Empleo extends \Phalcon\Mvc\Model
     {
         return $this->empleo_puestoId;
     }
-
+    /**
+     * Returns the value of field empleo_puestoOtro
+     *
+     * @return integer
+     */
+    public function getEmpleoPuestootro()
+    {
+        return $this->empleo_puestoOtro;
+    }
     /**
      * Returns the value of field empleo_habilitado
      *
