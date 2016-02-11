@@ -30,8 +30,8 @@
                     </div>
                     <!-- BEGAIN CALL US FEATURE -->
                     <div class="col-lg-3 col-md-3 col-sm-6">
-                        {{ link_to('administrar/index','<div class="single_contact_feaured wow fadeInUp"><i class="fa fa-pied-piper-alt"></i><h4>Sector Interno</h4>
-                            <p>Acceso restringido.</p></div>') }}
+                        {{ link_to('curriculum/login','<div class="single_contact_feaured wow fadeInUp"><i class="fa fa-black-tie"></i><h4>Buscas Trabajo?</h4>
+                            <p>Envianos tu Curriculum.</p></div>') }}
                     </div>
                 </div>
             </div>

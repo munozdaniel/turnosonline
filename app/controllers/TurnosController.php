@@ -534,9 +534,7 @@ class TurnosController extends ControllerBase
                         $this->response->setJsonContent(array("res" => "success"));
                         $this->response->setStatusCode(200, "OK");
                     } else {
-                        $this->response->setJsonContent(array("res" => "error"));
-                        $this->response->setStatusCode(500, "OPS! HAY UN PROBLEMA, POR FAVOR VERIFIQUE QUE TODOS LOS CAMPOS SEAN INGRESADOS.");
-                    }
+                        }
                 } else {
                     $this->response->setJsonContent(array("res" => "warning"));
                     $this->response->setStatusCode(500, "Ocurrio un error, no se pudieron guardar los datos. Comunicarse con Soporte Tecnico.");
@@ -788,6 +786,8 @@ class TurnosController extends ControllerBase
 
     public function listadoEnPdfAction()
     {
+        ini_set('max_execution_time', 300); //300 seconds = 5 minutes // si funciona pero la pagina anterior se corrompe
+
         $listado = Solicitudturno::accionVerSolicitudesConRespuestaEnviada();
         $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
         $fechaInicio = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
@@ -837,12 +837,18 @@ class TurnosController extends ControllerBase
                 $unPeriodo->fechasTurnos_cantidadDeTurnos = $this->request->getPost('cantidadTurnos');
                 $unPeriodo->fechasTurnos_cantidadDiasConfirmacion = $this->request->getPost('cantidadDias');
                 $unPeriodo->fechasTurnos_activo = 1;
-                if ($unPeriodo->save()) {
-                    $this->flash->message('exito', "Los datos se guardaron correctamente!");
-                    return $this->dispatcher->forward(array("action" => "verPeriodos"));
+                if ($unPeriodo->update()) {
+                    $schedule = $this->getDi()->get('schedule');
+                    $puntoProgramado = $schedule->getByType('plazo')->getLast();
+                    $puntoProgramado->setStart($this->request->getPost('periodoSolicitudDesde'));
+                    $puntoProgramado->setEnd($this->request->getPost('periodoSolicitudHasta'));
+                    if ($puntoProgramado->update())
+                        $this->flash->message('exito', "Los datos se guardaron correctamente!");
+
+                    return $this->redireccionar('turnos/verPeriodos');
                 } else {
                     $this->flash->message('problema', "Ocurrio un error, no se pudieron guardar los datos.");
-                    return $this->dispatcher->forward(array("action" => "verPeriodos"));
+                    return $this->redireccionar('turnos/verPeriodos');
                 }
             }
         }

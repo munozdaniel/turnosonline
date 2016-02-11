@@ -227,10 +227,11 @@
                                         <th class="tg-b7pm">Interno</th>
                                     </tr>
                                     <tr>
-                                        <td class="tg-4su2">Liquidación de Haberes</td>
+                                        <td class="tg-4su2">División Sueldos</td>
                                         <td class="tg-fmhh">fmansegosa@imps.org.ar</td>
                                         <td class="tg-emon">24</td>
                                     </tr>
+
                                     <tr>
                                         <td class="tg-4su2" rowspan="2"></td>
                                         <td class="tg-fmhh">lsagaseta@imps.org.ar</td>
@@ -241,16 +242,21 @@
                                         <td class="tg-emon">40</td>
                                     </tr>
                                     <tr>
+                                        <td class="tg-4su2"></td>
+                                        <td class="tg-fmhh">ajorge@imps.org.ar</td>
+                                        <td class="tg-emon">43</td>
+                                    </tr>
+                                    <tr>
                                         <td class="tg-la71" rowspan="5">Recursos Humanos<br>rrhh@imps.org.ar</td>
                                         <td class="tg-4cxe">phuenohueque@imps.org.ar</td>
                                         <td class="tg-y5bo">28</td>
                                     </tr>
                                     <tr>
-                                        <td class="tg-4cxe">cmoron@imps.org.ar</td>
+                                        <td class="tg-4cxe">shinojosa@imps.org.ar</td>
                                         <td class="tg-y5bo">44</td>
                                     </tr>
                                     <tr>
-                                        <td class="tg-4cxe" rowspan="3">shinojosa@imps.org.ar</td>
+                                        <td class="tg-4cxe" rowspan="3">rvillagra@imps.org.ar </td>
                                         <td class="tg-y5bo" rowspan="3">41</td>
                                     </tr>
                                     <tr>

@@ -6,6 +6,7 @@ $loader = new \Phalcon\Loader();
 $loader->registerNamespaces(
     array(
         "Modules"    => "../app/vendor/schedule/",
+        "Curriculum"    => "../app/models/curriculum/",
     )
 );
 /**
@@ -18,6 +19,7 @@ $loader->registerDirs(
         $config->application->libraryDir,
         $config->application->mpdfDir,
         $config->application->componentesDir,
+        $config->application->curriculumDir,
         $config->application->phpmailerDir,
         $config->application->utilesDir,
         $config->application->pluginsDir,

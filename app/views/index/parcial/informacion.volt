@@ -13,7 +13,7 @@
                     <!-- START ABOUT CONTENT -->
                     <div class="about_content">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="about_featured">
                                     <div class="panel-group" id="accordion">
                                         <!-- START SINGLE FEATURED ITEAM #1-->
@@ -77,7 +77,7 @@
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion"
                                                        href="#collapseThree">
-                                                        <span class="fa fa-check-square-o"></span>Depto. Turismo IMPS
+                                                        <span class="fa fa-check-square-o"></span> Departamento de Turismo IMPS
                                                     </a>
                                                 </h4>
                                             </div>
@@ -117,7 +117,7 @@
                                                 <h4 class="panel-title">
                                                     <a
                                                             href="http://imps.org.ar/farmacia/" target="_blank">
-                                                        <span class="fa fa-external-link "></span>Farmacia IMPS <small>(Pagina Oficial)</small>
+                                                        <span class="fa fa-external-link "></span> <strong> VISITAR Farmacia IMPS <small>(Pagina Web Oficial)</small></strong>
                                                     </a>
                                                 </h4>
                                             </div>
@@ -129,9 +129,39 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="about_slider">
-                                    <div class="ribbon">
-                                        <h3>NOVEDADES</h3>
+                                    <div align="center" style="color: #FFF;background-color: #2DA2C8;">
+                                        <h1>NOVEDADES</h1>
                                     </div>
+
+                                    <!-- BEGAIN FEATURED SLIDER -->
+                                    <div class="featured_slider">
+                                        <!-- PROMO FARMACIA OESTE 1 -->
+                                        <div class="single_iteam" style="padding-left: 15px; padding-right: 5px; border-style: solid !important;">
+                                            <h3><strong><em>ATENCIÓN JUBILADOS Y PENSIONADOS</em> <br> </strong></h3>
+                                            <h4><strong>Información Impuesto a las Ganancias Periodo Fiscal 2015</strong></h4>
+                                            <h3 align="center"><i class="fa fa-users"></i></h3>
+                                            <p>El IMPS les informa que el plazo para informar deducciones para la liquidación del impuesto a las ganancias del periodo fiscal 2015 es hasta el 31/01/2016 (Sin Excepción, dispuesto por RG Nº 3418/12). </p>
+                                            <p>Solicitamos a quienes deban cargar las novedades para la DDJJ, tengan en cuenta dicha información.</p>
+                                            <p>Cualquier duda, dirigirse a Fotheringham Nº 107 2º piso o vía mail<strong style="color: #286090"> consultasganancias@imps.org.ar</strong></p>
+                                          <h4>{{ link_to('public/files/novedad/afiliados.pdf','<i class="fa fa-search-plus"></i> ZOOM EN PDF','target':'_blank','class':'pull-right') }}<br></h4>
+
+                                        </div>
+
+                                        <!-- EMPRENDIMIENTO -->
+                                        <div class="">
+                                            {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/novedades/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
+                                        </div>
+
+                                    </div>
+                                    <!-- END FEATURED SLIDER -->
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="about_slider">
+                                    <div align="center" style="color: #FFF;background-color: #4CAF50;">
+                                        <h1>PROMOCIONES</h1>
+                                    </div>
+
                                     <!-- BEGAIN FEATURED SLIDER -->
                                     <div class="featured_slider">
                                         <!-- PROMO FARMACIA OESTE 1 -->
@@ -152,20 +182,6 @@
                                                 {{  image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1')  }}
                                             </a>
                                         </div>
-
-                                        <!-- EMPRENDIMIENTO -->
-                                        <div class="single_iteam">
-                                            {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/novedades/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
-                                        </div>
-
-                                        <!-- FECHAS TURNOS -->
-                                        <div class="single_iteam">
-                                            <a href="#novedades-fechaTurnos" data-toggle="modal">
-                                                {{ image('img/novedades/feature_img3.jpg','alt':'Fecha Turnos Online') }}
-                                            </a>
-                                        </div>
-
-
                                     </div>
                                     <!-- END FEATURED SLIDER -->
                                 </div>

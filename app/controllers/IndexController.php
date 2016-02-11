@@ -20,7 +20,16 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
-        $this->assets->collection('footer')->addJs('js/menu.js');
+        $this->assets->collection('headerCss')
+            ->addCss('css/slick.css');
+        $this->assets->collection('footer')
+            ->addJs('js/menu.js')
+            ->addJs('js/jquery.superslides.min.js')
+            ->addJs('js/slick.min.js')
+            ->addJs('js/jquery.ui.map.js')
+            ->addJs('https://maps.googleapis.com/maps/api/js',false)
+            ->addJs('js/customIndex.js')
+            ->addJs('js/redireccionarSeccion.js');
         /*  $this->assets->collection('footerInline')
                ->addInlineJs("if(self.location=='http://192.168.42.149/impsweb/'){var timeoutId = setTimeout(\"self.location='#about'\",15000);}");
         */
@@ -53,7 +62,7 @@ class IndexController extends ControllerBase
             }
             //Si el periodo se encuentra
             if ($puntoProgramado->isActive()) {
-                $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online</h3>', "class" => "")) .
+                $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "")) .
                     '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                                 o llamarnos al (0299) 4479921</p>';
 
@@ -115,7 +124,7 @@ class IndexController extends ControllerBase
             $this->mail->Host = 'mail.imps.org.ar';
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'consultas@imps.org.ar';
-            $this->mail->Password = 'consu';
+            $this->mail->Password = 'consul';
             $this->mail->SMTPSecure = '';
             $this->mail->Port = 26;
 

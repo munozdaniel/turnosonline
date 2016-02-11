@@ -42,6 +42,7 @@ return new \Phalcon\Config(array(
         'viewsDir'       => APP_PATH . '/app/views/',
         'pluginsDir'     => APP_PATH . '/app/plugins/',
         'formsDir'       => APP_PATH . '/app/forms/',
+        'curriculumDir'       => APP_PATH . '/app/forms/curriculum/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'mpdfDir'        => APP_PATH . '/app/library/mpdf/',
         'vendorDir'        => APP_PATH . '/app/vendor/',
