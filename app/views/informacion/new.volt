@@ -159,13 +159,15 @@
     </script>
     {#====================================================================================#}
     <hr>
-    {{ form("empleo/create", "method":"post", 'class':'curriculum-bg-form borde-top') }}
+    <div class=" curriculum-bg-form borde-top">
 
-     <div class=" col-md-2 pull-right text-info">
+    <div class=" col-md-2 pull-right text-info">
          {{ link_to('files/curriculum/puestos.pdf','<i class="fa fa-file-pdf-o"></i> VER ESTRUCTURA EN PDF','target':'_blank') }}
 
      </div>
     <div class="row form-group">
+        <div id="empleo_mensaje" class="col-md-8 col-md-offset-2  ">
+        </div>
         <div class="col-sm-12 col-md-2 col-md-offset-2">
             {{ informacionForm.label('dependencia_id' ) }}
         </div>
@@ -188,10 +190,10 @@
 
     <div id="puesto_otro" class="row form-group ocultar">
         <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('puesto_otro' ) }}
+            {{ informacionForm.label('empleo_puestoOtro' ) }}
         </div>
         <div class="col-sm-4">
-            {{ informacionForm.render('puesto_otro') }}
+            {{ informacionForm.render('empleo_puestoOtro') }}
         </div>
     </div>
 
@@ -221,32 +223,75 @@
         <div class="col-sm-4">
             {{ informacionForm.render('empleo_carnet') }}
         </div>
-        <div class="col-sm-2">
-            {{ submit_button("Añadir",'class':'btn btn-block btn-info') }}
+        <div class="col-sm-12"><hr>
+            <a class="btn  btn-info" onclick="agregarEmpleo()"><i class="fa fa-plus"></i> Guardar Datos Adicionales</a>
         </div>
     </div>
-    {{ end_form() }}
-
+    </div>
 </div>
-
+<script>
+    function agregarEmpleo (event) {
+        var formData = {
+            'dependencia_id'            : document.getElementById('dependencia_id').value,
+            'puesto_id'                 : document.getElementById('puesto_id').value,
+            'puesto_otro'               : document.getElementById('empleo_puestoOtro').value,
+            'sectorInteres_id'          : document.getElementById('sectorInteres_id').value,
+            'empleo_disponibilidad'     : document.getElementById('empleo_disponibilidad').value,
+            'empleo_carnet'             : document.getElementById('empleo_carnet').value,
+            'curriculum_id'             : document.getElementById('curriculum_id').value
+        };
+        $.ajax({
+            data: formData,
+            method: "POST",
+            url: '/impsweb/empleo/agregar',
+            success: function (response) {
+                console.log(response);//Co0mentar cuando funcione
+                //alert(response);//Sirve cuando no podemos ver el error.
+                parsed = $.parseJSON(response);
+                var mensaje = $('#empleo_mensaje');
+                if(!parsed.success){
+                    mensaje.empty();
+                    for(var datos in parsed.mensaje)//Arma los mensajes con errores
+                    {
+                        mensaje.append('<div class="idioma problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
+                    }
+                }
+                else
+                {
+                    mensaje.empty();
+                    mensaje.append('<div class="idioma exito font-blanco"> Los Datos se han guardado correctamente</div>'); // add the actual error message under our input
+                }
+            },
+            error: function (error) {
+                alert("ERROR : "+error.statusText) ;
+                console.log(error);
+            }
+        });
+    };
+</script>
+{#====================================================================================#}
 
 <script type="text/javascript">
     document.getElementById('dependencia_id').onchange = function () {
         if (document.getElementById('dependencia_id').value == 1) {//ADMINISTRACION CENTRAL (Mostrar SectorInteres_id)
             $('#sectorInteres').show();
+            $('#puesto_otro').hide();
+            document.getElementById("empleo_puestoOtro").value="";
             document.getElementById("sectorInteres_id").required = true;
         } else {
             $('#sectorInteres').hide();
+            document.getElementById("sectorInteres_id").value="";
             document.getElementById("sectorInteres_id").required = false;
         }
     };
     document.getElementById('puesto_id').onchange = function () {
         if (document.getElementById('puesto_id').value == 21) {//Otro (Mostrar otro puesto)
             $('#puesto_otro').show();
-            document.getElementById("puesto_otro").required = true;
+            document.getElementById("empleo_puestoOtro").required = true;
         } else {
             $('#puesto_otro').hide();
-            document.getElementById("puesto_otro").required = false;
+            document.getElementById("empleo_puestoOtro").value="";
+            document.getElementById("empleo_puestoOtro").required = false;
         }
     };
 </script>

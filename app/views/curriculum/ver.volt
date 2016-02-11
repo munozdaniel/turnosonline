@@ -23,7 +23,7 @@
             <div class="row">
                 <h3 class="subtitle-curriculum">DATOS PERSONALES</h3>
                 <dl class="dl-horizontal boxed">
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="padding-left: 200px;">
                         <dt>Nombre Completo</dt>
                         <dd>{{ persona.getPersonaApellido() ~ persona.getPersonaNombre() }} </dd>
                         <dt>Fecha de Nacimiento</dt>
@@ -226,7 +226,7 @@
 
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <h3 class="subtitle-curriculum">CONOCIMIENTOS INFORMÁTICOS</h3>
+                    <h3 class="subtitle-curriculum">APTITUDES/CURSOS </h3>
                     {% if informatica is defined %}
                         {% for info in informatica %}
                             <div class="col-md-6">
