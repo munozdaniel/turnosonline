@@ -190,11 +190,16 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo.
         $solicitudesOnline= array();
 
-        if(!empty($fechaTurnos)){
+        if(!empty($fechaTurnos))
+        {
             $ffI = $fechaTurnos->fechasTurnos_inicioSolicitud;
             $ffF =$fechaTurnos->fechasTurnos_finSolicitud;
 
-            $solicitudes = Solicitudturno::findBySolicitudTurnos_fechasTurnos($fechaTurnos->fechasTurnos_id);
+            $solicitudes = Solicitudturno::find(array(
+                "solicitudTurnos_fechasTurnos = {$fechaTurnos->fechasTurnos_id}",
+                "order" => "solicitudTurno_numero DESC")); // 11/02/2016 M.
+
+            //$solicitudes = Solicitudturno::findBySolicitudTurnos_fechasTurnos($fechaTurnos->fechasTurnos_id);
 
             foreach($solicitudes as $unaSolicitud)
             {
@@ -357,16 +362,23 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         $solicitudAnterior = $this->getModelsManager()->executeQuery($query);
         return $solicitudAnterior[0]->solicitudTurno_numero;
     }
-    public static function recuperaSolicitudesSegunEstado($estado)
+
+    /*
+    ESTA FUNCION RECUPERA LAS SOLICITUDES QUE RESPONDEN AL ESTADO y USUARIO PASADOS POR PARAMETRO,
+    ADEMAS QUE NO SEAN SOLITUDES MANUALES, QUE EL CAMPO RESPUESTA ENVIADA ESTE EN 'NO' */
+
+    public static function recuperaSolicitudesSegunEstado($estado,$usuario)
     {
         $lista = array();
         $fechaTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo .
-        if(!empty($fechaTurnos)){
+
+        if(!empty($fechaTurnos))
+        {
             $fechaIniSol = $fechaTurnos->fechasTurnos_inicioSolicitud;
             $fechaFinSol = $fechaTurnos->fechasTurnos_finSolicitud;
 
-            $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2 AND solicitudTurno_manual=?3";
-            $parametros = array(1=>$estado,2=>'NO',3=>0);
+            $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2 AND solicitudTurno_manual=?3 AND solicitudTurno_nickUsuario=?4";
+            $parametros = array(1=>$estado,2=>'NO',3=>0,4=>$usuario);
             $solicitudes = Solicitudturno::find(array($condiciones,"bind"=>$parametros));
 
             foreach($solicitudes as $unaSolicitud)
@@ -390,5 +402,4 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         $laSolicitud->solicitudTurno_fechaRespuestaEnviada= date('Y-m-d');
         $laSolicitud->save();
     }
-
 }
