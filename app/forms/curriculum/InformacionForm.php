@@ -21,10 +21,15 @@ class InformacionForm extends Form {
     {
 
         /*========================== CONOCIMIENTOS ==========================*/
-        $persona_nombre = new Text('conocimientos_nombre',array('class'=>'form-control','required'=>'true','placeholder'=>'Cursos/Aptitudes'));
-        $persona_nombre->setLabel('Aptitudes');
-        $persona_nombre->setFilters(array('striptags', 'string'));
-        $this->add($persona_nombre);
+        $elemento = new Text('conocimientos_nombre',array('class'=>'form-control','required'=>'true','placeholder'=>'Cursos/Aptitudes'));
+        $elemento->setLabel('Aptitudes');
+        $elemento->setFilters(array('striptags', 'string'));
+        $elemento->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Ingrese una Aptitud/Curso'
+            ))
+        ));
+        $this->add($elemento);
         /*========================== ==========================*/
         $elemento = new Select('conocimientos_nivelId', \Curriculum\Nivel::find(), array(
             'using'      => array('nivel_id', 'nivel_nombre'),
@@ -33,7 +38,11 @@ class InformacionForm extends Form {
             'emptyValue' => '',
             'class'      => 'form-control','required'=>'true'
         ));
-
+        $elemento->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Ingrese el Nivel de la Aptitud/Curso'
+            ))
+        ));
         $elemento->setLabel('Nivel');
         $this->add($elemento);
         /*========================== ADICIONAL ==========================*/

@@ -44,7 +44,7 @@
             <fieldset class="">
                 <legend class="legendStyle ">
                     <a data-toggle="collapse" data-target="#idiomas"  class="btn btn-gris" onclick="cargarIdiomas()"><i class="fa fa-pencil"></i> Ver idiomas</a>
-                    <a class="btn  btn-info" onclick="agregarIdioma()"><i class="fa fa-plus"></i> Agregar idioma</a>
+                    <a class="btn  btn-info" onclick="agregarIdioma()"><i class="fa fa-plus"></i> Guardar idioma</a>
                 </legend>
                 <div class="row collapse " id="idiomas">
                         hola
@@ -73,7 +73,6 @@
                     var idiomas = $('.idioma');
                     if(!parsed.success){
                         $('#idiomas_mensaje').empty();
-                        var mensaje = "";
                         for(var datos in parsed.errors)//Arma los mensajes con errores
                         {
                             selectorIdioma.append('<div class="idioma problema font-blanco">' + parsed.errors[datos] + '</div>'); // add the actual error message under our input
@@ -95,29 +94,70 @@
         };
     </script>
     <hr>
-    {{ form("conocimientos/create", "method":"post", 'class':'curriculum-bg-form borde-top') }}
-
+    <div class=" curriculum-bg-form borde-top">
     <div class="row form-group">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
+        <div id="conocimientos_mensaje" class="col-md-8 col-md-offset-2  ">
+        </div>
+        <div class="col-sm-8 col-md-2 col-md-offset-2">
             {{ informacionForm.label('conocimientos_nombre' ) }}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-8 col-md-4">
             {{ informacionForm.render('conocimientos_nombre') }}
             <small> Paquete Office, internet, email, etc.</small>
         </div>
     </div>
     <div class="row form-group">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
+        <div class="col-sm-8 col-md-2 col-md-offset-2">
             {{ informacionForm.label('conocimientos_nivelId' ) }}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-8 col-md-4">
             {{ informacionForm.render('conocimientos_nivelId') }}
         </div>
-        <div class="col-sm-2">
-            {{ submit_button("Añadir",'class':'btn btn-block btn-info') }}
+        <div class="col-sm-12"><hr>
+            <a data-toggle="collapse" data-target="#conocimientos"  class="btn btn-gris" onclick="cargarConocimientos()"><i class="fa fa-pencil"></i> Ver idiomas</a>
+            <a class="btn  btn-info" onclick="agregarConocimiento()"><i class="fa fa-plus"></i> Guardar Conocimiento</a>
         </div>
     </div>
-    {{ end_form() }}
+    </div>
+    <script>
+        function agregarConocimiento (event) {
+            var formData = {
+                'conocimientos_nombre'    : document.getElementById('conocimientos_nombre').value,
+                'conocimientos_nivelId'   : document.getElementById('conocimientos_nivelId').value,
+                'curriculum_id'   : document.getElementById('curriculum_id').value
+            };
+            $.ajax({
+                data: formData,
+                method: "POST",
+                url: '/impsweb/conocimientos/agregar',
+                success: function (response) {
+                    console.log(response);//Co0mentar cuando funcione
+                    //alert(response);//Sirve cuando no podemos ver el error.
+                    parsed = $.parseJSON(response);
+                    var mensaje = $('#conocimientos_mensaje');
+                    if(!parsed.success){
+                        mensaje.empty();
+                        for(var datos in parsed.mensaje)//Arma los mensajes con errores
+                        {
+                            mensaje.append('<div class="idioma problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
+                        }
+                    }
+                    else
+                    {
+                        mensaje.empty();
+                        mensaje.append('<div class="idioma exito font-blanco"> La Aptitud/Curso se ha guardado correctamente</div>'); // add the actual error message under our input
+                        document.getElementById('conocimientos_nombre').value='';//Vacia los inputs una vez guardado
+                        document.getElementById('conocimientos_nivelId').value='';
+                    }
+                },
+                error: function (error) {
+                    alert("ERROR : "+error.statusText) ;
+                    console.log(error);
+                }
+            });
+        };
+    </script>
+    {#====================================================================================#}
     <hr>
     {{ form("empleo/create", "method":"post", 'class':'curriculum-bg-form borde-top') }}
 
