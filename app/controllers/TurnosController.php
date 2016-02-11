@@ -629,13 +629,14 @@ class TurnosController extends ControllerBase
     }
 
     /**
-     * Envia el correo segun el estado en el que se encuentra serà el mensaje enviado.
+     * Envia el correo segun el estado en el que se encuentra sera el mensaje enviado.
      */
     public function enviarRespuestasAction()
     {
-        $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO');
-        $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO');
-        $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('denegado por falta de turnos');
+        $usuarioActual = $this->session->get('auth')['usuario_nick'];
+        $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO',$usuarioActual);
+        $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO',$usuarioActual);
+        $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO POR FALTA DE TURNOS',$usuarioActual);
 
         if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0) {
             $this->flash->message('',"<div><h3>No se pueden enviar respuestas,<br> ya que solo hay solicitudes pendientes o en revisión.</h3></div>");
