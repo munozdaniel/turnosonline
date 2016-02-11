@@ -3,14 +3,8 @@
     {# <meta http-equiv="refresh" content="35"> #}
 
     <style>
-        a {
-            color: #2da2c8
-        }
-
-        .heading h2 {
-            font-size: 30px;
-            line-height: 35px;
-        }
+        a {color: #2da2c8}
+        .heading h2 {font-size: 30px;line-height: 35px;}
     </style>
 
     <div class="container">
@@ -58,8 +52,6 @@
                 </div>
             </div>
         </div>
-
-        {{ form('turnos/enviarRespuestas') }}
 
         <div class="row edicion">
             <div class="col-md-12">
@@ -143,15 +135,16 @@
             </div>
         </div>
 
-        <br/><br/>
+        {{ form('turnos/enviarRespuestas') }}
 
-        <div class="row">
-            <div class="col-lg-6 col-lg-offset-3">
-                {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block') }}
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block') }}
+                </div>
             </div>
-        </div>
 
         {{ end_form() }}
+
     </div>
 
     <!-- ====================================== -->
