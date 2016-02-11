@@ -504,11 +504,11 @@ class Persona extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo('persona_tipoDocumentoId', 'Tipodocumento', 'tipodocumento_id', array('alias' => 'Tipodocumento'));
-        $this->belongsTo('persona_nacionalidadId', 'Nacionalidad', 'nacionalidad_id', array('alias' => 'Nacionalidad'));
-        $this->belongsTo('persona_localidadId', 'Localidad', 'localidad_id', array('alias' => 'Localidad'));
-        $this->belongsTo('persona_estadoCivilId', 'Estadocivil', 'estadoCivil_id', array('alias' => 'Estadocivil'));
-        $this->belongsTo('persona_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
+        $this->belongsTo('persona_tipoDocumentoId', 'Curriculum\Tipodocumento', 'tipodocumento_id', array('alias' => 'Tipodocumento'));
+        $this->belongsTo('persona_nacionalidadId', 'Curriculum\Nacionalidad', 'nacionalidad_id', array('alias' => 'Nacionalidad'));
+        $this->belongsTo('persona_localidadId', 'Curriculum\Localidad', 'localidad_id', array('alias' => 'Localidad'));
+        $this->belongsTo('persona_estadoCivilId', 'Curriculum\Estadocivil', 'estadoCivil_id', array('alias' => 'Estadocivil'));
+        $this->belongsTo('persona_curriculumId', 'Curriculum\Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
     }
 
     /**

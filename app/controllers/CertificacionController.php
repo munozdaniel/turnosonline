@@ -45,6 +45,7 @@ class CertificacionController extends ControllerBase
                     if ($beneficio)
                         $tipoBeneficio = Tipobeneficio::findFirstByTipobeneficio_id($beneficio->datosbeneficio_tipoBeneficio);
                 }
+                ini_set('max_execution_time', 300); //300 seconds = 5 minutes // si funciona pero la pagina anterior se corrompe
 
                 //GENERAR PDF
                 $this->view->disable();

@@ -21,7 +21,7 @@ class Nacionalidad extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('nacionalidad_id', 'Persona', 'persona_nacionalidadId', array('alias' => 'Persona'));
+        $this->hasMany('nacionalidad_id', 'Curriculum\Persona', 'persona_nacionalidadId', array('alias' => 'Persona'));
     }
 
     /**

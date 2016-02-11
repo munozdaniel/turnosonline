@@ -68,8 +68,8 @@ class Localidad extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('localidad_id', 'Persona', 'persona_localidadId', array('alias' => 'Persona'));
-        $this->belongsTo('localidad_ciudadId', 'Ciudad', 'ciudad_id', array('alias' => 'Ciudad'));
+        $this->hasMany('localidad_id', 'Curriculum\Persona', 'persona_localidadId', array('alias' => 'Persona'));
+        $this->belongsTo('localidad_ciudadId', 'Curriculum\Ciudad', 'ciudad_id', array('alias' => 'Ciudad'));
     }
 
     /**

@@ -328,8 +328,8 @@ class Experiencia extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo('experiencia_provinciaId', 'Provincia', 'provincia_id', array('alias' => 'Provincia'));
-        $this->belongsTo('experiencia_curriculumId', 'Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
+        $this->belongsTo('experiencia_provinciaId', 'Curriculum\Provincia', 'provincia_id', array('alias' => 'Provincia'));
+        $this->belongsTo('experiencia_curriculumId', 'Curriculum\Curriculum', 'curriculum_id', array('alias' => 'Curriculum'));
     }
 
     /**

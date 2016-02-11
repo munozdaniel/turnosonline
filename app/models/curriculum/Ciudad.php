@@ -57,8 +57,8 @@ class Ciudad extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('ciudad_id', 'Localidad', 'localidad_ciudadId', array('alias' => 'Localidad'));
-        $this->belongsTo('ciudad_provinciaId', 'Provincia', 'provincia_id', array('alias' => 'Provincia'));
+        $this->hasMany('ciudad_id', 'Curriculum\Localidad', 'localidad_ciudadId', array('alias' => 'Localidad'));
+        $this->belongsTo('ciudad_provinciaId', 'Curriculum\Provincia', 'provincia_id', array('alias' => 'Provincia'));
     }
 
     /**

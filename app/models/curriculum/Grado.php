@@ -67,7 +67,7 @@ class Grado extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('grado_id', 'Formacion', 'formacion_gradoId', array('alias' => 'Formacion'));
+        $this->hasMany('grado_id', 'Curriculum\Formacion', 'formacion_gradoId', array('alias' => 'Formacion'));
     }
 
     /**

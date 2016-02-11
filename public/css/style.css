@@ -3177,3 +3177,19 @@ textarea .form-control {
 .has-error{
      border-color: red !important;
 }
+.dl-horizontal dd{
+    text-align: left;
+}
+.subtitle-curriculum{
+    text-align: left;
+    margin-left: 15px;
+    text-decoration: underline;
+    margin-bottom: 20px;
+}
+.division-curriculum li {
+    border-color: #dddddd #dddddd #dddddd #1b5a8f;
+    border-style: solid;
+    border-width: 0px 5px 0px 5px;
+    padding: 10px;
+
+}
