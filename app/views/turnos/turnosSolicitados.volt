@@ -125,8 +125,8 @@
                                 {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn') }}
                                 {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn') }}
-
-                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
+                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                P&aacute;gina {{ page.current }} de {{ page.total_pages }}
                             </div>
                         </td>
                     </tr>
@@ -135,15 +135,11 @@
             </div>
         </div>
 
-        {{ form('turnos/enviarRespuestas') }}
-
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block') }}
-                </div>
-            </div>
-
-        {{ end_form() }}
+        <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
+            {{ form('turnos/enviarRespuestas') }}
+                    {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block','style':'width:320px;') }}
+            {{ end_form() }}
+        </div>
 
     </div>
 
