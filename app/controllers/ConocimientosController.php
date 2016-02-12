@@ -174,7 +174,34 @@ class ConocimientosController extends ControllerBase
         $this->response->send();
 
     }
+    /**
+     * Busca todos los conocimientos correspondientes  a un curriculum
+     */
+    public function buscarConocimientosPorCurriculumAction(){
+        $this->view->disable();
 
+        if($this->request->isPost()) {
+            $conocimientos = \Curriculum\Conocimientos::find();//ByConocimientos_curriculumId($this->request->getPost('curriculum_id'));
+            if(count($conocimientos)==0){
+                $data['success'] = false;
+                $data['mensaje'] = array("No hay Aptitudes/Cursos cargados.");
+            }else{
+                $data['success'] = true;
+                $data['mensaje'] = array("Operación Correcta");
+                $arregloConocimientos = array();
+                foreach($conocimientos as $unConocimiento){
+                    $aptitud = array();
+                    $aptitud['nombre']=$unConocimiento->getConocimientosNombre();
+                    $aptitud['nivel']=$unConocimiento->getNivel()->getNivelNombre();
+                    $aptitud['conocimiento_id']=$unConocimiento->getConocimientosId();
+                    $arregloConocimientos[]=$aptitud;
+                }
+                $data['conocimientos'] = $arregloConocimientos;
+            }
+            $this->response->setJsonContent($data);
+            $this->response->send();
+        }
+    }
     /**
      * Saves a conocimiento edited
      *
@@ -236,35 +263,29 @@ class ConocimientosController extends ControllerBase
      */
     public function deleteAction($conocimientos_id)
     {
-
+        $this->view->disable();
+        $data = array();
+        $data['success']=true;
+        $errores = array();
         $conocimiento = \Curriculum\Conocimientos::findFirstByconocimientos_id($conocimientos_id);
         if (!$conocimiento) {
-            $this->flash->error("conocimiento was not found");
-
-            return $this->dispatcher->forward(array(
-                "controller" => "conocimientos",
-                "action" => "index"
-            ));
+            $data['success']=false;
+            $date['mensaje']="La Aptitud/Curso no se ha encontrado";
         }
 
         if (!$conocimiento->delete()) {
 
             foreach ($conocimiento->getMessages() as $message) {
-                $this->flash->error($message);
+                $errores[] = $message . "<br>";
             }
-
-            return $this->dispatcher->forward(array(
-                "controller" => "conocimientos",
-                "action" => "search"
-            ));
+            $data['success']=false;
+            $date['mensaje']=$errores;
         }
 
-        $this->flash->success("conocimiento was deleted successfully");
-
-        return $this->dispatcher->forward(array(
-            "controller" => "conocimientos",
-            "action" => "index"
-        ));
+        if($data['success'])
+            $data['mensaje']="Operación Exitosa";
+        $this->response->setJsonContent($data);
+        $this->response->send();
     }
 
 }

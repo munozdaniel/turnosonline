@@ -48,7 +48,7 @@
             <fieldset class="">
                 <legend class="legendStyle ">
                     <a data-toggle="collapse" data-target="#idiomas" class="btn btn-gris" onclick="verIdiomas()"><i
-                                class="fa fa-pencil"></i> Ver idiomas</a>
+                                class="fa fa-pencil"></i> Ver mis Idiomas</a>
                     <a class="btn  btn-info" onclick="agregarIdioma()"><i class="fa fa-plus"></i> Guardar idioma</a>
                 </legend>
                 <div class="row collapse " id="idiomas">
@@ -74,7 +74,7 @@
                 success: function (response) {
                     //alert(response);Sirve cuando no podemos ver el error.
                     arreglo = $.parseJSON(response);
-                    console.log(response);//Co0mentar cuando funcione
+                    //console.log(response);//Co0mentar cuando funcione
                     var selectorIdioma = $('#idiomas_mensaje');
                     var idiomas = $('.idioma');
                     if (!arreglo.success) {
@@ -136,7 +136,7 @@
                     var selectorIdioma = $('#idiomas_mensaje');
                     var idiomas = $('.idioma');
                     if (!parsed.success) {
-                        $('#idiomas_mensaje').empty();
+                        selectorIdioma.empty();
                         for (var datos in parsed.errors)//Arma los mensajes con errores
                         {
                             selectorIdioma.append('<div class="idioma problema font-blanco">' + parsed.errors[datos] + '</div>'); // add the actual error message under our input
@@ -173,7 +173,7 @@
                     var selectorIdioma = $('#idiomas_mensaje');
                     var idiomas = $('.idioma');
                     if (!parsed.success) {
-                        $('#idiomas_mensaje').empty();
+                        selectorIdioma.empty();
                         for (var datos in parsed.errors)//Arma los mensajes con errores
                         {
                             selectorIdioma.append('<div class="idioma problema font-blanco">' + parsed.errors[datos] + '</div>'); // add the actual error message under our input
@@ -181,7 +181,7 @@
                     }
                     else {
                         $("#idiomas").load(location.href+" #idiomas>*","");
-                        $('#idiomas_mensaje').empty();
+                        selectorIdioma.empty();
                         selectorIdioma.append('<div class="idioma exito font-blanco"> El Idioma se ha guardado correctamente</div>'); // add the actual error message under our input
                         document.getElementById('idiomas_nombre').value = '';//Vacia los inputs una vez guardado
                         document.getElementById('idiomas_nivelId').value = '';
@@ -217,12 +217,104 @@
             <div class="col-sm-12">
                 <hr>
                 <a data-toggle="collapse" data-target="#conocimientos" class="btn btn-gris"
-                   onclick="cargarConocimientos()"><i class="fa fa-pencil"></i> Ver idiomas</a>
-                <a class="btn  btn-info" onclick="agregarConocimiento()"><i class="fa fa-plus"></i> Guardar Conocimiento</a>
+                   onclick="verConocimientos()"><i class="fa fa-pencil"></i> Ver mis Aptitudes</a>
+                <a class="btn  btn-info" onclick="agregarConocimiento()"><i class="fa fa-plus"></i> Guardar Aptitud</a>
+                <div class="row collapse" id="conocimientos">
+                    <div class="col-md-12">
+                        <ul id="lista_conocimientos" class="list-inline"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script>
+        function verConocimientos(event) {
+            var formData = {
+                'curriculum_id': document.getElementById('curriculum_id').value
+            };
+            $.ajax({
+                    data: formData,
+                method: "POST",
+                url: '/impsweb/conocimientos/buscarConocimientosPorCurriculum',
+                success: function (response) {
+                    arreglo = $.parseJSON(response);
+                    var selector = $('#conocimientos_mensaje');
+                    if (!arreglo.success) {
+                        console.log("verConocimientos: "+response);
+                        selector.empty();
+                        for (var datos in arreglo.mensaje)//Arma los mensajes con errores
+                        {
+                            selector.append('<div class="conocimiento problema font-blanco">' + arreglo.mensaje[datos] + '</div>'); // add the actual error message under our input
+                        }
+                    }
+                    else {
+                        //$('#conocimiento_mensaje').empty();
+                        $('#lista_conocimientos').empty();
+                        var ul = document.getElementById("lista_conocimientos");
+                        for (var item in arreglo.conocimientos)//Arma los mensajes con errores
+                        {
+                            //<li><a><i></i>nombre</a></li>
+                            var elemt =arreglo.conocimientos[item];
+                            var li = document.createElement("li");
+                            var i = document.createElement("i");
+
+                            i.setAttribute('class','fa fa-remove');
+                            li.appendChild(i);
+
+                            li.setAttribute('class','tag tag-1 puntero');
+                            li.setAttribute('onclick','eliminarConocimiento('+elemt['conocimiento_id']+')');
+                            var nombre = document.createTextNode("  " + elemt['nombre'] + " "  );
+                            li.appendChild(nombre);
+
+                            var br = document.createElement("br");
+                            li.appendChild(br);
+
+                            var nivel = document.createTextNode("  [" + elemt['nivel'] + "] "  );
+                            var small = document.createElement('small');
+                            small.appendChild(nivel);
+                            li.appendChild(small);
+
+                            ul.appendChild(li);
+
+                        }
+                    }
+                },
+                error: function (error) {
+                    alert("ERROR : " + error.statusText);
+                    console.log(error);
+                }
+            });
+        }
+        /*===========================================================================*/
+        function eliminarConocimiento(conocimiento_id) {
+            $.ajax({
+                method: "POST", 'class': 'curriculum-bg-form borde-top',
+                url: '/impsweb/conocimientos/delete/'+conocimiento_id,
+                success: function (response) {
+                    console.log(response);//Co0mentar cuando funcione
+                    parsed = $.parseJSON(response);
+                    var mensaje = $('#conocimientos_mensaje');
+                    if (!parsed.success) {
+                        mensaje.empty();
+                        for (var datos in parsed.mensaje)//Arma los mensajes con errores
+                        {
+                            mensaje.append('<div class="conocimiento problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
+                        }
+                    }
+                    else {
+                        mensaje.empty();
+                        mensaje.append('<div class="conocimiento exito font-blanco"> La Aptitud/Curso se ha eliminado correctamente</div>'); // add the actual error message under our input
+                        $("#lista_conocimientos").load(location.href+" #lista_conocimientos>*","");
+                    }
+                },
+                error: function (error) {
+                    alert("ERROR : " + error.statusText);
+                    console.log(error);
+                }
+            });
+
+        }
+        /*===========================================================================*/
         function agregarConocimiento(event) {
             var formData = {
                 'conocimientos_nombre': document.getElementById('conocimientos_nombre').value,
@@ -246,10 +338,12 @@
                         }
                     }
                     else {
-                        mensaje.empty();
+                        $("#conocimientos").load(location.href+" #conocimientos>*","");
                         mensaje.append('<div class="idioma exito font-blanco"> La Aptitud/Curso se ha guardado correctamente</div>'); // add the actual error message under our input
+                        mensaje.empty();
                         document.getElementById('conocimientos_nombre').value = '';//Vacia los inputs una vez guardado
                         document.getElementById('conocimientos_nivelId').value = '';
+
                     }
                 },
                 error: function (error) {
@@ -357,12 +451,12 @@
                     mensaje.empty();
                     for (var datos in parsed.mensaje)//Arma los mensajes con errores
                     {
-                        mensaje.append('<div class="idioma problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
+                        mensaje.append('<div class="empleo problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
                     }
                 }
                 else {
                     mensaje.empty();
-                    mensaje.append('<div class="idioma exito font-blanco"> Los Datos se han guardado correctamente</div>'); // add the actual error message under our input
+                    mensaje.append('<div class="empleo exito font-blanco"> Los Datos se han guardado correctamente</div>'); // add the actual error message under our input
                 }
             },
             error: function (error) {
