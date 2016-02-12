@@ -3,8 +3,12 @@
 <div class="curriculum-bg-header modal-header " align="left">
     <h1>
         <ins>Información General</ins>
-        <br><h3 class="">
-            <ins><small  style=" color:#FFF !important;">Idiomas / Aptitudes / Datos Adicionales / Preferencias</small></ins>
+        <br>
+
+        <h3 class="">
+            <ins>
+                <small style=" color:#FFF !important;">Idiomas / Aptitudes / Datos Adicionales / Preferencias</small>
+            </ins>
         </h3>
     </h1>
     <table class="" width="100%">
@@ -43,11 +47,14 @@
         <div class="col-md-10 col-md-offset-1">
             <fieldset class="">
                 <legend class="legendStyle ">
-                    <a data-toggle="collapse" data-target="#idiomas"  class="btn btn-gris" onclick="cargarIdiomas()"><i class="fa fa-pencil"></i> Ver idiomas</a>
+                    <a data-toggle="collapse" data-target="#idiomas" class="btn btn-gris" onclick="verIdiomas()"><i
+                                class="fa fa-pencil"></i> Ver idiomas</a>
                     <a class="btn  btn-info" onclick="agregarIdioma()"><i class="fa fa-plus"></i> Guardar idioma</a>
                 </legend>
                 <div class="row collapse " id="idiomas">
-                        hola
+                    <div class="col-md-12">
+                        <ul id="lista_idiomas" class="list-inline"></ul>
+                    </div>
                 </div>
             </fieldset>
         </div>
@@ -55,15 +62,109 @@
 
     {{ end_form() }}
     <script>
-        function agregarIdioma (event) {
+
+        function verIdiomas(event) {
             var formData = {
-                'idiomas_nombre'    : document.getElementById('idiomas_nombre').value,
-                'idiomas_nivelId'   : document.getElementById('idiomas_nivelId').value,
-                'curriculum_id'   : document.getElementById('curriculum_id').value
+                'curriculum_id': document.getElementById('curriculum_id').value
             };
             $.ajax({
                 data: formData,
-                method: "POST", 'class':'curriculum-bg-form borde-top',
+                method: "POST", 'class': 'curriculum-bg-form borde-top',
+                url: '/impsweb/idiomas/buscarIdiomasPorCurriculum',
+                success: function (response) {
+                    //alert(response);Sirve cuando no podemos ver el error.
+                    arreglo = $.parseJSON(response);
+                    console.log(response);//Co0mentar cuando funcione
+                    var selectorIdioma = $('#idiomas_mensaje');
+                    var idiomas = $('.idioma');
+                    if (!arreglo.success) {
+                        $('#idiomas_mensaje').empty();
+                        for (var datos in arreglo.mensaje)//Arma los mensajes con errores
+                        {
+                            selectorIdioma.append('<div class="idioma problema font-blanco">' + arreglo.mensaje + '</div>'); // add the actual error message under our input
+                        }
+                    }
+                    else {
+                        //$('#idiomas_mensaje').empty();
+                        $('#lista_idiomas').empty();
+                        //mostrar los idiomas
+                        var ul = document.getElementById("lista_idiomas");
+                        console.log(arreglo.idiomas);
+
+                            for (var item in arreglo.idiomas)//Arma los mensajes con errores
+                            {
+                                //<li><a><i></i>nombre</a></li>
+                                var elemt =arreglo.idiomas[item];
+                                var li = document.createElement("li");
+                                var i = document.createElement("i");
+                                //<i class='fa fa-remove></i>
+                                i.setAttribute('class','fa fa-remove');
+                                li.appendChild(i);
+                                //<li> <i><li>
+                                li.setAttribute('class','tag tag-1 puntero');
+                                li.setAttribute('onclick','eliminarIdioma('+elemt['idiomas_id']+')');
+                                var nombre = document.createTextNode("  " + elemt['nombre'] + " "  );
+                                li.appendChild(nombre);
+                                var br = document.createElement("br");
+                                li.appendChild(br);
+
+                                var nivel = document.createTextNode("  [" + elemt['nivel'] + "] "  );
+                                var small = document.createElement('small');
+                                small.appendChild(nivel);
+                                li.appendChild(small);
+
+                                ul.appendChild(li);
+
+                        }
+                    }
+                },
+                error: function (error) {
+                    alert("ERROR : " + error.statusText);
+                    console.log(error);
+                }
+            });
+        }
+        /*===========================================================================*/
+        function eliminarIdioma(idiomas_id) {
+            $.ajax({
+                method: "POST", 'class': 'curriculum-bg-form borde-top',
+                url: '/impsweb/idiomas/delete/'+idiomas_id,
+                success: function (response) {
+                    //alert(response);Sirve cuando no podemos ver el error.
+                    parsed = $.parseJSON(response);
+                    //console.log(response);//Co0mentar cuando funcione
+                    var selectorIdioma = $('#idiomas_mensaje');
+                    var idiomas = $('.idioma');
+                    if (!parsed.success) {
+                        $('#idiomas_mensaje').empty();
+                        for (var datos in parsed.errors)//Arma los mensajes con errores
+                        {
+                            selectorIdioma.append('<div class="idioma problema font-blanco">' + parsed.errors[datos] + '</div>'); // add the actual error message under our input
+                        }
+                    }
+                    else {
+                        selectorIdioma.empty();
+                        selectorIdioma.append('<div class="idioma exito font-blanco"> El Idioma se ha eliminado correctamente</div>'); // add the actual error message under our input
+                        $("#idiomas").load(location.href+" #idiomas>*","");
+                    }
+                },
+                error: function (error) {
+                    alert("ERROR : " + error.statusText);
+                    console.log(error);
+                }
+            });
+
+        }
+        /*===========================================================================*/
+        function agregarIdioma(event) {
+            var formData = {
+                'idiomas_nombre': document.getElementById('idiomas_nombre').value,
+                'idiomas_nivelId': document.getElementById('idiomas_nivelId').value,
+                'curriculum_id': document.getElementById('curriculum_id').value
+            };
+            $.ajax({
+                data: formData,
+                method: "POST", 'class': 'curriculum-bg-form borde-top',
                 url: '/impsweb/idiomas/agregar',
                 success: function (response) {
                     //alert(response);Sirve cuando no podemos ver el error.
@@ -71,60 +172,62 @@
                     //console.log(response);//Co0mentar cuando funcione
                     var selectorIdioma = $('#idiomas_mensaje');
                     var idiomas = $('.idioma');
-                    if(!parsed.success){
+                    if (!parsed.success) {
                         $('#idiomas_mensaje').empty();
-                        for(var datos in parsed.errors)//Arma los mensajes con errores
+                        for (var datos in parsed.errors)//Arma los mensajes con errores
                         {
                             selectorIdioma.append('<div class="idioma problema font-blanco">' + parsed.errors[datos] + '</div>'); // add the actual error message under our input
                         }
                     }
-                    else
-                    {
+                    else {
+                        $("#idiomas").load(location.href+" #idiomas>*","");
                         $('#idiomas_mensaje').empty();
                         selectorIdioma.append('<div class="idioma exito font-blanco"> El Idioma se ha guardado correctamente</div>'); // add the actual error message under our input
-                        document.getElementById('idiomas_nombre').value='';//Vacia los inputs una vez guardado
-                        document.getElementById('idiomas_nivelId').value='';
+                        document.getElementById('idiomas_nombre').value = '';//Vacia los inputs una vez guardado
+                        document.getElementById('idiomas_nivelId').value = '';
                     }
                 },
                 error: function (error) {
-                    alert("ERROR : "+error.statusText) ;
+                    alert("ERROR : " + error.statusText);
                     console.log(error);
                 }
             });
-        };
+        }
     </script>
     <hr>
     <div class=" curriculum-bg-form borde-top">
-    <div class="row form-group">
-        <div id="conocimientos_mensaje" class="col-md-8 col-md-offset-2  ">
+        <div class="row form-group">
+            <div id="conocimientos_mensaje" class="col-md-8 col-md-offset-2  ">
+            </div>
+            <div class="col-sm-8 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('conocimientos_nombre' ) }}
+            </div>
+            <div class="col-sm-8 col-md-4">
+                {{ informacionForm.render('conocimientos_nombre') }}
+                <small> Paquete Office, internet, email, etc.</small>
+            </div>
         </div>
-        <div class="col-sm-8 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('conocimientos_nombre' ) }}
+        <div class="row form-group">
+            <div class="col-sm-8 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('conocimientos_nivelId' ) }}
+            </div>
+            <div class="col-sm-8 col-md-4">
+                {{ informacionForm.render('conocimientos_nivelId') }}
+            </div>
+            <div class="col-sm-12">
+                <hr>
+                <a data-toggle="collapse" data-target="#conocimientos" class="btn btn-gris"
+                   onclick="cargarConocimientos()"><i class="fa fa-pencil"></i> Ver idiomas</a>
+                <a class="btn  btn-info" onclick="agregarConocimiento()"><i class="fa fa-plus"></i> Guardar Conocimiento</a>
+            </div>
         </div>
-        <div class="col-sm-8 col-md-4">
-            {{ informacionForm.render('conocimientos_nombre') }}
-            <small> Paquete Office, internet, email, etc.</small>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-sm-8 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('conocimientos_nivelId' ) }}
-        </div>
-        <div class="col-sm-8 col-md-4">
-            {{ informacionForm.render('conocimientos_nivelId') }}
-        </div>
-        <div class="col-sm-12"><hr>
-            <a data-toggle="collapse" data-target="#conocimientos"  class="btn btn-gris" onclick="cargarConocimientos()"><i class="fa fa-pencil"></i> Ver idiomas</a>
-            <a class="btn  btn-info" onclick="agregarConocimiento()"><i class="fa fa-plus"></i> Guardar Conocimiento</a>
-        </div>
-    </div>
     </div>
     <script>
-        function agregarConocimiento (event) {
+        function agregarConocimiento(event) {
             var formData = {
-                'conocimientos_nombre'    : document.getElementById('conocimientos_nombre').value,
-                'conocimientos_nivelId'   : document.getElementById('conocimientos_nivelId').value,
-                'curriculum_id'   : document.getElementById('curriculum_id').value
+                'conocimientos_nombre': document.getElementById('conocimientos_nombre').value,
+                'conocimientos_nivelId': document.getElementById('conocimientos_nivelId').value,
+                'curriculum_id': document.getElementById('curriculum_id').value
             };
             $.ajax({
                 data: formData,
@@ -135,110 +238,111 @@
                     //alert(response);//Sirve cuando no podemos ver el error.
                     parsed = $.parseJSON(response);
                     var mensaje = $('#conocimientos_mensaje');
-                    if(!parsed.success){
+                    if (!parsed.success) {
                         mensaje.empty();
-                        for(var datos in parsed.mensaje)//Arma los mensajes con errores
+                        for (var datos in parsed.mensaje)//Arma los mensajes con errores
                         {
                             mensaje.append('<div class="idioma problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
                         }
                     }
-                    else
-                    {
+                    else {
                         mensaje.empty();
                         mensaje.append('<div class="idioma exito font-blanco"> La Aptitud/Curso se ha guardado correctamente</div>'); // add the actual error message under our input
-                        document.getElementById('conocimientos_nombre').value='';//Vacia los inputs una vez guardado
-                        document.getElementById('conocimientos_nivelId').value='';
+                        document.getElementById('conocimientos_nombre').value = '';//Vacia los inputs una vez guardado
+                        document.getElementById('conocimientos_nivelId').value = '';
                     }
                 },
                 error: function (error) {
-                    alert("ERROR : "+error.statusText) ;
+                    alert("ERROR : " + error.statusText);
                     console.log(error);
                 }
             });
-        };
+        }
+        ;
     </script>
     {#====================================================================================#}
     <hr>
     <div class=" curriculum-bg-form borde-top">
 
-    <div class=" col-md-2 pull-right text-info">
-         {{ link_to('files/curriculum/puestos.pdf','<i class="fa fa-file-pdf-o"></i> VER ESTRUCTURA EN PDF','target':'_blank') }}
-
-     </div>
-    <div class="row form-group">
-        <div id="empleo_mensaje" class="col-md-8 col-md-offset-2  ">
-        </div>
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('dependencia_id' ) }}
-        </div>
-        <div class="col-sm-4">
-            {{ informacionForm.render('dependencia_id') }}
-            {{ informacionForm.render('script_puestoDependencia') }}
+        <div class=" col-md-2 pull-right text-info">
+            {{ link_to('files/curriculum/puestos.pdf','<i class="fa fa-file-pdf-o"></i> VER ESTRUCTURA EN PDF','target':'_blank') }}
 
         </div>
-    </div>
+        <div class="row form-group">
+            <div id="empleo_mensaje" class="col-md-8 col-md-offset-2  ">
+            </div>
+            <div class="col-sm-12 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('dependencia_id' ) }}
+            </div>
+            <div class="col-sm-4">
+                {{ informacionForm.render('dependencia_id') }}
+                {{ informacionForm.render('script_puestoDependencia') }}
 
-    <div class="row form-group">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('puesto_id' ) }}
-        </div>
-        <div class="col-sm-4">
-            {{ informacionForm.render('puesto_id') }}
-        </div>
-
-    </div>
-
-    <div id="puesto_otro" class="row form-group ocultar">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('empleo_puestoOtro' ) }}
-        </div>
-        <div class="col-sm-4">
-            {{ informacionForm.render('empleo_puestoOtro') }}
-        </div>
-    </div>
-
-    <div id="sectorInteres" class="row form-group  ocultar">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('sectorInteres_id' ) }}
-        </div>
-        <div class="col-sm-4">
-            {{ informacionForm.render('sectorInteres_id') }}
+            </div>
         </div>
 
-    </div>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('puesto_id' ) }}
+            </div>
+            <div class="col-sm-4">
+                {{ informacionForm.render('puesto_id') }}
+            </div>
 
-    <div class="row form-group">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('empleo_disponibilidad' ) }}
         </div>
-        <div class="col-sm-4">
-            {{ informacionForm.render('empleo_disponibilidad') }}
-            <small> Ej: 8:00hs - 14:00hs, Full Time, etc.</small>
+
+        <div id="puesto_otro" class="row form-group ocultar">
+            <div class="col-sm-12 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('empleo_puestoOtro' ) }}
+            </div>
+            <div class="col-sm-4">
+                {{ informacionForm.render('empleo_puestoOtro') }}
+            </div>
         </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-sm-12 col-md-2 col-md-offset-2">
-            {{ informacionForm.label('empleo_carnet' ) }}
+
+        <div id="sectorInteres" class="row form-group  ocultar">
+            <div class="col-sm-12 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('sectorInteres_id' ) }}
+            </div>
+            <div class="col-sm-4">
+                {{ informacionForm.render('sectorInteres_id') }}
+            </div>
+
         </div>
-        <div class="col-sm-4">
-            {{ informacionForm.render('empleo_carnet') }}
+
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('empleo_disponibilidad' ) }}
+            </div>
+            <div class="col-sm-4">
+                {{ informacionForm.render('empleo_disponibilidad') }}
+                <small> Ej: 8:00hs - 14:00hs, Full Time, etc.</small>
+            </div>
         </div>
-        <div class="col-sm-12"><hr>
-            <a class="btn  btn-info" onclick="agregarEmpleo()"><i class="fa fa-plus"></i> Guardar Datos Adicionales</a>
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-2 col-md-offset-2">
+                {{ informacionForm.label('empleo_carnet' ) }}
+            </div>
+            <div class="col-sm-4">
+                {{ informacionForm.render('empleo_carnet') }}
+            </div>
+            <div class="col-sm-12">
+                <hr>
+                <a class="btn  btn-info" onclick="agregarEmpleo()"><i class="fa fa-plus"></i> Guardar Datos Adicionales</a>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 <script>
-    function agregarEmpleo (event) {
+    function agregarEmpleo(event) {
         var formData = {
-            'dependencia_id'            : document.getElementById('dependencia_id').value,
-            'puesto_id'                 : document.getElementById('puesto_id').value,
-            'puesto_otro'               : document.getElementById('empleo_puestoOtro').value,
-            'sectorInteres_id'          : document.getElementById('sectorInteres_id').value,
-            'empleo_disponibilidad'     : document.getElementById('empleo_disponibilidad').value,
-            'empleo_carnet'             : document.getElementById('empleo_carnet').value,
-            'curriculum_id'             : document.getElementById('curriculum_id').value
+            'dependencia_id': document.getElementById('dependencia_id').value,
+            'puesto_id': document.getElementById('puesto_id').value,
+            'puesto_otro': document.getElementById('empleo_puestoOtro').value,
+            'sectorInteres_id': document.getElementById('sectorInteres_id').value,
+            'empleo_disponibilidad': document.getElementById('empleo_disponibilidad').value,
+            'empleo_carnet': document.getElementById('empleo_carnet').value,
+            'curriculum_id': document.getElementById('curriculum_id').value
         };
         $.ajax({
             data: formData,
@@ -249,25 +353,25 @@
                 //alert(response);//Sirve cuando no podemos ver el error.
                 parsed = $.parseJSON(response);
                 var mensaje = $('#empleo_mensaje');
-                if(!parsed.success){
+                if (!parsed.success) {
                     mensaje.empty();
-                    for(var datos in parsed.mensaje)//Arma los mensajes con errores
+                    for (var datos in parsed.mensaje)//Arma los mensajes con errores
                     {
                         mensaje.append('<div class="idioma problema font-blanco">' + parsed.mensaje[datos] + '</div>'); // add the actual error message under our input
                     }
                 }
-                else
-                {
+                else {
                     mensaje.empty();
                     mensaje.append('<div class="idioma exito font-blanco"> Los Datos se han guardado correctamente</div>'); // add the actual error message under our input
                 }
             },
             error: function (error) {
-                alert("ERROR : "+error.statusText) ;
+                alert("ERROR : " + error.statusText);
                 console.log(error);
             }
         });
-    };
+    }
+    ;
 </script>
 {#====================================================================================#}
 
@@ -276,11 +380,11 @@
         if (document.getElementById('dependencia_id').value == 1) {//ADMINISTRACION CENTRAL (Mostrar SectorInteres_id)
             $('#sectorInteres').show();
             $('#puesto_otro').hide();
-            document.getElementById("empleo_puestoOtro").value="";
+            document.getElementById("empleo_puestoOtro").value = "";
             document.getElementById("sectorInteres_id").required = true;
         } else {
             $('#sectorInteres').hide();
-            document.getElementById("sectorInteres_id").value="";
+            document.getElementById("sectorInteres_id").value = "";
             document.getElementById("sectorInteres_id").required = false;
         }
     };
@@ -290,7 +394,7 @@
             document.getElementById("empleo_puestoOtro").required = true;
         } else {
             $('#puesto_otro').hide();
-            document.getElementById("empleo_puestoOtro").value="";
+            document.getElementById("empleo_puestoOtro").value = "";
             document.getElementById("empleo_puestoOtro").required = false;
         }
     };
