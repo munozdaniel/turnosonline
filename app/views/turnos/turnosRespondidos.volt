@@ -67,9 +67,11 @@
         </div>
 
         <div class="row edicion">
+
             <div class="col-md-12">
                 {{ content() }}
             </div>
+
             <div class="col-lg-12 col-md-12"> <!-- margin-top:-5%; -->
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
@@ -109,18 +111,25 @@
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.next,'Siguiente','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'Última','class':'btn') }}
-                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
+                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                P&aacute;gina {{ page.current }} de {{ page.total_pages }}
                             </div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-12">
+
+           {# <div class="col-md-12">
                 {{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3">
                                                 <div class="btn btn-blue btn-lg btn-block">
                                                      VER LISTADO EN PDF</div></div>','target':'_blank') }}
+            </div> #}
+
+            <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
+                {{ link_to('turnos/listadoEnPdf','VER LISTADO EN PDF','style':'width:320px;','class':'btn btn-blue btn-lg btn-block','target':'_blank') }}
             </div>
+
         </div>
     </div>
 </section>
