@@ -241,7 +241,11 @@ class EmpleoController extends ControllerBase
         $mensaje = array();
         if($this->request->isPost())
         {
-            $empleo = new \Curriculum\Empleo();
+            if(!$this->request->hasPost('empleo_id') || $this->request->getPost('empleo_id')=="" ){
+                $empleo = new \Curriculum\Empleo();
+            }else{
+                $empleo = \Curriculum\Empleo::findFirstByEmpleo_id($this->request->getPost('empleo_id'));
+            }
             $empleo->setEmpleoCurriculumid($this->request->getPost('curriculum_id','int'));
             $empleo->setEmpleoCarnet($this->request->getPost('empleo_carnet','int'));
             $empleo->setEmpleoDisponibilidad($this->request->getPost('empleo_disponibilidad','string'));
@@ -259,6 +263,7 @@ class EmpleoController extends ControllerBase
             else{
                 $data['success']=true;
                 $mensaje = "Operación Exitosa . ".$this->request->getPost('puesto_otro','string');
+                $data['empleo_id']=$empleo->getEmpleoId();
             }
         }else{
             $data['success']=false;

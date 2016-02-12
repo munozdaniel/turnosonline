@@ -356,11 +356,11 @@
     </script>
     {#====================================================================================#}
     <hr>
-    <div class=" curriculum-bg-form borde-top">
+    <div id="div_empleo" class=" curriculum-bg-form borde-top">
 
         <div class=" col-md-2 pull-right text-info">
             {{ link_to('files/curriculum/puestos.pdf','<i class="fa fa-file-pdf-o"></i> VER ESTRUCTURA EN PDF','target':'_blank') }}
-
+            {{ hidden_field('empleo_id','value':'') }}
         </div>
         <div class="row form-group">
             <div id="empleo_mensaje" class="col-md-8 col-md-offset-2  ">
@@ -422,13 +422,14 @@
             </div>
             <div class="col-sm-12">
                 <hr>
-                <a class="btn  btn-info" onclick="agregarEmpleo()"><i class="fa fa-plus"></i> Guardar Datos Adicionales</a>
+                <a id="btn_agregar_empleo" class="btn  btn-info" onclick="agregarEmpleo()"><i class="fa fa-plus"></i> Guardar Datos Adicionales</a>
             </div>
         </div>
     </div>
 </div>
 <script>
     function agregarEmpleo(event) {
+
         var formData = {
             'dependencia_id': document.getElementById('dependencia_id').value,
             'puesto_id': document.getElementById('puesto_id').value,
@@ -457,6 +458,10 @@
                 else {
                     mensaje.empty();
                     mensaje.append('<div class="empleo exito font-blanco"> Los Datos se han guardado correctamente</div>'); // add the actual error message under our input
+                    document.getElementById("btn_agregar_empleo").textContent = "Editar Datos Adicionales";
+                    document.getElementById("btn_agregar_empleo").className  = "btn btn-gris";
+                    document.getElementById("empleo_id").value  = parsed.empleo_id;
+
                 }
             },
             error: function (error) {
