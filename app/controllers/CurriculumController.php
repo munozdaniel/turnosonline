@@ -8,12 +8,12 @@ class CurriculumController extends ControllerBase
     public function initialize()
     {
         $this->tag->setTitle('Curriculum');
+
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
 
         parent::initialize();
-
     }
 
     /**
@@ -311,26 +311,34 @@ class CurriculumController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $correo = $this->request->getPost('confirmar_email');
-            $this->mailDesarrollo->CharSet = 'UTF-8';
-            $this->mailDesarrollo->Host = 'mail.imps.org.ar';
-            $this->mailDesarrollo->SMTPAuth = true;
-            $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->Password = 'sis$%&--temas';
-            $this->mailDesarrollo->SMTPSecure = '';
-            $this->mailDesarrollo->Port = 26;
-            $this->mailDesarrollo->AddBCC($correo);
-            $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN RRHH';
-            $this->mailDesarrollo->Subject = "Confirmación de correo";
-            $email = base64_encode($correo);
-            $this->mailDesarrollo->Body = "<h1>Confirmación de Correo Electronico</h1>
-            <p>Para continuar con tu registro, pulsa en el enlace abajo:</p>
-            <a href='http://192.168.42.149/impsweb/persona/new?email=$email' >  click aquí  </a>";
+            $persona = Curriculum\Persona::findFirstByPersona_email($correo);
+            if($persona){
+                $this->flash->message('problema',"La casilla de correo ya se encuentra en registrada en nuestro sistema");
 
-            if ($this->mailDesarrollo->send()) {
-                $this->flash->message('exito',"Se ha enviado un correo de confirmación para continuar con el proceso");
-            } else
-                $this->flash->success("Ha sucedido un error. No es posible comunicarse con nuestras oficinas momentáneamente..");
+            }else{
+                $this->mailDesarrollo->CharSet = 'UTF-8';
+                $this->mailDesarrollo->Host = 'mail.imps.org.ar';
+                $this->mailDesarrollo->SMTPAuth = true;
+                $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
+                $this->mailDesarrollo->Password = 'sis$%&--temas';
+                $this->mailDesarrollo->SMTPSecure = '';
+                $this->mailDesarrollo->Port = 26;
+                $this->mailDesarrollo->AddBCC($correo);
+                $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
+                $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN RRHH';
+                $this->mailDesarrollo->Subject = "Confirmación de correo";
+                $email = base64_encode($correo);
+
+                $this->mailDesarrollo->Body = "<h1>Bienvenido</h1>
+                <p>Para continuar con el proceso de registración, tenés que confirmar tu dirección de email haciendo click en el siguiente link:</p>
+                <a href='http://192.168.42.149/impsweb/persona/new?email=$email' style='color:#ff8936;'> <em> Confirmar Email  </em></a>";
+
+                if ($this->mailDesarrollo->send()) {
+                    $this->flash->message('exito',"Se ha enviado un correo de confirmación para continuar con el proceso. Por favor, revise su cassilla");
+                } else
+                    $this->flash->success("Ha sucedido un error. No es posible comunicarse con nuestras oficinas momentáneamente.");
+            }
+
 
             $this->redireccionar('curriculum/login');
         }
