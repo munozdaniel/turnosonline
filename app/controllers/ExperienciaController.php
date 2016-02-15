@@ -122,13 +122,19 @@ class ExperienciaController extends ControllerBase
         }
 
         $experiencia    = new Curriculum\Experiencia();
-        $curriculumId   = $this->request->getPost("curriculum_id");
-
-        $experiencia->setExperienciaCurriculumid($this->request->getPost("curriculum_id"));
-        $experiencia->setExperienciaEmpresa(strtoupper($this->request->getPost("experiencia_empresa")));
-        $experiencia->setExperienciaRubro(strtoupper($this->request->getPost("experiencia_rubro")));
-        $experiencia->setExperienciaCargo(strtoupper($this->request->getPost("experiencia_cargo")));
-        $experiencia->setExperienciaTareas(strtoupper($this->request->getPost("experiencia_tareas")));
+        $curriculumId   = $this->request->getPost("curriculum_id",array('int'));
+        if ($curriculumId=="" || $curriculumId==null) {
+            $this->flash->message('problema','Ocurrio un problema, no se pudo encontrar los datos referidos al curriculum.<br> Por favor comuniquese con nosotros vía email para resolver el problema. <br> Disculpe las molestias ocasionadas.');
+            return $this->dispatcher->forward(array(
+                "controller" => "curriculum",
+                "action" => "login"
+            ));
+        }
+        $experiencia->setExperienciaCurriculumid($this->request->getPost("curriculum_id",array('int')));
+        $experiencia->setExperienciaEmpresa(strtoupper($this->request->getPost("experiencia_empresa",'string')));
+        $experiencia->setExperienciaRubro(strtoupper($this->request->getPost("experiencia_rubro",'string')));
+        $experiencia->setExperienciaCargo(strtoupper($this->request->getPost("experiencia_cargo",'string')));
+        $experiencia->setExperienciaTareas(strtoupper($this->request->getPost("experiencia_tareas",'string')));
         $experiencia->setExperienciaFechainicio($this->request->getPost("experiencia_fechaInicio"));
         if($this->request->hasPost('experiencia_fechaFinal'))
         {
