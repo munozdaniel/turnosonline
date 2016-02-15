@@ -150,11 +150,11 @@ class PersonaController extends ControllerBase
      */
     public function createAction()
     {
-
+        //echo  $_FILES['curriculum_adjunto']['name'] . " - ".$_FILES['curriculum_adjunto']['type'];
         if (!$this->request->isPost()) {
             return $this->dispatcher->forward(array(
                 "controller" => "persona",
-                "action" => "index"
+                "action" => "new"
             ));
         }
         try {
@@ -176,6 +176,44 @@ class PersonaController extends ControllerBase
             $curriculum->setCurriculumHabilitado(1);
             $curriculum->setCurriculumFechacreacion(date('Y-m-d'));
             $curriculum->setCurriculumUltimamodificacion(date('Y-m-d'));
+            /** Agregar curriculum pdf */
+            if($_FILES['curriculum_adjunto']['name']!=""){
+
+                if($_FILES['curriculum_adjunto']['type']=="application/pdf")
+            {
+                $limite_kb = 2000;
+                if ( $_FILES['curriculum_adjunto']['size'] <= $limite_kb * 1024){
+                    $ruta = "files/curriculum/pdf/" . $this->request->getPost("persona_numeroDocumento",array('int')).".pdf";
+                    $resultado = move_uploaded_file($_FILES["curriculum_adjunto"]["tmp_name"], $ruta);
+                    if($resultado)
+                        $curriculum->setCurriculumAdjunto($ruta);
+                    else
+                        $this->flash->message('problema','El archivo adjunto no se pudo guardar, intentelo más tarde.');
+
+                }else
+                {
+                    $this->flash->message('problema','El tamaño del pdf supera el limite (2mb)');
+                    return $this->dispatcher->forward(array(
+                        "controller" => "persona",
+                        "action" => "new"
+                    ));
+                }
+            }else{
+                $this->flash->message('problema','El Curriculum adjunto debe ser un pdf');
+                return $this->dispatcher->forward(array(
+                    "controller" => "persona",
+                    "action" => "new"
+                ));
+
+            }
+            }else{
+                $this->flash->message('problema','Curriculum adjunto es null');
+                return $this->dispatcher->forward(array(
+                    "controller" => "persona",
+                    "action" => "new"
+                ));
+            }
+            /** Fin: Agregar Curriculum Pdf*/
             if (!$curriculum->save()) {
                 foreach ($curriculum->getMessages() as $message) {
                     $this->flash->message('problema',$message);
@@ -183,9 +221,50 @@ class PersonaController extends ControllerBase
                 $this->db->rollback();
                 return $this->redireccionar('persona/new');
             }
+
             /*==================== DATOS PERSONALES =========================*/
             $persona = new \Curriculum\Persona();
+            /** Agregar foto*/
+            if($_FILES['curriculum_foto']['name']!=""){
+                if($_FILES['curriculum_foto']['type']=="image/jpeg" || $_FILES['curriculum_foto']['type']=="image/jpg")
+                {
+                    $limite_kb = 4000;
+                    $dimensiones = getimagesize(rtrim($_FILES["curriculum_foto"]["tmp_name"]));
+                    $ancho = $dimensiones[0];
+                    $alto = $dimensiones[1];
+                    if ( $_FILES['curriculum_foto']['size'] <= $limite_kb * 1024
+                           && $ancho <=300 && $alto<=400 ){
+                        $ruta = "files/curriculum/perfil/" . $this->request->getPost("persona_numeroDocumento",array('int')).".jpg";
+                        $resultado = move_uploaded_file($_FILES["curriculum_foto"]["tmp_name"], $ruta);
+                        if($resultado)
+                            $persona->setPersonaFoto($ruta);
+                        else
+                            $this->flash->message('problema','La foto de perfil no se pudo guardar, intentelo más tarde.');
 
+                    }else
+                    {
+                        $this->flash->message('problema','La foto de perfil no debe supera los 4mb y sus dimensiones deben ser 300x400 máx.');
+                        return $this->dispatcher->forward(array(
+                            "controller" => "persona",
+                            "action" => "new"
+                        ));
+                    }
+                }else{
+                    $this->flash->message('problema','La foto de perfil debe ser un jpg');
+                    return $this->dispatcher->forward(array(
+                        "controller" => "persona",
+                        "action" => "new"
+                    ));
+
+                }
+            }else{
+                $this->flash->message('problema','Curriculum foto es null');
+                return $this->dispatcher->forward(array(
+                    "controller" => "persona",
+                    "action" => "new"
+                ));
+            }
+            /** Fin: Agregar foto*/
             $persona->setPersonaCurriculumid($curriculum->getCurriculumId());
             $persona->setPersonaApellido($this->request->getPost("persona_apellido"),array('string'));
             $persona->setPersonaNombre($this->request->getPost("persona_nombre",array('string')));
@@ -215,7 +294,6 @@ class PersonaController extends ControllerBase
             $persona->setPersonaEstadocivilid($this->request->getPost("persona_estadoCivilId"));
             $persona->setPersonaHabilitado(1);
             $persona->setPersonaFechacreacion(Date('Y-m-d'));
-            //FIXME: AGREGAR PATH DE LA FOTO.
 
             if (!$persona->save()) {
                 foreach ($persona->getMessages() as $message) {

@@ -122,7 +122,7 @@ class DatosPersonalesForm  extends Form {
         $this->add($persona_nacionalidadId);
 
         /*========================== ==========================*/
-        $localidad_codigoPostal = new Text('localidad_codigoPostal',array('class'=> 'form-control','required'=>'','placeholder'=>'Ingrese su Codigo Postal'));
+        $localidad_codigoPostal = new \Phalcon\Forms\Element\Numeric('localidad_codigoPostal',array('class'=> 'form-control','required'=>'','placeholder'=>'Ingrese su Codigo Postal'));
         $localidad_codigoPostal->setLabel('<strong class="font-rojo "> * </strong>Codigo Postal');
         $localidad_codigoPostal->setFilters(array('int'));
         $localidad_codigoPostal->addValidators(array(
@@ -173,7 +173,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($localidad_domicilio);
         /*========================== Telefono ==========================*/
-        $persona_telefono = new Text('persona_telefono',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
+        $persona_telefono = new \Phalcon\Forms\Element\Numeric('persona_telefono',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
         $persona_telefono->setLabel('<strong class="font-rojo "> * </strong>Teléfono ');
         $persona_telefono->setFilters(array('int'));
         $persona_telefono->addValidators(array(
@@ -183,7 +183,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_telefono);
         /*========================== Celular ==========================*/
-        $persona_celular = new Text('persona_celular',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
+        $persona_celular = new \Phalcon\Forms\Element\Numeric('persona_celular',array('placeholder'=>'Solo Números','class'=> 'form-control'));
         $persona_celular->setLabel('Celular ');
         $persona_celular->setFilters(array('int'));
         $persona_celular->addValidators(array(
