@@ -284,15 +284,19 @@ class TurnosController extends ControllerBase
      * MJE ERROR: SUS DATOS YA FUERON INGRESADO, NO PUEDE SACAR MÁS DE UN TURNO POR PERÍODO
      * @return boolean devuelve si encontro o no.
      */
-    private function tieneTurnoSolicitado($legajo, $nomApe)
+    private function tieneTurnoSolicitado($legajo, $nomApe,$email)
     {
         try {
             $fechasTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo (campo nuevo).
-            $consulta = "SELECT ST.* FROM solicitudturno AS ST, Fechasturnos AS F WHERE (fechasTurnos_activo = 1) AND (F.fechasTurnos_id= ST.solicitudTurnos_fechasTurnos) AND ((ST.solicitudTurno_legajo=:legajo:) OR (ST.solicitudTurno_nomApe LIKE  :nomApe:))";
+            $consulta = "SELECT ST.* FROM solicitudturno AS ST, Fechasturnos AS F WHERE (fechasTurnos_activo = 1)
+                        AND (F.fechasTurnos_id = ST.solicitudTurnos_fechasTurnos) AND ((ST.solicitudTurno_legajo=:legajo:)
+                        OR (ST.solicitudTurno_nomApe LIKE  :nomApe:) OR (ST.solicitudTurno_email LIKE :email:))";
+
             $solicitudTurno = $this->modelsManager->executeQuery($consulta,
                 array(
                     'legajo' => $legajo,
-                    'nomApe' => $nomApe));
+                    'nomApe' => $nomApe,
+                    'email' => $email));
 
             //Si no encontro datos, es porque no solicito un turno en este periodo.
             if (count($solicitudTurno) == 0)
