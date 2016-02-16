@@ -289,17 +289,18 @@ class CurriculumController extends ControllerBase
                 "email" => $email,
                 "dni" => $dni
             );
-            $persona = \Curriculum\Persona::find(
+            $persona = \Curriculum\Persona::findFirst(
                 array(
                     $condiciones,
                     "bind" => $parametros
                 ));
-            if (count($persona) == 0) {
+            if (!$persona) {
                 $this->view->form = new LoginForm();
                 $this->flash->message('problema','Usted no se encuentra registrado en el sistema');
                 return $this->redireccionar('curriculum/login');
             }else{
-                return $this->redireccionar("curriculum/ver/".$persona[0]->getPersonaCurriculumid());
+                $this->view->pick('curriculum/ver');
+                return $this->redireccionar("curriculum/ver/".$persona->getPersonaCurriculumid());
             }
         }
     }
@@ -358,32 +359,13 @@ class CurriculumController extends ControllerBase
         }
 
         $persona = \Curriculum\Persona::findFirstByPersona_curriculumId($curriculumId);
-        $arregloLocalidad = array();
-        $arregloLocalidad['localidad_codigoPostal'] = "Sin Especificar";
-        $arregloLocalidad['localidad_domicilio'] = "Sin Especificar";
-        $arregloLocalidad['ciudad_nombre'] = "Sin Especificar";
-        $arregloLocalidad['provincia_nombre'] = "Sin Especificar";
-        if(!empty($persona)){
-            $localidad = \Curriculum\Localidad::findFirstByLocalidadId($persona->getPersonaLocalidadid());
-            if(!empty($localidad)){
-                $arregloLocalidad['localidad_codigoPostal'] = $localidad->getLocalidadCodigopostal();
-                $arregloLocalidad['localidad_domicilio'] = $localidad->getLocalidadDomicilio();
-                $ciudad = \Curriculum\Ciudad::findFirstByCiudad_id($localidad->getLocalidadCiudadid());
-                if(!empty($ciudad)){
-                    $arregloLocalidad['ciudad_nombre'] = $ciudad->getCiudadNombre();
-                    $provincia = \Curriculum\Provincia::findFirstByProvincia_id($ciudad->getCiudadProvinciaid());
-                    if(!empty($provincia))
-                        $arregloLocalidad['provincia_nombre']=$provincia->getProvinciaNombre();
-                }
-            }
-        }
+        $this->view->curriculum = Curriculum\Curriculum::findFirstByCurriculum_id($curriculumId);
         $this->view->persona = $persona;
-        $this->view->arregloLocalidad = $arregloLocalidad;
         $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($persona->getPersonaCurriculumid());
         $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($persona->getPersonaCurriculumid());
         $this->view->idiomas = Curriculum\Idiomas::findByIdiomas_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->informatica = Curriculum\Informatica::findByInformatica_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->empleo = Curriculum\Empleo::findByEmpleo_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->conocimientos = Curriculum\Conocimientos::findByConocimientos_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->empleos = Curriculum\Empleo::findByEmpleo_curriculumId($persona->getPersonaCurriculumid());
 
     }
 }

@@ -2,13 +2,13 @@
 
 <div class="curriculum-bg-header modal-header " align="left">
     <h1>
-        <ins>Información General</ins>
+        <ins>INFORMACIÓN ADICIONAL</ins>
         <br>
 
         <h3 class="">
-            <ins>
+            <em>
                 <small style=" color:#FFF !important;">Idiomas / Aptitudes / Datos Adicionales / Preferencias</small>
-            </ins>
+            </em>
         </h3>
     </h1>
     {% if curriculumId is defined %}
