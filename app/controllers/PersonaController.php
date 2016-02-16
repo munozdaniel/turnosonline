@@ -269,10 +269,10 @@ class PersonaController extends ControllerBase
             $persona->setPersonaApellido($this->request->getPost("persona_apellido"),array('string'));
             $persona->setPersonaNombre($this->request->getPost("persona_nombre",array('string')));
             $persona->setPersonaFechanacimiento($this->request->getPost("persona_fechaNacimiento"));
-            $persona->setPersonaTipodocumentoid($this->request->getPost("persona_tipoDocumentoId"));
+            $persona->setPersonaTipodocumentoid($this->request->getPost("persona_tipoDocumentoId",'int'));
             $persona->setPersonaNumerodocumento($this->request->getPost("persona_numeroDocumento",array('int')));
-            $persona->setPersonaSexo($this->request->getPost("persona_sexo"));
-            $persona->setPersonaNacionalidadid($this->request->getPost("persona_nacionalidadId"));
+            $persona->setPersonaSexo($this->request->getPost("persona_sexo",'int'));
+            $persona->setPersonaNacionalidadid($this->request->getPost("persona_nacionalidadId",'int'));
             /*Agregar localidad*/
             $localidad = new \Curriculum\Localidad();
             $localidad->setLocalidadCodigopostal($this->request->getPost('localidad_codigoPostal','int'));
@@ -290,8 +290,8 @@ class PersonaController extends ControllerBase
             $persona->setPersonaLocalidadid($localidad->getLocalidadId());
             $persona->setPersonaTelefono($this->request->getPost("persona_telefono",array('int')));
             $persona->setPersonaCelular($this->request->getPost("persona_celular",array('int')));
-            $persona->setPersonaEmail($this->request->getPost("persona_email"));
-            $persona->setPersonaEstadocivilid($this->request->getPost("persona_estadoCivilId"));
+            $persona->setPersonaEmail($this->request->getPost("persona_email",'email'));
+            $persona->setPersonaEstadocivilid($this->request->getPost("persona_estadoCivilId",'int'));
             $persona->setPersonaHabilitado(1);
             $persona->setPersonaFechacreacion(Date('Y-m-d'));
 

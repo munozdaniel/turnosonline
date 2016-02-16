@@ -11,17 +11,23 @@
             </ins>
         </h3>
     </h1>
+    {% if curriculumId is defined %}
+
     <table class="" width="100%">
         <tr>
-            <td align="right">{{ link_to("curriculum/ver"~curriculum_id, "<i class='fa fa-clone'></i> FINALIZAR ",'class':'btn btn-large btn-blue') }}</td>
+            <td align="right">{{ link_to("curriculum/ver/"~curriculumId, "<i class='fa fa-home'></i> MI PERFIL",'class':'btn btn-lg btn-primary') }}</td>
         </tr>
     </table>
+    {% endif %}
+
 </div>
 <hr>
 <div class="modal-body col-md-12 ">
 
-    {{ hidden_field('curriculum_id','value':curriculum_id) }}
     {{ form("idiomas/agregar","id":"agregarIdioma","method":"post", 'class':'curriculum-bg-form borde-top') }}
+
+
+    {{ hidden_field('curriculum_id','value':curriculumId) }}
 
     <div class="row form-group">
         <div id="idiomas_mensaje" class="col-md-8 col-md-offset-2  ">

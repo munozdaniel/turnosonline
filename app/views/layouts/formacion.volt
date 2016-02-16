@@ -1,6 +1,5 @@
-<!--=========== BEGAIN PRICING SECTION ================-->
-<section id="onepage" class="admin">
-    <div class="container">
+<section id="onepage" class="admin curriculum-bg">
+    <div class="container ">
         <div align="center">
             {{ content() }}
         </div>

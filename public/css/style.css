@@ -3270,3 +3270,6 @@ textarea .form-control {
     box-shadow: 12px 11px 1px -7px rgba(9,79,112,0.75);
     margin-right: 20px;
 }
+.font-bold{
+    font-weight: bold;
+}

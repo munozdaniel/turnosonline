@@ -2,7 +2,7 @@
 
 /**
  * Class InformacionController
- * Se encarga de unir varios modelos  en una sola vista: Idioma, Conocimientos, Adicional y Puesto. Verificar si es necesario.
+ * Se encarga de unir varios modelos  en una sola vista: Idioma, Conocimientos, Adicional y Puesto.
  */
 class InformacionController extends ControllerBase
 {
@@ -29,7 +29,7 @@ class InformacionController extends ControllerBase
         }*/
         $this->view->informacionForm = new InformacionForm();
         $this->view->idiomaForm = new IdiomaForm();
-        $this->view->curriculum_id = $curriculum_id;
+        $this->view->curriculumId = $curriculum_id;
     }
 
 }

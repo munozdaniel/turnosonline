@@ -25,14 +25,17 @@
 {{ form("experiencia/create","id":"form_expediente", "method":"post", 'class':'curriculum-bg-form borde-top') }}
 
 {{ content() }}
+    {% if curriculumId is defined %}
     <table width="100%" style="margin-bottom: 40px;">
         <tbody>
         <tr style="border-bottom: 1px solid #F3E7E7;">
-            <td align="left">{{ link_to("curriculum/ver", "<i class='fa fa-home'></i> MI PERFIL",'class':'btn btn-lg btn-primary') }}</td>
-            <td align="right">{{ link_to("formacion/new/curriculumId=?"~curriculumId, "SALTAR ESTE PASO ►",'class':'btn btn-lg btn-primary') }}</td>
+            <td align="left">{{ link_to("curriculum/ver/"~curriculumId, "<i class='fa fa-home'></i> MI PERFIL",'class':'btn btn-lg btn-primary') }}</td>
+
+            <td align="right">{{ link_to("formacion/new/"~curriculumId, "SALTAR ESTE PASO ►",'class':'btn btn-lg btn-primary') }}</td>
         </tr>
         </tbody>
     </table>
+    {% endif %}
     {{ hidden_field('curriculum_id','value':curriculumId) }}
     <div class="row form-group">
         <div class="col-sm-12 col-md-2 col-md-offset-2">
