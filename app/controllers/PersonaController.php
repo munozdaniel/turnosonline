@@ -82,42 +82,27 @@ class PersonaController extends ControllerBase
      */
     public function editAction($persona_id)
     {
-
         if (!$this->request->isPost()) {
-
             $persona = Curriculum\Persona::findFirstBypersona_id($persona_id);
             if (!$persona) {
                 $this->flash->error("La persona no fue encontrada");
-
                 return $this->dispatcher->forward(array(
                     "controller" => "persona",
                     "action" => "index"
                 ));
             }
-
-            $this->view->persona_id = $persona->persona_id;
-
-            $this->tag->setDefault("persona_id", $persona->getPersonaId());
-            $this->tag->setDefault("persona_apellido", $persona->getPersonaApellido());
-            $this->tag->setDefault("persona_nombre", $persona->getPersonaNombre());
-            $this->tag->setDefault("persona_fechaNacimiento", $persona->getPersonaFechanacimiento());
-            $this->tag->setDefault("persona_tipoDocumentoId", $persona->getPersonaTipodocumentoid());
-            $this->tag->setDefault("persona_numeroDocumento", $persona->getPersonaNumerodocumento());
-            $this->tag->setDefault("persona_sexo", $persona->getPersonaSexo());
-            $this->tag->setDefault("persona_nacionalidadId", $persona->getPersonaNacionalidadid());
-            $this->tag->setDefault("persona_localidadId", $persona->getPersonaLocalidadid());
-            $this->tag->setDefault("persona_telefono", $persona->getPersonaTelefono());
-            $this->tag->setDefault("persona_celular", $persona->getPersonaCelular());
-            $this->tag->setDefault("persona_email", $persona->getPersonaEmail());
-            $this->tag->setDefault("persona_estadoCivilId", $persona->getPersonaEstadocivilid());
-            $this->tag->setDefault("persona_habilitado", $persona->getPersonaHabilitado());
-            $this->tag->setDefault("persona_fechaCreacion", $persona->getPersonaFechacreacion());
-
+            $this->view->form = new DatosPersonalesForm($persona, array('edit' => true));
+            $this->view->curriculum_id = $persona->getPersonaCurriculumid();
+            $this->tag->setDefault("localidad_codigoPostal", $persona->getLocalidad()->getLocalidadCodigopostal());
+            $this->tag->setDefault("provincia_id", $persona->getLocalidad()->getCiudad()->getProvincia()->getProvinciaId());
+            $this->tag->setDefault("ciudad_id", $persona->getLocalidad()->getCiudad()->getCiudadId());
+            $this->tag->setDefault("localidad_domicilio", $persona->getLocalidad()->getLocalidadDomicilio());
         }
     }
 
     /**
      * Permite cargar el combobox Ciudad segun la provincia que se seleccione.
+     * Deberia ir en el controlador ciudad, y habilitar el acceso ACL
      */
     public function buscarCiudadesAction()
     {
@@ -334,49 +319,62 @@ class PersonaController extends ControllerBase
 
         $persona =  Curriculum\Persona::findFirstBypersona_id($persona_id);
         if (!$persona) {
-            $this->flash->error("persona does not exist " . $persona_id);
+            $this->flash->error("La persona no existe - " . $persona_id);
 
             return $this->dispatcher->forward(array(
                 "controller" => "persona",
                 "action" => "index"
             ));
         }
-
+        $this->view->form = new DatosPersonalesForm($persona, array('edit' => true));
         $persona->setPersonaApellido($this->request->getPost("persona_apellido"));
         $persona->setPersonaNombre($this->request->getPost("persona_nombre"));
         $persona->setPersonaFechanacimiento($this->request->getPost("persona_fechaNacimiento"));
         $persona->setPersonaTipodocumentoid($this->request->getPost("persona_tipoDocumentoId"));
-        $persona->setPersonaNumerodocumento($this->request->getPost("persona_numeroDocumento"));
+        //$persona->setPersonaNumerodocumento($this->request->getPost("persona_numeroDocumento"));
         $persona->setPersonaSexo($this->request->getPost("persona_sexo"));
         $persona->setPersonaNacionalidadid($this->request->getPost("persona_nacionalidadId"));
-        $persona->setPersonaLocalidadid($this->request->getPost("persona_localidadId"));
+        /*Actualizar localidad*/
+        $localidad =  \Curriculum\Localidad::findFirstByLocalidadId($persona->getPersonaLocalidadid());
+        $localidad->setLocalidadCodigopostal($this->request->getPost('localidad_codigoPostal','int'));
+        $localidad->setLocalidadDomicilio($this->request->getPost('localidad_domicilio','string'));
+        $localidad->setLocalidadCiudadid($this->request->getPost('ciudad_id','int'));
+        $this->db->begin();
+        if (!$localidad->update()) {
+            foreach ($localidad->getMessages() as $message) {
+                $this->flash->message('problema',$message);
+            }
+            $this->db->rollback();
+            return $this->redireccionar('persona/edit/'.$persona_id);
+        }
+        /*Fin: Actualizar localidad*/
+        $persona->setPersonaLocalidadid($localidad->getLocalidadId());
         $persona->setPersonaTelefono($this->request->getPost("persona_telefono"));
         $persona->setPersonaCelular($this->request->getPost("persona_celular"));
-        $persona->setPersonaEmail($this->request->getPost("persona_email"));
+        //$persona->setPersonaEmail($this->request->getPost("persona_email"));
         $persona->setPersonaEstadocivilid($this->request->getPost("persona_estadoCivilId"));
-        $persona->setPersonaHabilitado($this->request->getPost("persona_habilitado"));
-        $persona->setPersonaFechacreacion($this->request->getPost("persona_fechaCreacion"));
 
-
-        if (!$persona->save()) {
+        if (!$persona->update()) {
 
             foreach ($persona->getMessages() as $message) {
                 $this->flash->error($message);
             }
-
-            return $this->dispatcher->forward(array(
-                "controller" => "persona",
-                "action" => "edit",
-                "params" => array($persona->persona_id)
-            ));
+            $this->db->rollback();
+            return $this->redireccionar('persona/edit/'.$persona_id);
         }
+        $curriculum = Curriculum\Curriculum::findFirstByCurriculum_id($persona->getPersonaCurriculumid());
+        $curriculum->setCurriculumUltimamodificacion(date('Y-m-d'));
+        if (!$curriculum->update()) {
 
-        $this->flash->success("Los Datos Personales se han actualizado correctamente");
-
-        return $this->dispatcher->forward(array(
-            "controller" => "persona",
-            "action" => "index"
-        ));
+            foreach ($curriculum->getMessages() as $message) {
+                $this->flash->error($message);
+            }
+            $this->db->rollback();
+            return $this->redireccionar('persona/edit/'.$persona_id);
+        }
+        $this->db->commit();
+        $this->flash->notice("Los Datos Personales se han actualizado correctamente");
+        return $this->redireccionar('curriculum/ver/'.$persona->getPersonaCurriculumid());
 
     }
 

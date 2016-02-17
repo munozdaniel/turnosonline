@@ -10,12 +10,28 @@ class Nacionalidad extends \Phalcon\Mvc\Model
      */
     public $nacionalidad_id;
 
+    public function setNacionalidadId($nacionalidad_id)
+    {
+        $this->nacionalidad_id=$nacionalidad_id;
+    }
+    public function getNacionalidadId()
+    {
+        return $this->nacionalidad_id;
+    }
     /**
      *
      * @var string
      */
     public $nacionalidad_nombre;
 
+    public function setNacionalidadNombre($nacionalidad_nombre)
+    {
+        $this->nacionalidad_nombre=$nacionalidad_nombre;
+    }
+    public function getNacionalidadNombre()
+    {
+        return $this->nacionalidad_nombre;
+    }
     /**
      * Initialize method for model.
      */

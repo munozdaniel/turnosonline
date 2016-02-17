@@ -1,135 +1,42 @@
-{{ content() }}
-{{ form("persona/save", "method":"post") }}
-
-<table width="100%">
-    <tr>
-        <td align="left">{{ link_to("persona", "Go Back") }}</td>
-        <td align="right">{{ submit_button("Save") }}</td>
-    </tr>
-</table>
-
-<div align="center">
-    <h1>Edit persona</h1>
+<div class="curriculum-bg-header modal-header " align="left">
+    <h1>
+        <ins>EDITAR DATOS PERSONALES</ins>
+    </h1>
+    <table class="" width="100%">
+        <tr>
+            <td align="right">
+                {{ link_to("curriculum/login", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}
+            </td>
+        </tr>
+    </table>
 </div>
+<div class="modal-body col-md-12"  align="left">
 
-<table>
-    <tr>
-        <td align="right">
-            <label for="persona_apellido">Persona Of Apellido</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_apellido", "size" : 30) }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_nombre">Persona Of Nombre</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_nombre", "size" : 30) }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_fechaNacimiento">Persona Of FechaNacimiento</label>
-        </td>
-        <td align="left">
-                {{ text_field("persona_fechaNacimiento", "type" : "date") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_tipoDocumentoId">Persona Of TipoDocumentoId</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_tipoDocumentoId", "type" : "numeric") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_numeroDocumento">Persona Of NumeroDocumento</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_numeroDocumento", "size" : 30) }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_sexo">Persona Of Sexo</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_sexo", "type" : "numeric") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_nacionalidadId">Persona Of NacionalidadId</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_nacionalidadId", "type" : "numeric") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_localidadId">Persona Of LocalidadId</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_localidadId", "type" : "numeric") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_telefono">Persona Of Telefono</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_telefono", "size" : 30) }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_celular">Persona Of Celular</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_celular", "size" : 30) }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_email">Persona Of Email</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_email", "size" : 30) }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_estadoCivilId">Persona Of EstadoCivilId</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_estadoCivilId", "type" : "numeric") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_habilitado">Persona Of Habilitado</label>
-        </td>
-        <td align="left">
-            {{ text_field("persona_habilitado", "type" : "numeric") }}
-        </td>
-    </tr>
-    <tr>
-        <td align="right">
-            <label for="persona_fechaCreacion">Persona Of FechaCreacion</label>
-        </td>
-        <td align="left">
-                {{ text_field("persona_fechaCreacion", "type" : "date") }}
-        </td>
-    </tr>
+    {{ form("persona/save", "method":"post", 'class':'curriculum-bg-form borde-top') }}
+    {{ link_to("curriculum/ver/"~curriculum_id,'<i class="fa fa-reply"></i> VOLVER','class':'btn btn-lg btn-info font-bold') }}
+    <hr>
+    {{ content() }}
+        <fieldset>
 
-    <tr>
-        <td>{{ hidden_field("id") }}</td>
-        <td>{{ submit_button("Save") }}</td>
-    </tr>
-</table>
+            {% for element in form %}
 
-</form>
+            {% if is_a(element, 'Phalcon\Forms\Element\Hidden') %}
+                    {{ element }}
+                {% else %}
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ element.label() }}
+                    {{ element.render() }}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="col-md-4">
+                <hr>
+                {{ submit_button("GUARDAR CAMBIOS ",'class':'btn btn-lg btn-block  btn-info font-bold') }}
+            </div>
+        </fieldset>
+
+
+{{ end_form() }}
+</div>

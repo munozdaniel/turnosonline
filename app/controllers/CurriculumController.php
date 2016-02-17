@@ -357,15 +357,22 @@ class CurriculumController extends ControllerBase
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
             return $this->redireccionar('curriculum/login');
         }
-
         $persona = \Curriculum\Persona::findFirstByPersona_curriculumId($curriculumId);
+        if (!$persona) {
+            $this->flash->error("La persona no existe.");
+
+            return $this->dispatcher->forward(array(
+                "controller" => "curriculum",
+                "action" => "login"
+            ));
+        }
         $this->view->curriculum = Curriculum\Curriculum::findFirstByCurriculum_id($curriculumId);
         $this->view->persona = $persona;
-        $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->idiomas = Curriculum\Idiomas::findByIdiomas_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->conocimientos = Curriculum\Conocimientos::findByConocimientos_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->empleos = Curriculum\Empleo::findByEmpleo_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($curriculumId);
+        $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($curriculumId);
+        $this->view->idiomas = Curriculum\Idiomas::findByIdiomas_curriculumId($curriculumId);
+        $this->view->conocimientos = Curriculum\Conocimientos::findByConocimientos_curriculumId($curriculumId);
+        $this->view->empleos = Curriculum\Empleo::findByEmpleo_curriculumId($curriculumId);
 
     }
 }

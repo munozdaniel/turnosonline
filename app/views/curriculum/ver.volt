@@ -37,7 +37,7 @@
                     <dl class="dl-horizontal boxed">
 
                         <dt>Nombre Completo</dt>
-                        <dd>{{ persona.getPersonaApellido() ~ persona.getPersonaNombre() }} </dd>
+                        <dd>{{ persona.getPersonaApellido() ~" "~ persona.getPersonaNombre() }} </dd>
                         <dt>Fecha de Nacimiento</dt>
                         <dd>{{ date('d/m/Y',(persona.getPersonaFechaNacimiento()) | strtotime) }}</dd>
                         <dt>Documento</dt>
@@ -51,7 +51,7 @@
                         <dt>Codigo Postal</dt>
                         <dd>{{ persona.getLocalidad().getLocalidadCodigopostal() }}</dd>
                         <dt>Nacionalidad</dt>
-                        <dd>{{ persona.obtenerNacionalidad(persona.getPersonaNacionalidadid()) }}</dd>
+                        <dd>{{ persona.getNacionalidad().getNacionalidadNombre() }}</dd>
                         <dt>Provincia</dt>
                         <dd>{{ persona.getLocalidad().getCiudad().getProvincia().getProvinciaNombre() }}</dd>
                         <dt>Ciudad</dt>
@@ -63,7 +63,7 @@
                         <dt>E-Mail</dt>
                         <dd>{{ persona.getPersonaEmail() }}</dd>
                         <dt>Mi CV Adjunto</dt>
-                        <dd>{{ link_to(curriculum.getCurriculumAdjunto(),'DESCARGAR','class':'alert-info') }}</dd>
+                        <dd>{{ link_to(curriculum.getCurriculumAdjunto(),'DESCARGAR','class':'alert-info','target':'_blank') }}</dd>
                         <dt>Última Modificación</dt>
                         <dd>{{ date('d/m/Y',(curriculum.getCurriculumUltimamodificacion()) | strtotime) }}</dd>
                         <dt></dt>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-md-12">
                     <hr>
-                    {{ link_to('persona/edit' ~ persona.getPersonaId(), '<i class="glyphicon glyphicon-edit"></i> EDITAR DATOS PERSONALES', "class": "btn btn-gris") }}
+                    {{ link_to('persona/edit/' ~ persona.getPersonaId(), '<i class="glyphicon glyphicon-pencil"></i> EDITAR DATOS PERSONALES', "class": "btn btn-gris") }}
                 </div>
             </div>
         </div>
@@ -122,7 +122,6 @@
                                         <hr>
                                         <span><strong>Tareas: </strong></span>
                                         <em>{{ unaExperiencia.getExperienciaTareas() }}</em>
-                                        </p>
                                     </li>
                                 </ul>
                                 <div class="col-md-12">
@@ -333,7 +332,7 @@
                     <div class="col-md-12">
                         <hr>
                         {{ link_to('informatica/new/' ~ persona.getPersonaCurriculumid(),
-                        '<i class="glyphicon glyphicon-edit"></i> EDITAR SECTOR DE INTERES', "class": "btn btn-gris") }}
+                        '<i class="glyphicon glyphicon-pencil"></i> EDITAR SECTOR DE INTERES', "class": "btn btn-gris") }}
                     </div>
                 </div>
             </div>

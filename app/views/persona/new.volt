@@ -26,7 +26,7 @@
 
     {{ content() }}
 
-    <div class="modal-body row">
+    <div class="row">
         <div class="form-group col-sm-12 col-md-6">
             <div class="row form-group">
                 <div class="col-sm-12 col-md-4 col-md-offset-0">
