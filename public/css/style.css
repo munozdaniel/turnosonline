@@ -2382,7 +2382,11 @@ textarea .form-control {
   background-color:#ce39cc;
   color: #fff;
 }
-
+.btn-icono-submit{
+position: static;
+border-right: 1px solid #9E9E9E !important;
+cursor: none;
+}
 
 /*======================///////////////
 			start responsive style

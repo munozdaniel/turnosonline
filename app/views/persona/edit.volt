@@ -10,33 +10,39 @@
         </tr>
     </table>
 </div>
-<div class="modal-body col-md-12"  align="left">
+<div class="modal-body col-md-12" align="left">
 
     {{ form("persona/save", "method":"post", 'class':'curriculum-bg-form borde-top') }}
-    {{ link_to("curriculum/ver/"~curriculum_id,'<i class="fa fa-reply"></i> VOLVER','class':'btn btn-lg btn-info font-bold') }}
+    {% if curriculum_id is defined %}
+        {{ link_to("curriculum/ver/"~curriculum_id,'<i class="fa fa-reply"></i> VOLVER','class':'btn btn-lg btn-info font-bold') }}
+    {% else %}
+        {{ link_to("curriculum/login/",'<i class="fa fa-home"></i> SALIR','class':'btn btn-lg btn-info font-bold') }}
+    {% endif %}
+    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
+           value="<?php echo $this->security->getToken() ?>"/>
     <hr>
     {{ content() }}
-        <fieldset>
+    <fieldset>
 
-            {% for element in form %}
+        {% for element in form %}
 
             {% if is_a(element, 'Phalcon\Forms\Element\Hidden') %}
-                    {{ element }}
-                {% else %}
-            <div class="col-md-4">
-                <div class="form-group">
-                    {{ element.label() }}
-                    {{ element.render() }}
+                {{ element }}
+            {% else %}
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ element.label() }}
+                        {{ element.render() }}
+                    </div>
                 </div>
-            </div>
             {% endif %}
-            {% endfor %}
-            <div class="col-md-4">
-                <hr>
-                {{ submit_button("GUARDAR CAMBIOS ",'class':'btn btn-lg btn-block  btn-info font-bold') }}
-            </div>
-        </fieldset>
+        {% endfor %}
+        <div class="col-md-4">
+            <hr>
+            {{ submit_button("GUARDAR CAMBIOS ",'class':'btn btn-lg btn-block  btn-info font-bold') }}
+        </div>
+    </fieldset>
 
 
-{{ end_form() }}
+    {{ end_form() }}
 </div>

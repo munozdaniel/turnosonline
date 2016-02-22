@@ -27,13 +27,15 @@
                     <h3><strong>DATOS PERSONALES</strong></h3>
                     <hr>
                 </div>
-                <div class="col-md-3 col-md-offset-2">
 
+                <div class="col-md-3 col-md-offset-2">
                     {{ image('files/curriculum/perfil/default.jpg','alt':'Foto de perfil','width':'200','height':'300') }}
                 </div>
-
+                {{ form('persona/edit','method':'post') }}
+                {{ hidden_field('persona_id','value':persona.getPersonaId()) }}
+                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
+                       value="<?php echo $this->security->getToken() ?>"/>
                 <div class="col-md-6 ">
-
                     <dl class="dl-horizontal boxed">
 
                         <dt>Nombre Completo</dt>
@@ -72,8 +74,9 @@
                 </div>
                 <div class="col-md-12">
                     <hr>
-                    {{ link_to('persona/edit/' ~ persona.getPersonaId(), '<i class="glyphicon glyphicon-pencil"></i> EDITAR DATOS PERSONALES', "class": "btn btn-gris") }}
+                    <i class="glyphicon glyphicon-pencil btn btn-gris btn-icono-submit"></i>{{ submit_button('EDITAR DATOS PERSONALES', "class": "btn btn-gris") }}
                 </div>
+                {{ end_form() }}
             </div>
         </div>
         {# =======================================================#}

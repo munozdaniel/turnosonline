@@ -366,6 +366,7 @@ class CurriculumController extends ControllerBase
                 "action" => "login"
             ));
         }
+
         $this->view->curriculum = Curriculum\Curriculum::findFirstByCurriculum_id($curriculumId);
         $this->view->persona = $persona;
         $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($curriculumId);
