@@ -77,6 +77,12 @@ class ExperienciaForm   extends Form {
         ));
         $this->add($elemento);
         /*========================== ==========================*/
+        $elemento = new Check('experiencia_fechaActual', array(
+            'value' => '1', 'checked'=>''
+        ));
+        $elemento->setLabel('Al Presente');
+        $this->add($elemento);
+
         $elemento = new Date('experiencia_fechaFinal',array('class'=>'form-control', 'disabled'=>'','required'=>''));
         $elemento->setLabel('Fecha Final');
         $elemento->addValidators(array(
@@ -84,11 +90,6 @@ class ExperienciaForm   extends Form {
                 'message' => 'La fecha final es requerida.'
             ))
         ));
-        $this->add($elemento);
-        $elemento = new Check('experiencia_fechaActual', array(
-            'value' => '1', 'checked'=>''
-        ));
-        $elemento->setLabel('Al Presente');
         $this->add($elemento);
 
         /*========================== ==========================*/

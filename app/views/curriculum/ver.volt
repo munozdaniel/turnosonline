@@ -8,7 +8,7 @@
         </h4>
         <table class="" width="100%">
             <tr>
-                <td align="left ">{{ link_to('persona/edit' ~ persona.getPersonaId(), '<i class="glyphicon glyphicon-print"></i> GENERAR PDF', "class": "btn btn-primary btn-lg") }}
+                <td align="left ">{{ link_to('curriculum/pdf' , '<i class="glyphicon glyphicon-print"></i> GENERAR PDF', "class": "btn btn-primary btn-lg") }}
                 </td>
                 <td align="right">{{ link_to("curriculum/login", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
             </tr>
@@ -31,7 +31,7 @@
                 <div class="col-md-3 col-md-offset-2">
                     {{ image('files/curriculum/perfil/default.jpg','alt':'Foto de perfil','width':'200','height':'300') }}
                 </div>
-                {{ form('persona/edit','method':'post') }}
+                {{ form('persona/edit','method':'post', 'id':'id_form_persona') }}
                 {{ hidden_field('persona_id','value':persona.getPersonaId()) }}
                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
                        value="<?php echo $this->security->getToken() ?>"/>

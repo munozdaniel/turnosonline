@@ -75,36 +75,22 @@ class ExperienciaController extends ControllerBase
       * Edits a experiencia
       *
       * @param string $experiencia_id
+      * @return
       */
     public function editAction($experiencia_id)
     {
 
-        if (!$this->request->isPost()) {
-
+        if ($this->request->isGet()) {
             $experiencia = \Curriculum\Experiencia::findFirstByexperiencia_id($experiencia_id);
             if (!$experiencia) {
-                $this->flash->message("problema","experiencia was not found");
-
+                $this->flash->message("problema","La Experiencia Laboral no fue encontrada");
                 return $this->dispatcher->forward(array(
-                    "controller" => "experiencia",
-                    "action" => "index"
+                    "controller" => "curriculum",
+                    "action" => "login"
                 ));
             }
-
-            $this->view->experiencia_id = $experiencia->experiencia_id;
-
-            $this->tag->setDefault("experiencia_id", $experiencia->getExperienciaId());
-            $this->tag->setDefault("experiencia_curriculumId", $experiencia->getExperienciaCurriculumid());
-            $this->tag->setDefault("experiencia_empresa", $experiencia->getExperienciaEmpresa());
-            $this->tag->setDefault("experiencia_rubro", $experiencia->getExperienciaRubro());
-            $this->tag->setDefault("experiencia_cargo", $experiencia->getExperienciaCargo());
-            $this->tag->setDefault("experiencia_tareas", $experiencia->getExperienciaTareas());
-            $this->tag->setDefault("experiencia_fechaInicio", $experiencia->getExperienciaFechainicio());
-            $this->tag->setDefault("experiencia_fechaFinal", $experiencia->getExperienciaFechafinal());
-            $this->tag->setDefault("experiencia_fechaActual", $experiencia->getExperienciaFechaactual());
-            $this->tag->setDefault("experiencia_habilitado", $experiencia->getExperienciaHabilitado());
-            $this->tag->setDefault("experiencia_provinciaId", $experiencia->getExperienciaProvinciaid());
-            
+            $this->view->curriculum_id = $experiencia->getExperienciaCurriculumid();
+            $this->view->form = new ExperienciaForm($experiencia, array('edit' => true));
         }
     }
 
@@ -182,53 +168,68 @@ class ExperienciaController extends ControllerBase
         if (!$this->request->isPost()) {
             return $this->dispatcher->forward(array(
                 "controller" => "experiencia",
-                "action" => "index"
+                "action" => "login"
             ));
         }
 
         $experiencia_id = $this->request->getPost("experiencia_id");
 
-        $experiencia = \Curriculum\Experiencia::findFirstByexperiencia_id($experiencia_id);
+        $experiencia = \Curriculum\Experiencia::findFirstByExperiencia_id($experiencia_id);
         if (!$experiencia) {
-            $this->flash->message("problema","experiencia does not exist " . $experiencia_id);
+            $this->flash->message("problema","La experiencia laboral no existe - " . $experiencia_id);
 
             return $this->dispatcher->forward(array(
-                "controller" => "experiencia",
-                "action" => "index"
+                "controller" => "curriculum",
+                "action" => "login"
             ));
         }
+        $this->view->form = new ExperienciaForm($experiencia, array('edit' => true));
 
-        $experiencia->setExperienciaCurriculumid($this->request->getPost("experiencia_curriculumId"));
         $experiencia->setExperienciaEmpresa($this->request->getPost("experiencia_empresa"));
         $experiencia->setExperienciaRubro($this->request->getPost("experiencia_rubro"));
         $experiencia->setExperienciaCargo($this->request->getPost("experiencia_cargo"));
         $experiencia->setExperienciaTareas($this->request->getPost("experiencia_tareas"));
         $experiencia->setExperienciaFechainicio($this->request->getPost("experiencia_fechaInicio"));
-        $experiencia->setExperienciaFechafinal($this->request->getPost("experiencia_fechaFinal"));
-        $experiencia->setExperienciaFechaactual($this->request->getPost("experiencia_fechaActual"));
-        $experiencia->setExperienciaHabilitado($this->request->getPost("experiencia_habilitado"));
+        if($this->request->hasPost('experiencia_fechaFinal'))
+        {
+            $experiencia->setExperienciaFechafinal($this->request->getPost("experiencia_fechaFinal"));
+            $experiencia->setExperienciaFechaactual(0);
+        }
+        else{
+            $experiencia->setExperienciaFechaactual($this->request->getPost("experiencia_fechaActual"));
+        }
         $experiencia->setExperienciaProvinciaid($this->request->getPost("experiencia_provinciaId"));
-        
 
+        $this->db->begin();
         if (!$experiencia->save()) {
 
             foreach ($experiencia->getMessages() as $message) {
                 $this->flash->message("problema",$message);
             }
-
+            $this->db->rollback();
+            return $this->redireccionar('experiencia/edit/'.$experiencia_id);
+        }
+        $curriculum = Curriculum\Curriculum::findFirstByCurriculum_id($experiencia->getExperienciaCurriculumid());
+        if (!$curriculum) {
+            $this->flash->message("problema","No se encontro el curriculum - " . $experiencia->getExperienciaCurriculumid());
+            $this->db->rollback();
             return $this->dispatcher->forward(array(
-                "controller" => "experiencia",
-                "action" => "edit",
-                "params" => array($experiencia->experiencia_id)
+                "controller" => "curriculum",
+                "action" => "login"
             ));
         }
+        $curriculum->setCurriculumUltimamodificacion(date('Y-m-d'));
+        if (!$curriculum->update()) {
 
-        $this->flash->success("experiencia was updated successfully");
-
-        return $this->dispatcher->forward(array(
-            "controller" => "experiencia",
-            "action" => "index"
-        ));
+            foreach ($curriculum->getMessages() as $message) {
+                $this->flash->error($message);
+            }
+            $this->db->rollback();
+            return $this->redireccionar('experiencia/edit/'.$experiencia_id);
+        }
+        $this->db->commit();
+        $this->flash->notice("Los Datos Personales se han actualizado correctamente");
+        return $this->redireccionar('curriculum/ver/'.$experiencia->getExperienciaCurriculumid());
 
     }
 

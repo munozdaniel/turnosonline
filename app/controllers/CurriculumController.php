@@ -299,7 +299,6 @@ class CurriculumController extends ControllerBase
                 $this->flash->message('problema','Usted no se encuentra registrado en el sistema');
                 return $this->redireccionar('curriculum/login');
             }else{
-                $this->view->pick('curriculum/ver');
                 return $this->redireccionar("curriculum/ver/".$persona->getPersonaCurriculumid());
             }
         }
@@ -357,6 +356,7 @@ class CurriculumController extends ControllerBase
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
             return $this->redireccionar('curriculum/login');
         }
+
         $persona = \Curriculum\Persona::findFirstByPersona_curriculumId($curriculumId);
         if (!$persona) {
             $this->flash->error("La persona no existe.");
