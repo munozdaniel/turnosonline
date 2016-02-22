@@ -351,9 +351,9 @@ class CurriculumController extends ControllerBase
      * Un arreglo experiencia
      * Un arreglo Formacion
      */
-    public function verAction($curriculumId)
+    public function verAction($curriculumId=null)
     {
-        if($curriculumId==null){
+        if(empty($curriculumId) || $curriculumId==null){
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
             return $this->redireccionar('curriculum/login');
         }
