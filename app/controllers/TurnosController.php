@@ -648,9 +648,9 @@ class TurnosController extends ControllerBase
             $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
             $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->fechasTurnos_diaAtencion);//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
 
-            $textoA = "En respuesta a su solicitud, le comunicamos que podrá dirigirse al Instituto Municipal de Previsión Social el dia " . $fechaAtencion . " para tramitar un préstamo personal.";
-            $textoDxFdT = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para tramitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
-            $textoD = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para tramitar un préstamo personal porque ";
+            $textoA = "En respuesta a su solicitud, le comunicamos que podrá dirigirse al Instituto Municipal de Previsión Social el día " . $fechaAtencion . " para <b>trámitar</b> un préstamo personal.";
+            $textoDxFdT = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
+            $textoD = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque ";
 
             if (count($solicitudesAutorizadas) != 0)
                 $this->envioRespuestas($solicitudesAutorizadas, $textoA, 'A');
@@ -672,7 +672,6 @@ class TurnosController extends ControllerBase
             $this->enviarEmail($unaSolicitud, $texto, $tipoEstado);
         }
     }
-
 
     private function enviarEmail($unaSolicitud, $mensaje, $tipoEstado)
     {
@@ -704,9 +703,10 @@ class TurnosController extends ControllerBase
         $idCodif = base64_encode($idSol);
 
         $texto = "Estimado/a  " . $nomApe . ":<br/> <br/>" . $mensaje;
-        $textoFinal = "Para confirmar que recibio este mensaje, por favor"
-            . " <a href='http://localhost/impsweb/turnos/confirmaEmail?id=" . $idCodif . "' target='_blank'>haga click aqui.</a>"
-            . "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono:(299)- 4433798";
+        $textoFinalA = "Para confirmar que recibio este mensaje, por favor"
+            . " <a href='http://localhost/impsweb/turnos/confirmaEmail?id=" . $idCodif . "' target='_blank'>haga click aquí.</a>"
+            . "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono:(299) 4433798";
+        $textoFinal = "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono:(299) 4433798";
 
         if ($tipoEstado == 'A') {
             $cad1 = "Además, a modo informativo, le avisamos que el monto máximo que se le puede prestar es $" . $montoM . ", el monto posible que se le puede otorgar es $" . $montoP;
@@ -717,12 +717,14 @@ class TurnosController extends ControllerBase
 
             $cadena .= "Recuerde que usted tiene " . $diasConfirmacion . " dias para confirmar el mensaje, de lo contrario el turno sera cancelado.<br/>";
 
-            $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinal;
-        } else {   //verificar si es denegado para recuperar el contenido de observaciones.
-
+            $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinalA;
+        }
+        else
+        {
             if ($tipoEstado == 'D')
                 $this->mailDesarrollo->Body = $texto . ' ' . strtolower($obs) . '.<br/>' . $textoFinal;
-            else {
+            else
+            {
                 if ($obs != '-' && $obs != '')
                     $texto .= "Nota: " . $obs . "<br/>";
 
