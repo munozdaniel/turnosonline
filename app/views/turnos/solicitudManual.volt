@@ -22,8 +22,7 @@
             if (estadoSeleccionado === 'AUTORIZADO' || estadoSeleccionado === '') {
                 var cant = {{ cantAutorizados }};
                 if (cant > 0) {
-                    if ({{ cantAutorizados }} ===
-                    {{ cantTurnos }} )
+                    if ({{ cantAutorizados }} === {{ cantTurnos }} )
                     alert('No hay mas turnos disponibles en este periodo. Se debe denegar la solicitud.')
                 }
             }
@@ -115,8 +114,8 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                <div class="col-lg-6 col-lg-offset-4">
+                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block','style':'width:320px;') }}
                 </div>
             </div>
 
