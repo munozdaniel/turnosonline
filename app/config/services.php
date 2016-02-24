@@ -173,7 +173,7 @@ $di->set('mailInformatica', function () use ($config) {
 $di->set('flash', function()
 {
     return new Phalcon\Flash\Direct(array(
-        'error'     => 'alert alert-danger multiple col-md-8',
+        'error'     => 'problema',
         'success'   => 'alert alert-success',
         'notice'    => 'alert alert-info ',
         'validador'    => 'mi-alert alert-validador ',

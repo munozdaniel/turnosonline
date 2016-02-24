@@ -42,12 +42,12 @@ class Ciudad extends \Phalcon\Mvc\Model
     {
         $this->ciudad_nombre=$ciudad_nombre;
     }
-    public function getProvinciaid()
+    public function getCiudadProvinciaid()
     {
         return $this->ciudad_provinciaId;
     }
 
-    public function setProvinciaid($ciudad_provinciaId)
+    public function setCiudadProvinciaid($ciudad_provinciaId)
     {
         $this->ciudad_provinciaId=$ciudad_provinciaId;
     }

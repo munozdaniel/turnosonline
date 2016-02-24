@@ -8,13 +8,13 @@
     </style>
 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12" style="margin-bottom: 30px;">
-                <div class="heading">
-                    <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
-
-                    <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
-                </div>
+        <div class="row" align="center" style="margin-top: 30px;">
+            <div class="heading">
+                <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
+                {{ link_to('administrar/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
+            </div>
+        </div>
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
                 <div class="col-sm-6">
                     <div class="fuente-14"><strong>
                             <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
@@ -50,10 +50,9 @@
                         </div>
                     {% endif %}
                 </div>
-            </div>
         </div>
 
-        <div class="row edicion">
+        <div class="row  curriculum-bg-form borde-top borde-left-4 borde-right-4">
             <div class="col-md-12">
                 {{ content() }}
             </div>
@@ -133,14 +132,16 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
-        <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
             {{ form('turnos/enviarRespuestas') }}
-                    {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block','style':'width:320px;') }}
+
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block') }}
+                </div>
+            </div>
+
             {{ end_form() }}
         </div>
-
     </div>
 
     <!-- ====================================== -->

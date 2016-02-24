@@ -14,9 +14,7 @@
             <div class="col-lg-12 col-md-12">
                 <!-- BEGAIN SERVICE  -->
                 <div class="service_area">
-
                     <div class="row">
-
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <!-- BEGAIN SINGLE SERVICE -->
                             <div class="single_service wow fadeInLeft">
@@ -29,41 +27,34 @@
                                 </p>
                             </div>
                         </div>
-
+                         <div class="col-lg-6 col-md-6 col-sm-6">
+                            <!-- BEGAIN SINGLE SERVICE -->
+                            <div class="single_service wow fadeInRight">
+                                    {{ mensajePeriodo }}
+                            </div>
+                        </div>
+                        {#
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                           <!-- BEGAIN SINGLE SERVICE -->
-                           <div class="single_service wow fadeInRight">
-
-                               {{ mensajePeriodo }}
-
-                              {# {{ link_to('turnos/index','class':'puntero',' <div class="service_iconarea">
-                                   <span class="fa fa-ticket service_icon"></span></div> <h3 class="service_title">Turnos Online</h3>') }}
-                               <p> Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación, las fechas para solicitarlos se publicarán <strong><a style="color:#286090; cursor: pointer !important;">aquí</a></strong>. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente. </p>
-                               #}
-                           </div>
-                       </div>
-                    {#
-                     <div class="col-lg-6 col-md-6 col-sm-6">
-                           <!-- BEGAIN SINGLE SERVICE -->
-                           <div class="single_service wow fadeInLeft">
-                               <div class="service_iconarea">
-                                   <span class="fa fa-list-alt service_icon"></span>
-                               </div>
-                               <h3 class="service_title">Estado de Deuda</h3>
-                               <p>Proximamente. El Servicio se encuentra en construcción.</p>
-                           </div>
-                       </div>
-                       <div class="col-lg-6 col-md-6 col-sm-6">
-                           <!-- BEGAIN SINGLE SERVICE -->
-                           <div class="single_service wow fadeInRight">
-                               <div class="service_iconarea">
-                                   <span class="fa fa-users service_icon"></span>
-                               </div>
-                               <h3 class="service_title">Identificación de Afiliados</h3>
-                               <p>Proximamente. El Servicio se encuentra en construcción.</p>
-                           </div>
-                       </div>
-                       #}
+                            <!-- BEGAIN SINGLE SERVICE -->
+                            <div class="single_service wow fadeInLeft">
+                                <div class="service_iconarea">
+                                    <span class="fa fa-list-alt service_icon"></span>
+                                </div>
+                                <h3 class="service_title">Estado de Deuda</h3>
+                                <p>Proximamente. El Servicio se encuentra en construcción.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <!-- BEGAIN SINGLE SERVICE -->
+                            <div class="single_service wow fadeInRight">
+                                <div class="service_iconarea">
+                                    <span class="fa fa-users service_icon"></span>
+                                </div>
+                                <h3 class="service_title">Identificación de Afiliados</h3>
+                                <p>Proximamente. El Servicio se encuentra en construcción.</p>
+                            </div>
+                        </div>
+                        #}
                     </div>
                 </div>
             </div>

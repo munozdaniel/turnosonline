@@ -19,13 +19,14 @@ class DatosPersonalesForm  extends Form {
      */
     public function initialize($entity = null, $options = array())
     {
-     /*   if (!isset($options['edit'])) {
-
+        $disabled = array('disabled','false');
+        if (!isset($options['edit'])) {
             $element = new Text("persona_id");
             $this->add($element->setLabel("Id"));
         } else {
-            $this->add(new \Phalcon\Forms\Element\Hidden("persona_id"));
-        }*/
+            $this->add(new \Phalcon\Forms\Element\Hidden("persona_id"));//EDITAR
+            $disabled = array('disabled','true');
+        }
         /*========================== ==========================*/
         $persona_apellido = new Text('persona_apellido',
             array('class'=>'form-control','placeholder'=>'Ingrese su Apellido','required'=>'','maxlength'=>70));
@@ -65,7 +66,8 @@ class DatosPersonalesForm  extends Form {
             'useEmpty'   => true,
             'emptyText'  => 'Tipo ',
             'emptyValue' => '',
-            'class'      => 'form-control','required'=>''
+            'class'      => 'form-control',
+            'required'=>''
         ));
         $persona_tipoDocumentoId->addValidators(array(
             new PresenceOf(array(
@@ -76,7 +78,10 @@ class DatosPersonalesForm  extends Form {
         $this->add($persona_tipoDocumentoId);
         /*========================== ==========================*/
         $persona_numeroDocumento = new \Phalcon\Forms\Element\Numeric('persona_numeroDocumento',
-            array('placeholder'=>'Solo Números','class'=> 'form-control','required'=>''));
+            array('placeholder'=>'Solo Números',
+                'class'=> 'form-control',
+                'required'=>'',
+                $disabled[0]=>$disabled[1]));
         $persona_numeroDocumento->setLabel('<strong class="font-rojo "> * </strong>Nro Documento');
         $persona_numeroDocumento->setFilters(array('int'));
         $persona_numeroDocumento->addValidators(array(
@@ -86,7 +91,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_numeroDocumento);
         /*========================== ==========================*/
-        $persona_sexo = new Select('persona_sexo', array('Masculino','Femenino'),
+        $persona_sexo = new Select('persona_sexo', array(''=>'Seleccionar',1=>'Masculino',0=>'Femenino'),
             array('class'=>'form-control','required'=>''));
         $persona_sexo->setLabel('<strong class="font-rojo "> * </strong>Sexo');
         $this->add($persona_sexo);
@@ -122,7 +127,7 @@ class DatosPersonalesForm  extends Form {
         $this->add($persona_nacionalidadId);
 
         /*========================== ==========================*/
-        $localidad_codigoPostal = new Text('localidad_codigoPostal',array('class'=> 'form-control','required'=>'','placeholder'=>'Ingrese su Codigo Postal'));
+        $localidad_codigoPostal = new \Phalcon\Forms\Element\Numeric('localidad_codigoPostal',array('class'=> 'form-control','required'=>'','placeholder'=>'Ingrese su Codigo Postal'));
         $localidad_codigoPostal->setLabel('<strong class="font-rojo "> * </strong>Codigo Postal');
         $localidad_codigoPostal->setFilters(array('int'));
         $localidad_codigoPostal->addValidators(array(
@@ -147,7 +152,7 @@ class DatosPersonalesForm  extends Form {
         $provincia->setLabel('<strong class="font-rojo "> * </strong>Provincia');
         $this->add($provincia);
 
-        $ciudad =  new Select('ciudad_id',array(), array(
+        $ciudad =  new Select('ciudad_id',\Curriculum\Ciudad::find(), array(
             'using'      => array('ciudad_id', 'ciudad_nombre'),
             'useEmpty'   => true,
             'emptyText'  => 'Seleccionar Provincia',
@@ -173,7 +178,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($localidad_domicilio);
         /*========================== Telefono ==========================*/
-        $persona_telefono = new Text('persona_telefono',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
+        $persona_telefono = new \Phalcon\Forms\Element\Numeric('persona_telefono',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
         $persona_telefono->setLabel('<strong class="font-rojo "> * </strong>Teléfono ');
         $persona_telefono->setFilters(array('int'));
         $persona_telefono->addValidators(array(
@@ -183,7 +188,7 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_telefono);
         /*========================== Celular ==========================*/
-        $persona_celular = new Text('persona_celular',array('placeholder'=>'Solo Números','required'=>'','class'=> 'form-control'));
+        $persona_celular = new \Phalcon\Forms\Element\Numeric('persona_celular',array('placeholder'=>'Solo Números','class'=> 'form-control'));
         $persona_celular->setLabel('Celular ');
         $persona_celular->setFilters(array('int'));
         $persona_celular->addValidators(array(
@@ -193,7 +198,8 @@ class DatosPersonalesForm  extends Form {
         ));
         $this->add($persona_celular);
         /*========================== Email ==========================*/
-        $persona_email = new Email('persona_email',array('placeholder'=>'ejemplo@imps.org.ar','required'=>'','class'=> 'form-control'));
+        $persona_email = new Email('persona_email',array('placeholder'=>'ejemplo@imps.org.ar','required'=>'','class'=> 'form-control',
+            $disabled[0]=>$disabled[1]));
         $persona_email->setLabel('<strong class="font-rojo "> * </strong>Email');
         $persona_email->setFilters(array('email'));
         $persona_email->addValidators(array(
@@ -202,7 +208,6 @@ class DatosPersonalesForm  extends Form {
             ))
         ));
         $this->add($persona_email);
-
         /*========================== Script para los selects dependientes =============== */
         $script = new DataListScript('script_ciudadProvincia',array(
             'url' => '/impsweb/persona/buscarCiudades',
@@ -212,5 +217,6 @@ class DatosPersonalesForm  extends Form {
         ));
         $script->setLabel(" ");
         $this->add($script);
+
     }
 }

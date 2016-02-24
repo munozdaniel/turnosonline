@@ -8,12 +8,12 @@ class CurriculumController extends ControllerBase
     public function initialize()
     {
         $this->tag->setTitle('Curriculum');
+
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
 
         parent::initialize();
-
     }
 
     /**
@@ -289,17 +289,17 @@ class CurriculumController extends ControllerBase
                 "email" => $email,
                 "dni" => $dni
             );
-            $persona = \Curriculum\Persona::find(
+            $persona = \Curriculum\Persona::findFirst(
                 array(
                     $condiciones,
                     "bind" => $parametros
                 ));
-            if (count($persona) == 0) {
+            if (!$persona) {
                 $this->view->form = new LoginForm();
                 $this->flash->message('problema','Usted no se encuentra registrado en el sistema');
                 return $this->redireccionar('curriculum/login');
             }else{
-                return $this->redireccionar("curriculum/ver/".$persona[0]->getPersonaCurriculumid());
+                return $this->redireccionar("curriculum/ver/".$persona->getPersonaCurriculumid());
             }
         }
     }
@@ -311,26 +311,34 @@ class CurriculumController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $correo = $this->request->getPost('confirmar_email');
-            $this->mailDesarrollo->CharSet = 'UTF-8';
-            $this->mailDesarrollo->Host = 'mail.imps.org.ar';
-            $this->mailDesarrollo->SMTPAuth = true;
-            $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->Password = 'sis$%&--temas';
-            $this->mailDesarrollo->SMTPSecure = '';
-            $this->mailDesarrollo->Port = 26;
-            $this->mailDesarrollo->AddBCC($correo);
-            $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN RRHH';
-            $this->mailDesarrollo->Subject = "Confirmación de correo";
-            $email = base64_encode($correo);
-            $this->mailDesarrollo->Body = "<h1>Confirmación de Correo Electronico</h1>
-            <p>Para continuar con tu registro, pulsa en el enlace abajo:</p>
-            <a href='http://192.168.42.149/impsweb/persona/new?email=$email' >  click aquí  </a>";
+            $persona = Curriculum\Persona::findFirstByPersona_email($correo);
+            if($persona){
+                $this->flash->message('problema',"La casilla de correo ya se encuentra en registrada en nuestro sistema");
 
-            if ($this->mailDesarrollo->send()) {
-                $this->flash->message('exito',"Se ha enviado un correo de confirmación para continuar con el proceso");
-            } else
-                $this->flash->success("Ha sucedido un error. No es posible comunicarse con nuestras oficinas momentáneamente..");
+            }else{
+                $this->mailDesarrollo->CharSet = 'UTF-8';
+                $this->mailDesarrollo->Host = 'mail.imps.org.ar';
+                $this->mailDesarrollo->SMTPAuth = true;
+                $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
+                $this->mailDesarrollo->Password = 'sis$%&--temas';
+                $this->mailDesarrollo->SMTPSecure = '';
+                $this->mailDesarrollo->Port = 26;
+                $this->mailDesarrollo->AddBCC($correo);
+                $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
+                $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN RRHH';
+                $this->mailDesarrollo->Subject = "Confirmación de correo";
+                $email = base64_encode($correo);
+
+                $this->mailDesarrollo->Body = "<h1>Bienvenido</h1>
+                <p>Para continuar con el proceso de registración, tenés que confirmar tu dirección de email haciendo click en el siguiente link:</p>
+                <a href='http://192.168.42.149/impsweb/persona/new?email=$email' style='color:#ff8936;'> <em> Confirmar Email  </em></a>";
+
+                if ($this->mailDesarrollo->send()) {
+                    $this->flash->message('exito',"Se ha enviado un correo de confirmación para continuar con el proceso. Por favor, revise su cassilla");
+                } else
+                    $this->flash->success("Ha sucedido un error. No es posible comunicarse con nuestras oficinas momentáneamente.");
+            }
+
 
             $this->redireccionar('curriculum/login');
         }
@@ -342,40 +350,30 @@ class CurriculumController extends ControllerBase
      * Un arreglo experiencia
      * Un arreglo Formacion
      */
-    public function verAction($curriculumId)
+    public function verAction($curriculumId=null)
     {
-        if($curriculumId==null){
+        if(empty($curriculumId) || $curriculumId==null){
             $this->flash->message('problema','OPS! HUBO UN PROBLEMA AL RECUPERAR EL CURRICULUM');
             return $this->redireccionar('curriculum/login');
         }
 
         $persona = \Curriculum\Persona::findFirstByPersona_curriculumId($curriculumId);
-        $arregloLocalidad = array();
-        $arregloLocalidad['localidad_codigoPostal'] = "Sin Especificar";
-        $arregloLocalidad['localidad_domicilio'] = "Sin Especificar";
-        $arregloLocalidad['ciudad_nombre'] = "Sin Especificar";
-        $arregloLocalidad['provincia_nombre'] = "Sin Especificar";
-        if(!empty($persona)){
-            $localidad = \Curriculum\Localidad::findFirstByLocalidadId($persona->getPersonaLocalidadid());
-            if(!empty($localidad)){
-                $arregloLocalidad['localidad_codigoPostal'] = $localidad->getLocalidadCodigopostal();
-                $arregloLocalidad['localidad_domicilio'] = $localidad->getLocalidadDomicilio();
-                $ciudad = \Curriculum\Ciudad::findFirstByCiudad_id($localidad->getLocalidadCiudadid());
-                if(!empty($ciudad)){
-                    $arregloLocalidad['ciudad_nombre'] = $ciudad->getCiudadNombre();
-                    $provincia = \Curriculum\Provincia::findFirstByProvincia_id($ciudad->getCiudadProvinciaid());
-                    if(!empty($provincia))
-                        $arregloLocalidad['provincia_nombre']=$provincia->getProvinciaNombre();
-                }
-            }
+        if (!$persona) {
+            $this->flash->error("La persona no existe.");
+
+            return $this->dispatcher->forward(array(
+                "controller" => "curriculum",
+                "action" => "login"
+            ));
         }
+
+        $this->view->curriculum = Curriculum\Curriculum::findFirstByCurriculum_id($curriculumId);
         $this->view->persona = $persona;
-        $this->view->arregloLocalidad = $arregloLocalidad;
-        $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->idiomas = Curriculum\Idiomas::findByIdiomas_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->informatica = Curriculum\Informatica::findByInformatica_curriculumId($persona->getPersonaCurriculumid());
-        $this->view->empleo = Curriculum\Empleo::findByEmpleo_curriculumId($persona->getPersonaCurriculumid());
+        $this->view->experiencias = Curriculum\Experiencia::findByExperiencia_curriculumId($curriculumId);
+        $this->view->formacion = Curriculum\Formacion::findByFormacion_curriculumId($curriculumId);
+        $this->view->idiomas = Curriculum\Idiomas::findByIdiomas_curriculumId($curriculumId);
+        $this->view->conocimientos = Curriculum\Conocimientos::findByConocimientos_curriculumId($curriculumId);
+        $this->view->empleos = Curriculum\Empleo::findByEmpleo_curriculumId($curriculumId);
 
     }
 }

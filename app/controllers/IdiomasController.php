@@ -194,35 +194,29 @@ class IdiomasController extends ControllerBase
      */
     public function deleteAction($idiomas_id)
     {
-
+        $this->view->disable();
+        $data = array();
+        $data['success']=true;
+        $errores = array();
         $idioma = \Curriculum\Idiomas::findFirstByidiomas_id($idiomas_id);
         if (!$idioma) {
-            $this->flash->error("idioma was not found");
-
-            return $this->dispatcher->forward(array(
-                "controller" => "idiomas",
-                "action" => "index"
-            ));
+            $data['success']=false;
+            $date['mensaje']="El idioma no se ha encontrado";
         }
 
         if (!$idioma->delete()) {
 
             foreach ($idioma->getMessages() as $message) {
-                $this->flash->error($message);
+                $errores[] = $message . "<br>";
             }
-
-            return $this->dispatcher->forward(array(
-                "controller" => "idiomas",
-                "action" => "search"
-            ));
+            $data['success']=false;
+            $date['mensaje']=$errores;
         }
 
-        $this->flash->success("idioma was deleted successfully");
-
-        return $this->dispatcher->forward(array(
-            "controller" => "idiomas",
-            "action" => "index"
-        ));
+        if($data['success'])
+            $data['mensaje']="Operación Exitosa";
+        $this->response->setJsonContent($data);
+        $this->response->send();
     }
 
     /**
@@ -284,6 +278,32 @@ class IdiomasController extends ControllerBase
             $i++;
         }
         return $errors;
+    }
+
+    public function buscarIdiomasPorCurriculumAction(){
+        $this->view->disable();
+
+        if($this->request->isPost()) {
+            $idiomas = \Curriculum\Idiomas::findByIdiomas_curriculumId($this->request->getPost('curriculum_id'));
+            if(count($idiomas)==0){
+                $data['success'] = false;
+                $data['mensaje'] = array("No hay idiomas cargados.");
+            }else{
+                $data['success'] = true;
+                $data['mensaje'] = array("Operación Correcta");
+                $arregloIdiomas = array();
+                foreach($idiomas as $unIdioma){
+                    $idio = array();
+                    $idio['nombre']=$unIdioma->getIdiomasNombre();
+                    $idio['nivel']=$unIdioma->getNivel()->getNivelNombre();
+                    $idio['idiomas_id']=$unIdioma->getIdiomasId();
+                    $arregloIdiomas[]=$idio;
+                }
+                $data['idiomas'] = $arregloIdiomas;
+            }
+            $this->response->setJsonContent($data);
+            $this->response->send();
+        }
     }
 
 }

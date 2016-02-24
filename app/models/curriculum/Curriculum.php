@@ -1,4 +1,5 @@
 <?php
+namespace Curriculum;
 
 class Curriculum extends \Phalcon\Mvc\Model
 {

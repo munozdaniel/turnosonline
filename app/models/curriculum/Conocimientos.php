@@ -2,6 +2,7 @@
 namespace Curriculum;
 
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Validator\Uniqueness;
 
 class Conocimientos extends \Phalcon\Mvc\Model
 {
@@ -193,6 +194,11 @@ class Conocimientos extends \Phalcon\Mvc\Model
     }
     public function validation()
     {
+
+        $this->validate(new Uniqueness(array(
+            "field"   => array('conocimientos_nombre','conocimientos_curriculumId'),
+            "message" => "La Aptitud/Curso seleccionado ya fue agregada"
+        )));
         $this->validate(new PresenceOf(array(
         "field" => 'conocimientos_nombre',
         "message" => 'La Aptitud/Curso es requerida'

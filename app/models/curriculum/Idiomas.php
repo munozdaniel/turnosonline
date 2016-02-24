@@ -194,7 +194,7 @@ class Idiomas extends \Phalcon\Mvc\Model
     public function validation()
     {
         $this->validate(new Uniqueness(array(
-            "field"   => "idiomas_nombre",
+            "field"   => array("idiomas_nombre",'idiomas_curriculumId'),
             "message" => "El Idioma seleccionado ya fue agregado"
         )));
 

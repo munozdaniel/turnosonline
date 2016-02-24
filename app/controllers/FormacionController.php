@@ -68,6 +68,13 @@ class FormacionController extends ControllerBase
     public function newAction($curriculum_id)
     {
         //FIXME: Habilitar isPost o isGet?
+        /**
+        if (!$this->request->isPost()) {
+            return $this->dispatcher->forward(array(
+                "controller" => "curriculum",
+                "action" => "login"
+            ));
+        }*/
         if($curriculum_id== null){
             $this->flash->message('problema','Momentaneamente no es posible acceder a la url solicitada');
             $this->response->redirect('curriculum/login');
@@ -125,15 +132,21 @@ class FormacionController extends ControllerBase
                 "action" => "index"
             ));
         }
-
         $formacion = new Curriculum\Formacion();
-        $curriculumId = $this->request->getPost("curriculum_id");
+        $curriculumId = $this->request->getPost("curriculum_id",array('int'));
+        if ($curriculumId=="" || $curriculumId==null) {
+            $this->flash->message('problema','Ocurrio un problema, no se pudo encontrar los datos referidos al curriculum.<br> Por favor comuniquese con nosotros vía email para resolver el problema. <br> Disculpe las molestias ocasionadas.');
+            return $this->dispatcher->forward(array(
+                "controller" => "curriculum",
+                "action" => "login"
+            ));
+        }
         $formacion->setFormacionCurriculumid($curriculumId);
 
-        $formacion->setFormacionInstitucion($this->request->getPost("formacion_institucion"));
-        $formacion->setFormacionGradoid($this->request->getPost("formacion_gradoId"));
-        $formacion->setFormacionTitulo($this->request->getPost("formacion_titulo"));
-        $formacion->setFormacionEstadoid($this->request->getPost("formacion_estadoId"));
+        $formacion->setFormacionInstitucion($this->request->getPost("formacion_institucion",'string'));
+        $formacion->setFormacionGradoid($this->request->getPost("formacion_gradoId",'int'));
+        $formacion->setFormacionTitulo($this->request->getPost("formacion_titulo",'string'));
+        $formacion->setFormacionEstadoid($this->request->getPost("formacion_estadoId",'int'));
         $formacion->setFormacionFechainicio($this->request->getPost("formacion_fechaInicio"));
         if ($this->request->hasPost('formacion_fechaFinal')) {
             $formacion->setFormacionFechafinal($this->request->getPost("formacion_fechaFinal"));

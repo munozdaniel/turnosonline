@@ -10,12 +10,28 @@ class Tipodocumento extends \Phalcon\Mvc\Model
      */
     public $tipodocumento_id;
 
+    public function setTipodocumentoId($tipodocumento_id)
+    {
+        $this->tipodocumento_id=$tipodocumento_id;
+    }
+    public function getTipodocumentoId()
+    {
+        return $this->tipodocumento_id;
+    }
     /**
      *
      * @var string
      */
     public $tipodocumento_descripcion;
 
+    public function setTipodocumentoDescripcion($tipodocumento_descripcion)
+    {
+        $this->tipodocumento_descripcion=$tipodocumento_descripcion;
+    }
+    public function getTipodocumentoDescripcion()
+    {
+        return $this->tipodocumento_descripcion;
+    }
     /**
      * Initialize method for model.
      */
