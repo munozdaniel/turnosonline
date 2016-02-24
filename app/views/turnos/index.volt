@@ -57,8 +57,8 @@
                     <br/>
 
                     <div class="row">
-                        <div class="col-lg-9 col-lg-offset-4">
-                            {{ submit_button('ENVIAR DATOS','class':'btn btn-blue btn-lg btn-block','style':'width:320px;') }}
+                        <div class="col-lg-9 col-lg-offset-5">
+                            {{ submit_button('ENVIAR DATOS','class':'btn btn-blue btn-lg btn-block','style':'width:200px;') }}
                         </div>
                     </div>
 
