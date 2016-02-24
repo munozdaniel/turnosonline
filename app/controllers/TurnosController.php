@@ -514,6 +514,7 @@ class TurnosController extends ControllerBase
             $this->view->cantidadDeTurnos = '-';
             $this->flash->message('problema', 'NO HAY NINGÚN PERIODO HABILITADO PARA SOLICITAR TURNOS.');
         }
+
         $paginator = new PaginatorArray
         (
             array(
@@ -590,13 +591,16 @@ class TurnosController extends ControllerBase
         $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO',$usuarioActual);
         $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO POR FALTA DE TURNOS',$usuarioActual);
 
-        if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0) {
+        if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0)
+        {
             $this->flash->message('',"<div><h3>No se pueden enviar respuestas,<br> ya que solo hay solicitudes pendientes o en revisión.</h3></div>");
-        } else {
+        }
+        else
+        {
             $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
             $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->fechasTurnos_diaAtencion);//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
 
-            $textoA = "En respuesta a su solicitud, le comunicamos que podrá dirigirse al Instituto Municipal de Previsión Social el día " . $fechaAtencion . " para <b>trámitar</b> un préstamo personal.";
+            $textoA = "En respuesta a su solicitud, le comunicamos que podrá dirigirse a nuestra institución el día " . $fechaAtencion . " para <b>trámitar</b> un préstamo personal.";
             $textoDxFdT = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
             $textoD = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque ";
 
@@ -611,12 +615,14 @@ class TurnosController extends ControllerBase
 
             $this->flash->message('','<div><h1>Las respuestas fueron enviadas a los afiliados.</h1></div>');
         }
+
         $this->view->pick('turnos/vuelta');
     }
 
     private function envioRespuestas($solicitudes, $texto, $tipoEstado)
     {
-        foreach ($solicitudes as $unaSolicitud) {
+        foreach ($solicitudes as $unaSolicitud)
+        {
             $this->enviarEmail($unaSolicitud, $texto, $tipoEstado);
         }
     }
@@ -642,30 +648,32 @@ class TurnosController extends ControllerBase
         $this->mailDesarrollo->Password = 'sis$%&--temas';
         $this->mailDesarrollo->SMTPSecure = '';
         $this->mailDesarrollo->Port = 26;
-
-        $this->mailDesarrollo->AddBCC($correo, $nomApe);
         $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
         $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN AFILIADOS';
+
+        $this->mailDesarrollo->addAddress($correo,$nomApe);
         $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS.";
 
         $idCodif = base64_encode($idSol);
 
         $texto = "Estimado/a  " . $nomApe . ":<br/> <br/>" . $mensaje;
-        $textoFinalA = "Para confirmar que recibio este mensaje, por favor"
-            . " <a href='http://localhost/impsweb/turnos/confirmaEmail?id=" . $idCodif . "' target='_blank'>haga click aquí.</a>"
-            . "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono:(299) 4433798";
-        $textoFinal = "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono:(299) 4433798";
+        $textoFinal = "Para confirmar que recibio este mensaje, "
+            . " <a href='http://localhost/impsweb/turnos/confirmaEmail/?id=" . $idCodif . "' target='_blank'>haga click aquí.</a>"
+            . "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono: (0299) 4433798"
+            ."<br/><br/> <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta podrá dirijirse a nuestras oficinas o "
+            ."<a href='http://imps.org.ar/impsweb/' target='_blank'>hacer click aquí.</a></p>";
 
-        if ($tipoEstado == 'A') {
+        if ($tipoEstado == 'A')
+        {
             $cad1 = "Además, a modo informativo, le avisamos que el monto máximo que se le puede prestar es $" . $montoM . ", el monto posible que se le puede otorgar es $" . $montoP;
             $cadena = $cad1 . ", la cantidad máxima de cuotas es " . $cantCuotas . " y el valor de cada una de ellas es de $" . $valorCuota . '.<br/>';
 
             if ($obs != '-' && $obs != '')
                 $cadena .= "Nota: " . $obs . "<br/>";
 
-            $cadena .= "Recuerde que usted tiene " . $diasConfirmacion . " dias para confirmar el mensaje, de lo contrario el turno sera cancelado.<br/>";
+            $cadena .= "Recuerde que usted tiene " . $diasConfirmacion . " días para confirmar el mensaje, de lo contrario el turno será cancelado.<br/>";
 
-            $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinalA;
+            $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinal;
         }
         else
         {
@@ -695,45 +703,69 @@ class TurnosController extends ControllerBase
         $idSolicitud = $this->request->get('id');
         $id = base64_decode($idSolicitud);
         $laSolicitud = Solicitudturno::findFirstBySolicitudTurno_id($id);
-        if (!empty($laSolicitud)){
-            $resultado = $laSolicitud->comprobarRespuesta();
 
-            if($resultado['vencido']==2){
-                $this->flash->message("","<h1>LAMENTABLEMENTE EL PLAZO DE CONFIRMACIÓN HA FINALIZADO, POR FAVOR VUELVA A SOLICITAR EL TURNO.</h1>");
-            }else{
-                if($resultado['vencido']==1){
-                    $this->flash->message("","<h1> GRACIAS POR SU CONFIRMACIÓN </h1>
-                                            <h3 class='login-title'> EL TURNO ES EL Nº ".$laSolicitud->solicitudTurno_numero."</h3>
-                                            <h3>".$this->tag->linkTo(array('turnos/comprobanteTurno/'.$laSolicitud->solicitudTurno_id,'IMPRIMIR COMPROBANTE DE TURNO',
-                                            'class'=>'btn btn-info btn-large','target'=>'_blank'))."</h3>");
+        if (!empty($laSolicitud))
+        {
+            $estado = $laSolicitud->solicitudTurno_estado;
+
+            if($estado == 'AUTORIZADO')
+            {
+                $resultado = $laSolicitud->comprobarRespuesta();
+
+                if($resultado['vencido']==2)
+                {
+                    $this->flash->message("","<h1>LAMENTABLEMENTE EL PLAZO DE CONFIRMACIÓN HA FINALIZADO, POR FAVOR VUELVA A SOLICITAR EL TURNO.</h1>");
                 }
-                else{
-                    $this->flash->message("","<h1> USTED YA HA CONFIRMADO EL TURNO </h1>
-                                            <h3 class='login-title'> EL TURNO ES EL Nº ".$laSolicitud->solicitudTurno_numero."</h3>
-                                            <h3>".$this->tag->linkTo(array('turnos/comprobanteTurno/'.$laSolicitud->solicitudTurno_id,'IMPRIMIR COMPROBANTE DE TURNO',
-                            'class'=>'btn btn-info btn-large','target'=>'_blank'))."</h3>");
+                else
+                {
+                    // $resultado['nroTurno] es igual a $laSolicitud->solicitudTurno_numero;
+                    if($resultado['vencido']==1)
+                    {
+                        $this->flash->message("","<h1> GRACIAS POR SU CONFIRMACIÓN </h1>
+                                            <h3 class='login-title'> EL TURNO ES EL Nº ".$resultado['nroTurno']."</h3>
+                                            <h3>".$this->tag->linkTo(array('turnos/comprobanteTurno/?id='.$idSolicitud,'IMPRIMIR COMPROBANTE DE TURNO',
+                                'class'=>'btn btn-info btn-large','target'=>'_blank'))."</h3>");
+                    }
+                    else
+                    {
+                        $this->flash->message("","<h1> USTED YA HA CONFIRMADO EL TURNO </h1>
+                                            <h3 class='login-title'> EL TURNO ES EL Nº ".$resultado['nroTurno']."</h3>
+                                            <h3>".$this->tag->linkTo(array('turnos/comprobanteTurno/?id='.$idSolicitud,'IMPRIMIR COMPROBANTE DE TURNO',
+                                'class'=>'btn btn-info btn-large','target'=>'_blank'))."</h3>");
+                        //antes estaba $laSolicitud->solicitudTurno_id en vez de $idSolicitud
+                    }
                 }
+
+                $this->view->vencido = $resultado['vencido'];
+                $this->view->nroTurno = $resultado['nroTurno'];
             }
-            $this->view->vencido = $resultado['vencido'];
-            $this->view->nroTurno = $resultado['nroTurno'];
-        }else
+            else
+            {
+                Solicitudturno::cambiarRespuesta($id);
+                $this->flash->message("","<h1> GRACIAS POR CONFIRMAR EL RECIBO DEL MENSAJE.</h1>");
+            }
+        }
+        else
             $this->redireccionar('index/index');
     }
-    public function comprobanteTurnoAction($idSolicitud,$salida='I')
+    public function comprobanteTurnoAction($idSolicitud)
     {
+        $idSolicitud = $this->request->get('id');
+        $id = base64_decode($idSolicitud);
+        $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($id);
 
-        $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($idSolicitud);
+        if (empty($solicitud))
+            $mensaje ="ERROR";
+        else
+            $mensaje='EXITO';
+
         $this->tag->setTitle('');//Para que no muestre el titulo en el pdf.
-        //GENERAR PDF
         $this->view->disable();
-        // Get the view data
-        $html = $this->view->getRender('turnos', 'comprobanteTurno', array(
-            'solicitud' => $solicitud
-        ));
+        $html = $this->view->getRender('turnos', 'comprobanteTurno', array('solicitud' => $solicitud,'mensaje' =>$mensaje));
         $pdf = new mPDF();
         $pdf->SetHeader(date('d/m/Y'));
         $pdf->WriteHTML($html, 2);
-        $pdf->Output('comprobanteTurno.pdf', $salida);
+        $pdf->Output('comprobanteTurno.pdf', "I");
 
 
 

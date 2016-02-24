@@ -1,6 +1,6 @@
-<section id="onepage" class="admin bg-rayado">
+<section id="certificacion">
 
-    <meta http-equiv="refresh" content="20" property="">
+    <meta http-equiv="refresh" content="20">
 
     <style>
         a {
@@ -11,56 +11,67 @@
             font-size: 30px;
             line-height: 35px;
         }
+
+        .btn-volver {
+            margin-bottom: 15%;
+            margin-top: -125%;
+            margin-left: 310%;
+        }
     </style>
 
     <div class="container">
-        <div class="row" align="center" style="margin-top: 30px;">
-            <div class="heading">
-                <h2 class="">Listado de Solicitudes de Turnos <br> con respuesta enviada</h2>
-                {{ link_to('administrar/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
-            </div>
-        </div>
-        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-            <div class="col-sm-6">
-                <div class="fuente-14"><strong>
-                        <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
-                    </strong>{{ fechaI }} - {{ fechaF }}
-                </div>
-                <div class="fuente-14"><strong>
-                        <ins>DIA DE ATENCI&Oacute;N :</ins>
-                    </strong> {{ diaA }}
-                </div>
-            </div>
-            <div class="col-sm-6">{% if (cantidadDeTurnos == cantA) %}
-                    <div class="fuente-14" style="color:red;">
-                        <strong>
-                            <ins>TOTAL DE TURNOS :</ins>
-                        </strong> {{ cantidadDeTurnos }}
+        <div class="row">
+            <div class="col-lg-12 col-md-12" style="margin-bottom: 30px;">
+
+                    <div class="heading">
+                        <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos con respuesta enviada</h2>
+
+                        <div class="col-md col-md-offset-8" style="width: 10%;margin-top: 5%;">
+                            {{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}
+                        </div>
                     </div>
-                    <div class="fuente-14" id="idCantA" style="color:red;">
-                        <strong>
-                            <ins>TURNOS AUTORIZADOS :</ins>
-                        </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                    <div class="col-sm-6">
+                        <div class="fuente-14"><strong>
+                                <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
+                            </strong>{{ fechaI }} - {{ fechaF }}
+                        </div>
+                        <div class="fuente-14"><strong>
+                                <ins>DIA DE ATENCI&Oacute;N :</ins>
+                            </strong> {{ diaA }}
+                        </div>
                     </div>
-                {% else %}
-                    <div class="fuente-14">
-                        <strong>
-                            <ins>TOTAL DE TURNOS :</ins>
-                        </strong> {{ cantidadDeTurnos }}
-                    </div>
-                    <div class="fuente-14" id="idCantA">
-                        <strong>
-                            <ins>TURNOS AUTORIZADOS :</ins>
-                        </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                    </div>
-                {% endif %}
+                    <div class="col-sm-6">{% if (cantidadDeTurnos == cantA) %}
+                            <div class="fuente-14" style="color:red;">
+                                <strong>
+                                    <ins>TOTAL DE TURNOS :</ins>
+                                </strong> {{ cantidadDeTurnos }}
+                            </div>
+                            <div class="fuente-14" id="idCantA" style="color:red;">
+                                <strong>
+                                    <ins>TURNOS AUTORIZADOS :</ins>
+                                </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                            </div>
+                        {% else %}
+                            <div class="fuente-14">
+                                <strong>
+                                    <ins>TOTAL DE TURNOS :</ins>
+                                </strong> {{ cantidadDeTurnos }}
+                            </div>
+                            <div class="fuente-14" id="idCantA">
+                                <strong>
+                                    <ins>TURNOS AUTORIZADOS :</ins>
+                                </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                            </div>
+                        {% endif %}</div>
             </div>
         </div>
 
-        <div class="row  form-blanco borde-top borde-left-4 borde-right-4">
+        <div class="row edicion">
+
             <div class="col-md-12">
                 {{ content() }}
             </div>
+
             <div class="col-lg-12 col-md-12"> <!-- margin-top:-5%; -->
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
@@ -96,7 +107,7 @@
                         <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
                         <td style="text-align: center;width: 180px">{{ item['solicitudTurno_respChequedaTexto'] }}</td>
                         {% if  item['solicitudTurno_respChequedaTexto']  == "SI" %}
-                            <td style="text-align: center;width: 180px">{{ link_to('turnos/comprobanteTurno/'~ item['solicitudTurno_id'] ,'GENERAR ','class':'btn btn-info btn-large','target':'_blank') }}</td>
+                            <td style="text-align: center;width: 180px">{{ link_to('turnos/comprobanteTurno/?id='~ item['solicitudTurno_idCodificado'] ,'GENERAR ','class':'btn btn-info btn-large','target':'_blank') }}</td>
                         {% else %}
                             <td style="text-align: center;width: 180px"> EN ESPERA...</td>
                         {% endif %}
@@ -120,11 +131,17 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-12">
+
+           {# <div class="col-md-12">
                 {{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3">
                                                 <div class="btn btn-blue btn-lg btn-block">
                                                      VER LISTADO EN PDF</div></div>','target':'_blank') }}
+            </div> #}
+
+            <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
+                {{ link_to('turnos/listadoEnPdf','VER LISTADO EN PDF','style':'width:320px;','class':'btn btn-blue btn-lg btn-block','target':'_blank') }}
             </div>
+
         </div>
     </div>
 </section>

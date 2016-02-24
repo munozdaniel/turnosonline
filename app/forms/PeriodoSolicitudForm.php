@@ -14,9 +14,6 @@ use Phalcon\Validation\Validator\StringLength as StringLength;
 
 class PeriodoSolicitudForm extends Form
 {
-    /**
-     * Initialize the products form
-     */
     public function initialize($entity = null, $options = array())
     {
         /*=================== PERIODO DE SOLICITUD DE TURNOS ==========================*/
@@ -42,6 +39,7 @@ class PeriodoSolicitudForm extends Form
             ))
         ));
         $this->add($periodoSolicitudHasta);
+
         /*=================== PERIODO DE ATENCION DE TURNOS ==========================*/
 
         $periodoAtencionDesde= new Date('periodoAtencionDesde');
@@ -55,21 +53,32 @@ class PeriodoSolicitudForm extends Form
             ))
         ));
         $this->add($periodoAtencionDesde);
-        /* Eliminado
-        $periodoAtencionHasta= new Date('periodoAtencionHasta');
-        $periodoAtencionHasta->setLabel('Hasta');
-        $periodoAtencionHasta->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha Final</strong> para la atención de turnos.'
-            )),
-            new DateValidator(array(
-                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea mayor que la fecha  <strong>"DESDE"</strong>.',
-                'desde' =>$periodoAtencionDesde->getValue()
-            ))
-        ));
-        $this->add($periodoAtencionHasta);*/
+
+        /*=================== CANTIDAD DE TURNOS ==========================*/
+
+        $cantidadTurnos = new Text("cantidadTurnos",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE CANT. TURNOS'));
+        $cantidadTurnos->setDefault(70);
+        $cantidadTurnos->setLabel("Cantidad de Turnos");
+        $cantidadTurnos->setFilters(array('int'));
+        $cantidadTurnos->addValidators(
+            array(
+                new PresenceOf(
+                    array(
+                        'message' => 'Debe ingresar la <strong>cantidad de turnos</strong>.'
+                    )
+                ),
+                new Numericality(
+                    array(
+                        'message' => 'La <strong>cantidad de turnos</strong> debe ser un número.'
+                    )
+                ),
+                new NumberValidator()
+            ));
+
+        $this->add($cantidadTurnos);
+
         /*=================== CANTIDAD DE DIAS ==========================*/
-        $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>'CANTIDAD DÍAS'));
+        $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;'));
         $cantidadDias->setLabel("Cantidad de días para confirmar el mensaje ");
         $cantidadDias->setFilters(array('int'));
         $cantidadDias->addValidators(
@@ -88,32 +97,8 @@ class PeriodoSolicitudForm extends Form
             )
         );
         $this->add($cantidadDias);
-
-        /*=================== CANTIDAD DE TURNOS ==========================*/
-        $cantidadTurnos = new Text("cantidadTurnos",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;','placeholder'=>' INGRESE CANT. TURNOS'));
-        $cantidadTurnos->setDefault(70);
-        $cantidadTurnos->setLabel("Cantidad de Turnos");
-        $cantidadTurnos->setFilters(array('int'));
-        $cantidadTurnos->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Debe ingresar la <strong>cantidad de turnos</strong>.'
-                    )
-                ),
-                new Numericality(
-                    array(
-                        'message' => 'La <strong>cantidad de turnos</strong> debe ser un número.'
-                    )
-                ),
-                new NumberValidator()
-            )
-        );
-        $this->add($cantidadTurnos);
     }
-    /**
-     * Prints messages for a specific element
-     */
+
     public function messages($name)
     {
         $cadena= "";
@@ -124,5 +109,4 @@ class PeriodoSolicitudForm extends Form
         }
         return $cadena;
     }
-
 }
