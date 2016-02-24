@@ -97,7 +97,7 @@
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_fechaRespuestaEnviadaDate'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
                             <td style="text-align: center;width: 180px">{{ item['solicitudTurno_respChequedaTexto'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ link_to('turnos/comprobanteTurno/'~ item['solicitudTurno_id'] ,'GENERAR ','class':'btn btn-info btn-large','target':'_blank') }}</td>
+                            <td style="text-align: center;width: 180px">{{ link_to('turnos/comprobanteTurno/?id='~ item['solicitudTurno_id'] ,'GENERAR ','class':'btn btn-info btn-large','target':'_blank') }}</td>
 
                         </tr>
                     {% endfor %}
@@ -120,11 +120,8 @@
                 </table>
             </div>
 
-           {# <div class="col-md-12">
-                {{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3">
-                                                <div class="btn btn-blue btn-lg btn-block">
-                                                     VER LISTADO EN PDF</div></div>','target':'_blank') }}
-            </div> #}
+           {# <div class="col-md-12">{{ link_to('turnos/listadoEnPdf','<div class="col-lg-6 col-lg-offset-3"><div class="btn btn-blue btn-lg btn-block">
+                                                     VER LISTADO EN PDF</div></div>','target':'_blank') }}</div> #}
 
             <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
                 {{ link_to('turnos/listadoEnPdf','VER LISTADO EN PDF','style':'width:320px;','class':'btn btn-blue btn-lg btn-block','target':'_blank') }}
