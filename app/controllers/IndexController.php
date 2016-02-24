@@ -37,23 +37,27 @@ class IndexController extends ControllerBase
         $schedule = $this->getDi()->get('schedule');
         $puntoProgramado = $schedule->getByType('plazo')->getLast();
         //MENSAJES PREDETERMINADOS:
-        $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
-                                            <h3 class="service_title">Turnos Online</h3></a>' .
-            ' <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
+        $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color:rosybrown !important;"></span></div>
+                                            <h3 class="service_title" style="color:rosybrown;">Turnos Online</h3> </a>'.
+                                            '<p style="color:rosybrown;"><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong>
                                             Las fechas se dispondrán a través de la pagina web y en nuestras oficinas.
                                             Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                            o llamarnos al (0299) 4479921<br><br>';
+                                            o llamarnos al (0299) 4479921</p> <br/><br/>';
+
         $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EL PERIODO PARA SOLICITAR TURNOS ONLINE NO SE ENCUENTRA HABILITADO POR EL MOMENTO </h2>
                         <p> Por cualquier consulta puede llamarnos al (0299) 4479921</p> <a href="#service"> </a> ';
+
         if (!empty($puntoProgramado)) {
 
             $date = date_create($puntoProgramado->getStart());
             $dateFin = date_create($puntoProgramado->getEnd());
+
             //Si el periodo  no esta habilitado todavia
-            if ($puntoProgramado->isBefore()) {
+            if ($puntoProgramado->isBefore())
+            {
                 $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
                                             <h3 class="service_title">Turnos Online</h3></a>' .
-                    '<p> <strong>Los Período para la Solicitud de Turnos no se encuentran habilitado por el momento</strong>.
+                    '<p> <strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong>
                                                 Los turnos se podrán retirar a partir del : <strong>' . date_format($date, 'd/m/Y H:i:s') . '</strong><br>
                                                 Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                                 o llamarnos al (0299) 4479921<br><br>
@@ -61,8 +65,10 @@ class IndexController extends ControllerBase
                 $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EN EL PERIODO <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . ' SE PODRÁN SOLICITAR TURNOS ONLINE  </h2>
                         <p></p> <a href="#service"> </a> ';
             }
+
             //Si el periodo se encuentra
-            if ($puntoProgramado->isActive()) {
+            if ($puntoProgramado->isActive())
+            {
                 $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "")) .
                     '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
                                                 o llamarnos al (0299) 4479921</p>';
