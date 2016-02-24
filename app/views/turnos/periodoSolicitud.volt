@@ -48,6 +48,7 @@
                             {{ formulario.render('periodoSolicitudDesde',['class': 'btn-block']) }}
                             {{ formulario.messages('periodoSolicitudDesde') }}
                         </div>
+
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                             {{ formulario.label('periodoSolicitudHasta',['class': 'control-label']) }}
                             {{ formulario.render('periodoSolicitudHasta',['class': 'btn-block']) }}
@@ -55,6 +56,7 @@
                         </div>
                     </div>
                     <hr>
+
                     <div class="row">
                         <h4><label>Día de atención de turnos </label></h4><br>
 
@@ -65,14 +67,7 @@
 
                     </div>
                     <hr>
-                    <div class="row">
-                        <h4>{{ formulario.label('cantidadDias',['class': 'control-label']) }}</h4><br>
-                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
-                            {{ formulario.render('cantidadDias',['class': 'btn-block']) }}
-                            {{ formulario.messages('cantidadDias') }}
-                        </div>
-                    </div>
-                    <hr>
+
                     <div class="row">
                         <h4>{{ formulario.label('cantidadTurnos',['class': 'control-label']) }}</h4><br>
                         <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-12 col-xs-12">
@@ -81,12 +76,23 @@
                         </div>
                     </div>
                     <hr>
+
+                    <div class="row">
+                        <h4>{{ formulario.label('cantidadDias',['class': 'control-label']) }}</h4><br>
+                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                            {{ formulario.render('cantidadDias',['class': 'btn-block']) }}
+                            {{ formulario.messages('cantidadDias') }}
+                        </div>
+                    </div>
+                    <hr>
+
                     <div class="row">
                         <div class="col-lg-9 col-lg-offset-4">
                             {{ submit_button('GUARDAR','class':'btn btn-blue btn-lg btn-block','style':'width:320px;') }}
                         </div>
                     </div>
                     {{ end_form() }}
+
                 </div>
             </div>
         </div>
