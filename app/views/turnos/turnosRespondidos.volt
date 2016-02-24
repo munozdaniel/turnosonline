@@ -1,6 +1,6 @@
-<section id="certificacion">
+<section id="onepage" class="admin bg-rayado">
 
-    <meta http-equiv="refresh" content="20">
+    <meta http-equiv="refresh" content="20" property="">
 
     <style>
         a {
@@ -11,62 +11,53 @@
             font-size: 30px;
             line-height: 35px;
         }
-
-        .btn-volver {
-            margin-bottom: 15%;
-            margin-top: -125%;
-            margin-left: 310%;
-        }
     </style>
 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12" style="margin-bottom: 30px;">
-
-                    <div class="heading">
-                        <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos con respuesta enviada</h2>
-
-                        <div class="col-md col-md-offset-8" style="width: 10%;margin-top: 5%;">
-                            {{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}
-                        </div>
+        <div class="row" align="center" style="margin-top: 30px;">
+            <div class="heading">
+                <h2 class="">Listado de Solicitudes de Turnos <br> con respuesta enviada</h2>
+                {{ link_to('administrar/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
+            </div>
+        </div>
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+            <div class="col-sm-6">
+                <div class="fuente-14"><strong>
+                        <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
+                    </strong>{{ fechaI }} - {{ fechaF }}
+                </div>
+                <div class="fuente-14"><strong>
+                        <ins>DIA DE ATENCI&Oacute;N :</ins>
+                    </strong> {{ diaA }}
+                </div>
+            </div>
+            <div class="col-sm-6">{% if (cantidadDeTurnos == cantA) %}
+                    <div class="fuente-14" style="color:red;">
+                        <strong>
+                            <ins>TOTAL DE TURNOS :</ins>
+                        </strong> {{ cantidadDeTurnos }}
                     </div>
-                    <div class="col-sm-6">
-                        <div class="fuente-14"><strong>
-                                <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
-                            </strong>{{ fechaI }} - {{ fechaF }}
-                        </div>
-                        <div class="fuente-14"><strong>
-                                <ins>DIA DE ATENCI&Oacute;N :</ins>
-                            </strong> {{ diaA }}
-                        </div>
+                    <div class="fuente-14" id="idCantA" style="color:red;">
+                        <strong>
+                            <ins>TURNOS AUTORIZADOS :</ins>
+                        </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
                     </div>
-                    <div class="col-sm-6">{% if (cantidadDeTurnos == cantA) %}
-                            <div class="fuente-14" style="color:red;">
-                                <strong>
-                                    <ins>TOTAL DE TURNOS :</ins>
-                                </strong> {{ cantidadDeTurnos }}
-                            </div>
-                            <div class="fuente-14" id="idCantA" style="color:red;">
-                                <strong>
-                                    <ins>TURNOS AUTORIZADOS :</ins>
-                                </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                            </div>
-                        {% else %}
-                            <div class="fuente-14">
-                                <strong>
-                                    <ins>TOTAL DE TURNOS :</ins>
-                                </strong> {{ cantidadDeTurnos }}
-                            </div>
-                            <div class="fuente-14" id="idCantA">
-                                <strong>
-                                    <ins>TURNOS AUTORIZADOS :</ins>
-                                </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
-                            </div>
-                        {% endif %}</div>
+                {% else %}
+                    <div class="fuente-14">
+                        <strong>
+                            <ins>TOTAL DE TURNOS :</ins>
+                        </strong> {{ cantidadDeTurnos }}
+                    </div>
+                    <div class="fuente-14" id="idCantA">
+                        <strong>
+                            <ins>TURNOS AUTORIZADOS :</ins>
+                        </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                    </div>
+                {% endif %}
             </div>
         </div>
 
-        <div class="row edicion">
+        <div class="row  form-blanco borde-top borde-left-4 borde-right-4">
             <div class="col-md-12">
                 {{ content() }}
             </div>
@@ -87,16 +78,28 @@
 
                     <tbody>
                     {% for item in page.items %}
-                        <tr>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_numero'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_legajo'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nomApe'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_estado'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_fechaRespuestaEnviadaDate'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
-                            <td style="text-align: center;width: 180px">{{ item['solicitudTurno_respChequedaTexto'] }}</td>
+                        {% if  item['solicitudTurno_respChequedaTexto']  == "SI" %}
+                            <tr class="" style="">
+                        {% else %}
+                            <tr class="bg-red-pl" style="background: rgb(96,108,136); /* Old browsers */
+                                                        background: -moz-linear-gradient(top,  rgba(96,108,136,1) 0%, rgba(63,76,107,1) 100%); /* FF3.6-15 */
+                                                        background: -webkit-linear-gradient(top,  rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%); /* Chrome10-25,Safari5.1-6 */
+                                                        background: linear-gradient(to bottom,  rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                                                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
+                                                        ">
+                        {% endif %}
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_numero'] }}</td>
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_legajo'] }}</td>
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nomApe'] }}</td>
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_estado'] }}</td>
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_fechaRespuestaEnviadaDate'] }}</td>
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_nickUsuario'] }}</td>
+                        <td style="text-align: center;width: 180px">{{ item['solicitudTurno_respChequedaTexto'] }}</td>
+                        {% if  item['solicitudTurno_respChequedaTexto']  == "SI" %}
                             <td style="text-align: center;width: 180px">{{ link_to('turnos/comprobanteTurno/'~ item['solicitudTurno_id'] ,'GENERAR ','class':'btn btn-info btn-large','target':'_blank') }}</td>
-
+                        {% else %}
+                            <td style="text-align: center;width: 180px"> EN ESPERA...</td>
+                        {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

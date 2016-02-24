@@ -1,4 +1,4 @@
-<section id="onepage">
+<section id="onepage" class="admin bg-rayado">
 
     {# <meta http-equiv="refresh" content="35"> #}
 
@@ -8,13 +8,13 @@
     </style>
 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12" style="margin-bottom: 30px;">
-                <div class="heading">
-                    <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
-
-                    <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
-                </div>
+        <div class="row" align="center" style="margin-top: 30px;">
+            <div class="heading">
+                <h2 class="wow fadeInLeftBig">Listado de Solicitudes de Turnos</h2>
+                {{ link_to('administrar/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
+            </div>
+        </div>
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
                 <div class="col-sm-6">
                     <div class="fuente-14"><strong>
                             <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
@@ -50,10 +50,9 @@
                         </div>
                     {% endif %}
                 </div>
-            </div>
         </div>
 
-        <div class="row edicion">
+        <div class="row  curriculum-bg-form borde-top borde-left-4 borde-right-4">
             <div class="col-md-12">
                 {{ content() }}
             </div>
@@ -133,9 +132,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
-        {{ form('turnos/enviarRespuestas') }}
+            {{ form('turnos/enviarRespuestas') }}
 
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
@@ -143,8 +140,8 @@
                 </div>
             </div>
 
-        {{ end_form() }}
-
+            {{ end_form() }}
+        </div>
     </div>
 
     <!-- ====================================== -->

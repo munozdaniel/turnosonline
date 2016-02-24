@@ -3150,17 +3150,23 @@ cursor: none;
     box-shadow: 0px 0px 2px #00BCD4, inset 0px -3px 0px #e6e6e6;
 }
 /*Curriculum*/
-.curriculum-bg{
+.curriculum-bg,.bg-rayado{
     background: #f4f4f4 url(../img/curriculum/bg.gif) repeat top left ;
 
 }
-.curriculum-bg-form{
+.curriculum-bg-form,.form-blanco{
     background: #ffffff;
     padding-bottom: 20px;
     padding-top: 30px;
 }
 .borde-top{
     border-top: 1px solid #C00;
+}
+.borde-left-4{
+    border-left: 4px solid #E2DFDF;
+}
+.borde-right-4{
+    border-right: 4px solid #E2DFDF;
 }
 .marginBottom-20
 {

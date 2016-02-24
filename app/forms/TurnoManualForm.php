@@ -13,7 +13,11 @@ class TurnoManualForm extends Form
     public function initialize($entity = null, $options = array())
     {
         /*=================== Apellido ==========================*/
-        $apellido = new Text("solicitudTurno_ape",array('style'=>'text-align:right !important;height: 40px !important; width: 300px !important; font-size: 18px;'));
+        $apellido = new Text("solicitudTurno_ape",
+            array('style'=>'text-align:right !important; font-size: 18px;',
+                'class'=>'form-control',
+                'autocomplete'=>'off',
+                'placeholder'=>'INGRESE EL APELLIDO'));
         $apellido->setLabel("<strong style='color:red'>*</strong> Apellido: ");
         $apellido->setFilters(array('string'));
         $apellido->addValidators(
@@ -34,7 +38,11 @@ class TurnoManualForm extends Form
         $this->add($apellido);
 
         /*=================== Nombre ==========================*/
-        $nombre = new Text("solicitudTurno_nom",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
+        $nombre = new Text("solicitudTurno_nom",
+            array('style'=>'text-align:right !important;font-size: 18px;',
+                'class'=>'form-control',
+                'autocomplete'=>'off',
+                'placeholder'=>'INGRESE EL NOMBRE COMPLETO'));
         $nombre->setLabel("<strong style='color:red'>*</strong> Nombre: ");
         $nombre->setFilters(array('string'));
         $nombre->addValidators(
@@ -54,7 +62,11 @@ class TurnoManualForm extends Form
         );
         $this->add($nombre);
         /*=================== Nro Legajo ==========================*/
-        $legajo = new Text("solicitudTurno_legajo",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
+        $legajo = new Text("solicitudTurno_legajo",
+            array('style'=>'text-align:right !important;font-size: 18px;',
+                'class'=>'form-control',
+                'autocomplete'=>'off',
+                'placeholder'=>'INGRESE EL LEGAJO'));
         $legajo->setLabel("<strong style='color:red'>*</strong> Legajo: ");
         $legajo->setFilters(array('int'));
         $legajo->addValidators(
@@ -81,7 +93,11 @@ class TurnoManualForm extends Form
         $this->add($legajo);
 
         /*=================== Nro Documento ==========================*/
-        $dni = new Text("solicitudTurno_documento",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
+        $dni = new Text("solicitudTurno_documento",
+            array('style'=>'text-align:right !important;font-size: 18px;',
+                'class'=>'form-control',
+                'autocomplete'=>'off',
+                'placeholder'=>'INGRESE EL NRO DOCUMENTO'));
         $dni->setLabel("<strong style='color:red'>*</strong> Nro Documento: ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
@@ -107,19 +123,13 @@ class TurnoManualForm extends Form
         );
         $this->add($dni);
 
-        /*=================== Fecha Nacimiento ==========================*/
-        $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',array('style'=>'text-align:right !important;width: 300px !important;'));
-        $fechaNacimiento->setLabel("<strong style='color:red'>*</strong> Fecha Nacimiento:");
-        $fechaNacimiento->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha de Nacimiento</strong>.'
-            ))
-        ));
-        $this->add($fechaNacimiento);
-
         /*=================== Nro Telefono ==========================*/
-        $telefono = new Text("solicitudTurno_numTelefono",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $telefono->setLabel("<strong style='color:red'>*</strong> N&uacute;mero de telefono/celular (c&oacute;digo de &aacute;rea y n&uacute;mero):");
+        $telefono = new Text("solicitudTurno_numTelefono",
+            array('style'=>'text-align:right !important;font-size: 18px;',
+                'class'=>'form-control',
+                'autocomplete'=>'off',
+                'placeholder'=>'INGRESE NRO TELEFONO'));
+        $telefono->setLabel("<strong style='color:red'>*</strong> N&uacute;mero de telefono/celular:");
         $telefono->setFilters(array('int'));
         $telefono->addValidators(
             array(
@@ -143,8 +153,12 @@ class TurnoManualForm extends Form
 
         /*=================== Repita su telefono  ==========================*/
 
-        $telefonoBis = new Text("telefonoRepetido",array('style'=>'text-align:right !important;height: 40px !important;width: 300px !important;font-size: 18px;'));
-        $telefonoBis->setLabel("<strong style='color:red'>*</strong> Repita su n&uacute;mero de telefono/celular:");
+        $telefonoBis = new Text("telefonoRepetido",
+            array('style'=>'text-align:right !important;font-size: 18px;',
+                'class'=>'form-control',
+                'autocomplete'=>'off',
+                'placeholder'=>'REPITA NRO TELEFONO'));
+        $telefonoBis->setLabel("<strong style='color:red'>*</strong> Repita su n&uacute;mero:");
         $telefonoBis->setFilters(array('int'));
         $telefonoBis->addValidators(
             array(
@@ -166,6 +180,19 @@ class TurnoManualForm extends Form
             )
         );
         $this->add($telefonoBis);
+
+        /*=================== Fecha Nacimiento ==========================*/
+        $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',
+            array('style'=>'text-align:right !important;',
+                'class'=>'form-control',
+                'autocomplete'=>'off'));
+        $fechaNacimiento->setLabel("<strong style='color:red'>*</strong> Fecha Nacimiento:");
+        $fechaNacimiento->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Ingrese la <strong>Fecha de Nacimiento</strong>.'
+            ))
+        ));
+        $this->add($fechaNacimiento);
 
         /*=================== Estado ==========================*/
          /*$estado = new Select("solicitudTurno_estado",array(''=>'','autorizado'=>'autorizado','denegado'=>'denegado'),array('style'=>'width: 300px !important;height: 40px !important;'));
