@@ -151,10 +151,11 @@ class TurnosController extends ControllerBase
                                         Fechasturnos::incrementarCantAutorizados();
 
                                     $turnoManualForm->clear();
-                                    $this->flash->notice($this->tag->linkTo(array('turnos/comprobanteTurno/'.$solicitud->solicitudTurno_id, "IMPRIMIR COMPROBANTE DE TURNO", "class" => "btn btn-info btn-large",'target'=>'_blank')));
+                                    $this->flash->notice($this->tag->linkTo(array('turnos/comprobanteTurno/?id='.base64_encode($solicitud->solicitudTurno_id), "IMPRIMIR COMPROBANTE DE TURNO", "class" => "btn btn-info btn-large",'target'=>'_blank')));
 
 
-                                } else
+                                }
+                                else
                                     $this->flash->error('OCURRIO UN ERROR, INTENTE MAS TARDE.');
                             } else
                                 $this->flash->error('EL AFILIADO YA SOLICITO UN TURNO, POR LO CUAL NO SE PUEDE INGRESAR ESTA SOLICITUD.');
