@@ -24,14 +24,14 @@ class TurnoManualForm extends Form
             array(
                 new PresenceOf(
                     array(
-                        'message' => 'Ingrese su <strong>Apellido </strong>.'
+                        'message' => 'Ingrese su <strong>apellido </strong>.'
                     )
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Apellido demasiado corto.',
+                    'messageMinimum' => 'El apellido es emasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'Apellido demasiado largo.',
+                    'messageMaximun' => 'El apellido es demasiado largo.',
                 )),
             )
         );
@@ -49,14 +49,14 @@ class TurnoManualForm extends Form
             array(
                 new PresenceOf(
                     array(
-                        'message' => 'Ingrese su <strong>Nombre</strong>.'
+                        'message' => 'Ingrese su <strong>nombre</strong>.'
                     )
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Nombre demasiado corto.',
+                    'messageMinimum' => 'El nombre es demasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'Nombre demasiado largo.',
+                    'messageMaximun' => 'El nombre es demasiado largo.',
                 )),
             )
         );
@@ -78,15 +78,15 @@ class TurnoManualForm extends Form
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>Legajo</strong> debe ser un n&uacute;mero sin puntos ni coma.'
+                        'message' => 'El <strong>legajo</strong> debe ser un n&uacute;mero sin puntos ni comas.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Minimo 4 digitos.',
+                    'messageMinimum' => 'El legajo debe tener como minimo 4 digitos.',
                     'max' => 12,
-                    'messageMaximun' => 'Maximo 12 digitos.',
+                    'messageMaximun' => 'El legajo debe tener como maximo 12 digitos.',
                 )),
             )
         );
@@ -104,24 +104,34 @@ class TurnoManualForm extends Form
             array(
                 new PresenceOf(
                     array(
-                        'message' => 'Ingrese el <strong>DNI</strong>.'
+                        'message' => 'Ingrese el <strong>nro de documento</strong>.'
                     )
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>DNI</strong> debe ser un n&uacute;mero sin puntos ni coma.'
+                        'message' => 'El <strong>nro de documento</strong> no debe tener puntos ni comas.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Minimo 4 digitos.',
+                    'messageMinimum' => 'El nro de documento debe tener como minimo 4 digitos.',
                     'max' => 12,
-                    'messageMaximun' => 'Maximo 12 digitos.',
+                    'messageMaximun' => 'El nro de documento debe tener como maximo 12 digitos.',
                 ))
             )
         );
         $this->add($dni);
+
+        /*=================== Fecha Nacimiento ==========================*/
+        $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',array('style'=>'text-align:right !important;width: 300px !important;'));
+        $fechaNacimiento->setLabel("<strong style='color:red'>*</strong> Fecha Nacimiento:");
+        $fechaNacimiento->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Ingrese la <strong>Fecha de Nacimiento</strong>.'
+            ))
+        ));
+        $this->add($fechaNacimiento);
 
         /*=================== Nro Telefono ==========================*/
         $telefono = new Text("solicitudTurno_numTelefono",
@@ -134,18 +144,18 @@ class TurnoManualForm extends Form
         $telefono->addValidators(
             array(
                 new PresenceOf(array(
-                    'message' => 'El telefono  es requerido.'
+                    'message' => 'El nro de telefono es requerido.'
                 )),
                 new Numericality( array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un n&uacute;mero sin puntos ni coma.'
+                        'message' => 'El <strong>nro de telefono</strong> no debe tener puntos ni comas.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 6,
-                    'messageMinimum' => 'Minimo 6 digitos.',
+                    'messageMinimum' => 'El nro de telefono debe tener como minimo 6 digitos.',
                     'max' => 14,
-                    'messageMaximun' => 'Maximo 14 digitos.',
+                    'messageMaximun' => 'El nro de telefono debe tener como maximo 14 digitos.',
                 )),
             )
         );
@@ -163,18 +173,18 @@ class TurnoManualForm extends Form
         $telefonoBis->addValidators(
             array(
                 new PresenceOf(array(
-                    'message' => 'El telefono  es requerido.'
+                    'message' => 'El nro de telefono  es requerido.'
                 )),
                 new Numericality( array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un n&uacute;mero sin puntos ni coma.'
+                        'message' => 'El <strong>nro de telefono</strong> no debe tener puntos ni comas.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 6,
-                    'messageMinimum' => 'Minimo 6 digitos.',
+                    'messageMinimum' => 'El nro de telefono debe tener como minimo 6 digitos.',
                     'max' => 14,
-                    'messageMaximun' => 'Maximo 14 digitos.',
+                    'messageMaximun' => 'El nro de telefono debe tener como maximo 14 digitos.',
                 )),
                 new ComprobarTelefonoValidator(array('telefono'=>$telefono))
             )

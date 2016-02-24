@@ -112,7 +112,8 @@
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.next,'Siguiente','class':'btn') }}
                                 {{ link_to("/turnos/turnosRespondidos/?page="~page.last,'Última','class':'btn') }}
-                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
+                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                P&aacute;gina {{ page.current }} de {{ page.total_pages }}
                             </div>
                         </td>
                     </tr>

@@ -111,8 +111,14 @@
 
             </div>
 
-            <div class="col-md-6 col-md-offset-1"  align="center">
-                {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg pull-right') }}
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                        </div>
+                    </div>
+
+                    {{ end_form() }}
+                </div>
             </div>
 
             {{ end_form() }}

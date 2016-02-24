@@ -1,4 +1,4 @@
-<section id="onepage" class="admin bg-rayado">
+<section id="onepage">
 
     {# <meta http-equiv="refresh" content="35"> #}
 
@@ -124,8 +124,8 @@
                                 {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn') }}
                                 {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn') }}
                                 {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn') }}
-
-                                <div><p> P&aacute;gina {{ page.current }} de {{ page.total_pages }}</p></div>
+                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                P&aacute;gina {{ page.current }} de {{ page.total_pages }}
                             </div>
                         </td>
                     </tr>
