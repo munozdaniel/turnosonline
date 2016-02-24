@@ -29,7 +29,7 @@ class ComprobarEmailValidator extends Validator implements ValidatorInterface
         //echo $email->getValue()." $emailRepetido";
 
         if (strcmp(trim($email->getValue()),trim($emailRepetido))!=0) {
-            $validator->appendMessage(new Message('Los correos no coinciden.'));
+            $validator->appendMessage(new Message('Los emails no coinciden.'));
             return false;
         }
         return true;

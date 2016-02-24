@@ -24,8 +24,7 @@ class DataListScript  extends \Phalcon\Forms\Element implements \Phalcon\Forms\E
         $html="";
         $html .= " <script> \n";
         $html .= " $(\"#$idPrincipal\").change(function (event) { \n";
-        $html .= " var value = $(this).val(); \n";
-        $html .= " var getResultsUrl = 'buscarCiudades'; \n";
+        $html .= " var value = $(this).val();  \n";
         $html .= " $.ajax({ \n";
         $html .= " data: {\"id\": value}, \n";
         $html .= " method: \"POST\", \n";

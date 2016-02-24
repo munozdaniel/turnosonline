@@ -21,7 +21,6 @@ class TurnosOnlineForm  extends Form {
     {
         /*=================== Apellido ==========================*/
         $apellido = new Text("solicitudTurno_ape",array('style'=>'text-align:right !important;height: 40px !important; width: 300px !important; font-size: 18px;','placeholder'=>'APELLIDO'));
-
         $apellido->setLabel("<strong style='color: red'>*</strong> Apellido:");
         $apellido->setFilters(array('string'));
         $apellido->addValidators(
@@ -33,9 +32,9 @@ class TurnosOnlineForm  extends Form {
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Apellido demasiado corto.',
+                    'messageMinimum' => 'El apellido demasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'Apellido demasiado largo.',
+                    'messageMaximun' => 'El apellido demasiado largo.',
                 )),
             )
         );
@@ -54,9 +53,9 @@ class TurnosOnlineForm  extends Form {
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Nombre demasiado corto',
+                    'messageMinimum' => 'El nombre demasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'Nombre demasiado largo',
+                    'messageMaximun' => 'El nombre demasiado largo.',
                 )),
             )
         );
@@ -70,20 +69,20 @@ class TurnosOnlineForm  extends Form {
             array(
                 new PresenceOf(
                     array(
-                        'message' => 'Ingrese el <strong>Legajo</strong>.'
+                        'message' => 'Ingrese el <strong>legajo</strong>.'
                     )
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>Legajo</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>legajo</strong> debe ser un número sin puntos ni coma.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Minimo 4 digitos.',
+                    'messageMinimum' => 'El legajo debe tener como minimo 4 digitos.',
                     'max' => 12,
-                    'messageMaximun' => 'Maximo 12 digitos.',
+                    'messageMaximun' => 'El legajo debe tener como maximo 12 digitos.',
                 )),
             )
         );
@@ -96,20 +95,20 @@ class TurnosOnlineForm  extends Form {
             array(
                 new PresenceOf(
                     array(
-                        'message' => 'Ingrese el <strong>DNI</strong>.'
+                        'message' => 'Ingrese el <strong>nro de documento.</strong>.'
                     )
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>DNI</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>nro de documento</strong> no debe tener puntos.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'Minimo 4 digitos.',
+                    'messageMinimum' => 'El nro de documento debe tener como minimo 4 digitos.',
                     'max' => 12,
-                    'messageMaximun' => 'Maximo 12 digitos.',
+                    'messageMaximun' => 'El nro de documento debe tener como maximo 12 digitos.',
                 ))
             )
         );
@@ -119,7 +118,7 @@ class TurnosOnlineForm  extends Form {
         $fechaNacimiento->setLabel("<strong style='color: red'>*</strong> Fecha Nacimiento:");
         $fechaNacimiento->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha de Nacimiento</strong>.'
+                'message' => 'Ingrese la <strong>fecha de nacimiento</strong>.'
             ))
         ));
         $this->add($fechaNacimiento);
@@ -136,15 +135,15 @@ class TurnosOnlineForm  extends Form {
                 ),
                 new Numericality(
                     array(
-                        'message' => 'El <strong>Telefono</strong> debe ser un número sin puntos ni coma.'
+                        'message' => 'El <strong>n&uacute;mero</strong> no debe tener puntos ni comas.'
                     )
                 ),
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 6,
-                    'messageMinimum' => 'Minimo 6 digitos.',
+                    'messageMinimum' => 'El numero de telefono debe tener como minimo 6 digitos.',
                     'max' => 14,
-                    'messageMaximun' => 'Maximo 14 digitos.',
+                    'messageMaximun' => 'El numero de telefono debe tener como maximo 14 digitos.',
                 )),
             )
         );
@@ -155,10 +154,10 @@ class TurnosOnlineForm  extends Form {
         $email->setLabel("<strong style='color: red'>*</strong> Email:");
         $email->addValidators(array(
             new PresenceOf(array(
-                'message' => 'El Email es requerido.'
+                'message' => 'El email es requerido.'
             )),
             new Email(array(
-                'message' => 'El Email no es válido.'
+                'message' => 'El email no es válido.'
             ))
         ));
 
@@ -169,10 +168,10 @@ class TurnosOnlineForm  extends Form {
         $confirmarEmail->setLabel("<strong style='color: red'>*</strong> Repita el Email:");
         $confirmarEmail->addValidators(array(
             new PresenceOf(array(
-                'message' => 'El Email es requerido'
+                'message' => 'El email es requerido'
             )),
             new Email(array(
-                'message' => 'El Email no es válido.'
+                'message' => 'El email no es válido.'
             )),
             new ComprobarEmailValidator(array('email'=>$email))
         ));

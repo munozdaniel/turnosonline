@@ -84,7 +84,8 @@
                                     {{ link_to('turnos/verPeriodos?page='~tabla.before,'<i class="icon-step-backward"></i> Anterior','class':'btn') }}
                                     {{ link_to('turnos/verPeriodos?page='~tabla.next,'<i class="icon-step-forward"></i> Siguiente','class':'btn') }}
                                     {{ link_to('turnos/verPeriodos?page='~tabla.last,'<i class="icon-fast-forward"></i> Última','class':'btn') }}
-                                    <div><p> P&aacute;gina {{ tabla.current }} de {{ tabla.total_pages }}</p></div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                    P&aacute;gina {{ tabla.current }} de {{ tabla.total_pages }}
                                 </div>
                             </td>
                         <tr>
