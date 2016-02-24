@@ -66,6 +66,13 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     {
         return 'fechasturnos';
     }
+    /**
+     * Initialize method for model.
+     */
+    public function initialize()
+    {
+        $this->hasMany('fechasTurnos_id', 'Solicitudturno', 'solicitudTurnos_fechasTurnos', array('alias' => 'Solicitudturno'));
+    }
 
     /**
      * Allows to query a set of records that match the specified conditions

@@ -147,12 +147,13 @@ class TurnosController extends ControllerBase
                                 if (!empty($solicitud))//la solicitud se ingreso con exito.
                                 {
 
-                                    if ($estado == 'AUTORIZADO')
+                                    if ($estado == 'AUTORIZADO') {
                                         Fechasturnos::incrementarCantAutorizados();
-
-                                    $turnoManualForm->clear();
-                                    $this->flash->notice($this->tag->linkTo(array('turnos/comprobanteTurno/'.$solicitud->solicitudTurno_id, "IMPRIMIR COMPROBANTE DE TURNO", "class" => "btn btn-info btn-large",'target'=>'_blank')));
-
+                                        $turnoManualForm->clear();
+                                        $solicitud_encode = base64_encode($solicitud->solicitudTurno_id);
+                                        $this->flash->notice($this->tag->linkTo(array('turnos/comprobanteTurno/' . $solicitud_encode, "<i class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO", "class" => "btn btn-info btn-lg", 'target' => '_blank')));
+                                       // $this->comprobanteTurnoPostAction('F');
+                                    }
 
                                 } else
                                     $this->flash->error('OCURRIO UN ERROR, INTENTE MAS TARDE.');
@@ -175,59 +176,6 @@ class TurnosController extends ControllerBase
 
         $this->view->formulario = $turnoManualForm;
     }
-
-    /*   public function guardaDatosSolicitudManualAction()
-       {
-           $turnoManualForm = new TurnoManualForm();
-
-           if ($this->request->isPost())
-           {
-               if ($turnoManualForm->isValid($this->request->getPost()) != false) //aqui es donde valida los datos ingresados
-               {
-                   $legajo = $this->request->getPost('solicitudTurno_legajo', array('alphanum', 'trim'));
-                   $nombre = $this->request->getPost('solicitudTurno_nom', array('striptags', 'string', 'upper'));
-                   $apellido = $this->request->getPost('solicitudTurno_ape', array('striptags', 'string', 'upper'));
-                   $documento = $this->request->getPost('solicitudTurno_documento', array('alphanum', 'trim', 'string'));
-                   $numTelefono = $this->request->getPost('solicitudTurno_numTelefono', 'int');
-                   $estado = $this->request->getPost('estado');
-                   $miSesion = $this->session->get('auth');
-                   $nickActual = $miSesion['usuario_nick'];
-
-                   $fechaTurno = Fechasturnos::findFirstByFechasTurnos_activo(1);
-
-                   if ($fechaTurno->fechasTurnos_inicioSolicitud <= date('Y-m-d') && date('Y-m-d')<=$fechaTurno->fechasTurnos_finSolicitud)
-                   {
-                       $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
-
-                       if ($nombreCompleto != "")
-                       {
-                           if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto, null))
-                           {
-                               $seGuardo = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto, $documento, $numTelefono, $estado, $nickActual);
-
-                               if ($seGuardo)//la solicitud se ingreso con exito.
-                               {
-                                   if ($estado == 'AUTORIZADO')
-                                       Fechasturnos::incrementarCantAutorizados();
-
-                                   $turnoManualForm->clear();
-                                   $this->flash->success('LA SOLICITUD DE TURNO SE INGRESO CON EXITO.');
-                               }
-                               else
-                                   $this->flash->error('OCURRIO UN ERROR, INTENTE MAS TARDE.');
-                           }
-                           else
-                               $this->flash->error('EL AFILIADO YA SOLICITO UN TURNO, POR LO CUAL NO SE PUEDE INGRESAR ESTA SOLICITUD.');
-                       }
-                       else
-                           $this->flash->error('EL AFILIADO NO ESTA REGISTRADO EN EL SISTEMA O ALGUNO DE LOS DATOS INGRESADOS SON INCORRECTOS.');
-                   }
-                   else
-                       $this->flash->error('NO ES POSIBLE INGRESAR LA SOLICITUD EN LA FECHA ACTUAL. VERIFIQUE EL PERIODO DE SOLICITUD.');
-               }
-           }
-           $this->view->formulario = $turnoManualForm;
-       }*/
 
     /**
      * Verifica que los datos ingresados por parametros se encuentren en la bd de siprea.
@@ -771,7 +719,7 @@ class TurnosController extends ControllerBase
         }else
             $this->redireccionar('index/index');
     }
-    public function comprobanteTurnoAction($idSolicitud)
+    public function comprobanteTurnoAction($idSolicitud,$salida='I')
     {
 
         $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($idSolicitud);
@@ -785,7 +733,7 @@ class TurnosController extends ControllerBase
         $pdf = new mPDF();
         $pdf->SetHeader(date('d/m/Y'));
         $pdf->WriteHTML($html, 2);
-        $pdf->Output('comprobanteTurno.pdf', "I");
+        $pdf->Output('comprobanteTurno.pdf', $salida);
 
 
 

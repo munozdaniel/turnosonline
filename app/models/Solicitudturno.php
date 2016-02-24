@@ -394,6 +394,13 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         }
         return $lista;
     }
+    /**
+     * Initialize method for model.
+     */
+    public function initialize()
+    {
+        $this->belongsTo('solicitudTurnos_fechasTurnos', 'Fechasturnos', 'fechasTurnos_id', array('alias' => 'Fechasturnos'));
+    }
 
     private static function actualizarRespYFechaEnviada($id)
     {
