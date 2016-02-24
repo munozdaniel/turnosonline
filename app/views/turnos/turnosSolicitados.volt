@@ -135,7 +135,7 @@
             {{ form('turnos/enviarRespuestas') }}
 
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
+                <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
                     {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block') }}
                 </div>
             </div>
