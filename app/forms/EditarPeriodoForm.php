@@ -61,7 +61,7 @@ class EditarPeriodoForm extends Form
         $this->add($periodoAtencionDesde);
 
         /*=================== CANTIDAD DE DIAS ==========================*/
-        $cantidadDias = new Text("cantidadDias",array('style'=>'height: 40px !important;font-size: 18px;'));
+        $cantidadDias = new Text("cantidadDias",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;'));
         $cantidadDias->setLabel("Cantidad de d&iacute;as para confirmar el mensaje ");
         $cantidadDias->setDefault($cantDiasConf);
         $cantidadDias->setFilters(array('int'));
@@ -83,7 +83,7 @@ class EditarPeriodoForm extends Form
         $this->add($cantidadDias);
 
         /*=================== CANTIDAD DE TURNOS ==========================*/
-        $cantidadTurnos = new Text("cantidadTurnos",array('style'=>'height: 40px !important;font-size: 18px;'));
+        $cantidadTurnos = new Text("cantidadTurnos",array('style'=>'text-align:right !important;height: 40px !important;font-size: 18px;'));
         $cantidadTurnos->setDefault($cantTurnos);
         $cantidadTurnos->setLabel("Cantidad de Turnos");
         $cantidadTurnos->setFilters(array('int'));
