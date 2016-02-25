@@ -3168,6 +3168,9 @@ cursor: none;
 .borde-right-4{
     border-right: 4px solid #E2DFDF;
 }
+.borde-bottom-4{
+    border-bottom: 4px solid #E2DFDF;
+}
 .marginBottom-20
 {
     margin-bottom: 20px;
