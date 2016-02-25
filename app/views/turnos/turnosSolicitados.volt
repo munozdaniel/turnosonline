@@ -1,5 +1,4 @@
-<section id="onepage">
-
+<section id="onepage" class="admin bg-rayado">
     {# <meta http-equiv="refresh" content="35"> #}
 
     <style>

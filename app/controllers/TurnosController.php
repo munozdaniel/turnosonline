@@ -146,13 +146,15 @@ class TurnosController extends ControllerBase
 
                                 if (!empty($solicitud))//la solicitud se ingreso con exito.
                                 {
-
                                     if ($estado == 'AUTORIZADO') {
                                         Fechasturnos::incrementarCantAutorizados();
                                         $turnoManualForm->clear();
-                                        $solicitud_encode = base64_encode($solicitud->solicitudTurno_id);
-                                        $this->flash->notice($this->tag->linkTo(array('turnos/comprobanteTurno/' . $solicitud_encode, "<i class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO", "class" => "btn btn-info btn-lg", 'target' => '_blank')));
-                                       // $this->comprobanteTurnoPostAction('F');
+                                        $boton  =   $this->tag->form(array('turnos/comprobanteTurno','method'=>'POST'));
+                                        $encode = base64_encode($solicitud->solicitudTurno_id);
+                                        $boton .= $this->tag->hiddenField(array('solicitud_id','value'=>$encode));
+                                        $boton .=  "<button type='submit' class='btn btn-info btn-lg' formtarget='_blank'><i class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO</button>";
+                                        $boton .=  "</form>";
+                                        $this->flash->notice($boton);
                                     }
 
                                 } else
@@ -177,6 +179,28 @@ class TurnosController extends ControllerBase
         $this->view->formulario = $turnoManualForm;
     }
 
+    public function comprobanteTurnoAction(){
+        if(!$this->request->isPost())
+        {
+            $this->flash->error("Ocurrió un problema, la URL solicitada no se encuentra disponible.");
+            $this->redireccionar('index/index');
+        }
+        $idSolicitud = base64_decode($this->request->getPost('solicitud_id'));
+        $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($idSolicitud);
+
+        if (empty($solicitud))
+            $mensaje ="ERROR";
+        else
+            $mensaje='EXITO';
+
+        $this->tag->setTitle('');//Para que no muestre el titulo en el pdf.
+        $this->view->disable();
+        $html = $this->view->getRender('turnos', 'comprobanteTurno', array('solicitud' => $solicitud,'mensaje' =>$mensaje));
+        $pdf = new mPDF();
+        $pdf->SetHeader(date('d/m/Y'));
+        $pdf->WriteHTML($html, 2);
+        $pdf->Output('comprobanteTurno.pdf', "I");
+    }
     /**
      * Verifica que los datos ingresados por parametros se encuentren en la bd de siprea.
      * @param $legajo Corresponde al legajo del afiliado.
@@ -748,7 +772,7 @@ class TurnosController extends ControllerBase
         else
             $this->redireccionar('index/index');
     }
-    public function comprobanteTurnoAction($idSolicitud)
+    public function comprobanteTurnoAction2($idSolicitud)
     {
         $idSolicitud = $this->request->get('id');
         $id = base64_decode($idSolicitud);
@@ -815,7 +839,7 @@ class TurnosController extends ControllerBase
     public function guardarDatosEdicionPeriodoAction()
     {
         if ($this->request->isPost()) {
-            $id = $this->request->getPost('idPeriodo');
+            $id = $this->request->getPost('idPeriodo','int');
             $unPeriodo = Fechasturnos::findFirstByFechasTurnos_id($id);
             if ($unPeriodo) {
                 $unPeriodo->fechasTurnos_inicioSolicitud = $this->request->getPost('periodoSolicitudDesde');
@@ -832,13 +856,15 @@ class TurnosController extends ControllerBase
                     if ($puntoProgramado->update())
                         $this->flash->message('exito', "Los datos se guardaron correctamente!");
 
-                    return $this->redireccionar('turnos/verPeriodos');
                 } else {
                     $this->flash->message('problema', "Ocurrio un error, no se pudieron guardar los datos.");
-                    return $this->redireccionar('turnos/verPeriodos');
                 }
+            }else{
+                $this->flash->message('problema', "NO SE ENCONTRÓ EL PERIODO A EDITAR");
             }
-        }
+        }else
+            $this->flash->message('problema', "NO ES POST");
+        return $this->redireccionar('turnos/verPeriodos');
     }
 
 
