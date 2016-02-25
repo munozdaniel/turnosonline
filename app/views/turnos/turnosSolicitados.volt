@@ -316,11 +316,11 @@
                                         "<p >La solicitud se edito correctamente.</p>"
                                 );
                                 $("#onclickBtn").hide();
-                                console.log(data);
+                                console.log(data);//BORRAR EN PRODUCCION
                             },
                             error: function (error) {
                                 alert(error.statusText);
-                                console.log(error);
+                                console.log(error);//BORRAR EN PRODUCCION
                             }
                         })
                     },

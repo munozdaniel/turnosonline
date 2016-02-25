@@ -16,7 +16,8 @@
             <div class="col-md-12">
                 <h1> {{ content() }}</h1>
             </div>
-            {{ form('turnos/index','method':'post','style':'','class':'') }}
+
+            {{ form('turnos/guardarTurnoOnline','method':'post','style':'','class':'') }}
             <div class="col-md-12" style="margin-bottom: 30px;">
                 <em style="color:tomato">* Campos obligatorios.</em> <br/><br/>
                 {% for elto in formulario %}
@@ -36,7 +37,11 @@
 
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
-                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                    {% if deshabilitar is defined %}
+                        {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block disabled') }}
+                    {% else %}
+                        {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                    {% endif %}
                 </div>
             </div>
 
