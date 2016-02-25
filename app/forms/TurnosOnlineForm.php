@@ -20,11 +20,18 @@ class TurnosOnlineForm  extends Form {
     public function initialize($entity = null, $options = array())
     {
         /*=================== Apellido ==========================*/
+        $disable = array();
+        $disable['key']='';
+        $disable['value']='';
+        if(!isset($options['disabled'])){
+            $disable['key']='disabled';
+            $disable['value']='true';
+        }
         $apellido = new Text("solicitudTurno_ape",
             array('style'=>'text-align:right !important; font-size: 18px;',
                 'placeholder'=>'APELLIDO',
                 'class'=>'form-control',
-                'required'=>'true','autocomplete'=>'off'));
+                'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
         $apellido->setLabel("<strong style='color: red'>*</strong> Apellido:");
         $apellido->setFilters(array('string'));
         $apellido->addValidators(
@@ -48,7 +55,7 @@ class TurnosOnlineForm  extends Form {
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'placeholder'=>'NOMBRE',
                 'class'=>'form-control',
-                'required'=>'true','autocomplete'=>'off'));
+                'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
 
         $nombre->setLabel("<strong style='color: red'>*</strong> Nombre: ");
         $nombre->setFilters(array('string'));
@@ -73,7 +80,7 @@ class TurnosOnlineForm  extends Form {
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'placeholder'=>'LEGAJO',
                 'class'=>'form-control',
-                'required'=>'true','autocomplete'=>'off'));
+                'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
 
         $legajo->setLabel("<strong style='color: red'>*</strong> Legajo: ");
         $legajo->setFilters(array('int'));
@@ -104,7 +111,7 @@ class TurnosOnlineForm  extends Form {
             array('style'=>'text-align:right !important;font-size: 18px;',
             'placeholder'=>'NRO DOCUMENTO',
             'class'=>'form-control',
-            'required'=>'true','autocomplete'=>'off'));
+            'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
         $dni->setLabel("<strong style='color: red'>*</strong> Nro Documento: ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
@@ -133,7 +140,7 @@ class TurnosOnlineForm  extends Form {
         $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
-                'required'=>'true'));
+                'required'=>'true',$disable['key']=>$disable['value']));
         $fechaNacimiento->setLabel("<strong style='color: red'>*</strong> Fecha Nacimiento:");
         $fechaNacimiento->addValidators(array(
             new PresenceOf(array(
@@ -146,7 +153,7 @@ class TurnosOnlineForm  extends Form {
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'placeholder'=>'TELEFONO',
                 'class'=>'form-control',
-                'required'=>'true','autocomplete'=>'off'));
+                'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
         $telefono->setLabel("<strong style='color: red'>*</strong> N&uacute;mero de telefono/celular:");
         $telefono->setFilters(array('int'));
         $telefono->addValidators(
@@ -176,7 +183,7 @@ class TurnosOnlineForm  extends Form {
             array('style'=>'text-align:right !important;font-size: 18px;',
             'placeholder' => 'EMAIL',
                 'class'=>'form-control',
-                'required'=>'true','autocomplete'=>'off'));
+                'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
         $email->setLabel("<strong style='color: red'>*</strong> Email:");
         $email->addValidators(array(
             new PresenceOf(array(
@@ -193,7 +200,7 @@ class TurnosOnlineForm  extends Form {
             array('style'=>'text-align:right !important;font-size: 18px;',
             'placeholder' => 'REPITA EL EMAIL',
                 'class'=>'form-control',
-                'required'=>'true','autocomplete'=>'off'));
+                'required'=>'true','autocomplete'=>'off',$disable['key']=>$disable['value']));
         $confirmarEmail->setLabel("<strong style='color: red'>*</strong> Repita el Email:");
         $confirmarEmail->addValidators(array(
             new PresenceOf(array(
