@@ -100,16 +100,25 @@
                             </td>
                             <td style="text-align: center;width: 180px">{{ item.solicitudTurno_nickUsuario }}</td>
                             <td width="7%">
-                                {% if ((item.solicitudTurno_nickUsuario ==  session.get('auth')['usuario_nick']) OR (item.solicitudTurno_nickUsuario == '-')
-                                OR (session.get('auth')['rol_nombre']== "ADMIN") OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
-                                    <!--en el evento onclick pasamos el post en formato json-->
-                                    <a href="#" class="btn btn-info editar"
-                                       onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
-                                        Editar
-                                    </a>
+                                {% if ((item.solicitudTurno_nickUsuario ==  session.get('auth')['usuario_nick'])
+                                OR (session.get('auth')['rol_nombre']== "ADMIN")
+                                OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
+                                    <a  class="btn btn-info editar btn-block"
+                                        onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
+                                        EDITAR</a>
+                                {% elseif(item.solicitudTurno_nickUsuario == '-') %}
+                                        {% if(cantA < cantidadDeTurnos)%}
+                                            <a  class="btn btn-info editar btn-block"
+                                                onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
+                                                EDITAR</a>
+                                        {% else %}
+                                            <a href="#" class="btn btn-danger editar btn-block"
+                                               onclick="alert('NO HAY TURNOS DISPONIBLES')">SIN TURNOS </a>
+                                        {% endif %}
                                 {% else %}
-                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">Editar </a>
+                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
                                 {% endif %}
+
                             </td>
                         </tr>
                     {% endfor %}
@@ -134,7 +143,7 @@
             {{ form('turnos/enviarRespuestas') }}
 
             <div class="row">
-                <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class="col-md col-md-offset-5">
+                <div align="center" style="width:25%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;" class=" col-col-md col-md-offset-5">
                     {{ submit_button('ENVIAR RESPUESTAS','class':'btn btn-blue btn-lg btn-block') }}
                 </div>
             </div>
@@ -316,11 +325,11 @@
                                         "<p >La solicitud se edito correctamente.</p>"
                                 );
                                 $("#onclickBtn").hide();
-                                console.log(data);//BORRAR EN PRODUCCION
+                                //console.log(data);//BORRAR EN PRODUCCION
                             },
                             error: function (error) {
                                 alert(error.statusText);
-                                console.log(error);//BORRAR EN PRODUCCION
+                                //console.log(error);//BORRAR EN PRODUCCION
                             }
                         })
                     },

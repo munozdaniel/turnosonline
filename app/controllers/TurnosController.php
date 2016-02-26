@@ -92,7 +92,8 @@ class TurnosController extends ControllerBase
                     $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
 
                     if ($nombreCompleto != "") {
-                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto, $email)) {
+                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto)) {
+                            if( !$this->existeEmailEnElPeriodo($ultimoPeriodo,$email)){
                             $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo, $nombreCompleto, $documento, $email, $numTelefono, $ultimoPeriodo->fechasTurnos_id);
 
                             if ($seGuardo)//la solicitud se ingreso con exito.
@@ -102,10 +103,17 @@ class TurnosController extends ControllerBase
                                 $this->redireccionar('turnos/turnoSolicitadoExitoso');
                             } else
                                 $this->flash->error('OCURRIO UN PROBLEMA, POR FAVOR VUELVA A INTENTARLO EN UNOS MINUTOS.');
+                            }else{
+                                $this->flash->error('EL EMAIL INGRESADO YA HA SIDO UTILIZADO PAR SOLICITAR UN TURNO.');
+                            }
                         } else
                             $this->flash->error('SUS DATOS YA FUERON INGRESADOS, NO PUEDE OBTENER MÁS DE UN TURNO POR PERÍODO');
                     } else
                         $this->flash->error('USTED NO SE ENCUENTRA REGISTRADO EN EL SISTEMA, PARA OBTENER MAS INFORMACIÓN DIRÍJASE A NUESTRAS OFICINAS.');
+                }else{
+                    foreach($turnosOnlineForm->getMessages() as $mje){
+                        $this->flash->error($mje);
+                    }
                 }
             }
         } else {
@@ -113,6 +121,7 @@ class TurnosController extends ControllerBase
             $this->flash->message('problema', 'NO EXISTE EL PERIODO PARA SOLICITAR TURNOS.');
         }
         $this->view->formulario = $turnosOnlineForm;
+        return $this->redireccionar('turnos/index');
 
     }
 
@@ -298,20 +307,17 @@ class TurnosController extends ControllerBase
      * MJE ERROR: SUS DATOS YA FUERON INGRESADO, NO PUEDE SACAR MÁS DE UN TURNO POR PERÍODO
      * @return boolean devuelve si encontro o no.
      */
-    private function tieneTurnoSolicitado($legajo, $nomApe, $email)
+    private function tieneTurnoSolicitado($legajo, $nomApe)
     {
         try {
-            $fechasTurnos = Fechasturnos::findFirstByFechasTurnos_activo(1);//Obtengo el periodo activo (campo nuevo).
             $consulta = "SELECT ST.* FROM solicitudturno AS ST, Fechasturnos AS F WHERE (fechasTurnos_activo = 1)
                         AND (F.fechasTurnos_id = ST.solicitudTurnos_fechasTurnos) AND ((ST.solicitudTurno_legajo=:legajo:)
-                        OR (ST.solicitudTurno_nomApe LIKE  :nomApe:) OR (ST.solicitudTurno_email LIKE :email:))";
+                        OR (ST.solicitudTurno_nomApe LIKE  :nomApe:))";
 
             $solicitudTurno = $this->modelsManager->executeQuery($consulta,
                 array(
                     'legajo' => $legajo,
-                    'nomApe' => $nomApe,
-                    'email' => $email));
-
+                    'nomApe' => $nomApe));
             //Si no encontro datos, es porque no solicito un turno en este periodo.
             if (count($solicitudTurno) == 0)
                 return false;
@@ -451,7 +457,8 @@ class TurnosController extends ControllerBase
             ->addFrom('Solicitudturno', 'S')
             ->join('Fechasturnos', 'S.solicitudTurnos_fechasTurnos = F.fechasTurnos_id ', 'F')
             ->where(" F.fechasTurnos_activo=1 AND S.solicitudTurno_manual = 0 and (S.solicitudTurno_fechaPedido between :fI: and :fF:) and S.solicitudTurno_respuestaEnviada='NO'",
-                array('fI' => $fechaInicio, 'fF' => $fechaFin));
+                array('fI' => $fechaInicio, 'fF' => $fechaFin))
+            ->orderBy('S.solicitudTurno_fechaPedido ASC');
 
 
         $paginator = new PaginacionBuilder
@@ -892,6 +899,21 @@ class TurnosController extends ControllerBase
         } else
             $this->flash->message('problema', "NO ES POST");
         return $this->redireccionar('turnos/verPeriodos');
+    }
+
+    /**
+     * Verifica si el correo ya fue utilizado para solicitar un turno en el periodo activo
+     * @param $email
+     */
+    private function existeEmailEnElPeriodo($ultimoPeriodo,$email)
+    {
+        $solicitud  = Solicitudturno::findFirst(
+            array("conditions"=>"solicitudTurnos_fechasTurnos=:fechasTurnos_id: AND solicitudTurno_email = :email:",
+                "bind"=>array("fechasTurnos_id"=>$ultimoPeriodo->fechasTurnos_id,"email"=>$email))
+        );
+        if($solicitud)
+            return true;
+        return false;
     }
 
 
