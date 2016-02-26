@@ -4,7 +4,6 @@
         a {
             color: #2da2c8
         }
-
         .heading h2 {
             font-size: 35px;
             line-height: 35px;
@@ -26,7 +25,8 @@
                 </p>
             </div>
         </div>
-        <div class="row  form-blanco borde-top borde-left-4 borde-right-4">
+        <div class="row  form-blanco borde-top borde-left-4 borde-right-4 borde-bottom-4">
+
             <div class="" align="center">
                 <h3 style="text-transform: uppercase">{{ content() }}</h3>
             </div>

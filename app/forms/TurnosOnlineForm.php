@@ -23,7 +23,7 @@ class TurnosOnlineForm  extends Form {
         $disable = array();
         $disable['key']='';
         $disable['value']='';
-        if(!isset($options['disabled'])){
+        if(isset($options['disabled'])){
             $disable['key']='disabled';
             $disable['value']='true';
         }

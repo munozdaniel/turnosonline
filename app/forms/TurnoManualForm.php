@@ -12,12 +12,22 @@ class TurnoManualForm extends Form
 {
     public function initialize($entity = null, $options = array())
     {
+
+        $disable = array();
+        if (isset($options['disabled'])) {
+            $disable['key']='disabled';
+            $disable['value']='true';
+        } else {
+            $disable['key']='';
+            $disable['value']='';
+        }
+
         /*=================== Apellido ==========================*/
         $apellido = new Text("solicitudTurno_ape",
             array('style'=>'text-align:right !important; font-size: 18px;',
                 'class'=>'form-control',
                 'autocomplete'=>'off',
-                'required'=>'',
+                'required'=>'',$disable['key']=>$disable['value'],
                 'placeholder'=>'INGRESE EL APELLIDO'));
         $apellido->setLabel("<strong style='color:red'>*</strong> Apellido: ");
         $apellido->setFilters(array('string'));
@@ -43,7 +53,7 @@ class TurnoManualForm extends Form
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
                 'autocomplete'=>'off',
-                'required'=>'',
+                'required'=>'',$disable['key']=>$disable['value'],
                 'placeholder'=>'INGRESE EL NOMBRE COMPLETO'));
         $nombre->setLabel("<strong style='color:red'>*</strong> Nombre: ");
         $nombre->setFilters(array('string'));
@@ -68,7 +78,7 @@ class TurnoManualForm extends Form
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
                 'autocomplete'=>'off',
-                'required'=>'',
+                'required'=>'',$disable['key']=>$disable['value'],
                 'placeholder'=>'INGRESE EL LEGAJO'));
         $legajo->setLabel("<strong style='color:red'>*</strong> Legajo: ");
         $legajo->setFilters(array('int'));
@@ -100,7 +110,7 @@ class TurnoManualForm extends Form
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
                 'autocomplete'=>'off',
-                'required'=>'',
+                'required'=>'',$disable['key']=>$disable['value'],
                 'placeholder'=>'INGRESE EL NRO DOCUMENTO'));
         $dni->setLabel("<strong style='color:red'>*</strong> Nro Documento: ");
         $dni->setFilters(array('int'));
@@ -132,7 +142,7 @@ class TurnoManualForm extends Form
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
                 'autocomplete'=>'off',
-                'required'=>'',
+                'required'=>'',$disable['key']=>$disable['value'],
                 'placeholder'=>'INGRESE NRO TELEFONO'));
         $telefono->setLabel("<strong style='color:red'>*</strong> N&uacute;mero de telefono/celular:");
         $telefono->setFilters(array('int'));
@@ -162,7 +172,7 @@ class TurnoManualForm extends Form
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
                 'autocomplete'=>'off',
-                'required'=>'',
+                'required'=>'',$disable['key']=>$disable['value'],
                 'placeholder'=>'REPITA NRO TELEFONO'));
         $telefonoBis->setLabel("<strong style='color:red'>*</strong> Repita su n&uacute;mero:");
         $telefonoBis->setFilters(array('int'));
@@ -191,7 +201,7 @@ class TurnoManualForm extends Form
         $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',
             array('style'=>'text-align:right !important;',
                 'class'=>'form-control',
-                'autocomplete'=>'off'));
+                'autocomplete'=>'off',$disable['key']=>$disable['value']));
         $fechaNacimiento->setLabel("<strong style='color:red'>*</strong> Fecha Nacimiento:");
         $fechaNacimiento->addValidators(array(
             new PresenceOf(array(

@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-            <div class="col-md-12">
+            <div align="center">
                 <h1> {{ content() }}</h1>
             </div>
 
