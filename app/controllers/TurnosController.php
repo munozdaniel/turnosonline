@@ -124,7 +124,20 @@ class TurnosController extends ControllerBase
         return $this->redireccionar('turnos/index');
 
     }
-
+    /**
+     * Verifica si el correo ya fue utilizado para solicitar un turno en el periodo activo
+     * @param $email
+     */
+    private function existeEmailEnElPeriodo($ultimoPeriodo,$email)
+    {
+        $solicitud  = Solicitudturno::findFirst(
+            array("conditions"=>"solicitudTurnos_fechasTurnos=:fechasTurnos_id: AND solicitudTurno_email = :email:",
+                "bind"=>array("fechasTurnos_id"=>$ultimoPeriodo->fechasTurnos_id,"email"=>$email))
+        );
+        if($solicitud)
+            return true;
+        return false;
+    }
     /**
      * Muestra el formulario para guardar un solicitud manual.
      */
@@ -435,19 +448,19 @@ class TurnosController extends ControllerBase
             $fechaInicio = $ultimoPeriodo->fechasTurnos_inicioSolicitud;
             $fechaFin = $ultimoPeriodo->fechasTurnos_finSolicitud;
 
-            $this->view->fechaI = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
-            $this->view->fechaF = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
-            $this->view->diaA = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-            $this->view->cantA = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+            $this->view->fechaInicial = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_inicioSolicitud));
+            $this->view->fechaFinal = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_finSolicitud));
+            $this->view->diaAtencion = date('d/m/Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+            $this->view->turnosAutorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
             $this->view->cantidadDeTurnos = $ultimoPeriodo->fechasTurnos_cantidadDeTurnos;
             $this->view->autorizadosEnviados = $this->cantRtasAutorizadasEnviadas();
         } else {
             $fechaInicio = '-';
             $fechaFin = '-';
-            $this->view->fechaI = '-';
-            $this->view->fechaF = '-';
-            $this->view->diaA = '-';
-            $this->view->cantA = '-';
+            $this->view->fechaInicial = '-';
+            $this->view->fechaFinal = '-';
+            $this->view->diaAtencion = '-';
+            $this->view->turnosAutorizados = '-';
             $this->view->cantidadDeTurnos = '-';
             $this->view->autorizadosEnviados = '-';
             $this->flash->message('problema', 'NO HAY NINGÚN PERIODO HABILITADO PARA SOLICITAR TURNOS.');
@@ -477,7 +490,7 @@ class TurnosController extends ControllerBase
     }
 
     /**
-     * @desc - permitimos editar un
+     * @desc - permitimos editar la informacion del prestamo. AJAX
      * @return json
      */
     public function editAction()
@@ -901,20 +914,7 @@ class TurnosController extends ControllerBase
         return $this->redireccionar('turnos/verPeriodos');
     }
 
-    /**
-     * Verifica si el correo ya fue utilizado para solicitar un turno en el periodo activo
-     * @param $email
-     */
-    private function existeEmailEnElPeriodo($ultimoPeriodo,$email)
-    {
-        $solicitud  = Solicitudturno::findFirst(
-            array("conditions"=>"solicitudTurnos_fechasTurnos=:fechasTurnos_id: AND solicitudTurno_email = :email:",
-                "bind"=>array("fechasTurnos_id"=>$ultimoPeriodo->fechasTurnos_id,"email"=>$email))
-        );
-        if($solicitud)
-            return true;
-        return false;
-    }
+
 
 
 }

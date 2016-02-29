@@ -17,15 +17,15 @@
                 <div class="col-sm-6">
                     <div class="fuente-14"><strong>
                             <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
-                        </strong>{{ fechaI }} - {{ fechaF }}
+                        </strong>{{ fechaInicial }} - {{ fechaFinal }}
                     </div>
                     <div class="fuente-14"><strong>
                             <ins>DIA DE ATENCI&Oacute;N :</ins>
-                        </strong> {{ diaA }}
+                        </strong> {{ diaAtencion }}
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    {% if (cantidadDeTurnos == cantA) %}
+                    {% if (cantidadDeTurnos == turnosAutorizados) %}
                         <div class="fuente-14" style="color:red;">
                             <strong>
                                 <ins>TOTAL DE TURNOS :</ins>
@@ -34,7 +34,7 @@
                         <div class="fuente-14" id="idCantA" style="color:red;">
                             <strong>
                                 <ins>TURNOS AUTORIZADOS :</ins>
-                            </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                            </strong> <strong id="cantAutorizados">{{ turnosAutorizados }}</strong>
                         </div>
                     {% else %}
                         <div class="fuente-14">
@@ -45,7 +45,7 @@
                         <div class="fuente-14" id="idCantA">
                             <strong>
                                 <ins>TURNOS AUTORIZADOS :</ins>
-                            </strong> <strong id="cantAutorizados">{{ cantA }}</strong>
+                            </strong> <strong id="cantAutorizados">{{ turnosAutorizados }}</strong>
                         </div>
                     {% endif %}
                 </div>
@@ -88,7 +88,8 @@
                             <td style="text-align: center;width: 180px">{{ item.solicitudTurno_montoPosible }}</td>
                             <td style="text-align: center;width: 180px">{{ item.solicitudTurno_cantCuotas }}</td>
                             <td style="text-align: center;width: 180px">{{ item.solicitudTurno_valorCuota }}</td>
-                            <td style="text-align: center;width: 180px">{{ item.solicitudTurno_observaciones }}</td>
+                            <td style="max-width: 180px !important;overflow: hidden !important;text-overflow: ellipsis !important;
+    white-space: nowrap !important;" title="{{ item.solicitudTurno_observaciones }}">{{ item.solicitudTurno_observaciones }}</td>
                             <td style="text-align: center;width: 180px">
                                 {% if(item.solicitudTurno_fechaProcesamiento != null) %}
                                     {% set fechaModif = date('d/m/Y',(item.solicitudTurno_fechaProcesamiento) | strtotime) %}
@@ -107,7 +108,7 @@
                                         onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
                                         EDITAR</a>
                                 {% elseif(item.solicitudTurno_nickUsuario == '-') %}
-                                        {% if(cantA < cantidadDeTurnos)%}
+                                        {% if(turnosAutorizados < cantidadDeTurnos)%}
                                             <a  class="btn btn-info editar btn-block"
                                                 onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item)) ?>')">
                                                 EDITAR</a>
@@ -179,32 +180,39 @@
                 /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
 
                 var lista, editable = false, autorizacion = false;
-                var cantidadDeTurnos = {{ cantidadDeTurnos }}, autorizadosEnviados = {{ autorizadosEnviados }};
+                var autorizadosEnviados = {{ autorizadosEnviados }};
+                var sinTurnos = false;
+                var turnosAutorizados={{ turnosAutorizados }};
+                var cantidadDeTurnos = {{ cantidadDeTurnos }};
+                if( turnosAutorizados  >= cantidadDeTurnos ) {
+                    sinTurnos = true;
+                    alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR.");
 
-                if (json.solicitudTurno_estado == "PENDIENTE") {
-                    //Si es PENDIENTE cualquier usuario puede pasar a REVISION, salvo que no hayan turnos.
-                    if ((autorizadosEnviados > 0) && (autorizadosEnviados == cantidadDeTurnos))
-                        lista = ['DENEGADO POR FALTA DE TURNOS'];
-                    else
-                        lista = ['REVISION'];
                 }
-                else {
-                    if (json.solicitudTurno_estado == "REVISION" || json.solicitudTurno_estado == "AUTORIZADO") {
-                        lista = ['REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+
+                if (json.solicitudTurno_estado == "REVISION") {
+                    if(sinTurnos)
+                        lista = ['REVISION','DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                    else {
+                        lista = ['REVISION','AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
                         editable = true;
                     }
-                    else {
-                        if (json.solicitudTurno_estado == "DENEGADO" || json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS") {
-                            lista = ['REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
-                        }
-                        else {
-                            if (json.solicitudTurno_estado != 'PENDIENTE' || json.solicitudTurno_estado != 'REVISION'
-                                    || json.solicitudTurno_estado != 'AUTORIZADO' || json.solicitudTurno_estado != 'DENEGADO') {
-                                lista = ['PENDIENTE'];
-                            }
-                        }
+                }
+                if (json.solicitudTurno_estado == "AUTORIZADO") {
+                    lista = ['AUTORIZADO','REVISION', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                    editable = true;
+                }
+                if (json.solicitudTurno_estado == "DENEGADO"
+                        || json.solicitudTurno_estado == "DENEGADO POR FALTA DE TURNOS") {
+                    if(sinTurnos)
+                        lista = ['REVISION', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                    else
+                    {
+                        editable = true;
+                        lista = ['REVISION', 'AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
                     }
                 }
+
 
                 /*============================ ARMANDO EL SELECT DE LOS ESTADOS SEGUN EL PUNTO ANTERIOR ===============*/
 
@@ -215,7 +223,7 @@
                 var selectList = document.createElement("select");
                 selectList.setAttribute("id", "solicitudTurno_estado");
                 selectList.setAttribute("name", "solicitudTurno_estado");
-                selectList.setAttribute("style", "width:100%;");
+                selectList.setAttribute("class", "form-control");
                 selectList.setAttribute("onchange", "crudPhalcon.habilitarDeshabilitarSegunElEstado()");
                 div.appendChild(selectList);
 
@@ -233,7 +241,10 @@
                 }
                 /*=========================== COMENZANDO A ARMAR EL FORMULARIO =======================================*/
 
-                html += '<div class="row formulario-turnos" style="padding: 20px;">'
+                html += '<div class="row formulario-turnos" style="padding: 20px;">';
+                if(sinTurnos)
+                    html += '<div class="col-md-12"><h3 class="btn btn-warning" align="center"><strong> <i class="fa fa-warning"></i> ADVERTENCIA: NO HAY TURNOS DISPONIBLES PARA AUTORIZAR. </strong></h3></div>'
+                html += '<div class="col-md-12">';
                 html += '<?php echo $this->tag->form(array("turnos/edit", "method" => "post", "id" => "form")); ?>';
                 //Agrego el div creado con el select al modal.
                 html += '<div><label for="solicitudTurno_estado"> ESTADO </label></div>';
@@ -275,7 +286,7 @@
                 }
 
                 html += '<label for="causa">SELECCIONAR CAUSA</label><br>';
-                html += '<select id="causa" name="causa" >';
+                html += '<select id="causa" name="causa" class="form-control" >';
                 html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO">No cumple con el 50% capital adeudado</option>';
                 html += '<option value="SE ENCUENTRA EN ROJO">Se encuentra en rojo</option>';
                 html += '<option value="NO CUMPLE CON LA ANTIGUEDAD">No cumple con la antiguedad</option>';
@@ -284,6 +295,7 @@
                 html += '</div>';
 
                 html += '<?php echo $this->tag->endForm() ?>';
+                html += '</div>';//col
                 html += '</div>';//fin row
 
                 $("#onclickBtn").attr("onclick", "crudPhalcon.editPost()").text("Guardar").show();
