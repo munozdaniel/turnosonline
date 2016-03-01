@@ -1029,7 +1029,7 @@ class TurnosController extends ControllerBase
                 "", "", $ultimoPeriodo->fechasTurnos_id,2);
             if(!$guardado)
             {
-                $this->flash->error('EL EMAIL INGRESADO YA HA SIDO UTILIZADO PAR SOLICITAR UN TURNO.');
+                $this->flash->error('HA OCURRIDO UN ERROR AL GUARDAR LOS DATOS, VERIFIQUE QUE LOS DATOS INGRESADOS SEAN CORRECTOS.');
                 return $this->redireccionar('turnos/solicitudPersonal');
             }
             $this->flash->success('OPERACIÓN EXITOSA, POR FAVOR ESPERE A SER ATENDIDO.');
