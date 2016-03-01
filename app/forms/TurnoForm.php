@@ -8,7 +8,7 @@ use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\StringLength as StringLength;
 
-class TurnoManualForm extends Form
+class TurnoForm extends Form
 {
     public function initialize($entity = null, $options = array())
     {
