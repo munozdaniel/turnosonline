@@ -302,6 +302,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             'solicitudTurno_fechaRespuestaEnviada' => date('Y-m-d'),
             'solicitudTurno_numero' => $nroTurno,
             'solicitudTurnos_fechasTurnos' => $fechasTurnos_id,
+            'solicitudTurnos_tipo' => 1,
             'solicitudTurno_manual'=>1));
 
         if ($unaSolicitudManual->save())
