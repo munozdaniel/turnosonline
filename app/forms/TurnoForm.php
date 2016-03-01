@@ -166,8 +166,7 @@ class TurnoForm extends Form
         );
         $this->add($telefono);
 
-        /*=================== Repita su telefono  ==========================*/
-
+        /*=================== Repita su telefono
         $telefonoBis = new Text("telefonoRepetido",
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'class'=>'form-control',
@@ -196,6 +195,7 @@ class TurnoForm extends Form
             )
         );
         $this->add($telefonoBis);
+ ==========================*/
 
         /*=================== Fecha Nacimiento ==========================*/
         $fechaNacimiento= new Date('solicitudTurno_fechaNacimiento',

@@ -230,7 +230,7 @@ class TurnosController extends ControllerBase
                                 if ($estado == 'AUTORIZADO') {
                                     Fechasturnos::incrementarCantAutorizados();
                                     $turnoManualForm->clear();
-                                    $boton = $this->tag->form(array('turnos/comprobanteTurno', 'method' => 'POST'));
+                                    $boton = $this->tag->form(array('turnos/comprobanteTurnoPost', 'method' => 'POST'));
                                     $encode = base64_encode($solicitud->solicitudTurno_id);
                                     $boton .= $this->tag->hiddenField(array('solicitud_id', 'value' => $encode));
                                     $boton .= "<button type='submit' class='btn btn-info btn-lg' formtarget='_blank'><i class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO</button>";
@@ -258,32 +258,6 @@ class TurnosController extends ControllerBase
         $this->view->formulario = $turnoManualForm;
         return             $this->redireccionar('turnos/solicitudManual');
 
-    }
-
-    /**
-     * Genera el comprobante de turno en pdf mediante post.
-     */
-    public function comprobanteTurnoAction()
-    {
-        if (!$this->request->isPost()) {
-            $this->flash->error("Ocurrió un problema, la URL solicitada no se encuentra disponible.");
-            $this->redireccionar('index/index');
-        }
-        $idSolicitud = base64_decode($this->request->getPost('solicitud_id'));
-        $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($idSolicitud);
-
-        if (empty($solicitud))
-            $mensaje = "ERROR";
-        else
-            $mensaje = 'EXITO';
-
-        $this->tag->setTitle('');//Para que no muestre el titulo en el pdf.
-        $this->view->disable();
-        $html = $this->view->getRender('turnos', 'comprobanteTurno', array('solicitud' => $solicitud, 'mensaje' => $mensaje));
-        $pdf = new mPDF();
-        $pdf->SetHeader(date('d/m/Y'));
-        $pdf->WriteHTML($html, 2);
-        $pdf->Output('comprobanteTurno.pdf', "I");
     }
 
     /**
@@ -642,32 +616,10 @@ class TurnosController extends ControllerBase
         //no hace nada, esta solo para que vaya a la vista.
     }
 
-    /*================================ ADMINISTRADOR =======================================*/
-    /**
-     * Muestra una grilla con todos los periodos y permite la edicion de los campos:
-     * fechasTurnos_cantidadDeTurnos
-     * fechasTurnos_diaAtencion
-     */
-    public function verPeriodosAction()
-    {
-        //Crea un paginador, muestra 3 filas por página
-        $paginator = new Paginacion(
-            array(
-                //obtenemos los productos
-                "data" => Fechasturnos::find(array(
-                    "order" => "fechasTurnos_id DESC"
-                )),
-                //limite por página
-                "limit" => 10,
-                //variable get page convertida en un integer
-                "page" => $this->request->getQuery('page', 'int')
-            )
-        );
 
-        //pasamos el objeto a la vista con el nombre de $page
-        $this->view->tabla = $paginator->getPaginate();
-    }
-
+    /*==================================================================================================================*/
+    /*                                        ENVIAR TODAS LAS RESPUESTAS                                               */
+    /*==================================================================================================================*/
     /**
      * Envia el correo segun el estado en el que se encuentra sera el mensaje enviado.
      * Si es una solicitud Personal se generará un numero de comprobante pero no se enviara ningun correo.
@@ -815,10 +767,14 @@ class TurnosController extends ControllerBase
                                             <h3>" . $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idSolicitud, 'IMPRIMIR COMPROBANTE DE TURNO',
                                 'class' => 'btn btn-info btn-large', 'target' => '_blank')) . "</h3>");
                     } else {
+                        $boton = $this->tag->form(array('turnos/comprobanteTurnoPost', 'method' => 'POST'));
+                        $encode = base64_encode($laSolicitud->solicitudTurno_id);
+                        $boton .= $this->tag->hiddenField(array('solicitud_id', 'value' => $encode));
+                        $boton .= "<button type='submit' class='btn btn-info btn-lg' formtarget='_blank'><i class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO</button>";
+                        $boton .= "</form>";
                         $this->flash->message("", "<h1> USTED YA HA CONFIRMADO EL TURNO </h1>
-                                            <h3 class='login-title'> EL TURNO ES EL Nº " . $resultado['nroTurno'] . "</h3>
-                                            <h3>" . $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idSolicitud, 'IMPRIMIR COMPROBANTE DE TURNO',
-                                'class' => 'btn btn-info btn-large', 'target' => '_blank')) . "</h3>");
+                                            <h3 class='login-title'> EL TURNO ES EL Nº " . $resultado['nroTurno'] . "</h3><hr>");
+                        $this->flash->notice($boton);
                         //antes estaba $laSolicitud->solicitudTurno_id en vez de $idSolicitud
                     }
                 }
@@ -832,14 +788,24 @@ class TurnosController extends ControllerBase
         } else
             $this->redireccionar('index/index');
     }
-
-    public function comprobanteTurnoAction2($idSolicitud)
+    /*==================================================================================================================*/
+    /*                                        GENERAR COMPROBANTE                                                       */
+    /*==================================================================================================================*/
+    /**
+     * Se utiliza para generar un comprobante pdf, los empleados de imps unicamente pueden utilizar este metodo.
+     * @param $idSolicitud
+     */
+    public function comprobanteTurnoAction()
     {
+        $idSolicitud = $this->request->get('id');
+        //echo  $this->request->get('id') ." --- ". $id = base64_decode($idSolicitud); ;
+        //$this->view->pick('turnos/turnosRespondidos');
+
         $idSolicitud = $this->request->get('id');
         $id = base64_decode($idSolicitud);
         $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($id);
 
-        if (empty($solicitud))
+        if (!$solicitud)
             $mensaje = "ERROR";
         else
             $mensaje = 'EXITO';
@@ -855,6 +821,34 @@ class TurnosController extends ControllerBase
 
     }
 
+    /**
+     * Genera el comprobante de turno en pdf mediante post. Se utiliza para el public en general.
+     */
+    public function comprobanteTurnoPostAction()
+    {
+        if (!$this->request->isPost()) {
+            $this->flash->error("Ocurrió un problema, la URL solicitada no se encuentra disponible.");
+            $this->redireccionar('index/index');
+        }
+        $idSolicitud = base64_decode($this->request->getPost('solicitud_id'));
+        $solicitud = Solicitudturno::findFirstBySolicitudTurno_id($idSolicitud);
+
+        if (empty($solicitud))
+            $mensaje = "ERROR";
+        else
+            $mensaje = 'EXITO';
+
+        $this->tag->setTitle('');//Para que no muestre el titulo en el pdf.
+        $this->view->disable();
+        $html = $this->view->getRender('turnos', 'comprobanteTurno', array('solicitud' => $solicitud, 'mensaje' => $mensaje));
+        $pdf = new mPDF();
+        $pdf->SetHeader(date('d/m/Y'));
+        $pdf->WriteHTML($html, 2);
+        $pdf->Output('comprobanteTurno.pdf', "I");
+    }
+    /*==================================================================================================================*/
+    /*                                       LISTADO PDF                                                       */
+    /*==================================================================================================================*/
     public function listadoEnPdfAction()
     {
         ini_set('max_execution_time', 300); //300 seconds = 5 minutes // si funciona pero la pagina anterior se corrompe
@@ -887,8 +881,38 @@ class TurnosController extends ControllerBase
         $pdf->WriteHTML($html);
         $pdf->Output('listadoDeSolicitudes.pdf', "I"); //I:Es la opción por defecto, y lanza el archivo a que sea abierto en el navegador.
     }
+    /*==================================================================================================================*/
+    /*                                        PERIODO                                                                  */
+    /*==================================================================================================================*/
+    /**
+     * Muestra una grilla con todos los periodos y permite la edicion de los campos:
+     * fechasTurnos_cantidadDeTurnos
+     * fechasTurnos_diaAtencion
+     */
+    public function verPeriodosAction()
+    {
+        //Crea un paginador, muestra 3 filas por página
+        $paginator = new Paginacion(
+            array(
+                //obtenemos los productos
+                "data" => Fechasturnos::find(array(
+                    "order" => "fechasTurnos_id DESC"
+                )),
+                //limite por página
+                "limit" => 10,
+                //variable get page convertida en un integer
+                "page" => $this->request->getQuery('page', 'int')
+            )
+        );
 
+        //pasamos el objeto a la vista con el nombre de $page
+        $this->view->tabla = $paginator->getPaginate();
+    }
 
+    /**
+     * Muestra un formulario con el periodo a editar.
+     * @param $idFechaTurno
+     */
     public function editarPeriodoAction($idFechaTurno)
     {
         $unaFechaTurno = Fechasturnos::findFirstByFechasTurnos_id($idFechaTurno);
@@ -896,6 +920,10 @@ class TurnosController extends ControllerBase
         $this->view->idPeriodo = $idFechaTurno;
     }
 
+    /**
+     * Guarda los datos editados del periodo. Update.
+     * @return null
+     */
     public function guardarDatosEdicionPeriodoAction()
     {
         if ($this->request->isPost()) {
@@ -926,6 +954,9 @@ class TurnosController extends ControllerBase
             $this->flash->message('problema', "NO ES POST");
         return $this->redireccionar('turnos/verPeriodos');
     }
+    /*==================================================================================================================*/
+    /*                                        SOLICITUD PERSONAL                                                        */
+    /*==================================================================================================================*/
 
     /**
      * Utilizado para que los afiliados puedan solicitar turnos personalmente.
@@ -1017,76 +1048,6 @@ class TurnosController extends ControllerBase
             echo $e->getMessage(), PHP_EOL;
         }
         return "";
-    }
-
-    /**
-     * BORRARR!!
-     * @return null
-     */
-    public function guardarTurnoOnli2neAction()
-    {
-        if (!$this->request->isPost()) {
-            $this->response->redirect('index/index');
-        }
-        $this->view->setTemplateAfter('admin');
-        $turnosOnlineForm = new TurnosOnlineForm();
-        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-        if ($ultimoPeriodo) {
-            /*================== Controlo la cantidad de turnos ========================*/
-            if ($ultimoPeriodo->fechasTurnos_cantidadDeTurnos <= $ultimoPeriodo->fechasTurnos_cantidadAutorizados) {
-                $turnosOnlineForm = new TurnosOnlineForm(null, array('disabled' => 'true'));
-                $this->flash->error("LAMENTABLEMENTE NO HAY TURNOS DISPONIBLES.");
-            } /* ==================================================================================== */
-            else {
-                $data = $this->request->getPost();
-
-                if ($turnosOnlineForm->isValid($data) != false) //aqui es donde valida los datos ingresados
-                {
-                    $legajo = $this->request->getPost('solicitudTurno_legajo', array('alphanum', 'trim'));
-                    $nombre = $this->request->getPost('solicitudTurno_nom', array('striptags', 'string', 'upper'));
-                    $nombre = rtrim($nombre);
-                    $nombre = ltrim($nombre);
-                    $apellido = $this->request->getPost('solicitudTurno_ape', array('striptags', 'string', 'upper'));
-                    $apellido = rtrim($apellido);
-                    $apellido = ltrim($apellido);
-                    $documento = $this->request->getPost('solicitudTurno_documento', array('alphanum', 'trim', 'string'));
-                    $numTelefono = $this->request->getPost('solicitudTurno_numTelefono', 'int');
-                    $email = $this->request->getPost('solicitudTurno_email', array('email', 'trim'));
-
-                    $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
-
-                    if ($nombreCompleto != "") {
-                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto)) {
-                            if( !$this->existeEmailEnElPeriodo($ultimoPeriodo,$email)){
-                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo, $nombreCompleto, $documento, $email, $numTelefono, $ultimoPeriodo->fechasTurnos_id);
-
-                                if ($seGuardo)//la solicitud se ingreso con exito.
-                                {
-                                    $this->flash->success('LA SOLICITUD FUE INGRESADA CORRECTAMENTE');
-                                    $turnosOnlineForm->clear();
-                                    $this->redireccionar('turnos/turnoSolicitadoExitoso');
-                                } else
-                                    $this->flash->error('OCURRIO UN PROBLEMA, POR FAVOR VUELVA A INTENTARLO EN UNOS MINUTOS.');
-                            }else{
-                                $this->flash->error('EL EMAIL INGRESADO YA HA SIDO UTILIZADO PAR SOLICITAR UN TURNO.');
-                            }
-                        } else
-                            $this->flash->error('SUS DATOS YA FUERON INGRESADOS, NO PUEDE OBTENER MÁS DE UN TURNO POR PERÍODO');
-                    } else
-                        $this->flash->error('USTED NO SE ENCUENTRA REGISTRADO EN EL SISTEMA, PARA OBTENER MAS INFORMACIÓN DIRÍJASE A NUESTRAS OFICINAS.');
-                }else{
-                    foreach($turnosOnlineForm->getMessages() as $mje){
-                        $this->flash->error($mje);
-                    }
-                }
-            }
-        } else {
-            $turnosOnlineForm = new TurnosOnlineForm(null, array('disabled' => 'true'));
-            $this->flash->message('problema', 'NO EXISTE EL PERIODO PARA SOLICITAR TURNOS.');
-        }
-        $this->view->formulario = $turnosOnlineForm;
-        return $this->redireccionar('turnos/index');
-
     }
 
 }

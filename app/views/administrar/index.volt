@@ -2,7 +2,7 @@
 <section id="onepage" class="admin bg-rayado">
     <div class="container">
 
-        {{ content() }} <br/>
+
         <div class="row" align="center" style="margin-top: 30px;">
             <div class="heading">
                 <h2 class="">Sistema de Turnos Online</small>
@@ -10,9 +10,10 @@
                 {{ link_to('index/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
             </div>
         </div>
+        <div align="center"><h1> {{ content() }}</h1></div>
+        {% if admin or empleado or supervisor %}
         <div class="row  form-blanco borde-top borde-left-4 borde-right-4">
 
-            {% if admin or empleado or supervisor %}
 
                 <div class="col-sm-4">
                     {{ link_to('turnos/turnosSolicitados',
@@ -54,6 +55,20 @@
                         </div>
                     </div>') }}
                 </div>
+            <div class="col-sm-4">
+                {{ link_to('turnos/solicitudPersonal','
+                    <div class="panel mini-box">
+                            <span class="box-icon bg-red-pl">
+                                <i class="fa fa-ticket"></i>
+                            </span>
+
+                        <div class="box-info">
+                            <p class="size-h2"><strong>Solicitud PERSONAL</strong></p>
+
+                            <p class="text-muted">Turno</p>
+                        </div>
+                    </div>') }}
+            </div>
             {% endif %}
             {% if admin or supervisor %}
             <div class="col-sm-4">
@@ -84,8 +99,11 @@
                     </div>
                 </div>') }}
             </div>
-            {% endif %}
         </div>
+        {% endif %}
+
+
+            {% if admin or rrhh %}
         <div class="row" align="center" style="margin-top: 30px;">
             <div class="heading">
                 <h2 class="">Gestión de Curriculum</small>
@@ -94,9 +112,6 @@
             </div>
         </div>
         <div class="row  form-blanco borde-top borde-left-4 borde-right-4 borde-bottom-4">
-
-            {% if admin or rrhh %}
-
             <div class="col-sm-4">
                 {{ link_to('turnos/turnosSolicitados',
                 '<div class="panel mini-box">
@@ -109,8 +124,8 @@
                             </div>
                         </div>') }}
             </div>
-            {% endif %}
         </div>
+            {% endif %}
 
     </div>
 </section>
