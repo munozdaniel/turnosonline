@@ -45,8 +45,8 @@
                         <div class="item">
                             <div class="content">
                                 <label class="control-label" for="solicitudTurno_legajo"><small style="color:red">*</small>LEGAJO</label>
-                                <input type="number" class="form-control" id="solicitudTurno_legajo" name="solicitudTurno_legajo" placeholder="INGRESE SU LEGAJO" required=""
-                                        autocomplete="off">
+                                <input type="number" class="form-control" id="solicitudTurno_legajo" name="solicitudTurno_legajo"
+                                       placeholder="INGRESE SU LEGAJO" required="" autocomplete="off">
                                 <hr>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                             <div class="content">
                                 <label class="control-label" for="solicitudTurno_documento"><small style="color:red">*</small>NRO DOCUMENTO</label>
                                 <input type="number" class="form-control sin_spinner" id="solicitudTurno_documento" name="solicitudTurno_documento"
-                                       placeholder="INGRESE SU DOCUMENTO" autocomplete="off">
+                                       placeholder="INGRESE SU DOCUMENTO" required="" autocomplete="off">
                             </div>
                         </div>
                     </div>
