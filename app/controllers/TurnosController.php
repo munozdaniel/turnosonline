@@ -994,18 +994,26 @@ class TurnosController extends ControllerBase
         if (!$this->request->isPost()) {
             $this->response->redirect('index/index');
         }
-        if(!$this->request->hasPost('solicitudTurno_legajo'))
-            return $this->redireccionar('turnos/solicitudPersonal');
-        if(!$this->request->hasPost('solicitudTurno_documento'))
-            return $this->redireccionar('turnos/solicitudPersonal');
-
         $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
         if ($ultimoPeriodo) {
+
             /*================== Controlo la cantidad de turnos ========================*/
             if ($ultimoPeriodo->fechasTurnos_cantidadDeTurnos <= $ultimoPeriodo->fechasTurnos_cantidadAutorizados) {
                 $this->flash->error("LAMENTABLEMENTE NO HAY TURNOS DISPONIBLES.");
                 return $this->redireccionar('administrar/index');
-            } /* ==================================================================================== */
+            }
+            /* ============================== Control de Post =================================== */
+            if(!$this->request->hasPost('solicitudTurno_legajo') || $this->request->getPost('solicitudTurno_legajo',array('trim','int'))=="")
+            {
+                $this->flash->error('Ingrese el Legajo');
+                return $this->redireccionar('turnos/solicitudPersonal');
+            }
+            if(!$this->request->hasPost('solicitudTurno_documento')|| $this->request->getPost('solicitudTurno_documento',array('trim','int'))=="")
+            {
+                $this->flash->error('Ingrese el Documento');
+                return $this->redireccionar('turnos/solicitudPersonal');
+            }
+            /* ==================================================================================== */
             $legajo = $this->request->getPost('solicitudTurno_legajo', array('alphanum', 'trim'));
             $documento = $this->request->getPost('solicitudTurno_documento', array('int', 'trim'));
             $afiliado = $this->buscarAfiliadoEnSiprea($legajo);
