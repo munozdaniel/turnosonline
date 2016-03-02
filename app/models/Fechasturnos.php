@@ -57,6 +57,8 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      */
     public $fechasTurnos_sinTurnos;
 
+
+
     /**
      * Returns table name mapped in the model.
      *
@@ -129,5 +131,29 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
         $cantAutorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
         return $cantAutorizados;
+    }
+
+    /**
+     * Se encarga de verificar si en el ultimo periodo existen turnos disponible.
+     * @return boolean
+     */
+    public static function verificaSiHayTurnosEnPeriodo()
+    {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $retorno = array();
+        $retorno['success']=true;
+        if(!$ultimoPeriodo)
+        {
+            $retorno['success']=false;
+            $retorno['mensaje']="EL PERIODO PARA SOLICITAR TURNOS NO SE ENCUENTRA DISPONIBLE.";
+            return $retorno;
+        }
+        if($ultimoPeriodo->fechasTurnos_cantidadDeTurnos <= $ultimoPeriodo->fechasTurnos_cantidadAutorizados)
+        {
+            $retorno['success']=false;
+            $retorno['mensaje']="LAMENTABLEMENTE NO HAY TURNOS DISPONIBLE.";
+            return $retorno;
+        }
+        return $retorno;
     }
 }

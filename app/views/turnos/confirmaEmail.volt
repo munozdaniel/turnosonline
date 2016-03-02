@@ -1,16 +1,19 @@
-<section id="onepage" style="    background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%);
-    background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%);
-    background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 );">
+<section id="onepage" class="admin bg-rayado">
 
     <div class="container">
-        <div class="row ">
-            <div class="col-md-12" style="text-align: center;">
+            <div class="row" align="center" style="margin-top: 30px;">
+                <div class="heading">
 
-                <div class="box efecto3">
-                    {{ content() }}
+                    {{ link_to('index/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-home"></i> INICIO') }}
                 </div>
-                {{ link_to('index/index','<i class="fa fa-home"></i>INICIO','style':'font-size: xx-large;font-weight: bold;') }}
+            </div>
+        <div class="row  form-blanco borde-top borde-left-4 borde-right-4 borde-bottom-4" style="margin-bottom: 250px;">
+            <div class="" align="center">
+                <h3 style="text-transform: uppercase">{{ content() }}</h3>
+                <hr>
+                <br>
+                {{ link_to('index/index','class':'btn btn-lg btn-primary','<i class="fa fa-home"></i> VOLVER A LA PAGINA PRINCIPAL') }}
+
             </div>
         </div>
     </div>

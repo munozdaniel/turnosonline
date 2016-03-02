@@ -22,7 +22,8 @@
             if (estadoSeleccionado === 'AUTORIZADO' || estadoSeleccionado === '') {
                 var cant = {{ cantAutorizados }};
                 if (cant > 0) {
-                    if ({{ cantAutorizados }} === {{ cantTurnos }} )
+                    if ({{ cantAutorizados }} ===
+                    {{ cantTurnos }} )
                     alert('No hay mas turnos disponibles en este periodo. Se debe denegar la solicitud.')
                 }
             }
@@ -42,6 +43,7 @@
                 </p>
             </div>
         </div>
+        {% if cantTurnos is defined %}
         <div class="row form-blanco borde-top borde-left-4 borde-right-4">
             <div class="col-sm-6">
                 <div class="fuente-14"><strong>
@@ -78,14 +80,13 @@
                     </div>
                 {% endif %}
             </div>
-
         </div>
-
-        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-            <div class="col-md-12">
-                {{ content() }}
+        {% endif %}
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4 borde-bottom-4">
+            <div align="center">
+                <h1> {{ content() }}</h1>
             </div>
-            {{ form('turnos/solicitudManual','method':'post','style':'','class':'') }}
+            {{ form('turnos/guardarSolicitudManual','method':'post','style':'','class':'') }}
             <div class="col-md-12" style="margin-bottom: 30px;">
                 <em style="color:tomato">* Campos obligatorios.</em> <br/><br/>
                 {% for elto in formulario %}
@@ -114,8 +115,12 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-5">
-                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block','style':'width:200px;') }}
+                <div class="col-lg-6 col-lg-offset-3">
+                    {% if deshabilitar is defined %}
+                        {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block disabled') }}
+                    {% else %}
+                        {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                    {% endif %}
                 </div>
             </div>
 

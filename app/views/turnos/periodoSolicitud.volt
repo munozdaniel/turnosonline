@@ -1,4 +1,4 @@
-<section id="certificacion">
+<section id="onepage" class="admin bg-rayado">
 
     {#Firefox: Para ver el calendario en los input type=date #}
     {{ javascript_include('js/firefox/polyfiller.js') }}
@@ -13,88 +13,73 @@
     </style>
 
     <div class="container">
-
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="about_area">
-                    <div class="heading">
-                        <h2 class="wow fadeInLeftBig">Período de Solicitud de Turnos</h2>
-
-                        <div class="pull-right">{{ link_to('administrar/index','class':'btn btn-lg btn-default btn-block btn-volver','<i class="fa fa-undo"></i> VOLVER') }}</div>
-                        <p><i class="fa fa-info-circle"
-                              style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
-                            <em>Llene los campos para generar un nuevo período para solicitar turnos.</em>
-                        </p>
-                    </div>
-                </div>
+        <div class="row" align="center" style="margin-top: 30px;">
+            <div class="heading">
+                <h2 class="">Período de Solicitud de Turnos</h2>
+                {{ link_to('administrar/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
+                <p><i class="fa fa-info-circle"
+                      style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
+                    <em>Llene los campos para generar un nuevo período para solicitar turnos.</em>
+                </p>
             </div>
         </div>
 
-        <div class="row formulario-turnos">
-                <div class="col-md-12">
-                    {{ content() }}
-                </div>
+        <div class="row  form-blanco borde-top borde-left-4 borde-right-4">
+            <div class="" align="center">
+                <h3 style="text-transform: uppercase">{{ content() }}</h3>
+            </div>
 
-            <div class="col-lg-8 col-md-8 col-md-offset-2">
-
-                <div class="about_content wow bounceInUp ">
+            <div class="col-md-12">
                     {{ form('turnos/guardarPeriodoSolicitud','method':'post','style':'text-align:left') }}
 
                     <div class="row">
-                        <h4><label>Período para solicitud de turnos </label></h4><br>
+                        <div align="center">
+                            <h4><ins><strong>Período para solicitud de turnos </strong></ins></h4><br>
 
-                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                        </div>
+                        <div class="col-md-4 col-md-offset-2">
                             {{ formulario.label('periodoSolicitudDesde',['class': 'control-label']) }}
-                            {{ formulario.render('periodoSolicitudDesde',['class': 'btn-block']) }}
+                            {{ formulario.render('periodoSolicitudDesde',['class': 'form-control']) }}
                             {{ formulario.messages('periodoSolicitudDesde') }}
                         </div>
-
-                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                        <div class="col-md-4">
                             {{ formulario.label('periodoSolicitudHasta',['class': 'control-label']) }}
-                            {{ formulario.render('periodoSolicitudHasta',['class': 'btn-block']) }}
+                            {{ formulario.render('periodoSolicitudHasta',['class': 'form-control']) }}
                             {{ formulario.messages('periodoSolicitudHasta') }}
                         </div>
                     </div>
                     <hr>
-
                     <div class="row">
-                        <h4><label>Día de atención de turnos </label></h4><br>
-
-                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
-                            {{ formulario.render('periodoAtencionDesde',['class': 'btn-block']) }}
+                        <div class="col-md-4 col-md-offset-2">
+                            {{ formulario.label('periodoAtencionDesde',['class': 'control-label']) }}
+                            {{ formulario.render('periodoAtencionDesde',['class': 'form-control']) }}
                             {{ formulario.messages('periodoAtencionDesde') }}
                         </div>
-
-                    </div>
-                    <hr>
-
-                    <div class="row">
-                        <h4>{{ formulario.label('cantidadTurnos',['class': 'control-label']) }}</h4><br>
-                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-12 col-xs-12">
-                            {{ formulario.render('cantidadTurnos' ,['class': 'btn-block']) }}
+                        <div class="col-md-4">
+                            {{ formulario.label('cantidadTurnos',['class': 'control-label']) }}
+                            {{ formulario.render('cantidadTurnos' ,['class': 'form-control']) }}
                             {{ formulario.messages('cantidadTurnos') }}
                         </div>
                     </div>
                     <hr>
-
                     <div class="row">
-                        <h4>{{ formulario.label('cantidadDias',['class': 'control-label']) }}</h4><br>
-                        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
-                            {{ formulario.render('cantidadDias',['class': 'btn-block']) }}
+                        <div class="col-md-4 col-md-offset-2">
+                            {{ formulario.label('cantidadDias',['class': 'control-label']) }}
+                            {{ formulario.render('cantidadDias',['class': 'form-control']) }}
                             {{ formulario.messages('cantidadDias') }}
                         </div>
+
                     </div>
                     <hr>
 
                     <div class="row">
                         <div class="col-lg-9 col-lg-offset-4">
-                            {{ submit_button('GUARDAR','class':'btn btn-blue btn-lg btn-block','style':'width:320px;') }}
+                            {{ submit_button('GUARDAR','class':'btn btn-blue btn-lg form-control','style':'width:320px;') }}
                         </div>
                     </div>
                     {{ end_form() }}
 
                 </div>
-            </div>
         </div>
     </div>
 </section>

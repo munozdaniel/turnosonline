@@ -123,6 +123,12 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $solicitudTurno_numero;
+
+    /**
+     *
+     * @var integer
+     */
+    public $solicitudTurno_tipo;
     /**
      *
      * @var date
@@ -234,7 +240,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         return $solicitudesOnline;
     }
 
-    public static function accionAgregarUnaSolicitudOnline($legajo,$nombreCompleto,$documento,$email,$numTelefono,$fechasTurnos_id)
+    public static function accionAgregarUnaSolicitudOnline($legajo,$nombreCompleto,$documento,$email,$numTelefono,$fechasTurnos_id,$tipo=0)
     {
         $unaSolicitud = new Solicitudturno();
 
@@ -255,6 +261,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             'solicitudTurno_valorCuota'=>0,
             'solicitudTurno_fechaComprobacion'=>NULL,
             'solicitudTurno_observaciones'=>'-',
+            'solicitudTurno_tipo'=>$tipo,
             'solicitudTurnos_fechasTurnos' => $fechasTurnos_id,
             'solicitudTurno_manual'=>0));
 
@@ -295,6 +302,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             'solicitudTurno_fechaRespuestaEnviada' => date('Y-m-d'),
             'solicitudTurno_numero' => $nroTurno,
             'solicitudTurnos_fechasTurnos' => $fechasTurnos_id,
+            'solicitudTurnos_tipo' => 1,
             'solicitudTurno_manual'=>1));
 
         if ($unaSolicitudManual->save())
@@ -378,7 +386,12 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         $solicitudAnterior = $this->getModelsManager()->executeQuery($query);
         return $solicitudAnterior[0]->solicitudTurno_numero;
     }
+    public static function getUltimoTurnoDelPeriodo(){
 
+        $query = new Phalcon\Mvc\Model\Query("SELECT S.solicitudTurno_numero  FROM  Solicitudturno AS S, Fechasturnos AS F WHERE F.fechasTurnos_activo=1 AND S.solicitudTurnos_fechasTurnos = F.fechasTurnos_id ORDER BY  solicitudTurno_numero DESC LIMIT 0 , 1", \Phalcon\DI\FactoryDefault::getDefault());
+        $solicitudAnterior= $query->execute();
+        return $solicitudAnterior[0]->solicitudTurno_numero;
+    }
     /*
     ESTA FUNCION RECUPERA LAS SOLICITUDES QUE RESPONDEN AL ESTADO y USUARIO PASADOS POR PARAMETRO,
     ADEMAS QUE NO SEAN SOLITUDES MANUALES, QUE EL CAMPO RESPUESTA ENVIADA ESTE EN 'NO' */
