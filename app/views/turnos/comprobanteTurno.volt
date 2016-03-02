@@ -17,14 +17,8 @@
 
             {#LA PERSONA EXISTE Y POSEE BENEFICIOS#}
             <h1 class="layout" style="text-align: center"> NÚMERO DE TURNO:    {{ solicitud.solicitudTurno_numero }}</h1>
-            <table align="center">
-                <tr>
-                    <td class="layout"><h3><br>FECHA DE ATENCIÓN:</h3></td>
-                    <td> <h3><br> {{   date('d/m/Y',( solicitud.getFechasturnos().fechasTurnos_diaAtencion ) | strtotime) }}</h3></td>
-                </tr>
-            </table>
-            <br>
-            <br>
+
+            <br/>
             <table align="center">
                 <tr>
                     <td class="layout">Fecha de Confirmación </td>
