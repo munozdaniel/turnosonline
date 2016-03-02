@@ -406,16 +406,20 @@ class Solicitudturno extends \Phalcon\Mvc\Model
             $fechaIniSol = $fechaTurnos->fechasTurnos_inicioSolicitud;
             $fechaFinSol = $fechaTurnos->fechasTurnos_finSolicitud;
 
-            $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2 AND solicitudTurno_manual=?3 AND solicitudTurno_nickUsuario=?4";
-            $parametros = array(1=>$estado,2=>'NO',3=>0,4=>$usuario);
+            $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2 AND solicitudTurno_manual=?3 AND solicitudTurno_nickUsuario=?4
+            AND solicitudTurnos_fechasTurnos=?5";
+            $parametros = array(1=>$estado,2=>'NO',3=>0,4=>$usuario,5=>$fechaTurnos->fechasTurnos_id);
             $solicitudes = Solicitudturno::find(array($condiciones,"bind"=>$parametros));
 
             foreach($solicitudes as $unaSolicitud)
             {
-                $fechaPedido = $unaSolicitud->solicitudTurno_fechaPedido;
+                echo "<small> " .$unaSolicitud->solicitudTurno_id. "</small>";
+                $date = date_create($unaSolicitud->solicitudTurno_fechaPedido);
+                $fechaPedido = date_format($date, 'Y-m-d');
 
                 if ($fechaIniSol <= $fechaPedido and $fechaPedido <= $fechaFinSol)
                 {
+                    echo "<br> SI.";
                     $lista[] = (array)$unaSolicitud;
                     Solicitudturno::actualizarRespYFechaEnviada($unaSolicitud->solicitudTurno_id);
                 }
