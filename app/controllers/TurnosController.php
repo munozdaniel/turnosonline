@@ -940,7 +940,8 @@ class TurnosController extends ControllerBase
                     $schedule = $this->getDi()->get('schedule');
                     $puntoProgramado = $schedule->getByType('plazo')->getLast();
                     $puntoProgramado->setStart($this->request->getPost('periodoSolicitudDesde'));
-                    $puntoProgramado->setEnd($this->request->getPost('periodoSolicitudHasta'));
+                    $new_time =  date('Y-m-d H:i:s', strtotime($this->request->getPost('periodoSolicitudHasta'))+82800);//Le seteo a la fecha final las 23:00:00
+                    $puntoProgramado->setEnd($new_time);
                     if ($puntoProgramado->update())
                         $this->flash->message('exito', "Los datos se guardaron correctamente!");
 

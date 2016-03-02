@@ -209,6 +209,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
 
             foreach($solicitudes as $unaSolicitud)
             {
+
                 $ffPedido = date('Y-m-d',strtotime($unaSolicitud->solicitudTurno_fechaPedido));
 
                 if($unaSolicitud->solicitudTurno_respuestaEnviada=='SI' and $ffPedido <= $ffF and $ffPedido >= $ffI)
@@ -216,8 +217,27 @@ class Solicitudturno extends \Phalcon\Mvc\Model
                     $unaSolicitud->solicitudTurno_fechaRespuestaEnviadaDate = date('d/m/Y',strtotime($unaSolicitud->solicitudTurno_fechaRespuestaEnviada));
 
                     $resp = $unaSolicitud->solicitudTurno_respuestaChequeada;
+                    if($unaSolicitud->solicitudTurno_tipo == 0)//Online
+                    {
 
-                    if($resp == 1)
+                        if($resp == 0)
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="NO";
+                        else
+                        {   if($resp==1)
+                                $unaSolicitud->solicitudTurno_respChequedaTexto="SI";
+                            else
+                                if($resp==2)
+                                    $unaSolicitud->solicitudTurno_respChequedaTexto="SI (Turno Cancelado)";
+                        }
+                    }else{
+                        if($unaSolicitud->solicitudTurno_tipo == 1)//Manual
+                        {
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="SI (Solicitud Manual)";
+                        }else{//Personal
+                            $unaSolicitud->solicitudTurno_respChequedaTexto="SI (Solicitud Personal)";
+                        }
+                    }
+                    /*if($resp == 1)
                     {
                         if($unaSolicitud->solicitudTurno_manual == 1)
                             $unaSolicitud->solicitudTurno_respChequedaTexto="SI (solicitud manual)";
@@ -231,7 +251,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
                         else //2 (esta opcion quedo pendiente, hasta que se controle que el email se confirma dentro de los dias dados.)M. 09/11/15
                             $unaSolicitud->solicitudTurno_respChequedaTexto="SI (turno cancelado)";
                     }
-
+*/
                     $unaSolicitud->solicitudTurno_idCodificado= base64_encode($unaSolicitud->solicitudTurno_id); //24/02
                     $solicitudesOnline[]= (array)$unaSolicitud;
                 }

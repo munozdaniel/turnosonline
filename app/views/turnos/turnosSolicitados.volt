@@ -189,7 +189,7 @@
                     alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR.");
 
                 }
-                lista = ['REVISION','AUTORIZADO', 'DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];
+                lista = ['REVISION'];
                 if (json.solicitudTurno_estado == "REVISION") {
                     if(sinTurnos)
                         lista = ['REVISION','DENEGADO', 'DENEGADO POR FALTA DE TURNOS'];

@@ -100,7 +100,21 @@
                     <tbody>
                     {% for item in page.items %}
                         {# Controlo el color de las filas: PERSONAL - ONLINE CHEQUEADO - ONLINE NO CHEQUEADO#}
-                        <tr>
+                        {% if item['solicitudTurno_tipo']==0 %}{#Online#}
+                            {% if  item['solicitudTurno_respChequedaTexto']  == "SI" %}
+                                <tr style="background-color: rgba(126, 191, 227, 0.1)">{#azul#}
+                            {% else %}
+                                {% if  item['solicitudTurno_respChequedaTexto']  == "SI (Turno Cancelado)" %}
+                                    <tr style="background-color: rgba(227, 100, 84, 0.1)">{#red#}
+                                {% else %}
+                                    <tr style="background-color: rgba(227, 100, 84, 0.1)">{#red#}
+                                {% endif %}
+                            {% endif %}
+                        {% elseif  item['solicitudTurno_tipo']==1 %}{#Manual#}
+                            <tr style="background-color: rgba(255, 211, 95, 0.1)">{#amarillo#}
+                        {% else %}{#Personal#}
+                            <tr style="background-color: rgba(19, 143, 44, 0.1)">{#verde#}
+                        {% endif %}
                             <td class="td-posicion">{{ item['solicitudTurno_numero'] }}</td>
                             <td class="td-posicion">{{ item['solicitudTurno_legajo'] }}</td>
                             <td class="td-posicion">{{ item['solicitudTurno_nomApe'] }}</td>
@@ -115,7 +129,11 @@
                                         {{ link_to('turnos/comprobanteTurno/?id='~ item['solicitudTurno_idCodificado'] ,'<i class="fa fa-print pull-left"></i> ONLINE ','class':'btn btn-info btn-block','target':'_blank') }}
                                     </td>
                                 {% else %}
-                                    <td class="td-posicion bg-red-pl">  EN ESPERA</td>
+                                    {% if  item['solicitudTurno_respChequedaTexto']  == "SI (Turno Cancelado)" %}
+                                        <td class="td-posicion bg-red-pl">  CANCELADO</td>
+                                    {% else %}
+                                        <td class="td-posicion bg-red-pl">  EN ESPERA</td>
+                                    {% endif %}
                                 {% endif %}
                             {% elseif  item['solicitudTurno_tipo']==1 %}{#Manual#}
                                 <td class="td-posicion bg-yellow-pl">
