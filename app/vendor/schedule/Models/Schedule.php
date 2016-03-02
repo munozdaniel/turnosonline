@@ -195,11 +195,12 @@ class Schedule extends \Phalcon\Mvc\Model
     public function getStatus()
     {
        // $today = $this->getDI()->get('datetime')->datetime(); // Sirve para realizar pruebas, en el config se establece una fecha.
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $today = date("Y-m-d H:i:s");
-        //echo "$today STATUS: ". strtotime($this->getStart()) ." - ". strtotime($today);
+        //echo "<br> HASTA " .$this->getEnd() . "< HOY $today <br>";
         if(strtotime($this->getStart()) > strtotime($today))
             return 'before';
-        
+
         if(strtotime($this->getEnd()) < strtotime($today))
             return 'after';
         
@@ -219,7 +220,8 @@ class Schedule extends \Phalcon\Mvc\Model
         $periodoProgramado->setType($tipo);
         $periodoProgramado->setName($nombre);
         $periodoProgramado->setStart($inicio);
-        $periodoProgramado->setEnd($final);
+        $new_time =  date('Y-m-d H:i:s', strtotime($final)+82800);//Le seteo a la fecha final las 23:00:00
+        $periodoProgramado->setEnd($new_time);
         if($periodoProgramado->save()){
            return true;
         }
