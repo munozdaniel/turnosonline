@@ -10,8 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {{ getTitle() }}
     <!-- Bootstrap js -->
-    <!-- initialize jQuery Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
     <!-- Mobile Specific Metas
     ================================================== -->
@@ -59,17 +58,18 @@
 </body>
 <!-- Javascript Files
    ================================================== -->
-
+<!-- initialize jQuery Library -->
 {{ javascript_include('js/bootstrap.min.js') }}
+{{ javascript_include('js/jquery.min.js') }}
 <!-- For smooth animatin  -->
 {{ javascript_include('js/wow.min.js') }}
 <!-- for portfolio filter gallery -->
 {{ javascript_include('js/modernizr.custom.js') }}
-{{ javascript_include('js/classie.js') }}
+{{ javascript_include('js/classie.min.js') }}
 {# http://demo.phapsu.com/jquery.elastic_grid/ Para el portfolio#}
 {# javascript_include('js/elastic_grid.min.js') #}
 <!-- Custom js-->
-{{ javascript_include('js/custom.js') }}
+{{ javascript_include('js/custom.min.js') }}
 {% if (assets.collection("footer")) %}
     {{ assets.outputJs("footer") }}
 
