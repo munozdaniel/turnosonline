@@ -59,8 +59,8 @@
 <!-- Javascript Files
    ================================================== -->
 <!-- initialize jQuery Library -->
-{{ javascript_include('js/bootstrap.min.js') }}
 {{ javascript_include('js/jquery.min.js') }}
+{{ javascript_include('js/bootstrap.min.js') }}
 <!-- For smooth animatin  -->
 {{ javascript_include('js/wow.min.js') }}
 <!-- for portfolio filter gallery -->

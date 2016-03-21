@@ -4,8 +4,7 @@ class IndexController extends ControllerBase
 {
     public function initialize()
     {
-        $this->tag->setTitle('Bienvenidos');
-        $this->view->setTemplateAfter('main');
+
         parent::initialize();
 
     }
@@ -20,6 +19,8 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
+        $this->tag->setTitle('Bienvenidos');
+        $this->view->setTemplateAfter('main');
         $this->assets->collection('headerCss')
             ->addCss('css/slick.css')
             ->addCss('css/superslides.css');
@@ -103,11 +104,15 @@ class IndexController extends ControllerBase
      */
     public function crearPdfOrdenanzaAction()
     {
+        $this->tag->setTitle('PDF');
+        $this->view->setTemplateAfter('main');
         $this->buscarPdf('files/prestaciones/Ordenanza_11633.pdf');
     }
 
     private function buscarPdf($url)
     {
+        $this->tag->setTitle('BUSCAR PDF');
+        $this->view->setTemplateAfter('main');
         $mpdf = new mPDF();
         $mpdf->SetImportUse();
         $pagecount = $mpdf->SetSourceFile($url);
@@ -126,6 +131,8 @@ class IndexController extends ControllerBase
 
     public function emailContactoAction()
     {
+        $this->tag->setTitle('CONTACTO');
+        $this->view->setTemplateAfter('main');
         if ($this->request->isPost()) {
             $this->mail->CharSet = 'UTF-8';
             $this->mail->Host = 'mail.imps.org.ar';
@@ -153,6 +160,17 @@ class IndexController extends ControllerBase
 
             $this->redireccionar('index/index');
         }
+    }
+    public function revistaAction(){
+        $this->tag->setTitle('Revista IMPS');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footer')
+            ->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js')
+            ->addJs('plugins/turnjs/extras/modernizr.2.5.3.min.js')
+            ->addJs('plugins/turnjs/lib/hash.js')
+            ->addJs('plugins/turnjs/magazine/conf-slider.js');
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
     }
 
 }
