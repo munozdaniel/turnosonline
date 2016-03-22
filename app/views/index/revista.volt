@@ -1,20 +1,29 @@
 
 <style type="text/css">
     body{
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#019cad+0,23538a+100 */
-        background: rgb(1,156,173); /* Old browsers */
-        background: -moz-linear-gradient(left,  rgba(1,156,173,1) 0%, rgba(35,83,138,1) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left,  rgba(1,156,173,1) 0%,rgba(35,83,138,1) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right,  rgba(1,156,173,1) 0%,rgba(35,83,138,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#019cad', endColorstr='#23538a',GradientType=1 ); /* IE6-9 */
-
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3f4c6b+0,3f4c6b+100;Blue+Grey+Flat */
+        background: #f4f4f4 url(../img/curriculum/bg.gif) repeat top left;
     }
 
 </style>
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    <strong>TIPS</strong>
+    <ul class="">
+        <li>
+           <i class="fa fa-dot-circle-o"></i> Para <strong>CAMBIAR DE PÁGINA</strong> puede utilizar las flechas del teclado, o arrastrando una esquina.
+        </li>
+        <li>
+            <i class="fa fa-dot-circle-o"></i> Para hacer <strong>ZOOM</strong> solo basta con hacer  click en cualquier zona.
+        </li>
+    </ul>
+</div>
 
 <div id="onepage" class="modal-body col-md-12 ">
 {{ content() }}
      {{ hidden_field('volumen','value':volumen) }}
+
     <div id="canvas">
 
         <div class="zoom-icon zoom-icon-in"></div>
@@ -30,5 +39,6 @@
             </div>
 
         </div>
+
     </div>
 </div>

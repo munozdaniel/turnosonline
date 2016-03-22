@@ -161,18 +161,38 @@ class IndexController extends ControllerBase
             $this->redireccionar('index/index');
         }
     }
-    public function revistaAction(){
-        $this->view->volumen = 0;
-        $this->tag->setTitle('Revista IMPS');
+    public function catalogoAction()
+    {
+        $this->tag->setTitle('Catalogo IMPS');
         $this->view->setTemplateAfter('admin');
-        $this->assets->collection('footer')
-            ->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js')
-            ->addJs('plugins/turnjs/extras/modernizr.2.5.3.min.js')
-            ->addJs('plugins/turnjs/lib/hash.js')
-            ->addJs('plugins/turnjs/magazine/conf-slider.js');
         $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
 
     }
+    public function revistaAction(){
+        if(!$this->request->isGet()){
+            return $this->redireccionar('index/catalogo');
+        }
+        $volumen = $this->request->get('volumen','int');
+        $dir = "./img/revista/volumen/$volumen";
+        if(is_dir($dir)){
+            $this->view->volumen = $volumen;
+            $this->tag->setTitle('Revista IMPS');
+            $this->assets->collection('footer')
+                ->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js')
+                ->addJs('plugins/turnjs/extras/modernizr.2.5.3.min.js')
+                ->addJs('plugins/turnjs/lib/hash.js')
+                ->addJs('plugins/turnjs/magazine/conf-slider.js');
+        }
+        else
+        {
+            $this->flash->error("La revista seleccionada no se encuentra disponible por el momento");
+            return $this->redireccionar('index/catalogo');
+        }
+
+
+
+    }
+
 
 }
 
