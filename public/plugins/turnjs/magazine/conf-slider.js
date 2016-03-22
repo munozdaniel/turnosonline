@@ -1,6 +1,6 @@
 
 function loadApp() {
-
+    var vol = document.getElementById("volumen").value;
     $('#canvas').fadeIn(1000);
 
     var flipbook = $('.magazine');
@@ -82,7 +82,7 @@ function loadApp() {
                 // Add pages that aren't in the magazine
 
                 for (var i = 0; i < pages.length; i++)
-                    addPage(pages[i], $(this));
+                    addPage(pages[i], $(this),vol);
 
             }
         }
@@ -116,9 +116,9 @@ function loadApp() {
             resize: function(event, scale, page, pageElement) {
 
                 if (scale==1)
-                    loadSmallPage(page, pageElement);
+                    loadSmallPage(page, pageElement,vol);
                 else
-                    loadLargePage(page, pageElement);
+                    loadLargePage(page, pageElement,vol);
 
             },
 
@@ -133,7 +133,7 @@ function loadApp() {
                     escTip = true;
 
                     $('<div />', {'class': 'exit-message'}).
-                        html('<div>Press ESC to exit</div>').
+                        html('<div>Presionar ESC para salir.</div>').
                         appendTo($('body')).
                         delay(2000).
                         animate({opacity:0}, 500, function() {
@@ -289,10 +289,10 @@ function loadApp() {
 
             if (!window._thumbPreview) {
                 _thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
-                setPreview(ui.value);
+                setPreview(ui.value,vol);
                 _thumbPreview.appendTo($(ui.handle));
             } else
-                setPreview(ui.value);
+                setPreview(ui.value,vol);
 
             moveBar(false);
 
@@ -300,7 +300,7 @@ function loadApp() {
 
         slide: function(event, ui) {
 
-            setPreview(ui.value);
+            setPreview(ui.value,vol);
 
         },
 

@@ -162,6 +162,7 @@ class IndexController extends ControllerBase
         }
     }
     public function revistaAction(){
+        $this->view->volumen = 0;
         $this->tag->setTitle('Revista IMPS');
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('footer')

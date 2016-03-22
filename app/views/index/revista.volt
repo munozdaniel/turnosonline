@@ -13,7 +13,8 @@
 </style>
 
 <div id="onepage" class="modal-body col-md-12 ">
-
+{{ content() }}
+     {{ hidden_field('volumen','value':volumen) }}
     <div id="canvas">
 
         <div class="zoom-icon zoom-icon-in"></div>
@@ -27,11 +28,7 @@
                     <div ignore="1" class="previous-button"></div>
                 </div>
             </div>
-            <div class="bottom">
-                <div id="slider-bar" class="turnjs-slider">
-                    <div id="slider"></div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

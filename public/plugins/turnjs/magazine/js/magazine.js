@@ -2,7 +2,7 @@
  * Magazine sample
  */
 
-function addPage(page, book) {
+function addPage(page, book,vol) {
 
     var id, pages = book.turn('pages');
 
@@ -17,12 +17,12 @@ function addPage(page, book) {
         element.html('<div class="gradient"></div><div class="loader"></div>');
 
         // Load the page
-        loadPage(page, element);
+        loadPage(page, element,vol);
     }
 
 }
 
-function loadPage(page, pageElement) {
+function loadPage(page, pageElement,vol) {
 
     // Create an image element
 
@@ -48,9 +48,9 @@ function loadPage(page, pageElement) {
 
     // Load the page
 
-    img.attr('src', '../public/plugins/turnjs/magazine/pages/' +  page + '.jpg');
+    img.attr('src', '../public/img/revista/volumen/' + vol+'/'+  page + '.jpg');
 
-    loadRegions(page, pageElement);
+    loadRegions(page, pageElement,vol);
 
 }
 
@@ -76,9 +76,9 @@ function zoomTo(event) {
 
 // Load regions
 
-function loadRegions(page, element) {
+function loadRegions(page, element,vol) {
 
-    $.getJSON('../public/plugins/turnjs/magazine/pages/'+page+'-regions.json').
+    $.getJSON('../public/img/revista/volumen/' + vol+'/'+page+'-regions.json').
         done(function(data) {
 
             $.each(data, function(key, region) {
@@ -164,7 +164,7 @@ function processRegion(region, regionType) {
 
 // Load large page
 
-function loadLargePage(page, pageElement) {
+function loadLargePage(page, pageElement,vol) {
 
     var img = $('<img />');
 
@@ -179,12 +179,12 @@ function loadLargePage(page, pageElement) {
 
     // Loadnew page
 
-    img.attr('src', '../public/plugins/turnjs/magazine/pages/' +  page + '-large.jpg');
+    img.attr('src', '../public/img/revista/volumen/' + vol+'/'+  page + '-large.jpg');
 }
 
 // Load small page
 
-function loadSmallPage(page, pageElement) {
+function loadSmallPage(page, pageElement,vol) {
 
     var img = pageElement.find('img');
 
@@ -193,7 +193,7 @@ function loadSmallPage(page, pageElement) {
     img.unbind('load');
     // Loadnew page
 
-    img.attr('src', '../public/plugins/turnjs/magazine/pages/' +  page + '.jpg');
+    img.attr('src', '../public/img/revista/volumen/'  + vol+'/'+  page + '.jpg');
 }
 
 // http://code.google.com/p/chromium/issues/detail?id=128488
@@ -298,11 +298,11 @@ function moveBar(yes) {
     }
 }
 
-function setPreview(view) {
+function setPreview(view,vol) {
 
     var previewWidth = 112,
         previewHeight = 73,
-        previewSrc = '../public/plugins/turnjs/magazine/pages/preview.jpg',
+        previewSrc = '../public/img/revista/volumen/ '+ vol+'/preview.jpg',
         preview = $(_thumbPreview.children(':first')),
         numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,
         width = (numPages==1) ? previewWidth/2 : previewWidth;
