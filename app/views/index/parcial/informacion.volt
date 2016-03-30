@@ -2,197 +2,247 @@
 <section id="about">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="about_area">
-                    <!-- START ABOUT HEADING -->
-                    <div class="heading">
-                        <h2 class="wow fadeInLeftBig">Información General</h2>
+            <!-- START ABOUT CONTENT -->
+            <div class="about_area marginBottom-20 ">
+                <div class="row">
 
-                    </div>
 
-                    <!-- START ABOUT CONTENT -->
-                    <div class="about_content">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="about_featured">
-                                    <div class="panel-group" id="accordion">
-                                        <!-- START SINGLE FEATURED ITEAM #1-->
-                                        <div class="panel panel-default wow fadeInLeft">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="#collapseOne">
-                                                        <span class="fa fa-check-square-o"></span>Óptica y Contactología
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseOne" class="panel-collapse collapse ">
-                                                <div class="panel-body">
-                                                    <p>
-                                                        <strong>HORARIOS:</strong>
-                                                        <a class="pull-right puntero" data-toggle="modal"
-                                                           data-target="#info-optica"><i
-                                                                    class="fa fa-info-circle"></i><b> más info</b></a>
-                                                    </p>
-                                                    <hr>
-                                                    <p>
-                                                        <strong>Horario de Verano: 01 de Noviembre al 30 de
-                                                            Abril</strong>
-                                                        <br>
-                                                        <strong>Lunes a Viernes:</strong> 09:00 a 19:00 hs.
-                                                        <br>
-                                                        <strong>Sábados:</strong> 09:00 a 13:00 hs.
-                                                        <br>
-                                                        <br>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="heading">
+                            <h2 class="wow fadeInLeftBig">Información</h2>
+                        </div>
+                        <div class="about_featured">
+                            <div class="panel-group" id="accordion">
+                                <!-- START SINGLE FEATURED ITEAM #1-->
+                                <div class="panel panel-default wow fadeInLeft">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseOne">
+                                                <span class="fa fa-check-square-o"></span>Óptica y Contactología
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse ">
+                                        <div class="panel-body">
+                                            <p>
+                                                <strong>HORARIOS:</strong>
+                                                <a class="pull-right puntero" data-toggle="modal"
+                                                   data-target="#info-optica"><i
+                                                            class="fa fa-info-circle"></i><b> más info</b></a>
+                                            </p>
+                                            <hr>
+                                            <p>
+                                                <strong>Horario de Verano: 01 de Noviembre al 30 de
+                                                    Abril</strong>
+                                                <br>
+                                                <strong>Lunes a Viernes:</strong> 09:00 a 19:00 hs.
+                                                <br>
+                                                <strong>Sábados:</strong> 09:00 a 13:00 hs.
+                                                <br>
+                                                <br>
 
-                                                        <strong>Horario de Invierno: 01 de Mayo al 31 de
-                                                            Octubre</strong>
-                                                        <br>
-                                                        <strong>Lunes a Viernes:</strong> 08:30 a 18:30 hs.
-                                                        <br>
-                                                        <strong>Sábados:</strong> 09:00 a 13:00 hs.
-                                                    </p>
+                                                <strong>Horario de Invierno: 01 de Mayo al 31 de
+                                                    Octubre</strong>
+                                                <br>
+                                                <strong>Lunes a Viernes:</strong> 08:30 a 18:30 hs.
+                                                <br>
+                                                <strong>Sábados:</strong> 09:00 a 13:00 hs.
+                                            </p>
+                                            <hr>
+                                            <p>
+                                                <strong>CONTACTO:</strong>
+                                            </p>
+                                            <hr>
+                                            <p>
+                                                <strong>Teléfono:</strong> +54 (0299) 447 - 6235<br>
 
-                                                    <p>
-                                                    <hr>
-                                                    <strong>CONTACTO:</strong>
-                                                    <hr>
-                                                    </p>
-                                                    <p>
-                                                        <strong>Teléfono:</strong> +54 (0299) 447 - 6235<br>
+                                                <strong>Dirección:</strong> San Martín esquina Santiago del
+                                                Estero<br>
 
-                                                        <strong>Dirección:</strong> San Martín esquina Santiago del
-                                                        Estero<br>
-
-                                                        <strong>E-Mail:</strong> optica@imps.org.ar<br>
-                                                        Neuquén Capital - Argentina<br>
-                                                    </p><br>
-                                                </div>
-                                            </div>
+                                                <strong>E-Mail:</strong> optica@imps.org.ar<br>
+                                                Neuquén Capital - Argentina<br>
+                                            </p><br>
                                         </div>
-
-                                        <!-- START SINGLE FEATURED ITEAM #3 -->
-                                        <div class="panel panel-default wow fadeInLeft">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion"
-                                                       href="#collapseThree">
-                                                        <span class="fa fa-check-square-o"></span> Departamento de Turismo IMPS
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseThree" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p>
-                                                        <strong>DÍAS Y HORARIOS DE ATENCIÓN:</strong>
-                                                    <hr>
-                                                    </p>
-                                                    <p>
-                                                        <strong>Lunes a Viernes:</strong> Mañana de 08:00 a 13:30
-                                                        hs.<br>
-                                                    </p>
-
-                                                    <p>
-                                                    <hr>
-                                                    <strong>CONTACTO:</strong>
-                                                    <hr>
-                                                    </p>
-                                                    <p>
-                                                        <strong>Teléfono:</strong> +54 (0299) 447 - 9921<br>
-                                                        <strong>Dirección:</strong> Fotheringham y Juan B. Justo<br>
-                                                        <strong>E-Mail:</strong> turismo@imps.tur.ar<br>
-                                                        <strong>Web: </strong><a href="http://www.melewe.com.ar"
-                                                                                 target="_blank"
-                                                                                 style="text-decoration:none;">
-                                                            www.melewe.com.ar</a>
-                                                    </p>
-                                                    <br>
-                                                    Neuquén Capital - Argentina<br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- START SINGLE FEATURED ITEAM #2 -->
-                                        <div class="panel panel-default wow fadeInLeft">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a
-                                                            href="http://imps.org.ar/farmacia/" target="_blank">
-                                                        <span class="fa fa-external-link "></span> <strong> VISITAR Farmacia IMPS <small>(Pagina Web Oficial)</small></strong>
-                                                    </a>
-                                                </h4>
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="about_slider">
-                                    <div align="center" style="color: #FFF;background-color: #2DA2C8;">
-                                        <h1>NOVEDADES</h1>
+
+                                <!-- START SINGLE FEATURED ITEAM #3 -->
+                                <div class="panel panel-default wow fadeInLeft">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseThree">
+                                                <span class="fa fa-check-square-o"></span> Departamento de Turismo IMPS
+                                            </a>
+                                        </h4>
                                     </div>
+                                    <div id="collapseThree" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <p>
+                                                <strong>DÍAS Y HORARIOS DE ATENCIÓN:</strong>
 
-                                    <!-- BEGAIN FEATURED SLIDER -->
-                                    <div class="featured_slider">
-                                        <!-- PROMO FARMACIA OESTE 1 -->
-                                        <div class="single_iteam" style="padding-left: 15px; padding-right: 5px; border-style: solid !important;">
-                                            <h3><strong><em>ATENCIÓN JUBILADOS Y PENSIONADOS</em> <br> </strong></h3>
-                                            <h4><strong>Información Impuesto a las Ganancias Periodo Fiscal 2015</strong></h4>
-                                            <h3 align="center"><i class="fa fa-users"></i></h3>
-                                            <p>El IMPS les informa que el plazo para informar deducciones para la liquidación del impuesto a las ganancias del periodo fiscal 2015 es hasta el 31/01/2016 (Sin Excepción, dispuesto por RG Nº 3418/12). </p>
-                                            <p>Solicitamos a quienes deban cargar las novedades para la DDJJ, tengan en cuenta dicha información.</p>
-                                            <p>Cualquier duda, dirigirse a Fotheringham Nº 107 2º piso o vía mail<strong style="color: #286090"> consultasganancias@imps.org.ar</strong></p>
-                                          <h4>{{ link_to('public/files/novedad/afiliados.pdf','<i class="fa fa-search-plus"></i> ZOOM EN PDF','target':'_blank','class':'pull-right') }}<br></h4>
-
+                                            </p>
+                                            <hr>
+                                            <p>
+                                                <strong>Lunes a Viernes:</strong> Mañana de 08:00 a 13:30
+                                                hs.
+                                                <br>
+                                            </p>
+                                            <hr>
+                                            <p>
+                                                <strong>CONTACTO:</strong>
+                                            </p>
+                                            <hr>
+                                            <p>
+                                                <strong>Teléfono:</strong> +54 (0299) 447 - 9921<br>
+                                                <strong>Dirección:</strong> Fotheringham y Juan B. Justo<br>
+                                                <strong>E-Mail:</strong> turismo@imps.tur.ar<br>
+                                                <strong>Web: </strong><a href="http://www.melewe.com.ar"
+                                                                         target="_blank"
+                                                                         style="text-decoration:none;">
+                                                    www.melewe.com.ar</a>
+                                            </p>
+                                            <br>
+                                            Neuquén Capital - Argentina<br>
                                         </div>
-
-                                        <!-- EMPRENDIMIENTO -->
-                                        <div class="">
-                                            {{ link_to('index/index#novedades-emprendimiento','data-toggle':'modal',image('img/novedades/feature_img1.jpg','alt':'Emprendimiento Mari Menuco')) }}
-                                        </div>
-
                                     </div>
-                                    <!-- END FEATURED SLIDER -->
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="about_slider">
-                                    <div align="center" style="color: #FFF;background-color: #4CAF50;">
-                                        <h1>PROMOCIONES</h1>
+                                <!-- START SINGLE FEATURED ITEAM #2 -->
+                                <div class="panel panel-default wow fadeInLeft">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a
+                                                    href="http://imps.org.ar/farmacia/" target="_blank">
+                                                <span class="fa fa-external-link "></span> <strong> VISITAR Farmacia
+                                                    IMPS
+                                                    <small>(Pagina Web Oficial)</small>
+                                                </strong>
+                                            </a>
+                                        </h4>
                                     </div>
 
-                                    <!-- BEGAIN FEATURED SLIDER -->
-                                    <div class="featured_slider">
-                                        <!-- PROMO FARMACIA OESTE 1 -->
-                                        <div class="single_iteam">
-                                            <a href="http://imps.org.ar/farmacia" target="_blank">
-                                                {{  image('public/img/novedades/promo.jpg','alt':'Promo 1 - Img 1')  }}
-                                            </a>
-                                        </div>
-                                        <!-- PROMO FARMACIA OESTE 2-->
-                                        <div class="single_iteam">
-                                            <a href="http://imps.org.ar/farmacia" target="_blank">
-                                                {{  image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1')  }}
-                                            </a>
-                                        </div>
-                                        <!-- PROMO FARMACIA OESTE 3 -->
-                                        <div class="single_iteam">
-                                            <a href="http://imps.org.ar/farmacia" target="_blank">
-                                                {{  image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1')  }}
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- END FEATURED SLIDER -->
                                 </div>
+
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12  marginBottom-20">
+                        <div class="heading"  style="margin-bottom: -25px;">
+                            <h2 class="wow fadeInLeftBig">Promociones</h2>
+                        </div>
+                        <div class="about_slider">
+                            <!-- BEGAIN FEATURED SLIDER -->
+                            <div class="featured_slider">
+                                <!-- PROMO FARMACIA OESTE 1 -->
+                                <div class="single_iteam">
+                                    <a href="http://imps.org.ar/farmacia" target="_blank">
+                                        {{ image('public/img/novedades/promo.jpg','alt':'Promo 1 - Img 1') }}
+                                    </a>
+                                </div>
+                                <!-- PROMO FARMACIA OESTE 2-->
+                                <div class="single_iteam">
+                                    <a href="http://imps.org.ar/farmacia" target="_blank">
+                                        {{ image('public/img/novedades/promo2.jpg','alt':'Promo 2 - Img 1') }}
+                                    </a>
+                                </div>
+                                <!-- PROMO FARMACIA OESTE 3 -->
+                                <div class="single_iteam">
+                                    <a href="http://imps.org.ar/farmacia" target="_blank">
+                                        {{ image('public/img/novedades/promo3.jpg','alt':'Promo 3 - Img 1') }}
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- END FEATURED SLIDER -->
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-        </div>
-    </div>
 
+                <div class="col-lg-12 col-md-12">
+                        <!-- START ABOUT HEADING -->
+                        <div class="heading">
+                            <h2 class="wow fadeInLeftBig">Últimas Novedades</h2>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <!-- BEGAIN BLOG CONTENT -->
+                            <div class="blog_content">
+
+                                <!-- BEGAIN BLOG SLIDER -->
+                                <div class="blog_slider">
+                                    <!-- BEGAIN SINGLE BLOG -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="single_post wow fadeInUp">
+                                            {{ link_to('index/catalogo',"<div class='blog_img'>"~
+                                                 image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas')~"</div>") }}
+
+                                            <h3>Catálogo de REVISTAS</h3>
+
+                                            <div class="post_commentbox">
+                                               Instituto Municipal de Previsión Social
+                                            </div>
+                                            <p class="fuente-16">
+                                                Todos los meses publicaremos una nueva edición.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- BEGAIN SINGLE BLOG -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="single_post wow fadeInUp">
+                                            {{ link_to('turnos/presentacion',"<div class='blog_img'>"~
+                                            image('img/informacion/n_turnos.jpg','alt':'Turnos Online')~"</div>") }}
+                                            <h3>Turnos Online</h3>
+
+                                            <div class="post_commentbox">
+                                                Instituto Municipal de Previsión Social
+                                            </div>
+                                            <p class="fuente-16">
+                                                Habilitamos un nuevo servicio para solicitar los préstamos.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- BEGAIN SINGLE BLOG -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="single_post wow fadeInUp">
+                                            {{ link_to('files/novedad/afiliados.pdf',' <div class="blog_img">'~
+                                                 image('img/informacion/n_jub.jpg','alt':'Jubilados y Pensionados') ~
+                                            '</div> <h3>Jubilados y Pensionados</h3><div class="post_commentbox font-azul">
+                                                Abrir Archivo PDF
+                                            </div>') }}
+
+                                            <p class="fuente-16">
+                                                Información Impuestos a las Ganancias Periodo Fiscal 2015
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- BEGAIN SINGLE BLOG -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="single_post wow fadeInUp">
+                                            {{ link_to('',"<div class='blog_img'>"~
+                                            image('img/informacion/n-emprendimiento.jpg','alt':'Emprendimiento')~"</div>") }}
+
+                                            <h3>Emprendimiento Marimenuco</h3>
+
+                                            <div class="post_commentbox">
+                                                Instituto Municipal de Previsión Social
+                                            </div>
+                                            <p class="fuente-16">
+                                                I.M.P.S. desarrollará un complejo turístico de aproximadamente 15 Ha
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+                </div>
+    </section>
     <!-- ==========================MODALES============================= -->
     <!-- Modal Info Optica -->
     <div id="info-optica" class="modal fade">

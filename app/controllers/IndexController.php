@@ -38,15 +38,9 @@ class IndexController extends ControllerBase
         $schedule = $this->getDi()->get('schedule');
         $puntoProgramado = $schedule->getByType('plazo')->getLast();
         //MENSAJES PREDETERMINADOS:
-        $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color:rosybrown !important;"></span></div>
-                                            <h3 class="service_title" style="color:rosybrown;">Turnos Online</h3> </a>'.
-                                            '<p style="color:rosybrown;"><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong>
-                                            Las fechas se dispondrán a través de la pagina web y en nuestras oficinas.
-                                            Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                            o llamarnos al (0299) 4479921</p> <br/><br/>';
-
-        $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EL PERIODO PARA SOLICITAR TURNOS ONLINE NO SE ENCUENTRA HABILITADO POR EL MOMENTO </h2>
-                        <p> Por cualquier consulta puede llamarnos al (0299) 4479921</p> <a href="#service"> </a> ';
+        $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-rojo fondo-rojo'><h4>Solicitar Turno</h4>
+                                <p><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong></p>
+                           </a>";
 
         if (!empty($puntoProgramado)) {
 
@@ -56,26 +50,22 @@ class IndexController extends ControllerBase
             //Si el periodo  no esta habilitado todavia
             if ($puntoProgramado->isBefore())
             {
-                $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
-                                            <h3 class="service_title">Turnos Online</h3></a>' .
-                    '<p> <strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong>
-                                                Los turnos se podrán retirar a partir del : <strong>' . date_format($date, 'd/m/Y H:i:s') . '</strong><br>
-                                                Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                                o llamarnos al (0299) 4479921<br><br>
-                                            </p>';
-                $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EN EL PERIODO <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . ' SE PODRÁN SOLICITAR TURNOS ONLINE  </h2>
-                        <p></p> <a href="#service"> </a> ';
+                $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-rojo fondo-rojo'><h4>Solicitar Turno</h4>
+                                <p>El período para solicitar turnos no se encuentran habilitado por el momento.</p>
+                                <p>Los turnos se podrán entre :<br> <strong>" . date_format($date, 'd/m/Y') ." - ".date_format($dateFin, 'd/m/Y')  . "</strong></p>
+                           </a>";
+
             }
 
             //Si el periodo se encuentra
             if ($puntoProgramado->isActive())
             {
-                $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "")) .
+                $this->view->linkTurnoOnline = $this->tag->linkTo(array('turnos/index','<h4>Solicitar Turno</h4>
+                                                <p>Periodo habilitado para solicitar turnos</p>','class'=>'list-group-item borde-3-verde'));
+                /*$this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "text-decoration-none")) .
                     '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                                o llamarnos al (0299) 4479921</p>';
+                                                o llamarnos al (0299) 4479921</p>';*/
 
-                $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> PERIODO HABILITADO PARA SOLICITAR TURNOS ONLINE <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . '  </h2>
-                        <p></p>' . $this->tag->linkTo(array("turnos/index", 'Solicitar Turno', "class" => "slider_btn slow"));
             }
             //Si el periodo para solicitar turnos ya termino.
             if ($puntoProgramado->isAfter()) {
@@ -98,36 +88,6 @@ class IndexController extends ControllerBase
 
     }
 
-    /**
-     * Ejemplo de como utilizar mpdf y crear un pdf a partir de otro pdf
-     * (generando un link hacia el archivo es mas que suficiente para mostrar el pdf)
-     */
-    public function crearPdfOrdenanzaAction()
-    {
-        $this->tag->setTitle('PDF');
-        $this->view->setTemplateAfter('main');
-        $this->buscarPdf('files/prestaciones/Ordenanza_11633.pdf');
-    }
-
-    private function buscarPdf($url)
-    {
-        $this->tag->setTitle('BUSCAR PDF');
-        $this->view->setTemplateAfter('main');
-        $mpdf = new mPDF();
-        $mpdf->SetImportUse();
-        $pagecount = $mpdf->SetSourceFile($url);
-        for ($i = 1; $i <= $pagecount; $i++) {
-            // Do not add page until page template set, as it is inserted at the start of each page (? guat)
-            $mpdf->AddPage();
-            $tplId = $mpdf->ImportPage($i);
-            $mpdf->UseTemplate($tplId, '', '', 210, 297);
-        }
-        $mpdf->WriteHTML('<p><indexentry content="Dromedary" xref="Camel:types" />The dromedary is atype of camel</p>');
-        // The template $tplId will be inserted on all subsequent pages until (optionally)
-        // $mpdf->SetPageTemplate();
-        $mpdf->Output();
-        exit;
-    }
 
     public function emailContactoAction()
     {

@@ -29,8 +29,6 @@
         -->
     <!-- smooth animate css file -->
     {{ stylesheet_link('css/animate.min.css') }}
-    <!-- Elastic grid css file -->
-    {{ stylesheet_link('css/elastic_grid.css') }}
     <!-- Default Theme css file -->
     {{ stylesheet_link('css/themes/default-theme.css') }}
     <!-- Main structure css file -->
@@ -41,7 +39,7 @@
     {{ stylesheet_link('css/style.css') }}
 
     <!-- Google fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&amp;o3h5y6' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 

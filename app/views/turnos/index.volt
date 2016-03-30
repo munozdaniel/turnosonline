@@ -19,7 +19,12 @@
 
             {{ form('turnos/guardarTurnoOnline','method':'post','style':'','class':'') }}
             <div class="col-md-12" style="margin-bottom: 30px;">
-                <em style="color:tomato">* Campos obligatorios.</em> <br/><br/>
+                <ul>
+                    <li><i class="fa fa-dot-circle-o"></i> Es muy importante que complete correctamente sus datos personales, correo electrónico y  teléfono.</li>
+                    <li><i class="fa fa-dot-circle-o"></i> Los campos que contienen * son obligatorios.</li>
+                    <li><i class="fa fa-dot-circle-o"></i> Al finalizar, nuestros empleados analizarán su estado de deuda y le enviarán un correo electrónico.</li>
+                </ul>
+                <hr>
                 {% for elto in formulario %}
                     <div class="col-md-4">
                         {{ elto.label(['class': 'control-label']) }}

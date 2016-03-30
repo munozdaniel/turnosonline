@@ -53,19 +53,7 @@
                     </div>
                 </a>
             </li>
-            <!-- CUARTO SLIDE -->
-            <li>
-                <a href="#service" class="slow" style="text-decoration: none;">
-                    <!-- THIRD SLIDE OVERLAY -->
-                    <div class="slider_overlay"></div>
-                    <!-- THIRD SLIDE MAIN IMAGE -->
-                    {{ image('img/full-slider/full-slide7.jpg','alt':'tramites') }}
-                    <!-- THIRD SLIDE CAPTION-->
-                    <div class="slider_caption">
-                        {{ mensajeSlider }}
-                    </div>
-                </a>
-            </li>
+
         </ul>
         <!-- BEGAIN SLIDER NAVIGATION -->
         <nav class="slides-navigation">
