@@ -58,8 +58,8 @@ h1,h2{
 	font-family: 'Montserrat', sans-serif; 
 }
 h3,h4,h5,h6{
-	font-family: 'Varela', sans-serif;
-	/*font-family: Arial, Helvetica, sans-serif;*/
+	/*font-family: 'Varela', sans-serif;*/
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 h2 {
@@ -2425,6 +2425,7 @@ cursor: none;
   .slider_caption > p {font-size: 18px;}
   .about_area {padding-bottom: 80px;}
   .about_slider{margin-top: 30px;}
+  .margin-bottom-70-xs{margin-bottom: 70px !important;}
   .single_iteam {text-align: center;}
   .single_iteam img {display: inline-block;}
   .single_service .service_title {font-size: 18px;}
@@ -3372,4 +3373,48 @@ input[type=number]::-webkit-outer-spin-button {
     width: 25px;
     height: 25px;
     background: #ffd35f;
+}
+.text-decoration-none{
+    text-decoration: none !important;
+}
+.font-azul{
+    color: #0e76a8;
+}
+.borde-bottom-5-verde{
+    border-bottom: 3px solid rgba(13, 143, 78, 0.2);
+}
+.borde-bottom-5-rojo{
+    border-bottom: 3px solid rgba(200, 22, 23, 0.2);
+}
+.borde-bottom-5-naranja{
+    border-bottom: 3px solid rgba(200, 119, 4, 0.2);
+}
+.fondo{
+    background: url(../img/page-background.png) !important;
+}
+.font-gotham{
+    font-family: "Gotham", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+}
+.borde-3-rojo{
+    border:3px solid #a30e12;
+}
+.borde-3-verde{
+    border:3px solid #188f09;
+}
+.fondo-rojo{
+    background-color: rgba(163, 14, 18, 0.20);
+}
+.fondo-verde{
+    background-color: rgba(24, 143, 9, 0.32);
+}
+.banner-top {
+    text-align: left;
+    width: 75%;
+    padding: 10px 30px;
+
+    background: rgba(158, 158, 158, 0.32);
+    margin: 3em auto 0;
+    border-radius: 0.3em;
 }
