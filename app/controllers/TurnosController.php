@@ -1063,10 +1063,18 @@ class TurnosController extends ControllerBase
         return "";
     }
 
+    /**
+     * Explica como funciona el sistema de turnos.
+     */
     public function presentacionAction()
     {
+
     }
 
+    /**
+     * Muestra un calendario con los periodos disponibles.
+     * @return string
+     */
     public function calendarioAction()
     {
         $this->tag->setTitle('Calendario');
@@ -1087,49 +1095,117 @@ class TurnosController extends ControllerBase
         if($rangoJs=="")
             return $this->flash->error("NO HAY NINGUN PERIODO DISPONIBLE");
 
-        // $datos = "[{date:'2016/03/29',value:'EVENTO 1'}]";
         $this->assets->collection('footerInline')->addInlineJs("$('#ca').calendar({
-        // view: 'month',
-        width: 320,
-        height: 320,
-        // startWeek: 0,
-        // selectedRang: [new Date(), null],
-        data: $rangoJs,
-                onSelected: function (view, date, data) {
-                    console.log('view:' + view)
-                    console.log('date:' + date)
-                    console.log('data:' + (data || 'None'));
-                }
-            });
+                    // view: 'month',
+                    width: 320,
+                    height: 320,
+                    // startWeek: 0,
+                    // selectedRang: [new Date(), null],
+                    data: $rangoJs,
+                            onSelected: function (view, date, data) {
+                                console.log('view:' + view)
+                                console.log('date:' + date)
+                                console.log('data:' + (data || 'None'));
+                            }
+                        });
 
-            $('#dd').calendar({
-                trigger: '#dt',
-                // offset: [0, 1],
-                zIndex: 999,
-                onSelected: function (view, date, data) {
-                    console.log('event: onSelected')
-                },
-                onClose: function (view, date, data) {
-                    console.log('event: onClose')
-                    console.log('view:' + view)
-                    console.log('date:' + date)
-                    console.log('data:' + (data || 'None'));
-                }
-            });
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-36251023-1']);
-          _gaq.push(['_setDomainName', 'jqueryscript.net']);
-          _gaq.push(['_trackPageview']);
+                        $('#dd').calendar({
+                            trigger: '#dt',
+                            // offset: [0, 1],
+                            zIndex: 999,
+                            onSelected: function (view, date, data) {
+                                console.log('event: onSelected')
+                            },
+                            onClose: function (view, date, data) {
+                                console.log('event: onClose')
+                                console.log('view:' + view)
+                                console.log('date:' + date)
+                                console.log('data:' + (data || 'None'));
+                            }
+                        });
+                      var _gaq = _gaq || [];
+                      _gaq.push(['_setAccount', 'UA-36251023-1']);
+                      _gaq.push(['_setDomainName', 'jqueryscript.net']);
+                      _gaq.push(['_trackPageview']);
 
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        ");
-        parent::initialize();
+                      (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                      })();
+                    ");
     }
 
+    /**
+     * Solicita legajo y codigo de operacion para Cancelar el turno solicitado.
+     */
+    public function cancelarTurnoAction()
+    {
+        $this->tag->setTitle('Cancelar Turno');
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        if (!$ultimoPeriodo) {
+            $this->flash->error("EL PERIODO PARA CANCELAR LOS TURNOS NO SE ENCUENTRA HABILITADO.");
+            $this->view->deshabilitar = true;
+        }
+        $this->assets->collection('footerInline')->addInlineJs("  $(document).ready(function(){
+            $('[data-toggle=\"tooltip\"]').tooltip();
+        });");
+
+    }
+
+    /**
+     * Busca el turno solicitado y lo deshabilita, lo que conlleva:
+     * - Liberar un turno: fechasTurnos_sinTurnos = 0 , fechasTurnos_cantidadAutorizados --
+     * @return null
+     */
+    public function liberarTurnoAction(){
+        if(!$this->request->isPost()){
+            return $this->redireccionar('turnos/cancelarTurno');
+        }
+
+        if(!$this->request->hasPost('legajo') || $this->request->getPost('legajo','int')==null){
+            $this->flash->error('INGRESE EL LEGAJO');
+        }
+
+        if(!$this->request->hasPost('codigo') || $this->request->getPost('codigo','alphanum')==null){
+            $this->flash->error('INGRESE EL CODIGO');
+        }
+        $legajo = $this->request->getPost('legajo','int');
+        $codigo = $this->request->getPost('codigo','alphanum');
+        $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_legajo=:legajo: AND solicitudTurno_codigo=:codigo: AND solicitudTurno_habilitado=1',
+            'bind'=>array('legajo'=>$legajo,'codigo'=>$codigo)));
+        if(!$solicitudTurno)
+        {
+            $this->flash->error('NO SE HA ENCONTRADO EL TURNO ASOCIADO CON LOS DATOS INGRESADO');
+            return $this->redireccionar('turnos/cancelarTurno');
+        }
+        $ultimoPeriodo = Fechasturnos::findFirst(array('fechasTurnos_activo = 1 AND fechasTurnos_id=:id:',
+            'bind'=>array('id'=>$solicitudTurno->getSolicitudturnosFechasturnos())));
+        if (!$ultimoPeriodo) {
+            $this->flash->error("EL PERIODO PARA CANCELAR LOS TURNOS HA FINALIZADO.");
+            return $this->redireccionar('turnos/cancelarTurno');
+        }
+        $this->db->begin();
+        $solicitudTurno->setSolicitudturnoHabilitado(0);
+        if(!$solicitudTurno->update())
+        {
+            $this->flash->error('Ocurrio un problema al deshabilitar el turno');
+            $this->db->rollback();
+            return $this->redireccionar('turnos/cancelarTurno');
+        }
+        $ultimoPeriodo->setFechasturnosCantidadautorizados($ultimoPeriodo->getFechasturnosCantidadautorizados()-1);
+        $ultimoPeriodo->setFechasturnosSinturnos(0);//No hace falta preguntar si esta en 0 o en 1.
+        if(!$ultimoPeriodo->update()){
+            $this->flash->error('Ocurrio un problema al deshabilitar el turno. Periodo no actualizado.');
+            $this->db->rollback();
+            return $this->redireccionar('turnos/cancelarTurno');
+        }
+        $this->db->commit();
+        $this->flash->success("Operación Exitosa: El turno se ha cancelado.");
+        $this->redireccionar('turnos/canelarTurno');
+
+
+    }
 
 }
 
