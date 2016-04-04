@@ -26,7 +26,11 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      * @var string
      */
     protected $fechasTurnos_diaAtencion;
-
+    /**
+     *
+     * @var string
+     */
+    protected $fechasTurnos_diaAtencionFinal;
     /**
      *
      * @var integer
@@ -105,6 +109,18 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     public function setFechasturnosDiaatencion($fechasTurnos_diaAtencion)
     {
         $this->fechasTurnos_diaAtencion = $fechasTurnos_diaAtencion;
+
+        return $this;
+    }
+    /**
+     * Method to set the value of field fechasTurnos_diaAtencionFinal
+     *
+     * @param string $fechasTurnos_diaAtencionFinal
+     * @return $this
+     */
+    public function setFechasturnosDiaatencionfinal($fechasTurnos_diaAtencionFinal)
+    {
+        $this->fechasTurnos_diaAtencionFinal = $fechasTurnos_diaAtencionFinal;
 
         return $this;
     }
@@ -215,6 +231,16 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field fechasTurnos_diaAtencionFinal
+     *
+     * @return string
+     */
+    public function getFechasturnosDiaatencionfinal()
+    {
+        return $this->fechasTurnos_diaAtencionFinal;
+    }
+
+    /**
      * Returns the value of field fechasTurnos_cantidadDeTurnos
      *
      * @return integer
@@ -303,5 +329,86 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
+    public static function incrementarCantAutorizados()
+    {
+        $ultimoPeriodo  = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $autorizados    = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados+1;
 
+        if ($ultimoPeriodo->save())
+            return true;
+        else
+        {
+            foreach ($ultimoPeriodo->getMessages() as $message)
+            {
+                echo $message, "<br>";
+            }
+            return false;
+        }
+    }
+    public static function decrementarCantAutorizados()
+    {
+        $ultimoPeriodo  = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $autorizados    = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados-1;
+
+        if ($ultimoPeriodo->save())
+            return true;
+        else
+        {
+            foreach ($ultimoPeriodo->getMessages() as $message)
+            {
+                echo $message, "<br>";
+            }
+            return false;
+        }
+    }
+
+    public static function cantAutorizadosDelPeriodoActual()
+    {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $cantAutorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        return $cantAutorizados;
+    }
+
+    /**
+     * Se encarga de verificar si en el ultimo periodo existen turnos disponible.
+     * @return boolean
+     */
+    public static function verificaSiHayTurnosEnPeriodo()
+    {
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $retorno = array();
+        $retorno['success']=true;
+        if(!$ultimoPeriodo)
+        {
+            $retorno['success']=false;
+            $retorno['mensaje']="EL PERIODO PARA SOLICITAR TURNOS NO SE ENCUENTRA DISPONIBLE.";
+            return $retorno;
+        }
+        if($ultimoPeriodo->fechasTurnos_cantidadDeTurnos <= $ultimoPeriodo->fechasTurnos_cantidadAutorizados)
+        {
+            $retorno['success']=false;
+            $retorno['mensaje']="LAMENTABLEMENTE NO HAY TURNOS DISPONIBLE.";
+            return $retorno;
+        }
+        return $retorno;
+    }
+
+    /**
+     * Verifica si en la fecha de hoy ya vencio el plazo para confirmar el turno.
+     * @param $cantidadDias
+     * @param $fechaInicioSolicitud
+     * @return bool
+     */
+    public static function vencePlazoConfirmacion($cantidadDias,$fechaInicioSolicitud)
+    {
+        $fechaVencimiento = strtotime('+' . $cantidadDias . ' day', strtotime($fechaInicioSolicitud));
+        $fechaVencimiento = date('Y-m-d', $fechaVencimiento);
+        $fechaHoy = Date('Y-m-d');
+
+        if($fechaHoy <= $fechaVencimiento)
+            return false;
+        return true;
+    }
 }

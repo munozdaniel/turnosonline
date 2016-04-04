@@ -38,35 +38,41 @@
 
                         </div>
                         <div class="col-md-4 col-md-offset-2">
-                            {{ formulario.label('periodoSolicitudDesde',['class': 'control-label']) }}
-                            {{ formulario.render('periodoSolicitudDesde',['class': 'form-control']) }}
-                            {{ formulario.messages('periodoSolicitudDesde') }}
+                            {{ formulario.label('fechasTurnos_inicioSolicitud',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_inicioSolicitud',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_inicioSolicitud') }}
                         </div>
                         <div class="col-md-4">
-                            {{ formulario.label('periodoSolicitudHasta',['class': 'control-label']) }}
-                            {{ formulario.render('periodoSolicitudHasta',['class': 'form-control']) }}
-                            {{ formulario.messages('periodoSolicitudHasta') }}
+                            {{ formulario.label('fechasTurnos_finSolicitud',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_finSolicitud',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_finSolicitud') }}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-2">
-                            {{ formulario.label('periodoAtencionDesde',['class': 'control-label']) }}
-                            {{ formulario.render('periodoAtencionDesde',['class': 'form-control']) }}
-                            {{ formulario.messages('periodoAtencionDesde') }}
+                            {{ formulario.label('fechasTurnos_diaAtencion',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_diaAtencion',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_diaAtencion') }}
                         </div>
                         <div class="col-md-4">
-                            {{ formulario.label('cantidadTurnos',['class': 'control-label']) }}
-                            {{ formulario.render('cantidadTurnos' ,['class': 'form-control']) }}
-                            {{ formulario.messages('cantidadTurnos') }}
+                            {{ formulario.label('fechasTurnos_diaAtencionFinal',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_diaAtencionFinal',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_diaAtencionFinal') }}
                         </div>
+
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-2">
-                            {{ formulario.label('cantidadDias',['class': 'control-label']) }}
-                            {{ formulario.render('cantidadDias',['class': 'form-control']) }}
-                            {{ formulario.messages('cantidadDias') }}
+                            {{ formulario.label('fechasTurnos_cantidadDeTurnos',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_cantidadDeTurnos' ,['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_cantidadDeTurnos') }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ formulario.label('fechasTurnos_cantidadDiasConfirmacion',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_cantidadDiasConfirmacion',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_cantidadDiasConfirmacion') }}
                         </div>
 
                     </div>

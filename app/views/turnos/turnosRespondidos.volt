@@ -115,7 +115,7 @@
                         {% else %}{#Personal#}
                             <tr style="background-color: rgba(19, 143, 44, 0.1)">{#verde#}
                         {% endif %}
-                            <td class="td-posicion">{{ item['solicitudTurno_numero'] }}</td>
+                            <td class="td-posicion">{{ item['solicitudTurno_codigo'] }}</td>
                             <td class="td-posicion">{{ item['solicitudTurno_legajo'] }}</td>
                             <td class="td-posicion">{{ item['solicitudTurno_nomApe'] }}</td>
                             <td class="td-posicion">{{ item['solicitudTurno_estado'] }}</td>
