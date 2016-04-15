@@ -178,7 +178,7 @@
                                             {{ link_to('index/catalogo',"<div class='blog_img'>"~
                                                  image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas')~"</div>") }}
 
-                                            <h3>Catálogo de REVISTAS</h3>
+                                            <h3>REVISTAS IMPS</h3>
 
                                             <div class="post_commentbox">
                                                Instituto Municipal de Previsión Social
@@ -192,7 +192,7 @@
                                     <!-- BEGAIN SINGLE BLOG -->
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="single_post wow fadeInUp">
-                                            {{ link_to('turnos/presentacion',"<div class='blog_img'>"~
+                                            {{ link_to('index/presentacionTurnos',"<div class='blog_img'>"~
                                             image('img/informacion/n_turnos.jpg','alt':'Turnos Online')~"</div>") }}
                                             <h3>Turnos Online</h3>
 
@@ -211,7 +211,7 @@
                                                  image('img/informacion/n_jub.jpg','alt':'Jubilados y Pensionados') ~
                                             '</div> <h3>Jubilados y Pensionados</h3><div class="post_commentbox font-azul">
                                                 Abrir Archivo PDF
-                                            </div>') }}
+                                            </div>','target':'_blank') }}
 
                                             <p class="fuente-16">
                                                 Información Impuestos a las Ganancias Periodo Fiscal 2015
@@ -221,7 +221,7 @@
                                     <!-- BEGAIN SINGLE BLOG -->
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="single_post wow fadeInUp">
-                                            {{ link_to('',"<div class='blog_img'>"~
+                                            {{ link_to('index/emprendimiento',"<div class='blog_img'>"~
                                             image('img/informacion/n-emprendimiento.jpg','alt':'Emprendimiento')~"</div>") }}
 
                                             <h3>Emprendimiento Marimenuco</h3>

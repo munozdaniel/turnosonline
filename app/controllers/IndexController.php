@@ -50,9 +50,9 @@ class IndexController extends ControllerBase
             //Si el periodo  no esta habilitado todavia
             if ($puntoProgramado->isBefore())
             {
-                $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-rojo fondo-rojo'><h4>Solicitar Turno</h4>
+                $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-naranja fondo-naranja'><h4>Solicitar Turno</h4>
                                 <p>El período para solicitar turnos no se encuentran habilitado por el momento.</p>
-                                <p>Los turnos se podrán entre :<br> <strong>" . date_format($date, 'd/m/Y') ." - ".date_format($dateFin, 'd/m/Y')  . "</strong></p>
+                                <p>Los turnos se podrán solicitar entre :<br> <strong>" . date_format($date, 'd/m/Y') ." - ".date_format($dateFin, 'd/m/Y')  . "</strong></p>
                            </a>";
 
             }
@@ -153,6 +153,25 @@ class IndexController extends ControllerBase
 
     }
 
+
+    public function emprendimientoAction(){
+        $this->tag->setTitle('Emprendimiento IMPS');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
+    }
+    /**
+     * Explica como funciona el sistema de turnos.
+     */
+    public function presentacionTurnosAction(){
+        $this->tag->setTitle('Información Turnos Online');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('headerCss')
+            ->addCss("css/individual.css");
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
+
+    }
 
 }
 

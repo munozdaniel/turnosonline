@@ -19,6 +19,9 @@
         </li>
     </ul>
 </div>
+<div class="col-md-12 pull-left">
+    {{ link_to('index/catalogo','Volver al Catálogo','class':'btn btn-blue btn-flat ') }}
+</div>
 
 <div id="onepage" class="modal-body col-md-12 ">
 {{ content() }}

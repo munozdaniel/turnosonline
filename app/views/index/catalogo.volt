@@ -1,4 +1,4 @@
-<section id="onepage" class="admin curriculum-bg">
+<section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
@@ -19,12 +19,15 @@
             <div class="curriculum-bg-form borde-top" align="center">
                 <div class="row">
                     <div class="col-xs-6 col-md-3">
-                        {{ link_to('index/revista?volumen='~0,'class':'thumbnail btn btn-block btn-gris','target':'_blank',
-                        image('img/revista/volumen/0/1.jpg')~'ABRIL') }}
+                        {{ link_to('index/revista?volumen=57','class':'thumbnail btn btn-block btn-gris','target':'',
+                        image('img/revista/volumen/57/1.jpg')~'ABRIL') }}
                     </div>
+
                     <div class="col-xs-6 col-md-3">
-                        <a  class="thumbnail btn btn-block btn-">
-                            {{ image('img/revista/proximamente.png') }}
+                        <a  class="thumbnail btn btn-block">
+                            {{ image('img/revista/proximamente.png','width':'453','height':'650') }}
+                            <br>
+                            <br>
                             MAYO
                         </a>
                     </div>

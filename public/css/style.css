@@ -33,6 +33,7 @@ Tags: light, white, landing page,single page,Multipurpose,custom-colors,Bootstra
 
 body,html{
   overflow-x:hidden;
+
 }
 body {
  font-family: 'Open Sans', sans-serif;
@@ -678,6 +679,7 @@ div[data-dimension] {
   float: left;
   padding: 80px 0 70px;
   width: 100%;
+    height: 100%;
 }
 
 
@@ -1512,7 +1514,7 @@ div[data-dimension] {
   color: #555;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 0px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
@@ -3100,8 +3102,8 @@ cursor: none;
 }
 .panel {
     margin-bottom: 18px;
-    background-color: #fff;
-    border: 1px solid transparent;
+    background-color: rgba(255, 255, 255, 0.03);;
+    border: 1px dashed transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
     box-shadow: 0 1px 1px rgba(0,0,0,0.05);
@@ -3161,7 +3163,7 @@ cursor: none;
     box-shadow: 0px 0px 2px #00BCD4, inset 0px -3px 0px #e6e6e6;
 }
 /*Curriculum*/
-.curriculum-bg,.bg-rayado{
+.bg_line,.bg-rayado{
     background: #f4f4f4 url(../img/curriculum/bg.gif) repeat top left ;
 
 }
@@ -3400,11 +3402,17 @@ input[type=number]::-webkit-outer-spin-button {
 .borde-3-rojo{
     border:3px solid #a30e12;
 }
+.borde-3-naranja{
+    border:3px solid #c87704;
+}
 .borde-3-verde{
     border:3px solid #188f09;
 }
 .fondo-rojo{
     background-color: rgba(163, 14, 18, 0.20);
+}
+.fondo-naranja{
+    background-color: rgba(200, 119, 4, 0.20);
 }
 .fondo-verde{
     background-color: rgba(24, 143, 9, 0.32);
