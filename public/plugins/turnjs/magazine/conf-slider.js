@@ -42,7 +42,7 @@ function loadApp() {
 
         // The number of pages
 
-        pages: 12,
+        pages: 32,//Hacer lo mismo que con volumen para la proxima revista.
 
         // Events
 
