@@ -58,7 +58,7 @@ class CertificacionController extends ControllerBase
                     'tipoDni' => $tipoDni
 
                 ));
-                $pdf = new mPDF();
+                $pdf = new mpdf();
                 $pdf->WriteHTML($html, 2);
                 $pdf->Output('certificacion.pdf', "I");
             } else {
