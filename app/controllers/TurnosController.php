@@ -91,26 +91,34 @@ class TurnosController extends ControllerBase
 
                     $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
 
-                    if ($nombreCompleto != "") {
-                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto)) {
-                            if( !$this->existeEmailEnElPeriodo($ultimoPeriodo,$email)){
-                            $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo, $nombreCompleto, $documento, $email, $numTelefono, $ultimoPeriodo->fechasTurnos_id);
-
-                            if ($seGuardo)//la solicitud se ingreso con exito.
+                    if ($nombreCompleto != "")
+                    {
+                        if (!$this->tieneTurnoSolicitado($legajo, $nombreCompleto))
+                        {
+                            if( !$this->existeEmailEnElPeriodo($ultimoPeriodo,$email))
                             {
-                                $this->flash->success('LA SOLICITUD FUE INGRESADA CORRECTAMENTE');
-                                $turnosOnlineForm->clear();
-                                $this->redireccionar('turnos/turnoSolicitadoExitoso');
-                            } else
-                                $this->flash->error('OCURRIO UN PROBLEMA, POR FAVOR VUELVA A INTENTARLO EN UNOS MINUTOS.');
-                            }else{
-                                $this->flash->error('EL EMAIL INGRESADO YA HA SIDO UTILIZADO PAR SOLICITAR UN TURNO.');
+                                $seGuardo = Solicitudturno::accionAgregarUnaSolicitudOnline($legajo, $nombreCompleto, $documento, $email, $numTelefono, $ultimoPeriodo->fechasTurnos_id);
+
+                                if ($seGuardo)//la solicitud se ingreso con exito.
+                                {
+                                    $this->flash->success('LA SOLICITUD FUE INGRESADA CORRECTAMENTE');
+                                    $turnosOnlineForm->clear();
+                                    $this->redireccionar('turnos/turnoSolicitadoExitoso');
+                                }
+                                else
+                                    $this->flash->error('OCURRIO UN PROBLEMA, POR FAVOR VUELVA A INTENTARLO EN UNOS MINUTOS.');
                             }
-                        } else
+                            else
+                                $this->flash->error('EL EMAIL INGRESADO YA HA SIDO UTILIZADO PARA SOLICITAR UN TURNO.');
+                        }
+                        else
                             $this->flash->error('SUS DATOS YA FUERON INGRESADOS, NO PUEDE OBTENER MÁS DE UN TURNO POR PERÍODO');
-                    } else
+                    }
+                    else
                         $this->flash->error('USTED NO SE ENCUENTRA REGISTRADO EN EL SISTEMA, PARA OBTENER MAS INFORMACIÓN DIRÍJASE A NUESTRAS OFICINAS.');
-                }else{
+                }
+                else
+                {
                     foreach($turnosOnlineForm->getMessages() as $mje){
                         $this->flash->error($mje);
                     }
