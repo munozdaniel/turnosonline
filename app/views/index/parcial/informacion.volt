@@ -242,7 +242,6 @@
                 </div>
                 </div>
                 </div>
-    </section>
     <!-- ==========================MODALES============================= -->
     <!-- Modal Info Optica -->
     <div id="info-optica" class="modal fade">
@@ -346,77 +345,5 @@
         </div>
     </div>
     <!-- Fin: Modal Info Farmacia -->
-    <!- ============================================= NOVEDADES ===========================================>
 
-    <!-- Emprendimiento -->
-    <div id="novedades-emprendimiento" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Avistaje de Fauna Marina</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>Emprendimiento Mari Menuco</h3>
-
-                            <p class="fuente-16">
-                                El I.M.P.S. informa a sus afiliados que como resultado de nuestra participación en la
-                                Licitación Pública Nacional Nº 2, ha sido beneficiado por Decreto Provincial Nº 1657/12
-                                de la adjudicación en venta del lote 7 de aproximadamente 65 Ha, en el Istmo que separa
-                                los Lagos Mari Menuco y Los Barreales.
-                                <br>
-                                En dicho lote el I.M.P.S. desarrollará un complejo turístico de aproximadamente 15 Ha
-                                que contará con un camping, quincho y demás dependencias.
-                                <br>
-                                En la superficie restante se plantea una urbanización, con lotes de 500 m2
-                                aproximadamente, los que serán ofrecidos en venta a nuestros afiliados.
-                                <br>
-                                El valor del lote será determinado una vez finalizados los proyectos de infraestructura
-                                contemplándose una forma de pago accesible con un anticipo inicial y cuotas.
-                            </p>
-
-                            <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/03.jpg','target':'_blank','class':'thumbnail', image('img/informacion/03-mini.jpg','alt':'terreno 1') ) }}
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/02.jpg','target':'_blank','class':'thumbnail', image('img/informacion/02-mini.jpg','alt':'terreno 2') ) }}
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                {{ link_to('public/img/informacion/04.jpg','target':'_blank','class':'thumbnail', image('img/informacion/04-mini.jpg','alt':'terreno 3') ) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin: Avistaje Fauna Marina -->
-
-    <!-- Fecha Turnos Online -->
-    <div id="novedades-fechaTurnos" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Avistaje de Fauna Marina</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ image('img/feature_img3.jpg','alt':'Fecha Turnos Online') }}
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-green btn-lg" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin: Fecha Turnos Online -->
 </section>
