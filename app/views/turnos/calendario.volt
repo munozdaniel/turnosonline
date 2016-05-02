@@ -29,7 +29,7 @@
         outline: none;
     }
 </style>
-<section id="onepage" class="admin curriculum-bg">
+<section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
@@ -54,8 +54,9 @@
                         <div class="banner-top" align="left">
                             <h1>Información</h1>
                             <hr>
-                            <p><i class="fa fa-circle" style="color:rgb(152, 220, 251);"></i> Fecha Actual</p>
-                            <p><i class="fa fa-square" style="color: rgb(17, 65, 82);"></i> Periodo Habilitado para solicitar turnos</p>
+                            <p><i class="fa fa-square" style="color: rgba(224,243,250,1)"></i> Fecha Actual</p>
+                            <p><i class="fa fa-square" style="color: green;"></i> <strong>Solicitar Turnos</strong></p>
+                            <p><i class="fa fa-square" style="color: orange;"></i> <strong>Atención de Turnos</strong></p>
                         </div>
 
                     </div>
@@ -66,6 +67,7 @@
                         <input type="text" id="dt" placeholder="trigger calendar" class="ocultar">
                         <div id="dd"></div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
