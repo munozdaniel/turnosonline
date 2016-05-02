@@ -1,13 +1,5 @@
 <section id="onepage" class="admin bg-rayado">
 
-    {#Firefox: Para ver el calendario en los input type=date #}
-    {{ javascript_include('js/firefox/polyfiller.js') }}
-    <script>
-        webshims.setOptions('forms-ext', {types: 'date'});
-        webshims.polyfill('forms forms-ext');
-    </script>
-
-
     <style>
         .heading h2 {font-size: 35px;line-height: 35px;}
     </style>
