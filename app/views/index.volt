@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="bg_line">
 <head>
     <!-- Basic Page Needs
 ================================================== -->
@@ -21,6 +21,10 @@
     <!-- CSS
     ================================================== -->
     <!-- Bootstrap css file-->
+
+    <!-- initialize jQuery Library -->
+    {{ javascript_include('js/jquery.min.js') }}
+
     {{ stylesheet_link('css/bootstrap.min.css') }}
     <!-- Font awesome css file-->
     {{ stylesheet_link('css/font-awesome.min.css') }}
@@ -34,6 +38,12 @@
     <!-- Main structure css file -->
     {% if (assets.collection("headerCss")) %}
         {{ assets.outputCss("headerCss") }}
+    {% endif %}
+    {% if (assets.collection("headerJs")) %}
+        {{ assets.outputJs("headerJs") }}
+    {% endif %}
+    {% if (assets.collection("headerInline")) %}
+        {{ assets.outputInlineJs("headerInline") }}
     {% endif %}
 
     {{ stylesheet_link('css/style.css') }}
@@ -56,8 +66,6 @@
 </body>
 <!-- Javascript Files
    ================================================== -->
-<!-- initialize jQuery Library -->
-{{ javascript_include('js/jquery.min.js') }}
 {{ javascript_include('js/bootstrap.min.js') }}
 <!-- For smooth animatin  -->
 {{ javascript_include('js/wow.min.js') }}

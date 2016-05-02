@@ -16,6 +16,8 @@ class TurnosController extends ControllerBase
         $this->tag->setTitle('Turnos Online');
         $this->view->setTemplateAfter('admin');
         $this->importarFechaFirefox();
+        $this->assets->collection('headerJs')
+            ->addJs('js/jquery.min.js');
         $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
         parent::initialize();
     }

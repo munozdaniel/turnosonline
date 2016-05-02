@@ -25,6 +25,7 @@ class IndexController extends ControllerBase
             ->addCss('css/slick.css')
             ->addCss('css/superslides.css');
         $this->assets->collection('footer')
+            ->addJs('js/jquery.min.js')
             ->addJs('js/menu.js')
             ->addJs('js/jquery.superslides.min.js')
             ->addJs('js/slick.min.js')
