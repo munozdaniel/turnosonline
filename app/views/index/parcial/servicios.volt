@@ -25,10 +25,6 @@
                                 <p>Visitá nuestro calendario para visualizar los periodos habilitados.</p>','class':'list-group-item puntero') }}
                             {#===== Se genera un link_to en index/index =======#}
                             {{ linkTurnoOnline }}
-                            {#============#}
-                            {{ link_to('turnos/cancelarTurno','<h4>Cancelar Turno</h4>
-                                <p>En caso de no asistir por favor cancele el turno con anticipación, evite ser sancionado. </p>
-                           ','class':'list-group-item puntero') }}
 
                         </div>
                         <div class="col-md-4 list-group list-group-content">
