@@ -112,6 +112,7 @@ class Fechasturnos extends \Phalcon\Mvc\Model
 
         return $this;
     }
+
     /**
      * Method to set the value of field fechasTurnos_diaAtencionFinal
      *
@@ -329,35 +330,33 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
+
     public static function incrementarCantAutorizados()
     {
-        $ultimoPeriodo  = Fechasturnos::findFirstByFechasTurnos_activo(1);
-        $autorizados    = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
-        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados+1;
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $autorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados + 1;
 
         if ($ultimoPeriodo->save())
             return true;
-        else
-        {
-            foreach ($ultimoPeriodo->getMessages() as $message)
-            {
+        else {
+            foreach ($ultimoPeriodo->getMessages() as $message) {
                 echo $message, "<br>";
             }
             return false;
         }
     }
+
     public static function decrementarCantAutorizados()
     {
-        $ultimoPeriodo  = Fechasturnos::findFirstByFechasTurnos_activo(1);
-        $autorizados    = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
-        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados-1;
+        $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
+        $autorizados = $ultimoPeriodo->fechasTurnos_cantidadAutorizados;
+        $ultimoPeriodo->fechasTurnos_cantidadAutorizados = $autorizados - 1;
 
         if ($ultimoPeriodo->save())
             return true;
-        else
-        {
-            foreach ($ultimoPeriodo->getMessages() as $message)
-            {
+        else {
+            foreach ($ultimoPeriodo->getMessages() as $message) {
                 echo $message, "<br>";
             }
             return false;
@@ -379,17 +378,15 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     {
         $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
         $retorno = array();
-        $retorno['success']=true;
-        if(!$ultimoPeriodo)
-        {
-            $retorno['success']=false;
-            $retorno['mensaje']="EL PERIODO PARA SOLICITAR TURNOS NO SE ENCUENTRA DISPONIBLE.";
+        $retorno['success'] = true;
+        if (!$ultimoPeriodo) {
+            $retorno['success'] = false;
+            $retorno['mensaje'] = "EL PERIODO PARA SOLICITAR TURNOS NO SE ENCUENTRA DISPONIBLE.";
             return $retorno;
         }
-        if($ultimoPeriodo->fechasTurnos_cantidadDeTurnos <= $ultimoPeriodo->fechasTurnos_cantidadAutorizados)
-        {
-            $retorno['success']=false;
-            $retorno['mensaje']="LAMENTABLEMENTE NO HAY TURNOS DISPONIBLE.";
+        if ($ultimoPeriodo->fechasTurnos_cantidadDeTurnos <= $ultimoPeriodo->fechasTurnos_cantidadAutorizados) {
+            $retorno['success'] = false;
+            $retorno['mensaje'] = "LAMENTABLEMENTE NO HAY TURNOS DISPONIBLE.";
             return $retorno;
         }
         return $retorno;
@@ -401,13 +398,28 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      * @param $fechaInicioSolicitud
      * @return bool
      */
-    public static function vencePlazoConfirmacion($cantidadDias,$fechaInicioSolicitud)
+    public static function vencePlazoConfirmacion($cantidadDias, $fechaInicioSolicitud)
     {
         $fechaVencimiento = strtotime('+' . $cantidadDias . ' day', strtotime($fechaInicioSolicitud));
         $fechaVencimiento = date('Y-m-d', $fechaVencimiento);
         $fechaHoy = Date('Y-m-d');
+        echo " $fechaHoy < = $fechaVencimiento ";
+        if ($fechaHoy <= $fechaVencimiento)
+            return false;
+        return true;
+    }
 
-        if($fechaHoy <= $fechaVencimiento)
+    public function esPlazoParaSolicitarTurno()
+    {
+        if ($this->getFechasturnosIniciosolicitud()<= date('Y-m-d') &&
+            date('Y-m-d') <= $this->getFechasturnosFinsolicitud())
+            return true;
+        return false;
+    }
+
+    public function hayTurnosDisponibles()
+    {
+        if ($this->getFechasturnosCantidaddeturnos() <= $this->getFechasturnosCantidadautorizados())
             return false;
         return true;
     }
