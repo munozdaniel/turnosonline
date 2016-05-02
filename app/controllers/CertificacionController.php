@@ -10,6 +10,8 @@ class CertificacionController extends ControllerBase
         $this->tag->setTitle('Certificación Negativa');
         $this->view->setTemplateAfter('admin');
         parent::initialize();
+        $this->assets->collection('footer')
+            ->addJs('js/jquery.min.js');
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
     }
@@ -24,26 +26,62 @@ class CertificacionController extends ControllerBase
     public function generarAction()
     {
         $certificacionForm = new CertificacionForm();
-        if (!$this->request->isPost()) {
+        if (!$this->request->isPost())
+        {
             $certificacionForm->clear();
             $this->redireccionar('certificacion/index');
-        } else {
+        }
+        else
+        {
             $data = $this->request->getPost();
 
-            if ($certificacionForm->isValid($data) != false) {
-
+            if ($certificacionForm->isValid($data) != false)
+            {
                 $this->tag->setTitle('');//Para que no muestre el titulo en el pdf.
                 $dni = $this->request->getPost('nroDoc', array('int'));
+
                 $persona = Datospersona::findFirstByDatospersona_nroDoc($dni);
+
                 $beneficio = new Datosbeneficio();
+
                 $tipoBeneficio = -1;//Inicializo, porque sino el pdf no se genera.
                 $tipoDni = -1;//Inicializo, porque sino el pdf no se genera.
-                if ($persona) {
+
+                if ($persona)
+                {
                     $tipoDni = Tipodoc::findFirst('tipodoc_id', $persona->datospersona_tipoDoc);
                     $idPersona = $persona->datospersona_id;
-                    $beneficio = Datosbeneficio::findFirstByDatosbeneficio_datosPersonal($idPersona);
+
+                    /*$beneficio = Datosbeneficio::findFirstByDatosbeneficio_datosPersonal($idPersona);
                     if ($beneficio)
-                        $tipoBeneficio = Tipobeneficio::findFirstByTipobeneficio_id($beneficio->datosbeneficio_tipoBeneficio);
+                        $tipoBeneficio = Tipobeneficio::findFirstByTipobeneficio_id($beneficio->datosbeneficio_tipoBeneficio);*/
+
+                    //new 19/04/2016 M.
+                    $beneficios = Datosbeneficio::find(array("datosbeneficio_datosPersonal=?1","bind"=>array(1=>$idPersona)));
+
+                    if(count($beneficios) > 0)
+                    {
+                        if(count($beneficios) == 1)
+                        {
+                            $tipoBeneficio = Tipobeneficio::findFirstByTipobeneficio_id($beneficios[0]->datosbeneficio_tipoBeneficio);
+                            $beneficio = $beneficios[0];
+                        }
+
+                        else
+                        {
+                            if($beneficios[0]->datosbeneficio_tipoBeneficio == 4)
+                            {
+                                $tipoBeneficio = Tipobeneficio::findFirstByTipobeneficio_id($beneficios[1]->datosbeneficio_tipoBeneficio);
+                                $beneficio = $beneficios[1];
+                            }
+                            else
+                            {
+                                $tipoBeneficio = Tipobeneficio::findFirstByTipobeneficio_id($beneficios[0]->datosbeneficio_tipoBeneficio);
+                                $beneficio = $beneficios[0];
+                            }
+                        }
+                    } //fin new 19/04/2016 M.
+
                 }
                 ini_set('max_execution_time', 300); //300 seconds = 5 minutes // si funciona pero la pagina anterior se corrompe
 
@@ -61,7 +99,9 @@ class CertificacionController extends ControllerBase
                 $pdf = new mpdf();
                 $pdf->WriteHTML($html, 2);
                 $pdf->Output('certificacion.pdf', "I");
-            } else {
+            }
+            else
+            {
                 foreach ($certificacionForm->getMessages() as $message) {
                     $this->flash->message("validador", $message);
                 }
