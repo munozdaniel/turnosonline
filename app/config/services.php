@@ -185,7 +185,20 @@ $di->set('flash', function()
         'dismiss'=>'alert alert-info alert-dismissible fade in'
     ));
 });
-
+$di->set('flashSession', function()
+{
+    return new Phalcon\Flash\Session(array(
+        'error'     => 'problema',
+        'success'   => 'alert alert-success',
+        'notice'    => 'alert alert-info ',
+        'validador'    => 'mi-alert alert-validador ',
+        'problema'    => 'problema',
+        'exito'    => 'exito',
+        'aviso'    => 'aviso',
+        'warning'   => 'alert alert-warning ',
+        'dismiss'=>'alert alert-info alert-dismissible fade in'
+    ));
+});
 /**
  * Register a user component
  */
