@@ -1,4 +1,4 @@
-<section id="onepage" class="admin curriculum-bg">
+<section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
@@ -44,7 +44,7 @@
 
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-3">
-                                {% if deshabilitar is defined %}
+                                {% if deshabilitar is defined AND deshabilitar == true %}
                                     {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block disabled') }}
                                 {% else %}
                                     {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
