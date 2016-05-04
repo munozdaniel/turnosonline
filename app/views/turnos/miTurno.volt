@@ -148,7 +148,7 @@
                     if(data.success)
                     {
                         $('#mensaje_modal').append('<div class="alert  alert-info">' +
-                        '<h4>  ' + data.mensaje + '<br> Redireccionando...</h4></div>');
+                        '<h4>  ' + data.mensaje + '</h4></div>');
                         setTimeout("redireccionar()", 3000); //tiempo expresado en milisegundos
 
                     }else{
@@ -163,6 +163,6 @@
 
     });//Fin: ready
     function redireccionar() {
-        window.location = "/libro/nota/search" ;
+        window.location = "/impsweb/index" ;
     }
 </script>

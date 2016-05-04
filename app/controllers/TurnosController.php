@@ -696,6 +696,7 @@ class TurnosController extends ControllerBase
                     $respondio = "";
                     $comprobante = "";
                     $idCodificado = base64_encode($unaSolicitud->getSolicitudturnoId());
+                    //Controlo si las respuesta se vencio
                     if ($unaSolicitud->getSolicitudturnoRespuestachequeada() == 0) {
                         //NO
                         $respondio = '<a class="parpadea btn btn-white" style="display:inline-block;"><i class="fa fa-spinner fa-spin  fa-fw margin-bottom"></i>
@@ -1663,8 +1664,8 @@ class TurnosController extends ControllerBase
             return $this->redireccionar('turnos/buscarTurno');
         }
         if ($solicitudTurno->getSolicitudturnoCancelado() == 1) {
-            $this->flash->error('EL TURNO CON EL CODIGO ' . $codigo . ' SE ENCUENTRA CANCELADO.
-            <br> POR CUALQUIER CONSULTA PUEDE LLAMARNOS AL (0299) 4433978 Int 10');
+            $this->flash->error('<h3>EL TURNO CON EL CODIGO <ins>' . $codigo . '</ins> SE ENCUENTRA CANCELADO.
+            <br> POR CUALQUIER CONSULTA PUEDE LLAMARNOS AL (0299) 4433978 Int 10</h3>');
             return $this->redireccionar('turnos/buscarTurno');
         }
         $ultimoPeriodo = Fechasturnos::findFirst(array('fechasTurnos_activo = 1 AND fechasTurnos_id=:id:',
@@ -1700,7 +1701,7 @@ class TurnosController extends ControllerBase
         if (!$this->request->isPost()) {
             return $this->redireccionar('turnos/buscarTurno');
         }
-        if ($this->request->getPost('codigoSeguridad') != $this->request->getPost('codigoRepetido')) {
+        if (strtoupper($this->request->getPost('codigoSeguridad')) != strtoupper($this->request->getPost('codigoRepetido'))) {
             $retorno['mensaje'] = "EL Código de seguridad no coincide, vuelva a intentarlo nuevamente";
             echo json_encode($retorno);
             return;
@@ -1726,7 +1727,7 @@ class TurnosController extends ControllerBase
             echo json_encode($retorno);
             return;
         }
-        if ($solicitudTurno->getSolicitudturnoCancelado() == 0) {
+        if ($solicitudTurno->getSolicitudturnoCancelado() == 1) {
             $retorno['mensaje'] = 'El turno ya fue cancelado. <br> Redireccionando...';
             $retorno['success'] = true;//Para que redireccione
             echo json_encode($retorno);
@@ -1740,7 +1741,7 @@ class TurnosController extends ControllerBase
             return;
         }
         $this->db->begin();
-        //FIXME: TERMINAR...
+        //FIXME: TERMINAR VERIFICAR DENTRO DE 48HS...
         if (!Fechasturnos::verificaCancelacionDentro48Hs()) {
             $solicitudTurno->setSolicitudturnoSanciones($solicitudTurno->getSolicitudturnoSanciones() + 1);
             $retorno['mensaje'] = "Se ha registrado una sanción porque la cancelación no se realizó antes de las 48hs al período de atención. <br> Por cualquier consulta puede llamarnos al (0299) 4433978 Int 10";
