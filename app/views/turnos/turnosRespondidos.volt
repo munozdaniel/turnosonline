@@ -105,7 +105,7 @@
                     <th class="th-titulo">Fecha respuesta enviada</th>
                     <th class="th-titulo">Empleado</th>
                     <th class="th-titulo">Estado</th>
-                    <th class="th-titulo">Confirma Asistencia</th>
+                    <th class="th-titulo">Información</th>
                     <th class="th-titulo">Imprimir Comprobante</th>
                     <th class="th-titulo">Tipo</th>
                 </tr>
@@ -116,67 +116,31 @@
     </div>
 
 </section>
-<!-- Modal -->
-<div class="modal fade" id="confirmarAsistencia" role="dialog" >
-    <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top: 10%" align="center">
-        <div class="modal-dialog ">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-
-                    <h1><i class="fa fa-question-circle fa-3x bg-info-icon" aria-hidden="true"></i></h1>
-                    <p>¿Está seguro de confirmar la asistencia?</p>
-                    <div id="mensaje"></div>
-                    <p><strong>LEGAJO</strong> {{ text_field('confirma_legajo','readOnly':'true') }}</p>
-                    <p><strong>CODIGO</strong> {{ text_field('confirma_codigo','readOnly':'true') }}</p>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal">CONFIRMAR</button>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <script>
-    function confirmarAsistencia(solicitudTurno_id,solicitudTurno_codigo){
+    function confirmarAsistencia(solicitudTurno_id, solicitudTurno_legajo, solicitudTurno_codigo) {
         $('.help-block').remove(); // Limpieza de los mensajes de alerta.
         $("#confirmarAsistencia").modal();
+        var id = $("#confirma_id");
+        var codigo = $("#confirma_codigo");
+        var legajo = $("#confirma_legajo");
+        id.val("");
+        codigo.val("");
+        legajo.val("");
         //==========
-        if(solicitudTurno_codigo==""  || solicitudTurno_codigo==null)
-        {
-            $('#mensaje').append('<div class="help-block alert alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> El afiliado no tiene asignado ningún código. Por favor haga click en el botón "asignar nuevo código"</h4></div>');
+        if (solicitudTurno_codigo == "" || solicitudTurno_codigo == null) {
+            $("#posible_ocultar").attr('class', 'ocultar');
+            // $('#mensaje').append('<div class="help-block alert alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> El afiliado no tiene asignado ningún código. Por favor haga click en el botón "asignar nuevo código"</h4></div>');
             //FIXME: Ver si es necesario agregar un boton donde pueda generar y guardar el codigo nuevo al turnosolicitado.
+        } else {
+            $("#posible_ocultar").attr('class', 'mostrar');
+            codigo.val(solicitudTurno_codigo);
         }
-        //==========
-        $.ajax({
-            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
-            url: '/sya/planilla/crear', // the url where we want to POST
-            data: datos, // our data object
-            dataType: 'json', // what type of data do we expect back from the server
-            encode: true
-        })
-                .done(function (data) {
-                    //console.log(data);
-                    if (!data.success) {
-                        for (var item in data.mensaje) {
-                            var elemento = data.mensaje[item];
-                            $('#mensajes-alertas').append('<div class="help-block  alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> ' + elemento + '</h4></div>'); // add the actual error message under our input
-                        }
-                    } else {
-                        // here we will handle errors and validation messages
-                        $('#btn_guardar_planilla').prop('disabled', true);//Dehsabilitar boton guardar planilla
-                        $('#mensajes-alertas').append('<div class="help-block  alert-success"><h4>Operación Exitosa, la planilla se ha generado correctamente. </h4><h4> Por favor seleccione la cabecera a utilizar.</h4></div>');
-                        document.getElementById('planilla_id').value = data.planilla_id;
-                        $('#pnl_planilla').hide(1000);
-                        $('#pnl_cabecera').show(1000);
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                });
+        id.val(solicitudTurno_id);
+        legajo.val(solicitudTurno_legajo);
+
     }
+
     $(".alert-info").fadeTo(4000, 500).slideUp(500, function () {
         $(".alert-info").alert('close');
     });
@@ -193,12 +157,12 @@
             buttons: [
                 {
                     text: 'Recargar Tabla',
-                    action: function ( e, dt, node, config ) {
+                    action: function (e, dt, node, config) {
                         tabla.ajax.reload();
                     }
                 },
                 {
-                    text:"Exportar PDF",
+                    text: "Exportar PDF",
                     extend: 'pdfHtml5',
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
@@ -207,14 +171,14 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [ 10 ],
+                    "targets": [10],
                     "visible": false,
                     "searchable": false
                 }
             ],
             'pageLength': 10,
             'lengthMenu': [[10, 20, 50, 75, -1], [10, 20, 50, 75, 'Todos']]
-            ,"language": {
+            , "language": {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
@@ -258,4 +222,66 @@
         }
     })
     ;
+    function guardarConfirmarAsistencia() {
+        $('.help-block').remove(); // Limpieza de los mensajes de alerta.
+
+
+        var datos = {
+            'solicitudTurno_id': document.getElementById('confirma_id').value,
+            'solicitudTurno_legajo': document.getElementById('confirma_legajo').value
+        };
+        //==========
+        $.ajax({
+            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url: '/impsweb/turnos/confirmarRespuestaAjax', // the url where we want to POST
+            data: datos, // our data object
+            dataType: 'json', // what type of data do we expect back from the server
+            encode: true
+        })
+                .done(function (data) {
+                    //console.log(data);
+                    if (!data.success) {
+                        $('#mensaje').append('<div class="help-block  alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> ' + data.mensaje + '</h4></div>'); // add the actual error message under our input
+                    } else {
+                        $('#mensaje').append('<div class="help-block  alert-success"><h4>' + data.mensaje + '</h4></div>');
+                        setTimeout(function () {
+                            $("#confirmarAsistencia").hide(500);
+                        }, 1000);
+
+                    }
+                })
+                .fail(function (data) {
+                    console.log(data);
+                });
+    }
 </script>
+<!-- Modal -->
+<div class="modal fade" id="confirmarAsistencia" role="dialog">
+    <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top: 6%" align="center">
+        <div class="modal-dialog ">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <h1><i class="fa fa-question-circle fa-3x bg-info-icon" aria-hidden="true"></i></h1>
+
+                    <h3>Por favor presione el botón CONFIRMAR si el afiliado informó que fue notificado.</h3>
+
+                    <div id="mensaje"></div>
+                    <hr>
+                    {{ hidden_field('confirma_id') }}
+                    <p><strong>LEGAJO</strong> {{ text_field('confirma_legajo','readOnly':'true') }}</p>
+
+                    <p id="posible_ocultar">
+                        <strong>CODIGO</strong> {{ text_field('confirma_codigo','readOnly':'true') }}</p>
+                    <hr>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+                    <button type="button" class="btn btn-success" onclick="guardarConfirmarAsistencia()">CONFIRMAR</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

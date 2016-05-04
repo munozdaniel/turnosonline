@@ -701,11 +701,11 @@ class TurnosController extends ControllerBase
                         //NO
                         $respondio = '<a class="parpadea btn btn-white" style="display:inline-block;"><i class="fa fa-spinner fa-spin  fa-fw margin-bottom"></i>
                                         <span class="sr-only">Loading...</span>EN ESPERA</a>' .
-                            '<a onclick="confirmarAsistencia(' . $unaSolicitud->getSolicitudturnoId() . ',\''.$unaSolicitud->getSolicitudturnoCodigo().'\')" class=" btn btn-danger" style="display:inline-block;"><em>CONFIRMAR</em></i>';
+                            '<a onclick="confirmarAsistencia('.$unaSolicitud->getSolicitudturnoId().',' . $unaSolicitud->getSolicitudturnoLegajo() . ',\''.$unaSolicitud->getSolicitudturnoCodigo().'\')" class=" btn btn-danger" style="display:inline-block;"><em>CONFIRMAR</em></i>';
                     } else {
                         if ($unaSolicitud->getSolicitudturnoRespuestachequeada() == 1) {
                             //SI
-                            $respondio = '<a class="btn btn-block btn-white"><i class="fa fa-check-square" style="color:#0ec705"></i> ' . "ASISTENCIA CONFIRMADA</a>";
+                            $respondio = '<a class="btn btn-block btn-white"><i class="fa fa-check-square" style="color:#0ec705"></i> ' . "INFORMACIÓN CONFIRMADA</a>";
                             if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 1) {
                                 $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado
                                 , '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ', 'class' => 'btn btn-info btn-block', 'target' => '_blank'));;
@@ -1767,6 +1767,49 @@ class TurnosController extends ControllerBase
 
         echo json_encode($retorno);
         return;
+    }
+    public function confirmarRespuestaAjaxAction()
+    {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success'] = false;
+        if($this->request->getPost('solicitudTurno_id')==null)
+        {
+            $retorno['mensaje'] = "OCURRIÓ UN PROBLEMA, NO SE PUDO ACTUALIZAR LA SOLICITUD DE TURNO.";
+            echo json_encode($retorno);
+            return;
+        }
+        if($this->request->getPost('solicitudTurno_legajo')==null)
+        {
+            $retorno['mensaje'] = "OCURRIÓ UN PROBLEMA, NO SE PUDO RECUPERAR EL LEGAJO.";
+            echo json_encode($retorno);
+            return;
+        }
+
+        $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id: AND
+                        solicitudTurno_legajo=:solicitudTurno_legajo: ',
+            'bind'=>array('solicitudTurno_id'=>$this->request->getPost('solicitudTurno_id'),
+                            'solicitudTurno_legajo'=>$this->request->getPost('solicitudTurno_legajo'))));
+        if(!$solicitudTurno)
+        {
+            $retorno['mensaje'] = "OCURRIÓ UN PROBLEMA, NO SE ENCONTRÓ LA SOLICITUD.".$this->request->getPost('solicitudTurno_id');
+            echo json_encode($retorno);
+            return;
+        }
+
+        $solicitudTurno->setSolicitudturnoRespuestachequeada(1);
+        if(!$solicitudTurno->update())
+        {
+            $retorno['mensaje'] = "OCURRIÓ UN PROBLEMA, NO SE PUDO ACTUALIZAR LA SOLICITUD.";
+            echo json_encode($retorno);
+            return;
+        }
+        $retorno['mensaje'] = "OPERACIÓN EXITOSA, LA SOLICITUD DE TURNO HA SIDO ACTUALIZADA.";
+        $retorno['success']=true;
+        echo json_encode($retorno);
+        return;
+
+
     }
 
 }
