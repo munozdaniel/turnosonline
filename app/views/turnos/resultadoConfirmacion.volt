@@ -18,8 +18,9 @@
             <div class="curriculum-bg-form borde-top" align="center">
                 <div class="row">
                     <div class="col-md-12">
+                        {{ content() }}
+
                         {% if solicitud_id is defined %}
-                            {{ content() }}
                             {{ form('turnos/comprobanteTurnoPost','method':'POST') }}
                                     {{ hidden_field('solicitud_id',solicitud_id) }}
                             {{ end_form() }}
