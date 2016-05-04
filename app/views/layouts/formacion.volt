@@ -1,4 +1,4 @@
-<section id="onepage" class="admin curriculum-bg">
+<section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
             {{ content() }}
