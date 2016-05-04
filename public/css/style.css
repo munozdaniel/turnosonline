@@ -2746,6 +2746,7 @@ cursor: none;
 .tg .tg-zlxb{background-color:#ffffff;text-align:center}
 .tg .tg-5ym5{font-size:15px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#ffffff}
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{  border-top: 0px solid #ddd !important;}
+.table_r>thead>tr>th, .table_r>tbody>tr>th, .table_r>tfoot>tr>th, .table_r>thead>tr>td, .table_r>tbody>tr>td, .table_r>tfoot>tr>td{  border-top: 1px solid #646464 !important;}
 
 
 /*Melewe*/
@@ -3121,6 +3122,10 @@ cursor: none;
     font-size: 35px;
 }
 
+.bg-info-icon{
+    color: #00acee;
+    background-color: #ffffff;
+}
 .bg-green-pl {
     background-color: #138f2c !important;
     color: #fff;
@@ -3196,6 +3201,12 @@ cursor: none;
     color: #fff;
     background-color: #607D8B;
     border-color: #607D8B;
+}
+.btn-white{
+    color:#000000;
+    font-weight: bold;
+    background-color: #ffffff;
+    border-color: #0c0c0c;
 }
 .curriculum-bg-header{
     box-shadow: 0 1px 2px rgba(0,0,0,0.45);background-color: #287bbc;background-image: -webkit-linear-gradient(top, #287bbc 0%,#23639a 100%); color:#FFF !important;
@@ -3444,4 +3455,34 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 15px;
     text-align: right;
     border-top: 4px solid #0572A2;
+}
+.parpadea {
+
+    animation-name: parpadeo;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo{
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes parpadeo {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes parpadeo {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
 }
