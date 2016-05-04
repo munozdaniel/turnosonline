@@ -71,7 +71,7 @@ class IndexController extends ControllerBase
                                                 <p>Lamentablemente no hay turnos disponibles</p>', 'style' => 'background-color: #F44336;
     color: #FFF;','class'=>'list-group-item'));
                 }
-                $aVerTurno =  $this->tag->linkTo(array('turnos/cancelarTurno','<h4>Ver Turno</h4>
+                $aVerTurno =  $this->tag->linkTo(array('turnos/buscarTurno','<h4>Ver Turno</h4>
                                                 <p>Si desea puede consultar el código de turno o cancelarlo. Se recuerda que la cancelación debe ser con 48hs de anticipación.</p>','class'=>'list-group-item'));
                 $this->view->linkTurnoOnline = $aSolicitarTurno ." ".$aVerTurno ;
 
@@ -90,7 +90,7 @@ class IndexController extends ControllerBase
                         $unaSolicitud->solicitudTurno_respuestaChequeada = 2;//Se los cancela porque se les vencieron el plazo.
                         $unaSolicitud->save();
                     }
-                    $ultimoPeriodo->fechasTurnos_activo = 0;
+                    //$ultimoPeriodo->fechasTurnos_activo = 0; // NO se debe desactivar el periodo. El periodo se desactiva cuando finaliza la fecha de atencion
                     if (!$ultimoPeriodo->save()) {
                         $this->flash->error("LOS PERIODOS PARA LA SOLICITUD DE TURNOS NO SE HAN DESHABILITADOS. ");
                     }
