@@ -5,7 +5,6 @@
     <div class="container">
         <div class="row" align="center" style="margin-top: 30px;">
             <div class="heading">
-                <h2 class="">Respuestas Enviadas</h2>
                 {{ link_to('turnos/turnosSolicitados','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-arrow-left"></i> VOLVER') }}
             </div>
         </div>

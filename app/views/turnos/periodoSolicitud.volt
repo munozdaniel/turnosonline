@@ -1,13 +1,5 @@
 <section id="onepage" class="admin bg-rayado">
 
-    {#Firefox: Para ver el calendario en los input type=date #}
-    {{ javascript_include('js/firefox/polyfiller.js') }}
-    <script>
-        webshims.setOptions('forms-ext', {types: 'date'});
-        webshims.polyfill('forms forms-ext');
-    </script>
-
-
     <style>
         .heading h2 {font-size: 35px;line-height: 35px;}
     </style>
@@ -38,35 +30,41 @@
 
                         </div>
                         <div class="col-md-4 col-md-offset-2">
-                            {{ formulario.label('periodoSolicitudDesde',['class': 'control-label']) }}
-                            {{ formulario.render('periodoSolicitudDesde',['class': 'form-control']) }}
-                            {{ formulario.messages('periodoSolicitudDesde') }}
+                            {{ formulario.label('fechasTurnos_inicioSolicitud',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_inicioSolicitud',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_inicioSolicitud') }}
                         </div>
                         <div class="col-md-4">
-                            {{ formulario.label('periodoSolicitudHasta',['class': 'control-label']) }}
-                            {{ formulario.render('periodoSolicitudHasta',['class': 'form-control']) }}
-                            {{ formulario.messages('periodoSolicitudHasta') }}
+                            {{ formulario.label('fechasTurnos_finSolicitud',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_finSolicitud',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_finSolicitud') }}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-2">
-                            {{ formulario.label('periodoAtencionDesde',['class': 'control-label']) }}
-                            {{ formulario.render('periodoAtencionDesde',['class': 'form-control']) }}
-                            {{ formulario.messages('periodoAtencionDesde') }}
+                            {{ formulario.label('fechasTurnos_diaAtencion',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_diaAtencion',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_diaAtencion') }}
                         </div>
                         <div class="col-md-4">
-                            {{ formulario.label('cantidadTurnos',['class': 'control-label']) }}
-                            {{ formulario.render('cantidadTurnos' ,['class': 'form-control']) }}
-                            {{ formulario.messages('cantidadTurnos') }}
+                            {{ formulario.label('fechasTurnos_diaAtencionFinal',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_diaAtencionFinal',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_diaAtencionFinal') }}
                         </div>
+
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-2">
-                            {{ formulario.label('cantidadDias',['class': 'control-label']) }}
-                            {{ formulario.render('cantidadDias',['class': 'form-control']) }}
-                            {{ formulario.messages('cantidadDias') }}
+                            {{ formulario.label('fechasTurnos_cantidadDeTurnos',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_cantidadDeTurnos' ,['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_cantidadDeTurnos') }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ formulario.label('fechasTurnos_cantidadDiasConfirmacion',['class': 'control-label']) }}
+                            {{ formulario.render('fechasTurnos_cantidadDiasConfirmacion',['class': 'form-control']) }}
+                            {{ formulario.messages('fechasTurnos_cantidadDiasConfirmacion') }}
                         </div>
 
                     </div>
@@ -83,13 +81,3 @@
         </div>
     </div>
 </section>
-
-<!-- cdn for modernizr, if you haven't included it already -->
-<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
-<!-- polyfiller file to detect and load polyfills -->
-<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
-<script>
-    webshims.setOptions('waitReady', false);
-    webshims.setOptions('forms-ext', {types: 'date'});
-    webshims.polyfill('forms forms-ext');
-</script>

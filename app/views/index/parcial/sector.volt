@@ -90,18 +90,20 @@
                             <p style="text-align: center;">Luis Torres </p>
                             <p style="text-align: center;"> </p>
                             <p style="text-align: center; color: #3e4095;"><strong>CONSEJEROS TITULARES ACTIVOS</strong></p>
-                            <p style="text-align: center;"><span style="line-height: 1.3em;">Daniel Alberto Caporalini</span></p>
-                            <p style="text-align: center;">Georgina Graciela Santucho</p>
-                            <p style="text-align: center;">Fabián Villarroel</p>
+                            <p style="text-align: center;"><span style="line-height: 1.3em;">Zecca Mauricio Fabián, DNI 18.180.291</span></p>
+                            <p style="text-align: center;">Zarate Faundez  Nancy Rosana, DNI 23.201.028</p>
+                            <p style="text-align: center;">Caporalini Daniel Alberto, DNI 16.759.918</p>
                             <p style="text-align: center;"> </p>
-                            <p style="text-align: center; color: #3e4095;"><strong>CONSEJERO TITULAR PASIVOS</strong></p>
-                            <p style="text-align: center;">José Arnoldo Martínez</p>
+                            <p style="text-align: center; color: #3e4095;"><strong>CONSEJERO TITULAR PASIVO</strong></p>
+                            <p style="text-align: center;">Héctor Daniel Del Collado, DNI 13.750.195</p>
                             <p style="text-align: center;"> </p>
                             <p style="text-align: center; color: #3e4095;"><strong>CONSEJEROS SUPLENTES ACTIVOS</strong></p>
-                            <p style="text-align: center;">María Laura Moreno</p>
+                            <p style="text-align: center;">Villarroel Fabián, DNI 180180.332</p>
+                            <p style="text-align: center;">Broggi Viviana Soledad, DNI 23.400.408</p>
+                            <p style="text-align: center;">De La Zerda Pedro Pablo, DNI 24.331.534</p>
                             <p style="text-align: center;"> </p>
                             <p style="text-align: center; color: #3e4095;"><strong>CONSEJERO SUPLENTE PASIVOS</strong></p>
-                            <p style="text-align: center;">Héctor Rebolledo</p>
+                            <p style="text-align: center;">Soto Marta Haydee, DNI 6.542.652</p>
                             <p style="text-align: center;"> </p>
                             <p style="text-align: center;"> </p>
                             <p style="text-align: center;"> </p>

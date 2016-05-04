@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="bg_line">
 <head>
     <!-- Basic Page Needs
 ================================================== -->
@@ -10,8 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {{ getTitle() }}
     <!-- Bootstrap js -->
-    <!-- initialize jQuery Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
     <!-- Mobile Specific Metas
     ================================================== -->
@@ -22,6 +21,10 @@
     <!-- CSS
     ================================================== -->
     <!-- Bootstrap css file-->
+
+    <!-- initialize jQuery Library -->
+    {{ javascript_include('js/jquery.min.js') }}
+
     {{ stylesheet_link('css/bootstrap.min.css') }}
     <!-- Font awesome css file-->
     {{ stylesheet_link('css/font-awesome.min.css') }}
@@ -30,19 +33,23 @@
         -->
     <!-- smooth animate css file -->
     {{ stylesheet_link('css/animate.min.css') }}
-    <!-- Elastic grid css file -->
-    {{ stylesheet_link('css/elastic_grid.css') }}
     <!-- Default Theme css file -->
     {{ stylesheet_link('css/themes/default-theme.css') }}
     <!-- Main structure css file -->
     {% if (assets.collection("headerCss")) %}
         {{ assets.outputCss("headerCss") }}
     {% endif %}
+    {% if (assets.collection("headerJs")) %}
+        {{ assets.outputJs("headerJs") }}
+    {% endif %}
+    {% if (assets.collection("headerInline")) %}
+        {{ assets.outputInlineJs("headerInline") }}
+    {% endif %}
 
     {{ stylesheet_link('css/style.css') }}
 
     <!-- Google fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&amp;o3h5y6' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
@@ -59,17 +66,16 @@
 </body>
 <!-- Javascript Files
    ================================================== -->
-
 {{ javascript_include('js/bootstrap.min.js') }}
 <!-- For smooth animatin  -->
 {{ javascript_include('js/wow.min.js') }}
 <!-- for portfolio filter gallery -->
 {{ javascript_include('js/modernizr.custom.js') }}
-{{ javascript_include('js/classie.js') }}
+{{ javascript_include('js/classie.min.js') }}
 {# http://demo.phapsu.com/jquery.elastic_grid/ Para el portfolio#}
 {# javascript_include('js/elastic_grid.min.js') #}
 <!-- Custom js-->
-{{ javascript_include('js/custom.js') }}
+{{ javascript_include('js/custom.min.js') }}
 {% if (assets.collection("footer")) %}
     {{ assets.outputJs("footer") }}
 

@@ -4,8 +4,7 @@ class IndexController extends ControllerBase
 {
     public function initialize()
     {
-        $this->tag->setTitle('Bienvenidos');
-        $this->view->setTemplateAfter('main');
+
         parent::initialize();
 
     }
@@ -20,10 +19,13 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
+        $this->tag->setTitle('Bienvenidos');
+        $this->view->setTemplateAfter('main');
         $this->assets->collection('headerCss')
             ->addCss('css/slick.css')
             ->addCss('css/superslides.css');
         $this->assets->collection('footer')
+            ->addJs('js/jquery.min.js')
             ->addJs('js/menu.js')
             ->addJs('js/jquery.superslides.min.js')
             ->addJs('js/slick.min.js')
@@ -37,15 +39,9 @@ class IndexController extends ControllerBase
         $schedule = $this->getDi()->get('schedule');
         $puntoProgramado = $schedule->getByType('plazo')->getLast();
         //MENSAJES PREDETERMINADOS:
-        $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color:rosybrown !important;"></span></div>
-                                            <h3 class="service_title" style="color:rosybrown;">Turnos Online</h3> </a>'.
-                                            '<p style="color:rosybrown;"><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong>
-                                            Las fechas se dispondrán a través de la pagina web y en nuestras oficinas.
-                                            Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                            o llamarnos al (0299) 4479921</p> <br/><br/>';
-
-        $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EL PERIODO PARA SOLICITAR TURNOS ONLINE NO SE ENCUENTRA HABILITADO POR EL MOMENTO </h2>
-                        <p> Por cualquier consulta puede llamarnos al (0299) 4479921</p> <a href="#service"> </a> ';
+        $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-rojo fondo-rojo'><h4>Solicitar Turno</h4>
+                                <p><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong></p>
+                           </a>";
 
         if (!empty($puntoProgramado)) {
 
@@ -55,26 +51,34 @@ class IndexController extends ControllerBase
             //Si el periodo  no esta habilitado todavia
             if ($puntoProgramado->isBefore())
             {
-                $this->view->mensajePeriodo = ' <a class=""><div class="service_iconarea"><span class="fa fa-ticket service_icon" style="background-color: #CDD3D4 !important;"></span></div>
-                                            <h3 class="service_title">Turnos Online</h3></a>' .
-                    '<p> <strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong>
-                                                Los turnos se podrán retirar a partir del : <strong>' . date_format($date, 'd/m/Y H:i:s') . '</strong><br>
-                                                Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                                o llamarnos al (0299) 4479921<br><br>
-                                            </p>';
-                $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> EN EL PERIODO <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . ' SE PODRÁN SOLICITAR TURNOS ONLINE  </h2>
-                        <p></p> <a href="#service"> </a> ';
+
+                $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-naranja fondo-naranja'><h4>Solicitar Turno</h4>
+                                <p>El período para solicitar turnos no se encuentran habilitado por el momento.</p>
+                                <p>Los turnos se podrán solicitar entre :<br> <strong>" . date_format($date, 'd/m/Y') ." - ".date_format($dateFin, 'd/m/Y')  . "</strong></p>
+                           </a>";
+
             }
 
             //Si el periodo se encuentra
             if ($puntoProgramado->isActive())
             {
-                $this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "")) .
-                    '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                                o llamarnos al (0299) 4479921</p>';
+                if(Fechasturnos::verificaSiHayTurnosEnPeriodo()['success']) {
+                    $aSolicitarTurno = $this->tag->linkTo(array('turnos/index', '<h4>Solicitar Turno</h4>
+                                                <p>Periodo habilitado para solicitar turnos</p>', 'class' => 'list-group-item borde-3-verde'));
+                }
+                else{
+                    $aSolicitarTurno = $this->tag->linkTo(array('turnos/index', '<h4><i class="fa fa-ban"></i> Solicitar Turno</h4>
+                                                <p>Lamentablemente no hay turnos disponibles</p>', 'style' => 'background-color: #F44336;
+    color: #FFF;','class'=>'list-group-item'));
+                }
+                $aVerTurno =  $this->tag->linkTo(array('turnos/buscarTurno','<h4>Ver Turno</h4>
+                                                <p>Si desea puede consultar el código de turno o cancelarlo. Se recuerda que la cancelación debe ser con 48hs de anticipación.</p>','class'=>'list-group-item'));
+                $this->view->linkTurnoOnline = $aSolicitarTurno ." ".$aVerTurno ;
 
-                $this->view->mensajeSlider = '<h2 class="borde-bottom" style="font-size: 24px;line-height: 40px;"> PERIODO HABILITADO PARA SOLICITAR TURNOS ONLINE <br> ' . date_format($date, 'd/m/Y') . ' AL ' . date_format($dateFin, 'd/m/Y') . '  </h2>
-                        <p></p>' . $this->tag->linkTo(array("turnos/index", 'Solicitar Turno', "class" => "slider_btn slow"));
+                /*$this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "text-decoration-none")) .
+                    '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
+                                                o llamarnos al (0299) 4479921</p>';*/
+
             }
             //Si el periodo para solicitar turnos ya termino.
             if ($puntoProgramado->isAfter()) {
@@ -86,7 +90,7 @@ class IndexController extends ControllerBase
                         $unaSolicitud->solicitudTurno_respuestaChequeada = 2;//Se los cancela porque se les vencieron el plazo.
                         $unaSolicitud->save();
                     }
-                    $ultimoPeriodo->fechasTurnos_activo = 0;
+                    //$ultimoPeriodo->fechasTurnos_activo = 0; // NO se debe desactivar el periodo. El periodo se desactiva cuando finaliza la fecha de atencion
                     if (!$ultimoPeriodo->save()) {
                         $this->flash->error("LOS PERIODOS PARA LA SOLICITUD DE TURNOS NO SE HAN DESHABILITADOS. ");
                     }
@@ -97,35 +101,11 @@ class IndexController extends ControllerBase
 
     }
 
-    /**
-     * Ejemplo de como utilizar mpdf y crear un pdf a partir de otro pdf
-     * (generando un link hacia el archivo es mas que suficiente para mostrar el pdf)
-     */
-    public function crearPdfOrdenanzaAction()
-    {
-        $this->buscarPdf('files/prestaciones/Ordenanza_11633.pdf');
-    }
-
-    private function buscarPdf($url)
-    {
-        $mpdf = new mPDF();
-        $mpdf->SetImportUse();
-        $pagecount = $mpdf->SetSourceFile($url);
-        for ($i = 1; $i <= $pagecount; $i++) {
-            // Do not add page until page template set, as it is inserted at the start of each page (? guat)
-            $mpdf->AddPage();
-            $tplId = $mpdf->ImportPage($i);
-            $mpdf->UseTemplate($tplId, '', '', 210, 297);
-        }
-        $mpdf->WriteHTML('<p><indexentry content="Dromedary" xref="Camel:types" />The dromedary is atype of camel</p>');
-        // The template $tplId will be inserted on all subsequent pages until (optionally)
-        // $mpdf->SetPageTemplate();
-        $mpdf->Output();
-        exit;
-    }
 
     public function emailContactoAction()
     {
+        $this->tag->setTitle('CONTACTO');
+        $this->view->setTemplateAfter('main');
         if ($this->request->isPost()) {
             $this->mail->CharSet = 'UTF-8';
             $this->mail->Host = 'mail.imps.org.ar';
@@ -153,6 +133,57 @@ class IndexController extends ControllerBase
 
             $this->redireccionar('index/index');
         }
+    }
+    public function catalogoAction()
+    {
+        $this->tag->setTitle('Catalogo IMPS');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
+    }
+    public function revistaAction(){
+        if(!$this->request->isGet()){
+            return $this->redireccionar('index/catalogo');
+        }
+        $volumen = $this->request->get('volumen','int');
+        $dir = "./img/revista/volumen/$volumen";
+        if(is_dir($dir)){
+            $this->view->volumen = $volumen;
+            $this->tag->setTitle('Revista IMPS');
+            $this->assets->collection('footer')
+                ->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js')
+                ->addJs('plugins/turnjs/extras/modernizr.2.5.3.min.js')
+                ->addJs('plugins/turnjs/lib/hash.js')
+                ->addJs('plugins/turnjs/magazine/conf-slider.js');
+        }
+        else
+        {
+            $this->flash->error("La revista seleccionada no se encuentra disponible por el momento");
+            return $this->redireccionar('index/catalogo');
+        }
+
+
+
+    }
+
+
+    public function emprendimientoAction(){
+        $this->tag->setTitle('Emprendimiento IMPS');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
+    }
+    /**
+     * Explica como funciona el sistema de turnos.
+     */
+    public function presentacionTurnosAction(){
+        $this->tag->setTitle('Información Turnos Online');
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('headerCss')
+            ->addCss("css/individual.css");
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+
+
     }
 
 }

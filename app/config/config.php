@@ -21,7 +21,7 @@ return new \Phalcon\Config(array(
     ),
     'sujypweb' => array(
         'adapter'     => 'Mysql',
-        'host'        => '192.168.42.14',
+        'host'        => '201.251.125.209:4880',
         'username'    => 'root',
         'password'    => 'infoimps',
         'dbname'      => 'sujypweb',

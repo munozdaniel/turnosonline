@@ -37,6 +37,7 @@
                     <th style="text-align: center !important;">Inicio de Solicitud</th>
                     <th style="text-align: center !important;">Fin de Solicitud</th>
                     <th style="text-align: center !important;">Día de Atención</th>
+                    <th style="text-align: center !important;">Día de Atención Final</th>
                     <th style="text-align: center !important;">Cantidad de Turnos</th>
                     <th style="text-align: center !important;">Cantidad de Turnos Autorizados</th>
                     <th style="text-align: center !important;">Cantidad de días para confirmación</th>
@@ -62,6 +63,10 @@
                     </td>
                     <td>
                         {% set fechaModif =  date('d/m/Y',(item.fechasTurnos_diaAtencion) | strtotime) %}
+                        {{ fechaModif }}
+                    </td>
+                    <td>
+                        {% set fechaModif =  date('d/m/Y',(item.fechasTurnos_diaAtencionFinal) | strtotime) %}
                         {{ fechaModif }}
                     </td>
                     <td>{{ item.fechasTurnos_cantidadDeTurnos }}</td>

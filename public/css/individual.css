@@ -1,0 +1,131 @@
+
+/*Titulo*/
+.sombra-3d{
+
+    margin: 0;
+    font: bold 75px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbbbbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaaaaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
+    -webkit-transition: .2s all linear;
+    color: #ffffff;
+}
+.masked {
+    background: url(../img/turnos/presentacion/paint.png) repeat, white;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-animation-name: masked-animation;
+    -webkit-animation-duration: 40s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes masked-animation {
+    0% {background-position: left bottom;}
+    100% {background-position: right bottom;}
+}
+.h1{
+    font: bold 75px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 70px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -6px;
+    margin-bottom: 10px;
+}
+/*Fin:Titulo*/
+/*Pasos*/
+.pasos_seguir {
+    background: #0c397b;
+    background: #009688;
+    color: #fff;
+    padding: 40px;
+    font-size: 1.05em;
+
+}
+
+
+/*Fin:Pasos*/
+/*Section 0*/
+
+
+/**/
+.section1-izq .content {
+    margin-left: 20%;
+    display: block;
+    top: 20%;
+    position: absolute;
+}
+/*Paper*/
+.body {
+    background: linear-gradient(#ccc, #fff);
+    font: 14px sans-serif;
+    padding: 20px;
+}
+.letter {
+     background: #fff;
+     box-shadow: 0 0 10px rgba(0,0,0,0.3);
+     margin: 26px auto 0;
+     max-width: 600px;
+     min-height: 200px;
+     padding: 24px;
+     position: relative;
+     width: 80%;
+    text-align: left;
+    font-size: 19px;
+ }
+.letter:before, .letter:after {
+    content: "";
+    height: 98%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+.letter:before {
+    background: #fafafa;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    left: -5px;
+    top: 4px;
+    transform: rotate(-2.5deg);
+}
+.letter:after {
+    background: #f6f6f6;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    right: -3px;
+    top: 1px;
+    transform: rotate(1.4deg);
+}
+/*Fin:Paper*/
+/*Lista*/
+#ul li {
+    text-align: left;
+}
+/*Fin:Lista*/
+.section2-izq .content {
+    margin-left: 5%;
+    display: block;
+    top: 15%;
+    position: absolute;
+    color: #ffffff;
+}
+.section2-izq{
+    background: rgba(0, 0, 0, 0.91) !important;
+}
+.fondo-blanco-circles {
+    background-image: url(../img/turnos/circles.jpg) !important;
+}
+li.hr{
+    border-bottom: 1px solid #FFF;
+}
+.margin-right-5
+{
+    margin-right: 5px;
+}
+.hover-background:hover{
+    background-color: #0e76a8;
+    color: #ffffff;
+    text-decoration: none;
+
+}
+.cursor-hand{
+    cursor: pointer;
+}
+.font-blank{
+    color:#000 !important;
+}

@@ -10,6 +10,8 @@ class CertificacionController extends ControllerBase
         $this->tag->setTitle('Certificación Negativa');
         $this->view->setTemplateAfter('admin');
         parent::initialize();
+        $this->assets->collection('footer')
+            ->addJs('js/jquery.min.js');
         $this->assets->collection('footerInline')
             ->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
     }
@@ -92,7 +94,7 @@ class CertificacionController extends ControllerBase
                     'tipoDni' => $tipoDni
 
                 ));
-                $pdf = new mPDF();
+                $pdf = new mpdf();
                 $pdf->WriteHTML($html, 2);
                 $pdf->Output('certificacion.pdf', "I");
             }

@@ -1,143 +1,122 @@
-<section id="onepage" class="admin bg-rayado">
+{# <meta http-equiv="refresh" content="35">#}
 
-    {# <meta http-equiv="refresh" content="35">#}
+<style>
+    .heading h2 {
+        font-size: 35px;
+        line-height: 35px;
+    }
+</style>
 
-    <style>
-        .heading h2 {
-            font-size: 35px;
-            line-height: 35px;
-        }
-    </style>
+<script type="text/javascript">
+    var myVar = setInterval(function () {
+        myTimer()
+    }, 1000);
+    function myTimer() {
+        $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
+    }
 
-    <script type="text/javascript">
-        var myVar = setInterval(function () {
-            myTimer()
-        }, 1000);
-        function myTimer() {
-            $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
-        }
-        function otro() {
-            var estadoSeleccionado = document.getElementById('miselect').value;
 
-            if (estadoSeleccionado === 'AUTORIZADO' || estadoSeleccionado === '') {
-                var cant = {{ cantAutorizados }};
-                if (cant > 0) {
-                    if ({{ cantAutorizados }} ===
-                    {{ cantTurnos }} )
-                    alert('No hay mas turnos disponibles en este periodo. Se debe denegar la solicitud.')
-                }
-            }
-        }
+</script>
 
-    </script>
+<section id="onepage" class="admin bg_line">
+    <div class="container ">
+        <div class="row" align="center">
+            <div class="curriculum-bg-header modal-header " align="left">
+                <h1>
+                    <ins>SOLICITAR TURNO MANUAL</ins>
+                    <br>
+                </h1>
+                <ul>
+                    <li><i class="fa fa-dot-circle-o"></i> Es muy importante que complete correctamente sus
+                        datos personales, correo electrónico y teléfono.
+                    </li>
+                    <li><i class="fa fa-dot-circle-o"></i> Los campos que contienen * son obligatorios.</li>
+                </ul>
+                <table class="" width="100%">
+                    <tr>
+                        <td align="right">{{ link_to("administrar/index", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                    </tr>
+                </table>
 
-    <div class="container">
-        <div class="row" align="center" style="margin-top: 30px;">
-            <div class="heading">
-                <h2 class="wow fadeInLeftBig">Solicitud manual</h2>
-                {{ link_to('administrar/index','class':'btn btn-lg btn-primary pull-left','<i class="fa fa-undo"></i> VOLVER') }}
-                <p>
-                    <i class="fa fa-info-circle"
-                       style="vertical-align: middle;font-size: 35px;color: #5e7b97;margin-left: 2%;margin-right: 1%;"></i>
-                    <em>Por favor, llene los siguientes campos para ingresar una solicitud de turno.</em> <br/><br/>
-                </p>
             </div>
-        </div>
-        {% if cantTurnos is defined %}
-        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-            <div class="col-sm-6">
-                <div class="fuente-14"><strong>
-                        <ins>PERIODO DE SOLICITUD DE TURNOS :</ins>
-                    </strong>{{ fechaI }} - {{ fechaF }}
-                </div>
-                <div class="fuente-14"><strong>
-                        <ins>DIA DE ATENCI&Oacute;N :</ins>
-                    </strong> {{ diaA }}
-                </div>
-            </div>
-            <div class="col-sm-6">
-                {% if (cantTurnos == cantAutorizados) %}
-                    <div class="fuente-14" style="color:red;">
-                        <strong>
-                            <ins>TOTAL DE TURNOS :</ins>
-                        </strong> {{ cantTurnos }}
-                    </div>
-                    <div class="fuente-14" id="idCantA" style="color:red;">
-                        <strong>
-                            <ins>TURNOS AUTORIZADOS :</ins>
-                        </strong> <strong id="cantAutorizados">{{ cantAutorizados }}</strong>
-                    </div>
-                {% else %}
-                    <div class="fuente-14">
-                        <strong>
-                            <ins>TOTAL DE TURNOS :</ins>
-                        </strong> {{ cantTurnos }}
-                    </div>
-                    <div class="fuente-14" id="idCantA">
-                        <strong>
-                            <ins>TURNOS AUTORIZADOS :</ins>
-                        </strong> <strong id="cantAutorizados">{{ cantAutorizados }}</strong>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-        <div class="row form-blanco borde-top borde-left-4 borde-right-4 borde-bottom-4">
-            <div align="center">
-                <h1> {{ content() }}</h1>
-            </div>
-            {{ form('turnos/guardarSolicitudManual','method':'post','style':'','class':'') }}
-            <div class="col-md-12" style="margin-bottom: 30px;">
-                <em style="color:tomato">* Campos obligatorios.</em> <br/><br/>
-                {% for elto in formulario %}
-                    <div class="col-md-4">
-                        {{ elto.label(['class': 'control-label']) }}
-                        {{ elto }}
-                        {{ formulario.messages(elto.getName()) }}
-                    </div>
-                    {% if loop.index == 3 OR loop.index == 6 %}
-                        <div class="col-md-12">
-                            <hr>
+            <hr>
+
+            {{ content() }}
+            <div class="curriculum-bg-form borde-top" align="center">
+                <div class="row">
+                    {% if informacion is defined %}
+                        <div class="col-sm-4" align="right">
+                            <h3><strong>
+                                    <ins>PERIODO DE TURNOS</ins>
+                                </strong>
+                            </h3>
+                            <h4>
+                                Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
+                            </h4>
+
+                        </div>
+                        <div class="col-sm-4" align="center">
+                            <h3>
+                                <strong>
+                                    <ins>DÍA DE ATENCI&Oacute;N</ins>
+                                </strong>
+                            </h3>
+                            <h4>
+                                Desde {{ informacion['diaAtencion'] }}
+                                <br>Hasta {{ informacion['diaAtencionFinal'] }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-4" align="left"{% if rojo == true %}style="color: red;"{% endif %}>                            <h3>
+                                <strong>
+                                    <ins>TURNOS</ins>
+                                </strong>
+                            </h3>
+                            <h4>
+                                Total: {{ informacion['cantidadTurnos'] }}<br>
+                                Autorizados: {{ informacion['cantidadAutorizados'] }}
+                            </h4>
                         </div>
                     {% endif %}
-                {% endfor %}
-                <div class="col-md-4">
-                    <label for="miselect">
-                        <b style="color: red">* Estado de la solicitud:</b>
-                    </label>
-                    <select id="miselect" name="estado" onchange="otro()" required="true" class="form-control">
-                        <option value="">SELECCIONAR UNA OPCIÓN</option>
-                        <option value="AUTORIZADO">AUTORIZADO</option>
-                        <option value="DENEGADO">DENEGADO</option>
-                    </select>
+                    {{ form('turnos/guardarSolicitudManual','method':'post','style':'','class':'') }}
+                    <div class="col-md-12" style="margin-bottom: 30px; text-align: left;">
+
+                        <hr>
+                        {% for elto in formulario %}
+                            <div class="col-md-4">
+                                {{ elto.label(['class': 'control-label']) }}
+                                {{ elto }}
+                                {{ formulario.messages(elto.getName()) }}
+                            </div>
+                            {% if loop.index == 3 OR loop.index == 6 %}
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="col-md-4">
+                            <label for="miselect">
+                                <b style="color: red">* Estado de la solicitud:</b>
+                            </label>
+                            <select id="miselect" name="estado" required="true"
+                                    class="form-control">
+                                <option value="">SELECCIONAR UNA OPCIÓN</option>
+                                <option value="AUTORIZADO">AUTORIZADO</option>
+                                <option value="DENEGADO">DENEGADO</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
                 </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    {% if deshabilitar is defined %}
-                        {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block disabled') }}
-                    {% else %}
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
                         {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
 
-            {{ end_form() }}
+                {{ end_form() }}
+            </div>
         </div>
     </div>
-
-    {{ end_form() }}
-    </div>
-    </div>
 </section>
-<!-- cdn for modernizr, if you haven't included it already -->
-<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
-<!-- polyfiller file to detect and load polyfills -->
-<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
-<script>
-    webshims.setOptions('waitReady', false);
-    webshims.setOptions('forms-ext', {types: 'date'});
-    webshims.polyfill('forms forms-ext');
-</script>

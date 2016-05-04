@@ -1,5 +1,5 @@
 <!--=========== BEGIN SERVICE SECTION ================-->
-<section id="service">
+<section id="service" class="fondo">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -15,46 +15,24 @@
                 <!-- BEGAIN SERVICE  -->
                 <div class="service_area">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!-- BEGAIN SINGLE SERVICE -->
-                            <div class="single_service wow fadeInLeft">
-                                {{ link_to('certificacion/index','<div class="service_iconarea">
-                                    <span class="fa fa-file-text service_icon"></span>
-                                </div>
-                                <h3 class="service_title">Certificación Negativa</h3>
-                                ','class':'puntero') }}
-                                <p> Ud. podrá obtener el comprobante de Certificación Negativa que acredita que no registra antecedentes de Jubilación y/o Pensión del Instituto Municipal de Previsión Social de la Ciudad de Neuquén.
-                                </p>
-                            </div>
+                        <div class="col-md-4 list-group list-group-content">
+                            <h3 class="font-gotham">{{ image('img/servicios/icon_turnos.png') }} Turnos Online <small>para</small> Préstamos</h3>
+                            {{ link_to('index/presentacionTurnos',' <h4>Como funciona?</h4>
+                                <p>Te explicamos con detalle en que consiste nuestro servicio para solicitar los turnos.</p>
+                            ','class':'list-group-item puntero') }}
+                            {#============#}
+                            {{ link_to('turnos/calendario',' <h4>Ver Calendario</h4>
+                                <p>Visitá nuestro calendario para visualizar los periodos habilitados.</p>','class':'list-group-item puntero') }}
+                            {#===== Se genera un link_to en index/index =======#}
+                            {{ linkTurnoOnline }}
+
                         </div>
-                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!-- BEGAIN SINGLE SERVICE -->
-                            <div class="single_service wow fadeInRight">
-                                    {{ mensajePeriodo }}
-                            </div>
+                        <div class="col-md-4 list-group list-group-content">
+                            <h3 class="font-gotham">{{ image('img/servicios/icon_cn.png') }} Certificación Negativa</h3>
+                            {{ link_to('certificacion/index',' <h4>Solicitar Comprobante</h4>
+                                <p>Ud. podrá obtener el comprobante de Certificación Negativa que acredita que no registra antecedentes de Jubilación y/o Pensión del Instituto Municipal de Previsión Social de la Ciudad de Neuquén.</p>','class':'list-group-item puntero') }}
                         </div>
-                        {#
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!-- BEGAIN SINGLE SERVICE -->
-                            <div class="single_service wow fadeInLeft">
-                                <div class="service_iconarea">
-                                    <span class="fa fa-list-alt service_icon"></span>
-                                </div>
-                                <h3 class="service_title">Estado de Deuda</h3>
-                                <p>Proximamente. El Servicio se encuentra en construcción.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!-- BEGAIN SINGLE SERVICE -->
-                            <div class="single_service wow fadeInRight">
-                                <div class="service_iconarea">
-                                    <span class="fa fa-users service_icon"></span>
-                                </div>
-                                <h3 class="service_title">Identificación de Afiliados</h3>
-                                <p>Proximamente. El Servicio se encuentra en construcción.</p>
-                            </div>
-                        </div>
-                        #}
+
                     </div>
                 </div>
             </div>

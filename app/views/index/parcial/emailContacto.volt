@@ -1,5 +1,5 @@
 <!--=========== BEGAIN CONTACT SECTION ================-->
-<section id="contact">
+<section id="contact" class="fondo">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
