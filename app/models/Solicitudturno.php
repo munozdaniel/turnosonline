@@ -139,7 +139,21 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
+    protected $solicitudTurnos_orden;
+
+    /**
+     *
+     * @var integer
+     */
+    protected $solicitudTurno_sanciones;
+
+    /**
+     *
+     * @var integer
+     */
     protected $solicitudTurno_cancelado;
+
+
 
     /**
      * Method to set the value of field solicitudTurno_id
@@ -413,7 +427,15 @@ class Solicitudturno extends \Phalcon\Mvc\Model
 
         return $this;
     }
-
+    /**
+     * Returns the value of field solicitudTurnos_orden
+     *
+     * @return integer
+     */
+    public function setSolicitudturnosOrden($solicitudTurnos_orden)
+    {
+        return $this->solicitudTurnos_orden=$solicitudTurnos_orden;
+    }
     /**
      * Method to set the value of field solicitudTurno_tipoTurnoId
      *
@@ -423,6 +445,19 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     public function setSolicitudturnoTipoturnoid($solicitudTurno_tipoTurnoId)
     {
         $this->solicitudTurno_tipoTurnoId = $solicitudTurno_tipoTurnoId;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field solicitudTurno_sanciones
+     *
+     * @param integer $solicitudTurno_sanciones
+     * @return $this
+     */
+    public function setSolicitudturnoSanciones($solicitudTurno_sanciones)
+    {
+        $this->solicitudTurno_sanciones = $solicitudTurno_sanciones;
 
         return $this;
     }
@@ -649,7 +684,15 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     {
         return $this->solicitudTurnos_fechasTurnos;
     }
-
+    /**
+     * Returns the value of field solicitudTurnos_orde
+     *
+     * @return integer
+     */
+    public function getSolicitudturnosOrden()
+    {
+        return $this->solicitudTurnos_orden;
+    }
     /**
      * Returns the value of field solicitudTurno_tipoTurnoId
      *
@@ -668,6 +711,16 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     public function getSolicitudturnoCancelado()
     {
         return $this->solicitudTurno_cancelado;
+    }
+
+    /**
+     * Returns the value of field solicitudTurno_sanciones
+     *
+     * @return integer
+     */
+    public function getSolicitudturnoSanciones()
+    {
+        return $this->solicitudTurno_sanciones;
     }
 
     /**
@@ -744,7 +797,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      * Busca todas las solicitudes que fueron enviadas.
      * @return array
      */
-    public static function accionVerSolicitudesConRespuestaEnviada($tipoTurno=null)
+    public static function accionVerSolicitudesConRespuestaEnviada($tipoTurno = null)
     {
         $fechaTurnos = Fechasturnos::findFirst(array('fechasTurnos_activo=1'));//Obtengo el periodo activo.
         $solicitudesOnline = array();
@@ -757,8 +810,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
                      AND solicitudTurno_tipoTurnoId=:tipoTurno:',
                     'bind' => array('fechasTurnos_id' => $fechaTurnos->getFechasturnosId(), 'tipoTurno' => $tipoTurno),
                     'order' => 'solicitudTurno_fechaProcesamiento DESC'));
-            }
-            else{
+            } else {
                 $solicitudes = Solicitudturno::find(array('solicitudTurnos_fechasTurnos = :fechasTurnos_id:',
                     'bind' => array('fechasTurnos_id' => $fechaTurnos->getFechasturnosId()),
                     'order' => 'solicitudTurno_fechaProcesamiento DESC'));
@@ -821,6 +873,20 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         }
     }
 
+    /**
+     * Dada una solicitud se actualizan los datos en el modelo.
+     * @param $solicitud
+     * @return bool|Solicitudturno
+     */
+    public static function actualizarCodigoSolicitud($solicitud)
+    {
+        $solicitud = Solicitudturno::findFirst(array('solicitudTurno_id=solicitudTurno_id',
+            'bind'=>array('solicitudTurno'=>$solicitud['solicitudTurno_id'])));
+        $solicitud->setSolicitudturnoCodigo($solicitud['solicitudTurno_codigo']);
+        if(!$solicitud->update())
+            return false;
+        return $solicitud;
+    }
     /**
      * @param $legajo
      * @param $nombreCompleto
@@ -985,7 +1051,7 @@ class Solicitudturno extends \Phalcon\Mvc\Model
 
                 if ($fechaIniSol <= $fechaPedido and $fechaPedido <= $fechaFinSol)//
                 {
-                    $lista[] = $unaSolicitud->toArray();
+                    $lista[] = $unaSolicitud;
                     $unaSolicitud->setSolicitudturnoRespuestaenviada('SI');
                     $unaSolicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d'));
                     if (!$unaSolicitud->update()) {

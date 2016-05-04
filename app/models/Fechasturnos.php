@@ -61,6 +61,8 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      */
     protected $fechasTurnos_sinTurnos;
 
+
+
     /**
      * Method to set the value of field fechasTurnos_id
      *
@@ -403,7 +405,6 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         $fechaVencimiento = strtotime('+' . $cantidadDias . ' day', strtotime($fechaInicioSolicitud));
         $fechaVencimiento = date('Y-m-d', $fechaVencimiento);
         $fechaHoy = Date('Y-m-d');
-        echo " $fechaHoy < = $fechaVencimiento ";
         if ($fechaHoy <= $fechaVencimiento)
             return false;
         return true;
@@ -422,5 +423,22 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         if ($this->getFechasturnosCantidaddeturnos() <= $this->getFechasturnosCantidadautorizados())
             return false;
         return true;
+    }
+
+    /**
+     * Verifica si la cancelacion se realiza 48hs antes de la asistencia.
+     * @return bool
+     */
+    public static function verificaCancelacionDentro48Hs()
+    {
+        //FIXME: PREGUNTAR SI ES DENTRO DE LAS 48HS
+        $ultimoPeriodo = Fechasturnos::findFirst(array("fechasTurnos_activo = 1"));
+        if(!$ultimoPeriodo)
+            return false;
+        $nuevafecha = strtotime ( '-2 day' , strtotime ( $ultimoPeriodo->getFechasturnosDiaatencion() ) ) ;
+        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+        if(date('Y-m-d')< $nuevafecha)
+            return true;
+        return false;
     }
 }
