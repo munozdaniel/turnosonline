@@ -998,10 +998,10 @@ class TurnosController extends ControllerBase
                     //Está Autorizado, generar codigo
                     $codigo = $this->getRandomCode($ultimoPeriodo->getFechasTurnosId());
                     $solicitud->setSolicitudturnoCodigo($codigo);
-                    if ($solicitud->getSolicitudturnoOrden() == NULL)
-                        $solicitud->setSolicitudturnoOrden(1);
+                    if ($solicitud->getSolicitudturnosOrden() == NULL || $solicitud->getSolicitudturnosOrden() == 0)
+                        $solicitud->getSolicitudturnosOrden(1);
                     else
-                        $solicitud->setSolicitudturnoOrden($solicitud->getSolicitudturnoOrden() + 1);
+                        $solicitud->getSolicitudturnosOrden($solicitud->getSolicitudturnosOrden() + 1);
                     if (!$solicitud->update()) {
                         $this->flash->error("Ocurrió un error al generar el codigo de turno para el afiliado con legajo: " . $solicitud->getSolicitudTurnoLegajo());
                     }
