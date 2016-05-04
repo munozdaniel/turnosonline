@@ -41,6 +41,20 @@
                         </div>
                     </div>') }}
                 </div>
+            <div class="col-sm-4">
+                {{ link_to('turnos/turnosCancelados','
+                    <div class="panel mini-box">
+                            <span class="box-icon bg-red-pl">
+                                <i class="fa fa-ticket"></i>
+                            </span>
+
+                        <div class="box-info">
+                            <p class="size-h2"><strong>Listado</strong></p>
+
+                            <p class="text-muted">Turnos Cancelados</p>
+                        </div>
+                    </div>') }}
+            </div>
                 <div class="col-sm-4">
                     {{ link_to('turnos/solicitudManual','
                     <div class="panel mini-box">
@@ -55,20 +69,7 @@
                         </div>
                     </div>') }}
                 </div>
-            <div class="col-sm-4">
-                {{ link_to('turnos/solicitudPersonal','
-                    <div class="panel mini-box">
-                            <span class="box-icon bg-red-pl">
-                                <i class="fa fa-ticket"></i>
-                            </span>
 
-                        <div class="box-info">
-                            <p class="size-h2"><strong>Solicitud PERSONAL</strong></p>
-
-                            <p class="text-muted">Turno</p>
-                        </div>
-                    </div>') }}
-            </div>
             {% endif %}
             {% if admin or supervisor %}
             <div class="col-sm-4">
