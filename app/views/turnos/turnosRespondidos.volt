@@ -23,7 +23,7 @@
             </h3>
             <table class="" width="100%">
                 <tr>
-                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
                 </tr>
             </table>
 
@@ -37,7 +37,7 @@
         {% if informacion is defined %}
             <div class="col-sm-4" align="right">
                 <h3><strong>
-                        <ins>PERIODO DE TURNOS</ins>
+                        <ins>PERIODO DE SOLICITUD</ins>
                     </strong>
                 </h3>
                 <h4>
@@ -95,7 +95,7 @@
 
         <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
             <table id="tabla" class="table_r table-striped table-bordered table-condensed">
-                <thead>
+                <thead style="background-color: #131313;">
                 <tr>
                     <th class="th-titulo">Codigo</th>
                     <th class="th-titulo">Legajo</th>
@@ -116,7 +116,36 @@
     </div>
 
 </section>
+<!-- Modal -->
+<div class="modal fade" id="confirmarAsistencia" role="dialog">
+    <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top: 6%" align="center">
+        <div class="modal-dialog ">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <h1><i class="fa fa-question-circle fa-3x bg-info-icon" aria-hidden="true"></i></h1>
+
+                    <h3>Por favor presione el botón CONFIRMAR si el afiliado informó que fue notificado.</h3>
+
+                    <div id="mensaje"></div>
+                    <hr>
+                    {{ hidden_field('confirma_id') }}
+                    <p><strong>LEGAJO</strong> {{ text_field('confirma_legajo','readOnly':'true') }}</p>
+
+                    <p id="posible_ocultar">
+                        <strong>CODIGO</strong> {{ text_field('confirma_codigo','readOnly':'true') }}</p>
+                    <hr>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+                    <button type="button" class="btn btn-success" onclick="guardarConfirmarAsistencia()">CONFIRMAR</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <script>
     function confirmarAsistencia(solicitudTurno_id, solicitudTurno_legajo, solicitudTurno_codigo) {
         $('.help-block').remove(); // Limpieza de los mensajes de alerta.
@@ -145,7 +174,7 @@
         $(".alert-info").alert('close');
     });
     $(document).ready(function () {
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+
         var tabla = $('#tabla').DataTable({
             ajax: {
                 'url': '/impsweb/turnos/turnosRespondidosAjax',
@@ -220,8 +249,10 @@
             tabla.ajax.reload();
 
         }
+
     })
     ;
+
     function guardarConfirmarAsistencia() {
         $('.help-block').remove(); // Limpieza de los mensajes de alerta.
 
@@ -244,44 +275,15 @@
                         $('#mensaje').append('<div class="help-block  alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> ' + data.mensaje + '</h4></div>'); // add the actual error message under our input
                     } else {
                         $('#mensaje').append('<div class="help-block  alert-success"><h4>' + data.mensaje + '</h4></div>');
-                        setTimeout(function () {
-                            $("#confirmarAsistencia").hide(500);
-                        }, 1000);
-
+                       $("#confirmarAsistencia").hide(500);
+                        setTimeout("redireccionar()", 1000); //tiempo expresado en milisegundos
                     }
                 })
                 .fail(function (data) {
                     console.log(data);
                 });
     }
+    function redireccionar() {
+        window.location = "/impsweb/turnos/turnosRespondidos" ;
+    }
 </script>
-<!-- Modal -->
-<div class="modal fade" id="confirmarAsistencia" role="dialog">
-    <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top: 6%" align="center">
-        <div class="modal-dialog ">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-
-                    <h1><i class="fa fa-question-circle fa-3x bg-info-icon" aria-hidden="true"></i></h1>
-
-                    <h3>Por favor presione el botón CONFIRMAR si el afiliado informó que fue notificado.</h3>
-
-                    <div id="mensaje"></div>
-                    <hr>
-                    {{ hidden_field('confirma_id') }}
-                    <p><strong>LEGAJO</strong> {{ text_field('confirma_legajo','readOnly':'true') }}</p>
-
-                    <p id="posible_ocultar">
-                        <strong>CODIGO</strong> {{ text_field('confirma_codigo','readOnly':'true') }}</p>
-                    <hr>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
-                    <button type="button" class="btn btn-success" onclick="guardarConfirmarAsistencia()">CONFIRMAR</button>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>

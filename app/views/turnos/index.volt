@@ -9,7 +9,7 @@
                 <h3><small><em style=" color:#FFF !important;"> Complete sus datos para solicitar un turno</em></small></h3>
                 <table class="" width="100%">
                     <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                        <td align="right">{{ link_to("index", "<i class='fa fa-home'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
                     </tr>
                 </table>
 

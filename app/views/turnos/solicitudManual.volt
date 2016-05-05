@@ -34,7 +34,7 @@
                 </ul>
                 <table class="" width="100%">
                     <tr>
-                        <td align="right">{{ link_to("administrar/index", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                        <td align="right">{{ link_to("administrar/index", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
                     </tr>
                 </table>
 

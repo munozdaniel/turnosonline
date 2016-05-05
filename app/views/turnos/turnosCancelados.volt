@@ -23,7 +23,7 @@
             </h3>
             <table class="" width="100%">
                 <tr>
-                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
                 </tr>
             </table>
 
@@ -37,7 +37,7 @@
         {% if informacion is defined %}
         <div class="col-sm-4" align="right">
             <h3><strong>
-                    <ins>PERIODO DE TURNOS</ins>
+                    <ins>PERIODO DE SOLICITUD</ins>
                 </strong>
             </h3>
             <h4>
