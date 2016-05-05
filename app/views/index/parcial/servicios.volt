@@ -24,8 +24,9 @@
                             {{ link_to('turnos/calendario',' <h4>Ver Calendario</h4>
                                 <p>Visitá nuestro calendario para visualizar los periodos habilitados.</p>','class':'list-group-item puntero') }}
                             {#===== Se genera un link_to en index/index =======#}
-                            {{ linkTurnoOnline }}
-
+                            <div id="solicitudes">
+                                {{ linkTurnoOnline }}
+                            </div>
                         </div>
                         <div class="col-md-4 list-group list-group-content">
                             <h3 class="font-gotham">{{ image('img/servicios/icon_cn.png') }} Certificación Negativa</h3>
@@ -40,3 +41,13 @@
     </div>
 </section>
 <!--=========== END SERVICE SECTION ================-->
+<script>
+    var myVar = setInterval(function () {
+        myTimer()
+    }, 10000);
+
+    function myTimer() {
+        $('#solicitudes').load(document.URL + ' #solicitudes');
+    }
+
+</script>

@@ -56,16 +56,18 @@
                     <br>Hasta {{ informacion['diaAtencionFinal'] }}
                 </h4>
             </div>
-            <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
-                <h3>
-                    <strong>
-                        <ins>TURNOS</ins>
-                    </strong>
-                </h3>
-                <h4>
-                    Total: {{ informacion['cantidadTurnos'] }}<br>
-                    Autorizados: {{ informacion['cantidadAutorizados'] }}
-                </h4>
+            <div id="cantAutorizados">
+                <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                    <h3>
+                        <strong>
+                            <ins>TURNOS</ins>
+                        </strong>
+                    </h3>
+                    <h4>
+                        Total: {{ informacion['cantidadTurnos'] }}<br>
+                        Autorizados: {{ informacion['cantidadAutorizados'] }}
+                    </h4>
+                </div>
             </div>
             <div class="col-sm-12" align="center">
                 <hr>
@@ -138,7 +140,8 @@
                         <strong>CODIGO</strong> {{ text_field('confirma_codigo','readOnly':'true') }}</p>
                     <hr>
                     <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
-                    <button type="button" class="btn btn-success" onclick="guardarConfirmarAsistencia()">CONFIRMAR</button>
+                    <button type="button" class="btn btn-success" onclick="guardarConfirmarAsistencia()">CONFIRMAR
+                    </button>
 
                 </div>
             </div>
@@ -147,6 +150,14 @@
     </div>
 </div>
 <script>
+    var myVar = setInterval(function () {
+        myTimer()
+    }, 1000);
+
+    function myTimer() {
+        $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
+    }
+
     function confirmarAsistencia(solicitudTurno_id, solicitudTurno_legajo, solicitudTurno_codigo) {
         $('.help-block').remove(); // Limpieza de los mensajes de alerta.
         $("#confirmarAsistencia").modal();
@@ -275,7 +286,7 @@
                         $('#mensaje').append('<div class="help-block  alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> ' + data.mensaje + '</h4></div>'); // add the actual error message under our input
                     } else {
                         $('#mensaje').append('<div class="help-block  alert-success"><h4>' + data.mensaje + '</h4></div>');
-                       $("#confirmarAsistencia").hide(500);
+                        $("#confirmarAsistencia").hide(500);
                         setTimeout("redireccionar()", 1000); //tiempo expresado en milisegundos
                     }
                 })
@@ -284,6 +295,6 @@
                 });
     }
     function redireccionar() {
-        window.location = "/impsweb/turnos/turnosRespondidos" ;
+        window.location = "/impsweb/turnos/turnosRespondidos";
     }
 </script>

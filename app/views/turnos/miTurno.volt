@@ -55,7 +55,7 @@
                         </div>
                         <div class="col-md-4 col-md-offset-4">
                             {{ form('turnos/comprobanteTurnoPost','method':'POST') }}
-                            {{ hidden_field('solicitud_id',solicitud_id) }}
+                            {{ hidden_field('solicitud_id','value':solicitud_id) }}
                             <button type='submit' class='btn btn-info btn-lg' formtarget='_blank'><i
                                         class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO
                             </button>

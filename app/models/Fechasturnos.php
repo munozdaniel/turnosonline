@@ -393,7 +393,11 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         }
         return $retorno;
     }
-
+    public static function verificaSiHayTurnos($ultimoPeriodo){
+        if($ultimoPeriodo->getFechasturnosCantidadautorizados() >= $ultimoPeriodo->getFechasturnosCantidaddeturnos())
+            return true;
+        return false;
+    }
     /**
      * Verifica si en la fecha de hoy ya vencio el plazo para confirmar el turno.
      * @param $cantidadDias

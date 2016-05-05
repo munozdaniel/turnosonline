@@ -69,16 +69,20 @@
                     <br>Hasta {{ informacion['diaAtencionFinal'] }}
                 </h4>
             </div>
-            <div class="col-sm-4" align="left"{% if rojo == true %}style="color: red;"{% endif %}>
-                <h3>
-                    <strong>
-                        <ins>TURNOS</ins>
-                    </strong>
-                </h3>
-                <h4>
-                    Total: {{ informacion['cantidadTurnos'] }}<br>
-                    Autorizados: {{ informacion['cantidadAutorizados'] }}
-                </h4>
+            <div id="cantAutorizados">
+                <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                    <h3>
+                        <strong>
+                            <ins>TURNOS</ins>
+                        </strong>
+                    </h3>
+                    <h4>
+                        Total: {{ informacion['cantidadTurnos'] }}<br>
+                        Autorizados: {{ informacion['cantidadAutorizados'] }}
+                        {{ hidden_field('cantidadTurnos','value':informacion['cantidadTurnos'] ) }}
+                        {{ hidden_field('cantidadAutorizados','value':informacion['cantidadAutorizados'] ) }}
+                    </h4>
+                </div>
             </div>
 
         {% endif %}
@@ -86,114 +90,114 @@
     </div>
 
     <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-            <div class="col-md-12">
-                {{ content() }}
-                {{ flashSession.output() }}
-            </div>
-            <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
-                <table class="table table-striped table-bordered table-condensed">
-                    <thead>
+        <div class="col-md-12">
+            {{ content() }}
+            {{ flashSession.output() }}
+        </div>
+        <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th class="th-estilo">Legajo</th>
+                    <th class="th-estilo">Apellido y nombre</th>
+                    <th class="th-estilo">Fecha solicitud</th>
+                    <th class="th-estilo">Estado</th>
+                    <th class="th-estilo">Monto maximo</th>
+                    <th class="th-estilo">Monto posible</th>
+                    <th class="th-estilo">Máximo de cuotas</th>
+                    <th class="th-estilo">Valor cuota</th>
+                    <th class="th-estilo">Observaciones</th>
+                    <th class="th-estilo">Fecha revisión</th>
+                    <th class="th-estilo">Empleado</th>
+                    <th class="th-estilo">Tipo</th>
+                    <th class="th-estilo">EDITAR</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for item in page.items %}
                     <tr>
-                        <th class="th-estilo">Legajo</th>
-                        <th class="th-estilo">Apellido y nombre</th>
-                        <th class="th-estilo">Fecha solicitud</th>
-                        <th class="th-estilo">Estado</th>
-                        <th class="th-estilo">Monto maximo</th>
-                        <th class="th-estilo">Monto posible</th>
-                        <th class="th-estilo">Máximo de cuotas</th>
-                        <th class="th-estilo">Valor cuota</th>
-                        <th class="th-estilo">Observaciones</th>
-                        <th class="th-estilo">Fecha revisión</th>
-                        <th class="th-estilo">Empleado</th>
-                        <th class="th-estilo">Tipo</th>
-                        <th class="th-estilo">EDITAR</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoLegajo() }}</td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoNomApe() }}</td>
+                        <td class="td-estilo">
+                            {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
+                        </td>
+                        <td class="td-estilo"><strong><a
+                                        class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
+                        </td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoMontoMax() }}</td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoMontoPosible() }}</td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoCantCuotas() }}</td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoValorCuota() }}</td>
+                        <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
+                            {{ item.getSolicitudTurnoObservaciones() }}
+                        </td>
+                        <td class="td-estilo">
+                            {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
+                                {% set fechaModif = date('d/m/Y',(item.getSolicitudTurnoFechaProcesamiento()) | strtotime) %}
+                            {% else %}
+                                {% set fechaModif = '-' %}
+                            {% endif %}
+                            {#Mostramos la variable seteada con los valores anteriores.#}
+                            {{ fechaModif }}
+                        </td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
+                        <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
 
-                    {% for item in page.items %}
-                        <tr>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoLegajo() }}</td>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoNomApe() }}</td>
-                            <td class="td-estilo">
-                                {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
-                            </td>
-                            <td class="td-estilo"><strong><a
-                                            class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
-                            </td>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoMontoMax() }}</td>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoMontoPosible() }}</td>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoCantCuotas() }}</td>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoValorCuota() }}</td>
-                            <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
-                                {{ item.getSolicitudTurnoObservaciones() }}
-                            </td>
-                            <td class="td-estilo">
-                                {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
-                                    {% set fechaModif = date('d/m/Y',(item.getSolicitudTurnoFechaProcesamiento()) | strtotime) %}
-                                {% else %}
-                                    {% set fechaModif = '-' %}
-                                {% endif %}
-                                {#Mostramos la variable seteada con los valores anteriores.#}
-                                {{ fechaModif }}
-                            </td>
-                            <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
-                            <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
-
-                            <td width="7%">
-                                {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
-                                OR (session.get('auth')['rol_nombre']== "ADMIN")
-                                OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
+                        <td width="7%">
+                            {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
+                            OR (session.get('auth')['rol_nombre']== "ADMIN")
+                            OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
+                                <a class="btn btn-info editar btn-block"
+                                   onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
+                                    EDITAR</a>
+                            {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
+                                {% if(turnosAutorizados < cantidadDeTurnos) %}
                                     <a class="btn btn-info editar btn-block"
                                        onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
                                         EDITAR</a>
-                                {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
-                                    {% if(turnosAutorizados < cantidadDeTurnos) %}
-                                        <a class="btn btn-info editar btn-block"
-                                           onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
-                                            EDITAR</a>
-                                    {% else %}
-                                        <a href="#" class="btn btn-danger editar btn-block"
-                                           onclick="alert('NO HAY TURNOS DISPONIBLES')">SIN TURNOS </a>
-                                    {% endif %}
                                 {% else %}
-                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
+                                    <a href="#" class="btn btn-danger editar btn-block"
+                                       onclick="alert('NO HAY TURNOS DISPONIBLES')">SIN TURNOS </a>
                                 {% endif %}
+                            {% else %}
+                                <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
+                            {% endif %}
 
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-
-                    <tbody>
-                    <tr>
-                        <td colspan="16">
-                            <div align="center">
-                                {{ link_to("/turnos/turnosSolicitados/?page=1",'Primera','class':'btn btn-primary') }}
-                                {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn btn-primary') }}
-                                <div class="btn-primary btn">P&aacute;gina {{ page.current }}
-                                    de {{ page.total_pages }}</div>
-                                {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn btn-primary') }}
-                                {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn btn-primary') }}
-
-                            </div>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
-            {{ form('turnos/enviarRespuestas') }}
+                {% endfor %}
+                </tbody>
 
-            <div class="row">
-                <div align="center"
-                     style="width:50%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;"
-                     class=" col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
-                    {{ submit_button('ENVIAR RESPUESTAS A LOS AFILIADOS','class':'btn btn-blue btn-lg btn-block') }}
-                </div>
-            </div>
+                <tbody>
+                <tr>
+                    <td colspan="16">
+                        <div align="center">
+                            {{ link_to("/turnos/turnosSolicitados/?page=1",'Primera','class':'btn btn-primary') }}
+                            {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn btn-primary') }}
+                            <div class="btn-primary btn">P&aacute;gina {{ page.current }}
+                                de {{ page.total_pages }}</div>
+                            {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn btn-primary') }}
+                            {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn btn-primary') }}
 
-            {{ end_form() }}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+        {{ form('turnos/enviarRespuestas') }}
+
+        <div class="row">
+            <div align="center"
+                 style="width:50%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;"
+                 class=" col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
+                {{ submit_button('ENVIAR RESPUESTAS A LOS AFILIADOS','class':'btn btn-blue btn-lg btn-block') }}
+            </div>
+        </div>
+
+        {{ end_form() }}
+    </div>
 </section>
 <!-- ====================================== -->
 
@@ -223,12 +227,12 @@
 
 
             /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
-            var limpiarForm= false;
+            var limpiarForm = false;
             var lista, editable = false, autorizacion = false;
             var autorizadosEnviados =  {{ informacion['autorizadosEnviados'] }};
             var sinTurnos = false;
-            var turnosAutorizados = {{ informacion['cantidadAutorizados'] }};
-            var cantidadDeTurnos = {{ informacion['cantidadTurnos'] }};
+            var turnosAutorizados = document.getElementById("cantidadAutorizados").value;
+            var cantidadDeTurnos = document.getElementById("cantidadTurnos").value;
             if (turnosAutorizados >= cantidadDeTurnos) {
                 sinTurnos = true;
                 alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR.");
@@ -356,7 +360,7 @@
                     }
                     else {
                         if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "DENEGADO")
-                          $("#causaDenegado").removeClass('ocultar');
+                            $("#causaDenegado").removeClass('ocultar');
 
                         else
                             $("#causaDenegado").addClass('ocultar');
@@ -373,14 +377,12 @@
                         data: $("#form").serialize(),
                         method: "POST",
                         success: function (data) {
-
-                            //$('#solicitudes, #datos').load(document.URL +  ' #solicitudes',document.URL +  ' #datos');
                             $('#solicitudes').load(document.URL + ' #solicitudes');
                             $("#modalCrudPhalcon .modal-body").html("").html(
                                     "<p >La solicitud se edito correctamente.</p>"
                             );
                             $("#onclickBtn").hide();
-                            console.log("CONSOLE LOG " + data);//BORRAR EN PRODUCCION
+                            //console.log( data);//BORRAR EN PRODUCCION
                         },
                         error: function (error) {
                             alert(error.statusText);

@@ -66,15 +66,18 @@
                                 <br>Hasta {{ informacion['diaAtencionFinal'] }}
                             </h4>
                         </div>
-                        <div class="col-sm-4" align="left"{% if rojo == true %}style="color: red;"{% endif %}>                            <h3>
-                                <strong>
-                                    <ins>TURNOS</ins>
-                                </strong>
-                            </h3>
-                            <h4>
-                                Total: {{ informacion['cantidadTurnos'] }}<br>
-                                Autorizados: {{ informacion['cantidadAutorizados'] }}
-                            </h4>
+                        <div id="cantAutorizados">
+                            <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                                <h3>
+                                    <strong>
+                                        <ins>TURNOS</ins>
+                                    </strong>
+                                </h3>
+                                <h4>
+                                    Total: {{ informacion['cantidadTurnos'] }}<br>
+                                    Autorizados: {{ informacion['cantidadAutorizados'] }}
+                                </h4>
+                            </div>
                         </div>
                     {% endif %}
                     {{ form('turnos/guardarSolicitudManual','method':'post','style':'','class':'') }}
@@ -120,3 +123,13 @@
         </div>
     </div>
 </section>
+<script>
+    var myVar = setInterval(function () {
+        myTimer()
+    }, 1000);
+
+    function myTimer() {
+        $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
+    }
+
+</script>
