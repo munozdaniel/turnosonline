@@ -1,4 +1,4 @@
-{{ partial('index/parcial/home') }}
+{{ partial('index/parcial/bienvenido') }}
 {{ content() }}
 {{ partial('index/parcial/informacion') }}
 {{ partial('index/parcial/servicios') }}
