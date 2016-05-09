@@ -13,7 +13,7 @@ return new \Phalcon\Config(array(
     ),
     'gestionusuarios' => array(
         'adapter'     => 'Mysql',
-        'host'        => '192.168.42.14',
+        'host'        => '192.168.42.11',
         'username'    => 'root',
         'password'    => 'infoimps',
         'dbname'      => 'gestionusuarios',
