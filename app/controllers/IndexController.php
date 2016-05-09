@@ -52,7 +52,7 @@ class IndexController extends ControllerBase
                         { src: '/impsweb/public/img/inicio/4.jpg' },
                         { src: '/impsweb/public/img/inicio/5.gif' }
                       ],
-                      overlay: 'plugins/vegas/overlays/04.png'
+                      overlay: '/impsweb/public/plugins/vegas/overlays/04.png'
                     });
                ");
 
