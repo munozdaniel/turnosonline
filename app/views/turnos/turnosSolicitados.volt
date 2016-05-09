@@ -152,7 +152,7 @@
                                    onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
                                     EDITAR</a>
                             {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
-                                {% if({{ informacion['cantidadAutorizados'] }} < {{ informacion['cantidadTurnos'] }}) %}
+                                {% if( informacion['cantidadAutorizados']  <  informacion['cantidadTurnos'] ) %}
                                     <a class="btn btn-info editar btn-block"
                                        onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
                                         EDITAR</a>
