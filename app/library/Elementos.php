@@ -9,13 +9,13 @@ class Elementos extends \Phalcon\Mvc\User\Component
         $auth = $this->session->get('auth');
         if(!$auth){
             echo "<li>";
-            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-sign-in"></i>  INGRESAR');
+            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-sign-in"></i>  Iniciar Sesión');
             echo "</li>";
         }
         else{
 
             echo "<li>";
-            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-cogs"></i> '."PANEL DE CONTROL");
+            echo  $this->tag->linkTo('administrar/index', '<i class="fa fa-cogs"></i> '."Administración");
             echo "</li>";
 
             echo "<li>";
@@ -23,7 +23,7 @@ class Elementos extends \Phalcon\Mvc\User\Component
             echo "</li>";
 
             echo "<li>";
-            echo  $this->tag->linkTo('sesion/cerrar', '<i class="fa fa-sign-out"></i>  SALIR');
+            echo  $this->tag->linkTo('sesion/cerrar', '<i class="fa fa-sign-out"></i>  Cerrar Sesión');
             echo "</li>";
         }
     }

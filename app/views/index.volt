@@ -68,7 +68,6 @@
    ================================================== -->
 {{ javascript_include('js/bootstrap.min.js') }}
 <!-- For smooth animatin  -->
-{{ javascript_include('js/wow.min.js') }}
 <!-- for portfolio filter gallery -->
 {{ javascript_include('js/modernizr.custom.js') }}
 {{ javascript_include('js/classie.min.js') }}

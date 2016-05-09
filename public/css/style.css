@@ -181,20 +181,18 @@ img{
 .btn-menu{
     color: #FFF !important;
     background-color: transparent !important;
-    text-transform: uppercase;
-    font-weight: bold !important;
+}
+#miSubMenu{
+    margin-right: -65px;
 }
 #miSubMenu > li > a {
     color: #fff;
-    font-weight: 600;
-    text-transform: uppercase;
 }
 #miSubMenu > li > a:hover {
     background-color: rgba(45, 162, 200, 0.53);
 }
 #opciones-institucion > .btn {
     padding-top: 15px;
-    padding-bottom: 15px;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -462,7 +460,7 @@ img{
   display: inline;
   float: left;
   width: 100%;
-  padding: 80px 0px;
+  padding: 75px 0px;
 }
 
 
@@ -3020,7 +3018,7 @@ cursor: none;
     margin: 2px 0 0;
     font-size: 14px;
     list-style: none;
-    background-color: rgba(16, 17, 19, 0.92);
+    background-color: rgb(55, 90, 127);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid #ccc;
