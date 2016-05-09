@@ -1027,7 +1027,7 @@ class TurnosController extends ControllerBase
     private function enviarEmail($unaSolicitud, $mensaje, $tipoEstado, $unPeriodo)
     {
         if ($unaSolicitud->getSolicitudturnoEmail() != "" || $unaSolicitud->getSolicitudturnoEmail() != null) {
-            $diasConfirmacion = $unPeriodo->fechasTurnos_cantidadDiasConfirmacion;
+            $diasConfirmacion = $unPeriodo->getFechasTurnosCantidadDiasConfirmacion();
 
             $idSol = $unaSolicitud->getSolicitudturnoId();
             $correo = $unaSolicitud->getSolicitudturnoEmail();
