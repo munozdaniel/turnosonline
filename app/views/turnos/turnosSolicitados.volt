@@ -229,13 +229,13 @@
             /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
             var limpiarForm = false;
             var lista, editable = false, autorizacion = false;
-            var autorizadosEnviados =  {{ informacion['autorizadosEnviados'] }};
+            var autorizadosEnviados =   parseInt({{ informacion['autorizadosEnviados'] }});
             var sinTurnos = false;
-            var turnosAutorizados = document.getElementById("cantidadAutorizados").value;
-            var cantidadDeTurnos = document.getElementById("cantidadTurnos").value;
+            var turnosAutorizados =  parseInt(document.getElementById("cantidadAutorizados").value);
+            var cantidadDeTurnos =  parseInt(document.getElementById("cantidadTurnos").value);
             if (turnosAutorizados >= cantidadDeTurnos) {
                 sinTurnos = true;
-                alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR.");
+                alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR."+turnosAutorizados +">="+ cantidadDeTurnos);
 
             }
             lista = ['REVISION'];
