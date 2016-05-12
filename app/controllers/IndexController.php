@@ -50,9 +50,10 @@ class IndexController extends ControllerBase
                       animation: 'random',
                       animationDuration: 20000,
                       slides: [
-                        { src: '/impsweb/public/img/inicio/1.jpg' },
-                        { src: '/impsweb/public/img/inicio/4.jpg' },
-                        { src: '/impsweb/public/img/inicio/5.gif' }
+                        { src: '/impsweb/public/img/inicio/01_ini.jpg' },
+                        { src: '/impsweb/public/img/inicio/02_ini.jpg' },
+                        { src: '/impsweb/public/img/inicio/03_ini.jpg' },
+                        { src: '/impsweb/public/img/inicio/4.jpg' }
                       ],
                       overlay: '/impsweb/public/plugins/vegas/overlays/04.png'
                     });

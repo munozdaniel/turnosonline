@@ -4,12 +4,15 @@ class SesionController extends ControllerBase
 {
     public function initialize()
     {
-        $this->tag->setTitle('Iniciar Sesión');
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         parent::initialize();
     }
 
     public function indexAction()
     {
+        $this->tag->setTitle('Iniciar Sesión');
+
     }
 
     /**
@@ -17,6 +20,8 @@ class SesionController extends ControllerBase
      */
     public function validarAction()
     {
+        $this->tag->setTitle('Inicio de Sesión');
+
         if($this->request->isPost())
         {
             try
@@ -87,6 +92,8 @@ class SesionController extends ControllerBase
      */
     public function cerrarAction()
     {
+        $this->tag->setTitle('Cerrando Sesión');
+
         $this->session->remove('auth');
         $this->flash->success('Se ha cerrado la sesión.');
         return $this->redireccionar("index/index");
@@ -95,7 +102,10 @@ class SesionController extends ControllerBase
      * Busca con el email del empleado los datos usuario y contraseña, y los envia al correo ingresado por formulario.
      */
     public function recuperarAction()
-    {   $this->view->pick('sesion/index');
+    {
+        $this->tag->setTitle('Recuperar Contraseña');
+
+        $this->view->pick('sesion/index');
         if($this->request->isPost())
         {
             $email  = $this->request->getPost('sesion_email');
