@@ -23,8 +23,10 @@ class IndexController extends ControllerBase
         $this->view->setTemplateAfter('main');
         $this->assets->collection('headerCss')
             ->addCss('css/slick.css')
-            ->addCss('plugins/vegas/vegas.css')
-            ->addCss('css/superslides.css');
+            ->addCss('plugins/vegas/vegas.css');
+            //->addCss('css/superslides.css');
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         $this->assets->collection('footer')
             ->addJs('js/jquery.min.js')
             //->addJs('js/menu.js')
@@ -33,7 +35,7 @@ class IndexController extends ControllerBase
             ->addJs('js/jquery.ui.map.js')
             ->addJs('https://maps.googleapis.com/maps/api/js',false)
             ->addJs('js/customIndex.js')
-            ->addJs('js/redireccionarSeccion.js')
+            //->addJs('js/redireccionarSeccion.js')
             ->addJs('plugins/vegas/vegas.min.js')
         ;
           $this->assets->collection('footerInline')

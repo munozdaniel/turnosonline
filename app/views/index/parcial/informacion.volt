@@ -160,7 +160,7 @@
 
                 </div>
             </div>
-
+{#
             <div class="col-lg-12 col-md-12">
                 <!-- START ABOUT HEADING -->
                 <div class="heading">
@@ -242,6 +242,7 @@
             </div>
         </div>
     </div>
+    #}
     <!-- ==========================MODALES============================= -->
     <!-- Modal Info Optica -->
     <div id="info-optica" class="modal fade">

@@ -37,23 +37,154 @@
         font-size: 1.7em;
     }
 
-    .p {
+    /*.p {
         font-size: 2em;
     }
+
+    .tablas-news {
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 0 10px #000;
+        text-shadow: 0 0 5px #000;
+        color: #fff;
+
+    }*/
+
+    /* .a {
+         position: absolute;
+         left: 1em;
+         bottom: 3em;
+         border: 3px solid #fff;
+         border-radius: 8px;
+         box-shadow: 0 0 10px #000;
+         padding: 20px 40px;
+         text-align: center;
+         text-decoration: none;
+         text-shadow: 0 0 5px #000;
+         font-size: 13px;
+         color: #fff;
+         animation: pulse 4s infinite;
+
+     }*/
 
     .container-bottom {
         position: absolute;
         bottom: 2em;
-        right: 2em;
+        right: 0;
     }
 </style>
-<section id="inicio-slider" style="height: 600px">
 
+<div class="col-sm-12 col-xs-12 col-md-7 col-lg-8 novedades_slider" align="center">
+    <h3 class=""><strong>NOVEDADES</strong> </h3>
+
+    <div class="nov slider responsive">
+        <div class="col-xs-12 col-sm-12  col-md-3 col-lg-4">
+
+            <div class="thumbnail">
+                {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
+                <div class="caption">
+                    <p>
+                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        <i class="fa fa-calendar"></i> <small>01/05/2016</small>
+                    </p>
+                    <strong>REVISTA IMPS</strong><br>
+                    <small>Todos los meses publicaremos una nueva edición.</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
+
+            <div class="thumbnail">
+                {{ image('img/informacion/n_turnos.jpg','alt':'Guía para Solicitar Turno') }}
+                <div class="caption">
+                    <p>
+                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        <i class="fa fa-calendar"></i> <small>11/04/2016</small>
+                    </p>
+                    <strong>TURNOS ONLINE</strong><br>
+                    <small>Proximámente habilitaremos un nuevo servicio.</small>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
+
+            <div class="thumbnail">
+                {{ image('img/informacion/n_jub.jpg','alt':'Impuestos a la ganancia') }}
+                <div class="caption">
+                    <p>
+                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        <i class="fa fa-calendar"></i> <small>01/03/2016</small>
+                    </p>
+                    <strong>JUB. Y PENSIONADOS</strong><br>
+                    <small>Información Impuestos a las Ganancias Periodo Fiscal 2015</small>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
+
+            <div class="thumbnail">
+                {{ image('img/informacion/n-emprendimiento.jpg','alt':'Emprendimiento Marimenuco') }}
+                <div class="caption">
+                    <p>
+                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        <i class="fa fa-calendar"></i> <small>01/05/2014</small>
+                    </p>
+                    <strong>EMPRENDIMIENTO </strong><br>
+                    <small>Instituto Municipal de Previsión Social</small>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<section id="inicio-slider" style="height: 600px">
     <div class=" body container-bottom pull-right">
-        <h1 class="h1">IMPS</h1>
+        <h1 class="h1 strong">IMPS</h1>
 
         <h2 class="h2">Instituto Municipal </h2>
 
-        <p class="p">de Previsión Social</p>
+        <h2 class="h2">de Previsión Social</h2>
     </div>
 </section>
+
+<!--
+<div class="tablas-news col-md-7" style="height: 275px; background-color: rgba(238, 238, 238, 0.8); margin-top: 14em;">
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
+                    <div class="caption">
+                        <h3>Thumbnail label</h3>
+                        <p>...</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
+                    <div class="caption">
+                        <h3>Thumbnail label</h3>
+                        <p>...</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
+                    <div class="caption">
+                        <h3>Thumbnail label</h3>
+                        <p>...</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+-->
