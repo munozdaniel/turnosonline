@@ -8,7 +8,7 @@
                 </h1>
                 <table class="" width="100%">
                     <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-home'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                        <td align="right">{{ link_to("sesion/cerrar", "<i class='fa fa-home'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
                     </tr>
                 </table>
 
