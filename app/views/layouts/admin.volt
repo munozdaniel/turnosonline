@@ -21,7 +21,7 @@
                     <li>{{ link_to('index/index#service','class':'','Servicios') }}</li>
                     <li>{{ link_to('index/index#works','class':'','Guía de Tramites') }}</li>
                     <li>{{ link_to('index/index#team','class':'','Prestaciones' )}}</li>
-                    <li>{{ link_to('index/index#clients','class':'si_recorrer','Contactos' )}}</li>
+                    <li>{{ link_to('index/index#clients','class':'','Contactos' )}}</li>
                     <li id="opciones-institucion" class="dropdown">
                         <button class="btn btn-menu dropdown-toggle" type="button" id="desplegar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Institución
