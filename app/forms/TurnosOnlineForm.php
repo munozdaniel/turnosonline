@@ -37,8 +37,8 @@ class TurnosOnlineForm extends Form
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'El apellido demasiado corto.',
                     'max' => 30,
+                    'messageMinimum' => 'El apellido demasiado corto.',
                     'messageMaximun' => 'El apellido demasiado largo.',
                 )),
             )
@@ -62,8 +62,8 @@ class TurnosOnlineForm extends Form
                 ),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'El nombre demasiado corto.',
                     'max' => 30,
+                    'messageMinimum' => 'El nombre demasiado corto.',
                     'messageMaximun' => 'El nombre demasiado largo.',
                 )),
             )
@@ -93,8 +93,8 @@ class TurnosOnlineForm extends Form
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 4,
-                    'messageMinimum' => 'El legajo debe tener como minimo 4 digitos.',
                     'max' => 12,
+                    'messageMinimum' => 'El legajo debe tener como minimo 4 digitos.',
                     'messageMaximun' => 'El legajo debe tener como maximo 12 digitos.',
                 )),
             )
@@ -123,9 +123,9 @@ class TurnosOnlineForm extends Form
                 new NumberValidator(),
                 new StringLength(array(
                     'min' => 4,
+                    'max' => 10,
                     'messageMinimum' => 'El nro de documento debe tener como minimo 4 digitos.',
-                    'max' => 12,
-                    'messageMaximun' => 'El nro de documento debe tener como maximo 12 digitos.',
+                    'messageMaximum' => 'El nro de documento debe tener como maximo 12 digitos.',
                 ))
             )
         );
@@ -163,11 +163,11 @@ class TurnosOnlineForm extends Form
                 ),
                 new NumberValidator(),
                 new StringLength(array(
-                    'min' => 6,
-                    'messageMinimum' => 'El numero de telefono debe tener como minimo 6 digitos.',
-                    'max' => 14,
-                    'messageMaximun' => 'El numero de telefono debe tener como maximo 14 digitos.',
-                )),
+                    'min' => 4,
+                    'max' => 12,
+                    'messageMinimum' => 'El nro de télefono debe tener como minimo 4 digitos.',
+                    'messageMaximum' => 'El nro de télefono debe tener como maximo 12 digitos.',
+                ))
             )
         );
         $this->add($telefono);
