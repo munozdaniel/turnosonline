@@ -430,18 +430,14 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Verifica si la cancelacion se realiza 48hs antes de la asistencia.
-     * @return bool
+     * Verifica que la fecha en la que solicitó el turno no haya pasado las 96hs
      */
-    public static function verificaCancelacionDentro48Hs()
+    public static function verificarConfirmacionDentroPlazoValido($fechaSolicitud)
     {
-        //FIXME: PREGUNTAR SI ES DENTRO DE LAS 48HS
-        $ultimoPeriodo = Fechasturnos::findFirst(array("fechasTurnos_activo = 1"));
-        if(!$ultimoPeriodo)
-            return false;
-        $nuevafecha = strtotime ( '-2 day' , strtotime ( $ultimoPeriodo->getFechasturnosDiaatencion() ) ) ;
-        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
-        if(date('Y-m-d')< $nuevafecha)
+        $fechaLimiteConfirmacion = strtotime ( '+4 day' , strtotime ( $fechaSolicitud ) ) ;
+        $fechaLimiteConfirmacion = date('Y-m-d', $fechaLimiteConfirmacion);
+        $fechaSolicitud = (new DateTime($fechaSolicitud))->format('Y-m-d');
+        if($fechaSolicitud<=$fechaLimiteConfirmacion)
             return true;
         return false;
     }

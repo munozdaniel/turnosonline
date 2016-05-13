@@ -2907,6 +2907,7 @@ cursor: none;
 
 
 /*Validadores Alerts*/
+
 .font-rojo{
     color: #D23B3B;
 }
@@ -3394,6 +3395,7 @@ input[type=number]::-webkit-outer-spin-button {
 .font-azul{
     color: #0e76a8;
 }
+
 .borde-bottom-5-verde{
     border-bottom: 3px solid rgba(13, 143, 78, 0.2);
 }
@@ -3428,6 +3430,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .fondo-verde{
     background-color: rgba(24, 143, 9, 0.32);
+}
+.strong-azul{
+    background-color: rgba(0, 122, 255, 0.100);
+    color: #0572A2;
 }
 .banner-top {
     text-align: left;
@@ -3627,4 +3633,15 @@ input[type=number]::-webkit-outer-spin-button {
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
 
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout-danger {
+    border-left-color: #1b809e;
 }
