@@ -24,7 +24,7 @@
                             </span>
                         <div class="box-info">
                             <p class="size-h2"><strong>Listado</strong></p>
-                            <p class="text-muted">Turnos Solicitados</p>
+                            <p class="text-muted">de Turnos Solicitados</p>
                         </div>
                     </div>') }}
                 </div>
@@ -38,7 +38,7 @@
                         <div class="box-info">
                             <p class="size-h2"><strong>Listado</strong></p>
 
-                            <p class="text-muted">Respuestas Enviadas</p>
+                            <p class="text-muted">de Respuestas Enviadas</p>
                         </div>
                     </div>') }}
                 </div>
@@ -52,21 +52,7 @@
                         <div class="box-info">
                             <p class="size-h2"><strong>Listado</strong></p>
 
-                            <p class="text-muted">Turnos Cancelados</p>
-                        </div>
-                    </div>') }}
-                </div>
-                <div class="col-sm-4">
-                    {{ link_to('turnos/solicitudManual','
-                    <div class="panel mini-box">
-                            <span class="box-icon bg-red-pl">
-                                <i class="fa fa-ticket"></i>
-                            </span>
-
-                        <div class="box-info">
-                            <p class="size-h2"><strong>Solicitud Manual</strong></p>
-
-                            <p class="text-muted">Turno</p>
+                            <p class="text-muted">de Turnos Cancelados</p>
                         </div>
                     </div>') }}
                 </div>
