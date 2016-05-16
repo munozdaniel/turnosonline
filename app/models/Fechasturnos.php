@@ -399,6 +399,7 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         return false;
     }
     /**
+     * NO USAR (?
      * Verifica si en la fecha de hoy ya vencio el plazo para confirmar el turno.
      * @param $cantidadDias
      * @param $fechaInicioSolicitud
@@ -431,6 +432,7 @@ class Fechasturnos extends \Phalcon\Mvc\Model
 
     /**
      * Verifica que la fecha en la que solicitó el turno no haya pasado las 96hs
+     * @return boolean true si esta dentro del periodo, false si no lo está.
      */
     public static function verificarConfirmacionDentroPlazoValido($fechaSolicitud)
     {
