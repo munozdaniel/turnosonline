@@ -543,19 +543,11 @@ class TurnosController extends ControllerBase
                 {
                     if ($ultimoPeriodo->getFechasturnosCantidaddeturnos() == $ultimoPeriodo->getFechasturnosCantidadautorizados()) {
                         $solicitudTurno->setSolicitudturnoEstado('DENEGADO POR FALTA DE TURNOS');
-                        $solicitudTurno->setSolicitudturnoMontomax(0);
-                        $solicitudTurno->setSolicitudturnoMontoposible(0);
-                        $solicitudTurno->setSolicitudturnoCantcuotas(0);
-                        $solicitudTurno->setSolicitudturnoValorcuota(0);
-                        $solicitudTurno->setSolicitudturnoObservaciones('-');
+                        $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('solicitudTurno_observaciones', array('string')));
                         $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
                         $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
                     } else {
                         Fechasturnos::incrementarCantAutorizados();
-                        $solicitudTurno->setSolicitudturnoMontomax($this->request->getPost('solicitudTurno_montoMax', array('int', 'trim')));
-                        $solicitudTurno->setSolicitudturnoMontoposible($this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim')));
-                        $solicitudTurno->setSolicitudturnoCantcuotas($this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim')));
-                        $solicitudTurno->setSolicitudturnoValorcuota($this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim')));
                         $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('solicitudTurno_observaciones', array('string')));
                         $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
                         $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
@@ -569,23 +561,12 @@ class TurnosController extends ControllerBase
                         if ($estadoAntiguo != "AUTORIZADO" && $estadoNuevo == "AUTORIZADO")
                             Fechasturnos::incrementarCantAutorizados();
                     }
-
                     //Verificamos si se puede editar todos los campos.
-                    //if ($this->request->getPost('editable') == 1) {
                     if ($estadoNuevo == "REVISION" || $estadoNuevo == "AUTORIZADO") {
-                        $solicitudTurno->setSolicitudturnoMontomax($this->request->getPost('solicitudTurno_montoMax', array('int', 'trim')));
-                        $solicitudTurno->setSolicitudturnoMontoposible($this->request->getPost('solicitudTurno_montoPosible', array('int', 'trim')));
-                        $solicitudTurno->setSolicitudturnoCantcuotas($this->request->getPost('solicitudTurno_cantCuotas', array('int', 'trim')));
-                        $solicitudTurno->setSolicitudturnoValorcuota($this->request->getPost('solicitudTurno_valorCuota', array('int', 'trim')));
                         $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('solicitudTurno_observaciones', array('string')));
                         $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
                         $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
                     } else {
-                        $solicitudTurno->setSolicitudturnoMontomax(0);
-                        $solicitudTurno->setSolicitudturnoMontoposible(0);
-                        $solicitudTurno->setSolicitudturnoCantcuotas(0);
-                        $solicitudTurno->setSolicitudturnoValorcuota(0);
-
                         if ($estadoNuevo == "DENEGADO")
                             $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('causa'));
                         else
@@ -1136,10 +1117,6 @@ class TurnosController extends ControllerBase
             $idSol = $unaSolicitud->getSolicitudturnoId();
             $correo = $unaSolicitud->getSolicitudturnoEmail();
             $nomApe = $unaSolicitud->getSolicitudturnoNomape();
-            $montoM = $unaSolicitud->getSolicitudturnoMontomax();
-            $montoP = $unaSolicitud->getSolicitudturnoMontoposible();
-            $cantCuotas = $unaSolicitud->getSolicitudturnoCantcuotas();
-            $valorCuota = $unaSolicitud->getSolicitudturnoValorcuota();
             $obs = $unaSolicitud->getSolicitudturnoObservaciones();
 
             $this->mailDesarrollo->CharSet = 'UTF-8';
@@ -1165,9 +1142,7 @@ class TurnosController extends ControllerBase
                 . "<a href='http://imps.org.ar/impsweb/' target='_blank'>hacer click aquí.</a></p>";
 
             if ($tipoEstado == 'A') {
-                $cad1 = "Además, a modo informativo, le avisamos que el monto máximo que se le puede prestar es $" . $montoM . ", el monto posible que se le puede otorgar es $" . $montoP;
-                $cadena = $cad1 . ", la cantidad máxima de cuotas es " . $cantCuotas . " y el valor de cada una de ellas es de $" . $valorCuota . '.<br/>';
-
+               $cadena="";
                 if ($obs != '-' && $obs != '')
                     $cadena .= "Nota: " . $obs . "<br/>";
 

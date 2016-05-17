@@ -20,7 +20,7 @@
     }
 
     .td-observaciones {
-        max-width: 180px !important;
+        max-width: 230px !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
@@ -98,18 +98,14 @@
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                 <tr>
+                    <th class="th-estilo">Fecha solicitud</th>
+                    <th class="th-estilo">Tipo</th>
                     <th class="th-estilo">Legajo</th>
                     <th class="th-estilo">Apellido y nombre</th>
-                    <th class="th-estilo">Fecha solicitud</th>
-                    <th class="th-estilo">Estado</th>
-                    <th class="th-estilo">Monto maximo</th>
-                    <th class="th-estilo">Monto posible</th>
-                    <th class="th-estilo">Máximo de cuotas</th>
-                    <th class="th-estilo">Valor cuota</th>
-                    <th class="th-estilo">Observaciones</th>
                     <th class="th-estilo">Fecha revisión</th>
-                    <th class="th-estilo">Empleado</th>
-                    <th class="th-estilo">Tipo</th>
+                    <th class="th-estilo">Atendido por</th>
+                    <th class="th-estilo">Estado</th>
+                    <th class="th-estilo">Observaciones</th>
                     <th class="th-estilo">EDITAR</th>
                 </tr>
                 </thead>
@@ -117,21 +113,14 @@
 
                 {% for item in page.items %}
                     <tr>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoLegajo() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoNomApe() }}</td>
                         <td class="td-estilo">
                             {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
                         </td>
-                        <td class="td-estilo"><strong><a
-                                        class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
-                        </td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoMontoMax() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoMontoPosible() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoCantCuotas() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoValorCuota() }}</td>
-                        <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
-                            {{ item.getSolicitudTurnoObservaciones() }}
-                        </td>
+                        <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoLegajo() }}</td>
+                        <td class="td-estilo">{{ item.getSolicitudTurnoNomApe() }}</td>
+
+
                         <td class="td-estilo">
                             {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
                                 {% set fechaModif = date('d/m/Y',(item.getSolicitudTurnoFechaProcesamiento()) | strtotime) %}
@@ -142,8 +131,12 @@
                             {{ fechaModif }}
                         </td>
                         <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
-                        <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
-
+                        <td class="td-estilo"><strong><a
+                                        class="btn btn-block btn-default"> {{ item.getSolicitudTurnoEstado() }}</a></strong>
+                        </td>
+                        <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
+                            {{ item.getSolicitudTurnoObservaciones() }}
+                        </td>
                         <td width="7%">
                             {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
                             OR (session.get('auth')['rol_nombre']== "ADMIN")
@@ -309,20 +302,11 @@
                 html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
             }
 
-            html += '<div> <label for="solicitudTurno_montoMax">Monto Máximo</label>';
-            html += '<input type="number" min="0" id="solicitudTurno_montoMax" name="solicitudTurno_montoMax"  required="true" title="Ingrese numeros únicamente" placeholder="INGRESE EL MONTO MÁXIMO"  value="' + json.solicitudTurno_montoMax + '" class="form-control"></div>';
-            html += '<div> <label for="solicitudTurno_montoPosible">Monto Posible</label>';
-            html += '<input type="number" min="0" id="solicitudTurno_montoPosible" name="solicitudTurno_montoPosible"   title="Ingrese numeros unicamente" placeholder="INGRESE EL MONTO POSIBLE" required="true" value="' + json.solicitudTurno_montoPosible + '" class="form-control"></div>';
-            html += '<div> <label for="solicitudTurno_cantCuotas">Máximo de Cuotas</label>';
-            html += '<input type="number" min="0" id="solicitudTurno_cantCuotas" name="solicitudTurno_cantCuotas"  required="true"  title="Ingrese numeros unicamente" placeholder="INGRESE LA CANTIDAD DE CUOTAS" value="' + json.solicitudTurno_cantCuotas + '" class="form-control"></div>';
-            html += '<div> <label for="solicitudTurno_valorCuota">Valor de las Cuotas</label>';
-            html += '<input type="number" min="0" id="solicitudTurno_valorCuota" name="solicitudTurno_valorCuota"  required="true"  title="Ingrese numeros unicamente" placeholder="INGRESE EL VALOR DE LAS CUOTAS" value="' + json.solicitudTurno_valorCuota + '" class="form-control"></div>';
             html += '<div id="observacion" >';
             html += '<label for="solicitudTurno_observaciones">Observaciones</label>';
             html += '<textarea id="solicitudTurno_observaciones" maxlength="150"class="form-control" name="solicitudTurno_observaciones" placeholder="INGRESE UNA OBSERVACIÓN" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
             html += '</div>';
             html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control">';
-
             html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control">';
             html += '</div>';//fin campos_editables
             if (json.solicitudTurno_estado == "DENEGADO") {
@@ -336,7 +320,7 @@
             html += '<select id="causa" name="causa" class="form-control" >';
             html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO">No cumple con el 50% capital adeudado</option>';
             html += '<option value="SE ENCUENTRA EN ROJO">Se encuentra en rojo</option>';
-            html += '<option value="NO CUMPLE CON LA ANTIGUEDAD">No cumple con la antiguedad</option>';
+            html += '<option value="NO CUMPLE CON LA ANTIGUEDAD">No cumple con la antigüedad</option>';
             html += '<option value="REFINANCIACION TOTAL">Tiene refinanciación total</option>';
             html += '</select>';
             html += '</div>';
