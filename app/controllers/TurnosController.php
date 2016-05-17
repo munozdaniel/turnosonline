@@ -157,143 +157,6 @@ class TurnosController extends ControllerBase
     }
 
     /**
-     * Muestra el formulario para guardar un solicitud manual.
-     */
-    public function solicitudManualAction()
-    {
-        $ultimoPeriodo = Fechasturnos::findFirst(array('fechasTurnos_activo=1'));
-        $this->view->formulario = new TurnosOnlineForm(null, array('manual' => true));
-        //Verificamos si existe un periodo disponible.
-        if (!$ultimoPeriodo) {
-            $this->flash->error("<h3>NO HAY NINGÚN PERIODO DISPONIBLE</h3>");
-            $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h3><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h3>", 'class' => 'text-decoration-none ')));
-            return $this->redireccionar('administrar/index');
-
-        }
-        //Verifificamos si el plazo para solicitar turnos venció.
-        if (!$ultimoPeriodo->esPlazoParaSolicitarTurno()) {
-            $this->flash->error("<h3>EL PLAZO PARA SOLICITAR TURNO NO ESTÁ HABILITADO </h3>");
-            $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h3><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h3>", 'class' => 'text-decoration-none ')));
-            return $this->redireccionar('administrar/index');
-
-        }
-
-        $info = array();
-        $info['cantidadAutorizados'] = $ultimoPeriodo->getFechasturnosCantidadautorizados();
-        $info['cantidadTurnos'] = $ultimoPeriodo->getFechasturnosCantidaddeturnos();
-        $info['fechaInicio'] = date('d/m/Y', strtotime($ultimoPeriodo->getFechasturnosIniciosolicitud()));
-        $info['fechaFinal'] = date('d/m/Y', strtotime($ultimoPeriodo->getFechasturnosFinsolicitud()));
-        $info['diaAtencion'] = date('d/m/Y', strtotime($ultimoPeriodo->getFechasturnosDiaatencion()));
-        $info['diaAtencionFinal'] = date('d/m/Y', strtotime($ultimoPeriodo->getFechasturnosDiaatencionfinal()));
-        $this->view->informacion = $info;
-        if (Fechasturnos::verificaSiHayTurnos($ultimoPeriodo)) {
-            $this->view->rojo = true;
-        } else {
-            $this->view->rojo = false;
-        }
-
-    }
-
-    /**
-     * Guarda la solicitud manual.
-     */
-    public function guardarSolicitudManualAction()
-    {
-        if (!$this->request->isPost()) {
-            $this->redireccionar('index/index');
-        }
-
-        $turnoManualForm = new TurnosOnlineForm(null, array('manual' => true));
-        $ultimoPeriodo = Fechasturnos::findFirst(array('fechasTurnos_activo=1'));
-        if ($turnoManualForm->isValid($this->request->getPost()) != false) {
-            $this->db->begin();
-            //Filtrando
-            $legajo = $this->request->getPost('solicitudTurno_legajo', array('alphanum', 'trim'));
-            $nombre = $this->request->getPost('solicitudTurno_nom', array('striptags', 'string', 'upper'));
-            $nombre = rtrim($nombre);
-            $nombre = ltrim($nombre);
-            $apellido = $this->request->getPost('solicitudTurno_ape', array('striptags', 'string', 'upper'));
-            $apellido = rtrim($apellido);
-            $apellido = ltrim($apellido);
-            $documento = $this->request->getPost('solicitudTurno_documento', array('alphanum', 'trim', 'string'));
-            $numTelefono = $this->request->getPost('solicitudTurno_numTelefono', 'int');
-            $estado = $this->request->getPost('estado');
-            $miSesion = $this->session->get('auth');
-            $nickActual = $miSesion['usuario_nick'];
-            $email = $this->request->getPost('solicitudTurno_email');
-            //Volvemos a comprobar en caso que haya tardado mucho en llenar el formulario.
-            //Verificamos si existe un periodo disponible.
-            if (!$ultimoPeriodo) {
-                $this->flash->error("<h3>NO HAY NINGÚN PERIODO DISPONIBLE</h3>");
-                $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h3><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h3>", 'class' => 'text-decoration-none ')));
-                return $this->redireccionar('administrar/index');
-
-            }
-            //Verifificamos si el plazo para solicitar turnos venció.
-            if (!$ultimoPeriodo->esPlazoParaSolicitarTurno()) {
-                $this->flash->error("<h3>EL PLAZO PARA SOLICITAR TURNO NO ESTÁ HABILITADO </h3>");
-                $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h3><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h3>", 'class' => 'text-decoration-none ')));
-                return $this->redireccionar('administrar/index');
-
-            }
-            //verificamos si hay turnos disponibles.
-            if (!$ultimoPeriodo->hayTurnosDisponibles()) {
-                $this->flash->error("<h3>LAMENTABLEMENTE NO HAY TURNOS DISPONIBLES</h3>");
-                $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h3><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h3>", 'class' => 'text-decoration-none ')));
-                return $this->redireccionar('administrar/index');
-            }
-
-            $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
-            if ($nombreCompleto == "") {
-                $this->flash->error('<h3>EL AFILIADO NO ESTA REGISTRADO EN EL SISTEMA O ALGUNO DE LOS DATOS INGRESADOS SON INCORRECTOS.</h3>');
-                return $this->redireccionar('turnos/solicitudManual');
-            }
-            if ($this->tieneTurnoSolicitado($legajo, $nombreCompleto, null)) {
-                $this->flash->error('<h3>EL AFILIADO YA SOLICITO UN TURNO, POR LO CUAL NO SE PUEDE INGRESAR ESTA SOLICITUD.</h3>');
-                return $this->redireccionar('turnos/solicitudManual');
-            }
-            $codigo = null;
-            if ($estado == "AUTORIZADO") {
-                $codigo = $this->getRandomCode($ultimoPeriodo->getFechasturnosId());
-            }
-            $solicitud = Solicitudturno::accionAgregarUnaSolicitudManual($legajo, $nombreCompleto,
-                $documento, $numTelefono, $estado, $nickActual, $ultimoPeriodo->getFechasturnosId(), $email, $codigo);
-            if (empty($solicitud)) {
-                $this->flash->error("<h3>OCURRIÓ UN PROBLEMA AL GUARDAR LOS DATOS, POR FAVOR INTENTELO NUEVAMENTE.
-                        EN CASO QUE EL PROBLEMA PERSISTA COMUNICARSE CON EL SOPORTE TÉCNICO.</h3>");
-                $this->db->rollback();
-                return $this->redireccionar('turnos/solicitudManual');
-            }
-            $ultimoPeriodo->setFechasturnosCantidadautorizados($ultimoPeriodo->getFechasturnosCantidadautorizados() + 1);
-            if (!$ultimoPeriodo->update()) {
-                $this->flash->error("<h3>OCURRIÓ UN PROBLEMA AL ACTUALIZAR LA CANTIDAD DE AUTORIZADOS.</h3>");
-                $this->db->rollback();
-                return $this->redireccionar('turnos/solicitudManual');
-            }
-            $turnoManualForm->clear();
-            $boton = $this->tag->form(array('turnos/comprobanteTurnoPost', 'method' => 'POST'));
-            $encode = base64_encode($solicitud->getSolicitudturnoId());
-            $boton .= $this->tag->hiddenField(array('solicitud_id', 'value' => $encode));
-            $boton .= "<button type='submit' class='btn btn-info btn-lg' formtarget='_blank'><i class='fa fa-print'></i> IMPRIMIR COMPROBANTE DE TURNO</button>";
-            $boton .= "</form>";
-            $this->flash->notice($boton);
-
-            $this->db->commit();
-            $this->view->formulario = $turnoManualForm;
-            return $this->redireccionar('turnos/solicitudManual');
-
-        } else {
-            foreach ($turnoManualForm->getMessages() as $mensaje) {
-                $this->flash->error($mensaje);
-            }
-            return $this->redireccionar('turnos/solicitudManual');
-
-        }
-
-
-    }
-
-    /**
      * Verifica que los datos ingresados por parametros se encuentren en la bd de siprea.
      * @param $legajo int corresponde al legajo del afiliado.
      * @param $nombreCompleto String corresponde a los apellidos concatenados con los nombres, separados por espacio.
@@ -659,12 +522,11 @@ class TurnosController extends ControllerBase
         $datos = array();
 
         $fechaTurnos = Fechasturnos::findFirst(array('fechasTurnos_activo=1'));//Obtengo el periodo activo.
-        $solicitudesOnline = array();
 
         if ($fechaTurnos) {
             $solicitudes = Solicitudturno::find(array('solicitudTurnos_fechasTurnos = :fechasTurnos_id:',
                 'bind' => array('fechasTurnos_id' => $fechaTurnos->getFechasturnosId()),
-                'order' => 'solicitudTurno_fechaProcesamiento ASC'));
+                'order' => 'solicitudTurno_fechaRespuestaEnviada ASC'));
 
             foreach ($solicitudes as $unaSolicitud) {
                 if ($unaSolicitud->getSolicitudturnoRespuestaenviada() == 'SI') {
@@ -754,8 +616,6 @@ class TurnosController extends ControllerBase
                 }
             }
         }
-
-
         $retorno['data'] = $datos;
         echo json_encode($retorno);
         return;
@@ -935,20 +795,28 @@ class TurnosController extends ControllerBase
         $solicitudTurno->setSolicitudturnoFechaconfirmacion(date('Y-m-d'));
         $solicitudTurno->setSolicitudturnoRespuestachequeada(1);
         $solicitudTurno->setSolicitudturnoCancelado(0);
+        $mensajeCodigo= "";
         if ($solicitudTurno->getSolicitudturnoEstado() == "AUTORIZADO") {
             if (!$periodo->incrementarCantAutorizados()) {
                 $this->db->rollback();
                 $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
                     de que el problema persista comuniquesé con el Soporte Técnico.";
             }
+            if ($solicitudTurno->getSolicitudturnoCodigo() == null || trim($solicitudTurno->getSolicitudturnoCodigo()) == "")
+            {
+                $codigo = $this->getRandomCode($periodo->getFechasTurnosId());
+                $solicitudTurno->setSolicitudturnoCodigo($codigo);
+            }
+            $mensajeCodigo = "<br> Presentarse en nuestras oficinas con el código: <strong> ".$solicitudTurno->getSolicitudturnoCodigo()."</strong>";
         }
+
         if (!$solicitudTurno->update()) {
             $this->db->rollback();
             $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos. Intentelo nuevamente, en caso
                 de que el problema persista comuniquesé con el Soporte Técnico.";
         }
         $this->db->commit();
-        $retorno['mensaje'] = "Operación Exitosa, el turno ha sido confirmado.";
+        $retorno['mensaje'] = "Operación Exitosa, el turno ha sido confirmado. $mensajeCodigo";
         echo json_encode($retorno);
         return;
     }
@@ -1096,13 +964,7 @@ class TurnosController extends ControllerBase
         foreach ($solicitudes as $solicitud) {
 
             if ($solicitud->getSolicitudturnoTipoturnoid() == 2) {
-                //Es un turno solicitado por la terminal.
-                if ($tipoEstado == 'A') {
-                    //Está Autorizado, generar codigo
-                    $codigo = $this->getRandomCode($ultimoPeriodo->getFechasTurnosId());
-                    $solicitud->setSolicitudturnoCodigo($codigo);
-                }
-                $solicitud->setSolicitudTurnoFechaConfirmacion(date('Y-m-d H:i:s'));
+                $solicitud->setSolicitudTurnoFecharespuestaenviada(date('Y-m-d H:i:s'));
                 if (!$solicitud->update()) {
                     $this->flash->error("Ocurrió un error al generar el codigo de turno para el afiliado con legajo: " . $solicitud->getSolicitudTurnoLegajo());
                 }
@@ -1221,7 +1083,6 @@ class TurnosController extends ControllerBase
         } else {
             if ($estado == 'AUTORIZADO') {
 
-
                 $idCodificado = base64_encode($solicitud->getSolicitudturnoId());
                 $boton = $this->tag->form(array('turnos/comprobanteTurnoPost', 'method' => 'POST'));
                 $boton .= $this->tag->hiddenField(array('solicitud_id', 'value' => $idCodificado));
@@ -1249,9 +1110,11 @@ class TurnosController extends ControllerBase
                 }
                 $solicitud->setSolicitudturnoRespuestachequeada(1);
                 $solicitud->setSolicitudturnoFechaconfirmacion(Date('Y-m-d H:i:s'));
-                $codigo = $this->getRandomCode($ultimoPeriodo->getFechasturnosId());
-                $solicitud->setSolicitudturnoCodigo($codigo);
-
+                if ($solicitud->getSolicitudturnoCodigo() == null || trim($solicitud->getSolicitudturnoCodigo()) == "")
+                {
+                    $codigo = $this->getRandomCode($ultimoPeriodo->getFechasTurnosId());
+                    $solicitud->setSolicitudturnoCodigo($codigo);
+                }
                 if (!$solicitud->update()) {
                     $this->flash->error("<h3><i class='fa fa-warning'></i> OCURRIÓ UN PROBLEMA AL PROCESAR LA SOLICITUD, POR FAVOR INTENTELO NUEVAMENTE.</h3>");
                     $this->db->rollback();
