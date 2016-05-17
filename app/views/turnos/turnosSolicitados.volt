@@ -15,7 +15,7 @@
     }
 
     .td-estilo {
-        text-align: center;
+        vertical-align: middle text-align : center;
         width: 180px
     }
 
@@ -98,10 +98,9 @@
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                 <tr>
-                    <th class="th-estilo">Fecha solicitud</th>
                     <th class="th-estilo">Tipo</th>
-                    <th class="th-estilo">Legajo</th>
-                    <th class="th-estilo">Apellido y nombre</th>
+                    <th class="th-estilo">Fecha solicitud</th>
+                    <th class="th-estilo">Afiliado</th>
                     <th class="th-estilo">Fecha revisión</th>
                     <th class="th-estilo">Atendido por</th>
                     <th class="th-estilo">Estado</th>
@@ -113,42 +112,52 @@
 
                 {% for item in page.items %}
                     <tr>
-                        <td class="td-estilo">
-                            {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
+
+                        <td style="vertical-align: middle">
+                            {% if item.getSolicitudturnoTipoturnoid()==1 %}
+                                <button class="btn btn-block btn-primary">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
+                            {% else %}
+                                <button class="btn btn-block btn-success">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
+                            {% endif %}
                         </td>
-                        <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoLegajo() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoNomApe() }}</td>
+                        <td class="td-estilo">
+                            <i class="fa fa-calendar"></i> {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
+                        </td>
+                        <td class="td-estilo">
+                            <h4>
+                                <ins>{{ item.getSolicitudTurnoLegajo() }} </ins>
+                            </h4>{{ item.getSolicitudTurnoNomApe() }}</td>
 
 
                         <td class="td-estilo">
                             {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
                                 {% set fechaModif = date('d/m/Y',(item.getSolicitudTurnoFechaProcesamiento()) | strtotime) %}
                             {% else %}
-                                {% set fechaModif = '-' %}
+                                {% set fechaModif = '<p class="font-rojo" style="display:inline-block;">PENDIENTE</p> ' %}
                             {% endif %}
                             {#Mostramos la variable seteada con los valores anteriores.#}
-                            {{ fechaModif }}
+                            <i class="fa fa-calendar"></i> {{ fechaModif }}
                         </td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
-                        <td class="td-estilo"><strong><a
+                        <td style="text-align: left"><i class="fa fa-user"></i>
+                            <i>{{ item.getSolicitudTurnoNickUsuario() }}</i></td>
+                        <td class="td-estilo" style="vertical-align: middle"><strong><a
                                         class="btn btn-block btn-default"> {{ item.getSolicitudTurnoEstado() }}</a></strong>
                         </td>
                         <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
                             {{ item.getSolicitudTurnoObservaciones() }}
                         </td>
-                        <td width="7%">
+                        <td width="7%" style="vertical-align: middle">
                             {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
                             OR (session.get('auth')['rol_nombre']== "ADMIN")
                             OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
                                 <a class="btn btn-info editar btn-block"
                                    onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
-                                    EDITAR</a>
+                                    <i class="fa fa-pencil-square"></i> EDITAR</a>
                             {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
                                 {% if( informacion['cantidadAutorizados']  <  informacion['cantidadTurnos'] ) %}
                                     <a class="btn btn-info editar btn-block"
                                        onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
-                                        EDITAR</a>
+                                        <i class="fa fa-pencil"></i> EDITAR</a>
                                 {% else %}
                                     <a href="#" class="btn btn-danger editar btn-block"
                                        onclick="alert('NO HAY TURNOS DISPONIBLES')">SIN TURNOS </a>
@@ -156,7 +165,6 @@
                             {% else %}
                                 <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
                             {% endif %}
-
                         </td>
                     </tr>
                 {% endfor %}
@@ -222,13 +230,13 @@
             /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
             var limpiarForm = false;
             var lista, editable = false, autorizacion = false;
-            var autorizadosEnviados =   parseInt({{ informacion['autorizadosEnviados'] }});
+            var autorizadosEnviados = parseInt({{ informacion['autorizadosEnviados'] }});
             var sinTurnos = false;
-            var turnosAutorizados =  parseInt(document.getElementById("cantidadAutorizados").value);
-            var cantidadDeTurnos =  parseInt(document.getElementById("cantidadTurnos").value);
+            var turnosAutorizados = parseInt(document.getElementById("cantidadAutorizados").value);
+            var cantidadDeTurnos = parseInt(document.getElementById("cantidadTurnos").value);
             if (turnosAutorizados >= cantidadDeTurnos) {
                 sinTurnos = true;
-                alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR."+turnosAutorizados +">="+ cantidadDeTurnos);
+                alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR." + turnosAutorizados + ">=" + cantidadDeTurnos);
 
             }
             lista = ['REVISION'];

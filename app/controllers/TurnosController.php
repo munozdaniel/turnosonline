@@ -662,8 +662,6 @@ class TurnosController extends ControllerBase
         $solicitudesOnline = array();
 
         if ($fechaTurnos) {
-            $fechaSolicitudInicial = $fechaTurnos->getFechasturnosIniciosolicitud();
-            $fechaSolicitudFinal = $fechaTurnos->getFechasturnosFinsolicitud();
             $solicitudes = Solicitudturno::find(array('solicitudTurnos_fechasTurnos = :fechasTurnos_id:',
                 'bind' => array('fechasTurnos_id' => $fechaTurnos->getFechasturnosId()),
                 'order' => 'solicitudTurno_fechaProcesamiento ASC'));
@@ -744,10 +742,12 @@ class TurnosController extends ControllerBase
                     $item[] = $unaSolicitud->getSolicitudturnoEstado();
                     $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
                     $item[] = $respondio;
-                    $item[] = '<div class="btn-block" align="center">' .
-                        '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> SI</a>' .
-                        '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> NO</em></i></a>' .
-                        '</div>';
+                    $gestionAsistencia = '<div class="btn-block" align="center">' .
+                        '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> SI</a>';
+                    if ($unaSolicitud->getSolicitudturnoEstado() == "AUTORIZADO")
+                        $gestionAsistencia .= '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> NO</em></i></a>' .
+                            '</div>';
+                    $item[] = $gestionAsistencia;
                     $item[] = $comprobante;
                     $item[] = $unaSolicitud->getSolicitudturnoCancelado();
                     $datos[] = $item;
@@ -935,10 +935,12 @@ class TurnosController extends ControllerBase
         $solicitudTurno->setSolicitudturnoFechaconfirmacion(date('Y-m-d'));
         $solicitudTurno->setSolicitudturnoRespuestachequeada(1);
         $solicitudTurno->setSolicitudturnoCancelado(0);
-        if (!$periodo->incrementarCantAutorizados()) {
-            $this->db->rollback();
-            $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
-                de que el problema persista comuniquesé con el Soporte Técnico.";
+        if ($solicitudTurno->getSolicitudturnoEstado() == "AUTORIZADO") {
+            if (!$periodo->incrementarCantAutorizados()) {
+                $this->db->rollback();
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
+                    de que el problema persista comuniquesé con el Soporte Técnico.";
+            }
         }
         if (!$solicitudTurno->update()) {
             $this->db->rollback();
@@ -946,6 +948,7 @@ class TurnosController extends ControllerBase
                 de que el problema persista comuniquesé con el Soporte Técnico.";
         }
         $this->db->commit();
+        $retorno['mensaje'] = "Operación Exitosa, el turno ha sido confirmado.";
         echo json_encode($retorno);
         return;
     }
@@ -975,6 +978,11 @@ class TurnosController extends ControllerBase
             echo json_encode($retorno);
             return;
         }
+        if ($solicitudTurno->getSolicitudturnoCancelado() == 1) {
+            $retorno['mensaje'] = "El turno seleccionado ya ha sido cancelado";
+            echo json_encode($retorno);
+            return;
+        }
         //si esta vencido, se lo cancela.
         if ($solicitudTurno->getSolicitudturnoRespuestachequeada() == 2) {
             $retorno['mensaje'] = "El turno seleccionado ha caducado, el periodo para cancelar la asistencia ha finalizado";
@@ -988,10 +996,12 @@ class TurnosController extends ControllerBase
         $solicitudTurno->setSolicitudturnoFechaconfirmacion(date('Y-m-d'));
         $solicitudTurno->setSolicitudturnoRespuestachequeada(3);
         $solicitudTurno->setSolicitudturnoCancelado(1);
-        if (!$periodo->decrementarCantAutorizados()) {
-            $this->db->rollback();
-            $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
-                de que el problema persista comuniquesé con el Soporte Técnico.";
+        if ($solicitudTurno->getSolicitudturnoEstado() == "AUTORIZADO") {
+            if (!$periodo->decrementarCantAutorizados()) {
+                $this->db->rollback();
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
+                    de que el problema persista comuniquesé con el Soporte Técnico.";
+            }
         }
         if (!$solicitudTurno->update()) {
             $this->db->rollback();
@@ -999,6 +1009,7 @@ class TurnosController extends ControllerBase
             de que el problema persista comuniquesé con el Soporte Técnico.";
         }
         $this->db->commit();
+        $retorno['mensaje'] = "Operación Exitosa, el turno ha sido cancelado.";
         echo json_encode($retorno);
         return;
     }
@@ -1142,7 +1153,7 @@ class TurnosController extends ControllerBase
                 . "<a href='http://imps.org.ar/impsweb/' target='_blank'>hacer click aquí.</a></p>";
 
             if ($tipoEstado == 'A') {
-               $cadena="";
+                $cadena = "";
                 if ($obs != '-' && $obs != '')
                     $cadena .= "Nota: " . $obs . "<br/>";
 
