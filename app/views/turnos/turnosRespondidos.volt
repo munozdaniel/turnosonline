@@ -99,18 +99,17 @@
             <table id="tabla" class="table_r table-striped table-bordered table-condensed">
                 <thead style="background-color: #131313;">
                 <tr>
-                    <th class="th-titulo">ID</th>
-                    <th class="th-titulo">Tipo</th>
-                    <th class="th-titulo">Codigo</th>
-                    <th class="th-titulo">Afiliado</th>
-                    <th class="th-titulo">Email/Telefono</th>
-                    <th class="th-titulo">Fecha respuesta enviada</th>
-                    <th class="th-titulo">Estado</th>
-                    <th class="th-titulo">Observación</th>
-                    <th class="th-titulo">Estado de Asistencia</th>
-                    <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>
-                    <th class="th-titulo">Imprimir Comprobante</th>
-                    <th class="th-titulo">X</th>
+                    <th class="th-titulo">ID</th>{# 0 #}
+                    <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
+                    <th class="th-titulo">Codigo</th>{# 2 #}
+                    <th class="th-titulo">Afiliado</th>{# 3: Legajo y Nombre #}
+                    <th class="th-titulo">Email/Telefono</th>{# 4 #}
+                    <th class="th-titulo">Fecha respuesta enviada</th>{# 5 #}
+                    <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
+                    <th class="th-titulo">Observación</th>{# 7 #}
+                    <th class="th-titulo">Estado de Asistencia</th>{# 8 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
+                    <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 9 : Botones para aceptar/cancelar Asistencia #}
+                    <th class="th-titulo">Imprimir Comprobante</th>{# 10 #}
                 </tr>
                 </thead>
             </table>
@@ -180,7 +179,7 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [0,1,11],
+                    "targets": [0,1],
                     "visible": false,
                     "searchable": false
                 }
@@ -217,7 +216,7 @@
                 if (aData[6] != "AUTORIZADO") {//ESTADO
                     $nRow.css({"color": "red"});
                 }
-                if (aData[11] == 1) {//ESTADO
+                if (aData[1] == 4) {// SI EL ESTADO ASISTENCIA ES CANCELADO
                     $nRow.css({"color": "white"});
                     $nRow.css({"background-color": "#4A0D0D"});
                 }
