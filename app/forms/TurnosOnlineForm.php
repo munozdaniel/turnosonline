@@ -36,10 +36,10 @@ class TurnosOnlineForm extends Form
                     )
                 ),
                 new StringLength(array(
-                    'min' => 4,
-                    'messageMinimum' => 'El apellido demasiado corto.',
+                    'min' => 3,
+                    'messageMinimum' => 'El apellido es demasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'El apellido demasiado largo.',
+                    'messageMaximun' => 'El apellido es demasiado largo.',
                 )),
             )
         );
@@ -61,10 +61,10 @@ class TurnosOnlineForm extends Form
                     )
                 ),
                 new StringLength(array(
-                    'min' => 4,
-                    'messageMinimum' => 'El nombre demasiado corto.',
+                    'min' => 3,
+                    'messageMinimum' => 'El nombre es demasiado corto.',
                     'max' => 30,
-                    'messageMaximun' => 'El nombre demasiado largo.',
+                    'messageMaximun' => 'El nombre es demasiado largo.',
                 )),
             )
         );
