@@ -751,8 +751,11 @@ class Solicitudturno extends \Phalcon\Mvc\Model
                 if ($fechaIniSol <= $fechaPedido and $fechaPedido <= $fechaFinSol)//
                 {
                     $lista[] = $unaSolicitud;
+                    if($estado!="AUTORIZADO"){
+                        $unaSolicitud->setSolicitudturnoEstadoasistenciaid(5);
+                    }
                     $unaSolicitud->setSolicitudturnoRespuestaenviada('SI');
-                    $unaSolicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d'));
+                    $unaSolicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
                     if (!$unaSolicitud->update()) {
                         echo "<h1>Ocurrió un problema al actualizar los datos, por favor comunicarse con el Soporte Técnico. [Solicitud Turno - 1004]</h1>";
                     }

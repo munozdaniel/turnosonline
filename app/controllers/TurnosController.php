@@ -453,7 +453,6 @@ class TurnosController extends ControllerBase
         }
     }
 
-
     /**
      * Muestra la tabla donde van a ir todos los turnos que fueron respondidos, y muestra los estados individuales de cada uno.
      * @param null $tipoTurno
@@ -498,17 +497,6 @@ class TurnosController extends ControllerBase
         } else {
             $this->view->rojo = false;
         }
-        /* $paginator = new PaginatorArray
-         (
-             array(
-                 "data" => Solicitudturno::accionVerSolicitudesConRespuestaEnviada($tipoTurno),
-                 "limit" => 10,
-                 "page" => $this->request->getQuery('page', 'int')
-             )
-         );
-         $this->view->page = $paginator->getPaginate();*/
-
-
     }
 
     /**
@@ -558,20 +546,20 @@ class TurnosController extends ControllerBase
                         if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 1) {
                             //FIXME: La verificacion se deberia hacer con eventos y store procedure
                             if (!Fechasturnos::verificarConfirmacionDentroPlazoOnline($unaSolicitud->getSolicitudturnoFechapedido())) {
-                                $unaSolicitud->setSolicitudturnoSanciones($unaSolicitud->getSolicitudturnoSanciones()+1);
+                                $unaSolicitud->setSolicitudturnoSanciones($unaSolicitud->getSolicitudturnoSanciones() + 1);
                                 $unaSolicitud->setSolicitudturnoEstadoasistenciaid(3);
                                 $unaSolicitud->update();
                             }
                             $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado,
-                             '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ',
+                                '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ',
                                 'class' => 'btn btn-info btn-block', 'target' => '_blank'));
                         } else {
                             if (!$unaSolicitud->getSolicitudturnoTipoturnoid() == 2) {
                                 //FIXME: La verificacion se deberia hacer con eventos y store procedure
                                 if (Fechasturnos::verificarConfirmacionDentroPlazoTerminal($unaSolicitud->getSolicitudturnoFechapedido())) {
-                                   $unaSolicitud->setSolicitudturnoSanciones($unaSolicitud->getSolicitudturnoSanciones()+1);
-                                   $unaSolicitud->setSolicitudturnoEstadoasistenciaid(3);
-                                   $unaSolicitud->update();
+                                    $unaSolicitud->setSolicitudturnoSanciones($unaSolicitud->getSolicitudturnoSanciones() + 1);
+                                    $unaSolicitud->setSolicitudturnoEstadoasistenciaid(3);
+                                    $unaSolicitud->update();
                                 }
                                 $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado,
                                     '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ',
@@ -602,9 +590,9 @@ class TurnosController extends ControllerBase
                                 break;
                         }
                         $botonesAsistencia = '<div class="btn-block" align="center">' .
-                        '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> SI</a>'.
+                            '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> SI</a>' .
                             '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> NO</em></i></a>' .
-                                '</div>';
+                            '</div>';
                     }
 
                     if ($comprobante == "") {
@@ -1089,7 +1077,6 @@ class TurnosController extends ControllerBase
     {
         $idSolicitud = $this->request->get('id', 'trim');//Se obtiene por url.
         $id = base64_decode($idSolicitud);
-        //$laSolicitud = Solicitudturno::findFirst(array('solicitudTurno_id=:id: AND solicitudTurno_habilitado=1','bind'=>array('id'=>$id)));
         $solicitud = Solicitudturno::findFirst(array('solicitudTurno_id=:id:', 'bind' => array('id' => $id)));
         if (!$solicitud) {
             $this->flash->error("<h3>NO SE HA ENCONTRADO LA PETICIÓN SOLICITADA</h3>");
@@ -1099,74 +1086,77 @@ class TurnosController extends ControllerBase
             'bind' => array('solicitudTurno_id' => $solicitud->getSolicitudturnosFechasturnos())));
         if (!$ultimoPeriodo) {
             $this->flash->error("<h3><i class='fa fa-warning'></i> EL LINK HA CADUCADO, EL TURNO A CONFIRMAR NO PERTENECE AL PERIODO ACTIVO <br>
-                                POR FAVOR VUELVA A SOLICITAR UN TURNO </h3>");
+                                POR FAVOR VUELVA A SOLICITAR UN TURNO EN EL PRÓXIMO PERÍODO.  </h3>");
             return $this->redireccionar('turnos/resultadoConfirmacion');
         }
         $estado = $solicitud->getSolicitudturnoEstado();
         $this->db->begin();
-        if ($estado == 'DENEGADO') {
-            $solicitud->setSolicitudturnoRespuestachequeada(1);
+        if ($estado == 'AUTORIZADO') {
+            //Verifico si venció, según el tipo de turno.
+            $dentroPlazoValido=false;
+            if ($solicitud->getSolicitudturnoTipoturnoid() == 1)
+                $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitud->getSolicitudturnoFechapedido());
+            else
+                if ($solicitud->getSolicitudturnoTipoturnoid() == 1)
+                    $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitud->getSolicitudturnoFechapedido());
+            //Si venció, lo sanciono.
+            if(!$dentroPlazoValido)
+            {
+                $solicitud->setSolicitudturnoEstadoasistenciaid(3);
+                $solicitud->setSolicitudturnoSanciones($solicitud->getSolicitudturnoSanciones() + 1);
+                //FIXME: Mostrar las reglas del juego
+                if (!$solicitud->update())
+                    $this->db->rollback();
+                $this->db->commit();
+                $this->view->solicitud = NULL;
+                $this->flash->error("<h3>LAMENTABLEMENTE SE VENCIÓ EL TURNO PARA CONFIRMAR LA ASISTENCIA</h3>");
+                return $this->redireccionar('turnos/resultadoConfirmacion');
+            }
+            //Esta cancelado
+            if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 4) {
+                $this->view->solicitud = NULL;
+                $this->flash->error("<h3>USTED HA CANCELADO SU ASISTENCIA ANTERIORMENTE, DEBERÁ SOLICITAR UN TURNO NUEVAMENTE. </h3>");
+                return $this->redireccionar('turnos/resultadoConfirmacion');
+            }
+            //No venció, preparo el comprobante y las variables para la vista.
+            $idCodificado = base64_encode($solicitud->getSolicitudturnoId());
+            $boton = $this->tag->form(array('turnos/comprobanteTurnoPost', 'method' => 'POST'));
+            $boton .= $this->tag->hiddenField(array('solicitud_id', 'value' => $idCodificado));
+            $boton .= "<button type='submit' class='btn btn-danger btn-lg' formtarget='_blank'><i class='fa fa-print'></i> Imprimir</button>";
+            $boton .= "</form>";
+
+            $this->view->solicitud = $solicitud;
+            $this->view->periodo = $ultimoPeriodo;
+            $this->view->mensaje_boton = $boton;
+
+            //Ya fue confirmado
+            if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 2) {
+                $this->view->mensaje_alerta = "Su asistencia ya ha sido confirmada";
+                return $this->redireccionar('turnos/resultadoConfirmacion');
+            }
+
+            //Primera vez que confirma
+            $solicitud->setSolicitudturnoEstadoasistenciaid(2);
+            $solicitud->setSolicitudturnoFechaconfirmacion(Date('Y-m-d H:i:s'));
+            //Si no tiene codigo le genero uno nuevo.
+            if ($solicitud->getSolicitudturnoCodigo() == null || trim($solicitud->getSolicitudturnoCodigo()) == "") {
+                $codigo = $this->getRandomCode($ultimoPeriodo->getFechasTurnosId());
+                $solicitud->setSolicitudturnoCodigo($codigo);
+            }
             if (!$solicitud->update()) {
+                $this->flash->error("<h3><i class='fa fa-warning'></i> OCURRIÓ UN PROBLEMA AL PROCESAR LA SOLICITUD, POR FAVOR INTENTELO NUEVAMENTE.</h3>");
+                $this->db->rollback();
+                return $this->redireccionar('turnos/resultadoConfirmacion');
+            }
+            if (!$ultimoPeriodo->update()) {
                 $this->flash->error("OCURRIO UN PROBLEMA AL PROCESAR LA SOLICITUD, POR FAVOR INTENTELO NUEVAMENTE.");
                 $this->db->rollback();
-            } else {
-                $this->flash->notice("<h1>GRACIAS POR SU CONFIRMACIÓN. </h1>");
-                $this->db->commit();
+                return $this->redireccionar('turnos/resultadoConfirmacion');
             }
-        } else {
-            if ($estado == 'AUTORIZADO') {
-
-                $idCodificado = base64_encode($solicitud->getSolicitudturnoId());
-                $boton = $this->tag->form(array('turnos/comprobanteTurnoPost', 'method' => 'POST'));
-                $boton .= $this->tag->hiddenField(array('solicitud_id', 'value' => $idCodificado));
-                $boton .= "<button type='submit' class='btn btn-danger btn-lg' formtarget='_blank'><i class='fa fa-print'></i> Imprimir</button>";
-                $boton .= "</form>";
-
-                $this->view->solicitud = $solicitud;
-                $this->view->periodo = $ultimoPeriodo;
-                $this->view->mensaje_boton = $boton;
-
-                if ($solicitud->getSolicitudturnoRespuestachequeada() == 1) {
-                    $this->view->mensaje_alerta = "Su asistencia ya ha sido confirmada";
-                    return $this->redireccionar('turnos/resultadoConfirmacion');
-                }
-                if ($solicitud->getSolicitudturnoTipoturnoid() == 1)
-                    $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitud->getSolicitudturnoFechapedido());
-                else
-                    if ($solicitud->getSolicitudturnoTipoturnoid() == 1)
-                        $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitud->getSolicitudturnoFechapedido());
-                if ($dentroPlazoValido) {
-                    $this->flash->error("<h3>EL PERIODO PARA CONFIRMAR EL TURNO HA FINALIZADO</h3>");
-                    $solicitud->setSolicitudturnoRespuestachequeada(1);
-                    $solicitud->setSolicitudturnoSanciones($solicitud->getSolicitudturnoSanciones() + 1);
-                    if (!$solicitud->update())
-                        $this->db->rollback();
-                    $this->db->commit();
-                    $this->view->solicitud = NULL;
-                    return $this->redireccionar('turnos/resultadoConfirmacion');
-                }
-                $solicitud->setSolicitudturnoRespuestachequeada(1);
-                $solicitud->setSolicitudturnoFechaconfirmacion(Date('Y-m-d H:i:s'));
-                if ($solicitud->getSolicitudturnoCodigo() == null || trim($solicitud->getSolicitudturnoCodigo()) == "") {
-                    $codigo = $this->getRandomCode($ultimoPeriodo->getFechasTurnosId());
-                    $solicitud->setSolicitudturnoCodigo($codigo);
-                }
-                if (!$solicitud->update()) {
-                    $this->flash->error("<h3><i class='fa fa-warning'></i> OCURRIÓ UN PROBLEMA AL PROCESAR LA SOLICITUD, POR FAVOR INTENTELO NUEVAMENTE.</h3>");
-                    $this->db->rollback();
-                    return $this->redireccionar('turnos/resultadoConfirmacion');
-                }
-                if (!$ultimoPeriodo->update()) {
-                    $this->flash->error("OCURRIO UN PROBLEMA AL PROCESAR LA SOLICITUD, POR FAVOR INTENTELO NUEVAMENTE.");
-                    $this->db->rollback();
-                    return $this->redireccionar('turnos/resultadoConfirmacion');
-                }
-                $this->view->mensaje_alerta = "Gracias por confirmar su asistencia";
-                $this->db->commit();
-            }
+            $this->view->mensaje_alerta = "Gracias por confirmar su asistencia";
+            $this->db->commit();
+            return $this->redireccionar('turnos/resultadoConfirmacion');
         }
-
-        return $this->redireccionar('turnos/resultadoConfirmacion');
     }
 
     /**
