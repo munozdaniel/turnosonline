@@ -398,22 +398,6 @@ class Fechasturnos extends \Phalcon\Mvc\Model
             return true;
         return false;
     }
-    /**
-     * NO USAR (?
-     * Verifica si en la fecha de hoy ya vencio el plazo para confirmar el turno.
-     * @param $cantidadDias
-     * @param $fechaInicioSolicitud
-     * @return bool
-     */
-    public static function vencePlazoConfirmacion($cantidadDias, $fechaInicioSolicitud)
-    {
-        $fechaVencimiento = strtotime('+' . $cantidadDias . ' day', strtotime($fechaInicioSolicitud));
-        $fechaVencimiento = date('Y-m-d', $fechaVencimiento);
-        $fechaHoy = Date('Y-m-d');
-        if ($fechaHoy <= $fechaVencimiento)
-            return false;
-        return true;
-    }
 
     public function esPlazoParaSolicitarTurno()
     {
@@ -434,9 +418,22 @@ class Fechasturnos extends \Phalcon\Mvc\Model
      * Verifica que la fecha en la que solicitó el turno no haya pasado las 96hs
      * @return boolean true si esta dentro del periodo, false si no lo está.
      */
-    public static function verificarConfirmacionDentroPlazoValido($fechaSolicitud)
+    public static function verificarConfirmacionDentroPlazoOnline($fechaSolicitud)
     {
         $fechaLimiteConfirmacion = strtotime ( '+4 day' , strtotime ( $fechaSolicitud ) ) ;
+        $fechaLimiteConfirmacion = date('Y-m-d', $fechaLimiteConfirmacion);
+        $fechaSolicitud = (new DateTime($fechaSolicitud))->format('Y-m-d');
+        if($fechaSolicitud<=$fechaLimiteConfirmacion)
+            return true;
+        return false;
+    }
+    /**
+     * Verifica que la fecha en la que solicitó el turno no haya pasado las 72hs
+     * @return boolean true si esta dentro del periodo, false si no lo está.
+     */
+    public static function verificarConfirmacionDentroPlazoTerminal($fechaSolicitud)
+    {
+        $fechaLimiteConfirmacion = strtotime ( '+3 day' , strtotime ( $fechaSolicitud ) ) ;
         $fechaLimiteConfirmacion = date('Y-m-d', $fechaLimiteConfirmacion);
         $fechaSolicitud = (new DateTime($fechaSolicitud))->format('Y-m-d');
         if($fechaSolicitud<=$fechaLimiteConfirmacion)
