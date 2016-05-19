@@ -566,17 +566,25 @@ class TurnosController extends ControllerBase
                                     'class' => 'btn btn-success btn-block', 'target' => '_blank'));
                             }
                         }
+
                         switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid()) {
                             case 1:
                                 $estadoAsistencia = '<div class="btn-block" align="center">' .
                                     '<a class="parpadea btn btn-white" style="display:inline-block;">
                                         <i class="fa fa-spinner fa-spin  fa-fw margin-bottom"></i>
                                             <span class="sr-only">Cargando...</span>EN ESPERA</a></div>';
+                                $botonesAsistencia = '<div class="btn-block" align="center">' .
+                                    '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> ACEPTAR </a> ' .
+                                    '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
+                                    '</div>';
                                 break;
                             case 2:
                                 $estadoAsistencia = '<a class="btn btn- btn-white">
                                                         <i class="fa fa-check-square" style="display:inline-block;color:#0ec705"></i> '
                                     . "CONFIRMADO  </a>";
+                                $botonesAsistencia = '<div class="btn-block" align="center">' .
+                                    '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
+                                    '</div>';
                                 break;
                             case 3:
                                 $estadoAsistencia = '<a class="btn btn-block btn-white">
@@ -589,10 +597,7 @@ class TurnosController extends ControllerBase
                                                 ' . "CANCELADO</a>";
                                 break;
                         }
-                        $botonesAsistencia = '<div class="btn-block" align="center">' .
-                            '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> SI</a>' .
-                            '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> NO</em></i></a>' .
-                            '</div>';
+
                     }
 
                     if ($comprobante == "") {
