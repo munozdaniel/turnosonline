@@ -31,15 +31,17 @@
                 <table class="table table-striped table-bordered table-condensed" style="text-align: center !important;">
                     <thead>
                         <tr>
-                            <th style="text-align: center !important;">Inicio de Solicitud</th>
-                            <th style="text-align: center !important;">Fin de Solicitud</th>
-                            <th style="text-align: center !important;">Día de Atención</th>
-                            <th style="text-align: center !important;">Día de Atención Final</th>
+                            <th style="text-align: center !important;">Dia inicial para solicitud</th>
+                            <th style="text-align: center !important;">Dia final para solicitud</th>
+                            <th style="text-align: center !important;">Día inicial para atención</th>
+                            <th style="text-align: center !important;">Día final para atención</th>
                             <th style="text-align: center !important;">Cantidad de Turnos</th>
                             <th style="text-align: center !important;">Cantidad de Turnos Autorizados</th>
                             <th style="text-align: center !important;">Cantidad de días para confirmación</th>
-                            <th style="text-align: center !important;">Activo</th>
+                            <th style="text-align: center !important;">Periodo activo</th>
                             <th style="text-align: center !important;"><i class="glyphicon glyphicon-edit"></i></th>
+                            <th style="text-align: center !important;">Listado de solicitudes</th>
+
                         </tr>
                     </thead>
 
@@ -69,15 +71,19 @@
                             <td>{{ item.fechasTurnos_cantidadDeTurnos }}</td>
                             <td>{{ item.fechasTurnos_cantidadAutorizados }}</td>
                             <td>{{ item.fechasTurnos_cantidadDiasConfirmacion }}</td>
+
                             {% if   item.fechasTurnos_activo == 0 %}
                                 <td>NO</td>
                                 <td>-</td>
+                                <td>{{ link_to("turnos/solicitudesPorPeriodo/?ini="~item.fechasTurnos_inicioSolicitud~"&fin="~item.fechasTurnos_finSolicitud,'LISTA','class':'btn btn-success') }}</td>
                             {% else %}
                                 <td>SI</td>
                                 <td width="7%">
                                     {{ link_to("turnos/editarPeriodo/"~item.fechasTurnos_id,'<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-danger") }}
                                 </td>
+                                <td>-</td>
                             {% endif %}
+
                             </tr>
                         {% endfor %}
                     </tbody>
