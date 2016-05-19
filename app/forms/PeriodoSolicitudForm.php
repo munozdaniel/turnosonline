@@ -37,7 +37,7 @@ class PeriodoSolicitudForm extends Form
         $periodoSolicitudDesde= new Date('fechasTurnos_inicioSolicitud',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoSolicitudDesde->setLabel('<small class="font-rojo">* </small>Desde');
+        $periodoSolicitudDesde->setLabel('<small class="font-rojo">* </small>Día inicial para solicitud');
         $periodoSolicitudDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la solicitud de turnos.'
@@ -48,7 +48,7 @@ class PeriodoSolicitudForm extends Form
         $periodoSolicitudHasta= new Date('fechasTurnos_finSolicitud',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoSolicitudHasta->setLabel('<small class="font-rojo">* </small>Hasta');
+        $periodoSolicitudHasta->setLabel('<small class="font-rojo">* </small>Día final para solicitud');
         $periodoSolicitudHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la solicitud de turnos.'
@@ -65,7 +65,7 @@ class PeriodoSolicitudForm extends Form
         $periodoAtencionDesde= new Date('fechasTurnos_diaAtencion',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoAtencionDesde->setLabel('<small class="font-rojo">* </small>Día de atención de turnos inicial');
+        $periodoAtencionDesde->setLabel('<small class="font-rojo">* </small>Día inicial para atención');
         $periodoAtencionDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Inicial</strong> para la atención de turnos.'
@@ -80,7 +80,7 @@ class PeriodoSolicitudForm extends Form
         $periodoAtencionHasta= new Date('fechasTurnos_diaAtencionFinal',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoAtencionHasta->setLabel('<small class="font-rojo">* </small>Día de atención de turnos final');
+        $periodoAtencionHasta->setLabel('<small class="font-rojo">* </small>Día final para atención');
         $periodoAtencionHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la atención de turnos.'
@@ -98,7 +98,7 @@ class PeriodoSolicitudForm extends Form
                 'placeholder'=>' INGRESE CANT. TURNOS',
                 'required'=>'true'));
         $cantidadTurnos->setDefault(70);
-        $cantidadTurnos->setLabel('<small class="font-rojo">* </small>Cantidad de Turnos');
+        $cantidadTurnos->setLabel('<small class="font-rojo">* </small>Cantidad');
         $cantidadTurnos->setFilters(array('int'));
         $cantidadTurnos->addValidators(
             array(
