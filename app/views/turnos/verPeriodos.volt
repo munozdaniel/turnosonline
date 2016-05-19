@@ -75,7 +75,9 @@
                             {% if   item.fechasTurnos_activo == 0 %}
                                 <td>NO</td>
                                 <td>-</td>
-                                <td>{{ link_to("turnos/solicitudesPorPeriodo/?ini="~item.fechasTurnos_inicioSolicitud~"&fin="~item.fechasTurnos_finSolicitud,'LISTA','class':'btn btn-success') }}</td>
+                                <td>
+                                    {{ link_to("turnos/solicitudesPorPeriodo/?idP="~item.fechasTurnos_id,'LISTA','class':'btn btn-success') }}
+                                </td>
                             {% else %}
                                 <td>SI</td>
                                 <td width="7%">
