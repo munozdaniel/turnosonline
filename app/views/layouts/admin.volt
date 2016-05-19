@@ -16,7 +16,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul id="top-menu" class="nav navbar-nav navbar-right main_nav">
-                    <li class="active ">{{ link_to('index/index#','class':'','Inicio' )}}</li>
+                    <li>{{ link_to('index/index#','class':'','Inicio' )}}</li>
                     <li>{{ link_to('index/index#about','class':'','Informacion') }}</li>
                     <li>{{ link_to('index/index#service','class':'','Servicios') }}</li>
                     <li>{{ link_to('index/index#works','class':'','Guía de Tramites') }}</li>
