@@ -614,15 +614,18 @@ class TurnosController extends ControllerBase
                             }
                         }
                     }
-                    //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
+
+                    //6 Usuario
+                    $item[] =$unaSolicitud->getSolicitudturnoNickusuario();
+                    //7 Estado Deuda: Autorizado, denegado, denegado por falta de turno
                     $item[] = $unaSolicitud->getSolicitudturnoEstado();
-                    //7 Observaciones
+                    //8 Observaciones
                     $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
-                    //8 Estado Asistencia
+                    //9 Estado Asistencia
                     $item[] = $estadoAsistencia;
-                    //9 Botones par cancelar/Autorizar asistencia
+                    //10 Botones par cancelar/Autorizar asistencia
                     $item[] = $botonesAsistencia;
-                    //10 Comprobante
+                    //11 Comprobante
                     $item[] = $comprobante;
                     $datos[] = $item;
                 }
