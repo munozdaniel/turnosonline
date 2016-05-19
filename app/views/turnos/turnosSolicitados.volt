@@ -26,183 +26,191 @@
         white-space: nowrap !important;
     }
 </style>
+
 <section id="onepage" class="admin bg_line">
-    <div align="center">
-        <div class="curriculum-bg-header modal-header " align="left">
-            <h1>
-                <ins>LISTA DE TURNOS SOLICITADOS</ins>
-                <br>
-            </h1>
-            <h3>
-                <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados
-                        que han solicitado un turno.</em></small>
-            </h3>
-            <table class="" width="100%">
-                <tr>
-                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
-                </tr>
-            </table>
+    <div class="container">
 
-        </div>
-    </div>
-    <hr>
-    <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-        {% if informacion is defined %}
-            <div class="col-sm-4" align="right">
-                <h3><strong>
-                        <ins>PERIODO DE SOLICITUD</ins>
-                    </strong>
-                </h3>
-                <h4>
-                    Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
-                </h4>
+        <div align="center">
+            <div class="curriculum-bg-header modal-header " align="left">
 
-            </div>
-            <div class="col-sm-4" align="center">
+                <h1>
+                    <ins>LISTA DE TURNOS SOLICITADOS</ins>
+                    {{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:35%;background-color:#195889;') }}
+                    <br>
+                </h1>
+
                 <h3>
-                    <strong>
-                        <ins>DÍA DE ATENCI&Oacute;N</ins>
-                    </strong>
+                    <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados que han solicitado un turno.</em></small>
                 </h3>
-                <h4>
-                    Desde {{ informacion['diaAtencion'] }}
-                    <br>Hasta {{ informacion['diaAtencionFinal'] }}
-                </h4>
+
             </div>
-            <div id="cantAutorizados">
-                <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
-                    <h3>
-                        <strong>
-                            <ins>TURNOS</ins>
+        </div>
+
+        <hr>
+
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+            {% if informacion is defined %}
+                <div class="col-sm-4" align="right">
+                    <h3><strong>
+                            <ins>PERIODO DE SOLICITUD</ins>
                         </strong>
                     </h3>
                     <h4>
-                        Total: {{ informacion['cantidadTurnos'] }}<br>
-                        Autorizados: {{ informacion['cantidadAutorizados'] }}
-                        {{ hidden_field('cantidadTurnos','value':informacion['cantidadTurnos'] ) }}
-                        {{ hidden_field('cantidadAutorizados','value':informacion['cantidadAutorizados'] ) }}
+                        Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
                     </h4>
+
+                </div>
+                <div class="col-sm-4" align="center">
+                    <h3>
+                        <strong>
+                            <ins>DÍA DE ATENCI&Oacute;N</ins>
+                        </strong>
+                    </h3>
+                    <h4>
+                        Desde {{ informacion['diaAtencion'] }}
+                        <br>Hasta {{ informacion['diaAtencionFinal'] }}
+                    </h4>
+                </div>
+                <div id="cantAutorizados">
+                    <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                        <h3>
+                            <strong>
+                                <ins>TURNOS</ins>
+                            </strong>
+                        </h3>
+                        <h4>
+                            Total: {{ informacion['cantidadTurnos'] }}<br>
+                            Autorizados: {{ informacion['cantidadAutorizados'] }}
+                            {{ hidden_field('cantidadTurnos','value':informacion['cantidadTurnos'] ) }}
+                            {{ hidden_field('cantidadAutorizados','value':informacion['cantidadAutorizados'] ) }}
+                        </h4>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+            <div class="col-md-12">
+                {{ content() }}
+                {{ flashSession.output() }}
+            </div>
+            <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th class="th-estilo">Tipo</th>
+                        <th class="th-estilo">Fecha solicitud</th>
+                        <th class="th-estilo">Afiliado</th>
+                        <th class="th-estilo">Fecha revisión</th>
+                        <th class="th-estilo">Atendido por</th>
+                        <th class="th-estilo">Estado</th>
+                        <th class="th-estilo">Observaciones</th>
+                        <th class="th-estilo">EDITAR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for item in page.items %}
+                        <tr>
+
+                            <td style="vertical-align: middle">
+                                {% if item.getSolicitudturnoTipoturnoid()==1 %}
+                                    <button class="btn btn-block btn-primary">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
+                                {% else %}
+                                    <button class="btn btn-block btn-success">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
+                                {% endif %}
+                            </td>
+
+                            <td class="td-estilo">
+                                <i class="fa fa-calendar"></i> {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
+                            </td>
+
+                            <td class="td-estilo">
+                                <h4>
+                                    <ins>{{ item.getSolicitudTurnoLegajo() }} </ins>
+                                </h4>{{ item.getSolicitudTurnoNomApe() }}
+                            </td>
+
+                            <td class="td-estilo">
+                                {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
+                                    {% set fechaModif = date('d/m/Y',(item.getSolicitudTurnoFechaProcesamiento()) | strtotime) %}
+                                {% else %}
+                                    {% set fechaModif = '<p class="font-rojo" style="display:inline-block;">PENDIENTE</p> ' %}
+                                {% endif %}
+                                {#Mostramos la variable seteada con los valores anteriores.#}
+                                <i class="fa fa-calendar"></i> {{ fechaModif }}
+                            </td>
+
+                            <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
+
+                            <td class="td-estilo"><strong><a
+                                            class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
+                            </td>
+
+                            <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
+                                {{ item.getSolicitudTurnoObservaciones() }}
+                            </td>
+
+                            <td width="7%">
+                                {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
+                                OR (session.get('auth')['rol_nombre']== "ADMIN")
+                                OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
+
+                                    <a class="btn editar" style="background-color: #2E6E9F;"
+                                       onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
+                                        <i class="fa fa-pencil-square"></i> EDITAR</a>
+
+                                {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
+
+                                    {% if( informacion['cantidadAutorizados']  <  informacion['cantidadTurnos'] ) %}
+                                        <a class="btn editar" style="background-color: #2E6E9F;"
+                                           onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
+                                            <i class="fa fa-pencil"></i> EDITAR</a>
+                                    {% else %}
+                                        <a href="#" class="btn btn-danger editar btn-block"
+                                           onclick="alert('NO HAY TURNOS DISPONIBLES')">SIN TURNOS </a>
+                                    {% endif %}
+
+                                {% else %}
+                                    <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                    <tbody>
+                    <tr>
+                        <td colspan="16">
+                            <div align="center">
+                                {{ link_to("/turnos/turnosSolicitados/?page=1",'Primera','class':'btn btn-primary') }}
+                                {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn btn-primary') }}
+                                <div class="btn-primary btn">P&aacute;gina {{ page.current }}
+                                    de {{ page.total_pages }}</div>
+                                {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn btn-primary') }}
+                                {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn btn-primary') }}
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            {{ form('turnos/enviarRespuestas') }}
+
+            <div class="row">
+                <div align="center"
+                     style="width:38%;position:fixed;bottom:0;border-top:#2AA0C7 2px;"
+                     class=" col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
+                    {{ submit_button('ENVIAR RESPUESTAS A LOS AFILIADOS','class':'btn btn-blue btn-lg btn-block') }}
                 </div>
             </div>
 
-        {% endif %}
-
-    </div>
-
-    <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-        <div class="col-md-12">
-            {{ content() }}
-            {{ flashSession.output() }}
-        </div>
-        <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
-            <table class="table table-striped table-bordered table-condensed">
-                <thead>
-                <tr>
-                    <th class="th-estilo">Tipo</th>
-                    <th class="th-estilo">Fecha solicitud</th>
-                    <th class="th-estilo">Afiliado</th>
-                    <th class="th-estilo">Fecha revisión</th>
-                    <th class="th-estilo">Atendido por</th>
-                    <th class="th-estilo">Estado</th>
-                    <th class="th-estilo">Observaciones</th>
-                    <th class="th-estilo">EDITAR</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                {% for item in page.items %}
-                    <tr>
-
-                        <td style="vertical-align: middle">
-                            {% if item.getSolicitudturnoTipoturnoid()==1 %}
-                                <button class="btn btn-block btn-primary">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
-                            {% else %}
-                                <button class="btn btn-block btn-success">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
-                            {% endif %}
-                        </td>
-
-                        <td class="td-estilo">
-                            <i class="fa fa-calendar"></i> {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
-                        </td>
-
-                        <td class="td-estilo">
-                            <h4>
-                                <ins>{{ item.getSolicitudTurnoLegajo() }} </ins>
-                            </h4>{{ item.getSolicitudTurnoNomApe() }}
-                        </td>
-
-                        <td class="td-estilo">
-                            {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
-                                {% set fechaModif = date('d/m/Y',(item.getSolicitudTurnoFechaProcesamiento()) | strtotime) %}
-                            {% else %}
-                                {% set fechaModif = '<p class="font-rojo" style="display:inline-block;">PENDIENTE</p> ' %}
-                            {% endif %}
-                            {#Mostramos la variable seteada con los valores anteriores.#}
-                            <i class="fa fa-calendar"></i> {{ fechaModif }}
-                        </td>
-
-                        <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
-
-                        <td class="td-estilo"><strong><a
-                                        class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
-                        </td>
-
-                        <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
-                            {{ item.getSolicitudTurnoObservaciones() }}
-                        </td>
-
-                        <td width="7%">
-                            {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
-                            OR (session.get('auth')['rol_nombre']== "ADMIN")
-                            OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
-                                <a class="btn btn-info editar btn-block"
-                                   onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
-                                    <i class="fa fa-pencil-square"></i> EDITAR</a>
-                            {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
-                                {% if( informacion['cantidadAutorizados']  <  informacion['cantidadTurnos'] ) %}
-                                    <a class="btn btn-info editar btn-block"
-                                       onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
-                                        <i class="fa fa-pencil"></i> EDITAR</a>
-                                {% else %}
-                                    <a href="#" class="btn btn-danger editar btn-block"
-                                       onclick="alert('NO HAY TURNOS DISPONIBLES')">SIN TURNOS </a>
-                                {% endif %}
-                            {% else %}
-                                <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-
-                <tbody>
-                <tr>
-                    <td colspan="16">
-                        <div align="center">
-                            {{ link_to("/turnos/turnosSolicitados/?page=1",'Primera','class':'btn btn-primary') }}
-                            {{ link_to("/turnos/turnosSolicitados/?page="~page.before,' Anterior','class':'btn btn-primary') }}
-                            <div class="btn-primary btn">P&aacute;gina {{ page.current }}
-                                de {{ page.total_pages }}</div>
-                            {{ link_to("/turnos/turnosSolicitados/?page="~page.next,'Siguiente','class':'btn btn-primary') }}
-                            {{ link_to("/turnos/turnosSolicitados/?page="~page.last,'Última','class':'btn btn-primary') }}
-
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        {{ form('turnos/enviarRespuestas') }}
-
-        <div class="row">
-            <div align="center"
-                 style="width:50%;position:fixed;bottom:0;border-top:#2AA0C7 2px;left:0;background-color:#2AA0C7; padding: 4px 0 0 0;"
-                 class=" col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
-                {{ submit_button('ENVIAR RESPUESTAS A LOS AFILIADOS','class':'btn btn-blue btn-lg btn-block') }}
-            </div>
+            {{ end_form() }}
         </div>
 
-        {{ end_form() }}
     </div>
 </section>
 <!-- ====================================== -->
