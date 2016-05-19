@@ -102,10 +102,12 @@
                     <th class="th-estilo">Apellido y nombre</th>
                     <th class="th-estilo">Fecha solicitud</th>
                     <th class="th-estilo">Estado</th>
+
                     <th class="th-estilo">Monto maximo</th>
                     <th class="th-estilo">Monto posible</th>
                     <th class="th-estilo">Máximo de cuotas</th>
                     <th class="th-estilo">Valor cuota</th>
+
                     <th class="th-estilo">Observaciones</th>
                     <th class="th-estilo">Fecha revisión</th>
                     <th class="th-estilo">Empleado</th>
@@ -125,10 +127,12 @@
                         <td class="td-estilo"><strong><a
                                         class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
                         </td>
+
                         <td class="td-estilo">{{ item.getSolicitudTurnoMontoMax() }}</td>
                         <td class="td-estilo">{{ item.getSolicitudTurnoMontoPosible() }}</td>
                         <td class="td-estilo">{{ item.getSolicitudTurnoCantCuotas() }}</td>
                         <td class="td-estilo">{{ item.getSolicitudTurnoValorCuota() }}</td>
+
                         <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
                             {{ item.getSolicitudTurnoObservaciones() }}
                         </td>
@@ -142,7 +146,16 @@
                             {{ fechaModif }}
                         </td>
                         <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
-                        <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
+
+                        {% if item.getTipoturno().getTipoTurnoNombre() == 'ONLINE' %}
+                            <td class="td-estilo" style="background-color: #489EB7;">
+                                {{ item.getTipoturno().getTipoTurnoNombre() }}
+                            </td>
+                        {% elseif item.getTipoturno().getTipoTurnoNombre() == 'TERMINAL' %}
+                            <td class="td-estilo" style="background-color: #5cb85c;">
+                                {{ item.getTipoturno().getTipoTurnoNombre() }}
+                            </td>
+                        {% endif %}
 
                         <td width="7%">
                             {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
@@ -229,7 +242,7 @@
             /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
             var limpiarForm = false;
             var lista, editable = false, autorizacion = false;
-            var autorizadosEnviados =  {{ informacion['autorizadosEnviados'] }};
+            var autorizadosEnviados = {{ informacion['autorizadosEnviados'] }};
             var sinTurnos = false;
             var turnosAutorizados = document.getElementById("cantidadAutorizados").value;
             var cantidadDeTurnos = document.getElementById("cantidadTurnos").value;
