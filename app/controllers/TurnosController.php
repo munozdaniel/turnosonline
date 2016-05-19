@@ -147,7 +147,8 @@ class TurnosController extends ControllerBase
         );
         if ($solicitud)
             return true;
-        return false;
+        else
+            return false;
     }
 
     /**
@@ -958,20 +959,25 @@ class TurnosController extends ControllerBase
     public function enviarRespuestasAction()
     {
         $usuarioActual = $this->session->get('auth')['usuario_nick'];
+
         $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
 
         $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO', $usuarioActual, $ultimoPeriodo);
         $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO', $usuarioActual, $ultimoPeriodo);
         $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO POR FALTA DE TURNOS', $usuarioActual, $ultimoPeriodo);
 
-        if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0) {
+        if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0)
+        {
             $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
                                             </button> NO SE ENVIARON LAS RESPUESTAS, YA QUE SOLO HAY SOLICITUDES PENDIENTES O EN REVISIÓN.</h3>');
             return $this->response->redirect('turnos/turnosSolicitados');
         }
+
         $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+
         //FIXME: Preguntar como serán los mensajes que se van a enviar a los afiliados.
+
         $textoA = "En respuesta a su solicitud, le comunicamos que podrá dirigirse a nuestra institución el día " . $fechaAtencion . " para <b>trámitar</b> un préstamo personal.";
         $textoDxFdT = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
         $textoD = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque ";
@@ -980,10 +986,11 @@ class TurnosController extends ControllerBase
             $this->envioRespuestas($solicitudesAutorizadas, $textoA, 'A', $ultimoPeriodo);
 
         if (count($solicitudesDenegadas) != 0)
-            $this->envioRespuestas($solicitudesDenegadas, $textoD, 'D');
+            $this->envioRespuestas($solicitudesDenegadas, $textoD, 'D',$ultimoPeriodo);
 
         if (count($solicitudesDenegadasFaltaTurnos) != 0)
-            $this->envioRespuestas($solicitudesDenegadasFaltaTurnos, $textoDxFdT, 'DFT');
+            $this->envioRespuestas($solicitudesDenegadasFaltaTurnos, $textoDxFdT, 'DFT',$ultimoPeriodo);
+
         $this->flash->message('dismiss', '<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
                                             </button> LAS RESPUESTAS FUERON ENVIADAS A LOS AFILIADOS</h3>');
@@ -999,20 +1006,26 @@ class TurnosController extends ControllerBase
      */
     private function envioRespuestas($solicitudes, $texto, $tipoEstado, $ultimoPeriodo = null)
     {
-        foreach ($solicitudes as $solicitud) {
-
-            if ($solicitud->getSolicitudturnoTipoturnoid() == 2) {
-                //Es un turno solicitado por la terminal.
-                if ($tipoEstado == 'A') {
+        foreach ($solicitudes as $solicitud)
+        {
+            if ($solicitud->getSolicitudturnoTipoturnoid() == 2) //Es un turno solicitado por la terminal.
+            {
+                if ($tipoEstado == 'A')
+                {
                     //Está Autorizado, generar codigo
                     $codigo = $this->getRandomCode($ultimoPeriodo->getFechasTurnosId());
                     $solicitud->setSolicitudturnoCodigo($codigo);
                 }
-                $solicitud->setSolicitudTurnoFechaConfirmacion(date('Y-m-d H:i:s'));
-                if (!$solicitud->update()) {
+
+                $solicitud->setSolicitudTurnoFechaConfirmacion(date('Y-m-d H:i:s')); //esto no debe estar ahora
+
+                if (!$solicitud->update())
+                {
                     $this->flash->error("Ocurrió un error al generar el codigo de turno para el afiliado con legajo: " . $solicitud->getSolicitudTurnoLegajo());
                 }
-            } else {
+            }
+            else
+            {
                 $this->enviarEmail($solicitud, $texto, $tipoEstado, $ultimoPeriodo);
             }
         }
@@ -1026,7 +1039,8 @@ class TurnosController extends ControllerBase
      */
     private function enviarEmail($unaSolicitud, $mensaje, $tipoEstado, $unPeriodo)
     {
-        if ($unaSolicitud->getSolicitudturnoEmail() != "" || $unaSolicitud->getSolicitudturnoEmail() != null) {
+        if ($unaSolicitud->getSolicitudturnoEmail() != "" || $unaSolicitud->getSolicitudturnoEmail() != null)
+        {
             $diasConfirmacion = $unPeriodo->getFechasTurnosCantidadDiasConfirmacion();
 
             $idSol = $unaSolicitud->getSolicitudturnoId();
@@ -1041,14 +1055,15 @@ class TurnosController extends ControllerBase
             $this->mailDesarrollo->CharSet = 'UTF-8';
             $this->mailDesarrollo->Host = 'mail.imps.org.ar';
             $this->mailDesarrollo->SMTPAuth = true;
-            $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->Password = 'sis$%&--temas';
+            $this->mailDesarrollo->Username = 'informatica@imps.org.ar';
+            $this->mailDesarrollo->Password = 'tecno$%&--logia';
             $this->mailDesarrollo->SMTPSecure = '';
             $this->mailDesarrollo->Port = 26;
-            $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
+            $this->mailDesarrollo->From = 'informatica@imps.org.ar';
             $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN AFILIADOS';
 
             $this->mailDesarrollo->addAddress($correo, $nomApe);
+
             $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS.";
 
             $idCodif = base64_encode($idSol);
@@ -1060,7 +1075,8 @@ class TurnosController extends ControllerBase
                 . "<br/><br/> <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta podrá dirijirse a nuestras oficinas o "
                 . "<a href='http://imps.org.ar/impsweb/' target='_blank'>hacer click aquí.</a></p>";
 
-            if ($tipoEstado == 'A') {
+            if ($tipoEstado == 'A')
+            {
                 $cad1 = "Además, a modo informativo, le avisamos que el monto máximo que se le puede prestar es $" . $montoM . ", el monto posible que se le puede otorgar es $" . $montoP;
                 $cadena = $cad1 . ", la cantidad máxima de cuotas es " . $cantCuotas . " y el valor de cada una de ellas es de $" . $valorCuota . '.<br/>';
 
@@ -1070,10 +1086,13 @@ class TurnosController extends ControllerBase
                 $cadena .= "Recuerde que usted tiene " . $diasConfirmacion . " días para confirmar el mensaje, de lo contrario el turno será cancelado.<br/>";
 
                 $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinal;
-            } else {
+            }
+            else
+            {
                 if ($tipoEstado == 'D')
                     $this->mailDesarrollo->Body = $texto . ' ' . strtolower($obs) . '.<br/>' . $textoFinal;
-                else {
+                else
+                {
                     if ($obs != '-' && $obs != '')
                         $texto .= "Nota: " . $obs . "<br/>";
 
