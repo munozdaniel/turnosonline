@@ -1,19 +1,21 @@
 <section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
+
             <div class="curriculum-bg-header modal-header " align="left">
+
                 <h1>
                     <ins>SISTEMA DE TURNOS ONLINE</ins>
+                    {{ link_to("sesion/cerrar", "<i class='fa fa-home'></i> SALIR",'class':'btn btn-lg btn-primary','style':'margin-left:42%;background-color:#195889;') }}
                     <br>
                 </h1>
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("sesion/cerrar", "<i class='fa fa-home'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
 
             </div>
+
+            <hr>
+
             {{ content() }}
+
             {% if admin or empleado or supervisor %}
             <div class="row  form-blanco borde-top borde-left-4 borde-right-4">
                 <div class="col-sm-4">
