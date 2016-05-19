@@ -104,10 +104,6 @@
                     <th class="th-estilo">Fecha revisión</th>
                     <th class="th-estilo">Atendido por</th>
                     <th class="th-estilo">Estado</th>
-                    <th class="th-estilo">Monto maximo</th>
-                    <th class="th-estilo">Monto posible</th>
-                    <th class="th-estilo">Máximo de cuotas</th>
-                    <th class="th-estilo">Valor cuota</th>
                     <th class="th-estilo">Observaciones</th>
                     <th class="th-estilo">EDITAR</th>
                 </tr>
@@ -124,24 +120,16 @@
                                 <button class="btn btn-block btn-success">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
                             {% endif %}
                         </td>
+
                         <td class="td-estilo">
                             <i class="fa fa-calendar"></i> {{ date('d/m/Y',(item.getSolicitudTurnoFechaPedido()) | strtotime) }}
                         </td>
-                        <td class="td-estilo"><strong><a
-                                        class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
-                        </td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoMontoMax() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoMontoPosible() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoCantCuotas() }}</td>
-                        <td class="td-estilo">{{ item.getSolicitudTurnoValorCuota() }}</td>
-                        <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
-                            {{ item.getSolicitudTurnoObservaciones() }}
-                        </td>
+
                         <td class="td-estilo">
                             <h4>
                                 <ins>{{ item.getSolicitudTurnoLegajo() }} </ins>
-                            </h4>{{ item.getSolicitudTurnoNomApe() }}</td>
-
+                            </h4>{{ item.getSolicitudTurnoNomApe() }}
+                        </td>
 
                         <td class="td-estilo">
                             {% if(item.getSolicitudTurnoFechaProcesamiento() != null) %}
@@ -152,8 +140,16 @@
                             {#Mostramos la variable seteada con los valores anteriores.#}
                             <i class="fa fa-calendar"></i> {{ fechaModif }}
                         </td>
+
                         <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
-                        <td class="td-estilo">{{ item.getTipoturno().getTipoTurnoNombre() }}</td>
+
+                        <td class="td-estilo"><strong><a
+                                        class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
+                        </td>
+
+                        <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
+                            {{ item.getSolicitudTurnoObservaciones() }}
+                        </td>
 
                         <td width="7%">
                             {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
