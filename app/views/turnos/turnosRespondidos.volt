@@ -11,113 +11,118 @@
 </style>
 
 <section id="onepage" class="admin bg_line">
-    <div align="center">
-        <div class="curriculum-bg-header modal-header " align="left">
-            <h1>
-                <ins>LISTA DE TURNOS RESPONDIDOS</ins>
-                <br>
-            </h1>
-            <h3>
-                <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados
-                        con turnos Autorizado/Denegado.</em></small>
-            </h3>
-            <table class="" width="100%">
-                <tr>
-                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
-                </tr>
-            </table>
+    <div class="container">
 
-        </div>
-    </div>
-    <hr>
-    <div class="col-md-12">
-        {{ content() }}
-    </div>
-    <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-        {% if informacion is defined %}
-            <div class="col-sm-4" align="right">
-                <h3><strong>
-                        <ins>PERIODO DE SOLICITUD</ins>
-                    </strong>
-                </h3>
-                <h4>
-                    Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
-                </h4>
+        <div align="center">
+            <div class="curriculum-bg-header modal-header " align="left">
 
-            </div>
-            <div class="col-sm-4" align="center">
+                <h1>
+                    <ins>LISTA DE TURNOS RESPONDIDOS</ins>
+                    {{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:33%;background-color:#195889;') }}
+                    <br>
+                </h1>
+
                 <h3>
-                    <strong>
-                        <ins>DÍA DE ATENCI&Oacute;N</ins>
-                    </strong>
+                    <small> <em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados
+                            a los cuales se les envio la respuesta a su solicitud con Autorizado/Denegado.</em></small>
                 </h3>
-                <h4>
-                    Desde {{ informacion['diaAtencion'] }}
-                    <br>Hasta {{ informacion['diaAtencionFinal'] }}
-                </h4>
+
             </div>
-            <div id="cantAutorizados">
-                <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
-                    <h3>
-                        <strong>
-                            <ins>TURNOS</ins>
+        </div>
+
+        <hr>
+
+        <div class="col-md-12">
+            {{ content() }}
+        </div>
+
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+            {% if informacion is defined %}
+                <div class="col-sm-4" align="center">
+                    <h3><strong>
+                            <ins>PERIODO DE SOLICITUD</ins>
                         </strong>
                     </h3>
+
                     <h4>
-                        Total: {{ informacion['cantidadTurnos'] }}<br>
-                        Autorizados: {{ informacion['cantidadAutorizados'] }}
+                        Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
+                    </h4>
+
+                </div>
+
+                <div class="col-sm-4" align="center">
+                    <h3>
+                        <strong>
+                            <ins>PERIODO DE ATENCI&Oacute;N</ins>
+                        </strong>
+                    </h3>
+
+                    <h4>
+                        Desde {{ informacion['diaAtencion'] }}<br/>
+                        Hasta {{ informacion['diaAtencionFinal'] }}
                     </h4>
                 </div>
+
+                <div id="cantAutorizados">
+                    <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                        <h3>
+                            <strong>
+                                <ins>TURNOS</ins>
+                            </strong>
+                        </h3>
+                        <h4>
+                            Total: {{ informacion['cantidadTurnos'] }}<br/>
+                            Autorizados: {{ informacion['cantidadAutorizados'] }}
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-sm-12" align="center">
+
+                    <hr>
+
+                    <div class=" col-sm-2 col-sm-offset-4">
+                        <div class="cuadrado-azul" style="background-color: #5bc0de;"><i class="fa fa-bookmark"></i></div>
+                        <strong>ONLINE</strong>
+                    </div>
+
+                    <div class=" col-sm-2">
+                        <div class="cuadrado-verde" style="background-color: #5cb85c;"><i class="fa fa-bookmark"></i></div>
+                        <strong>TERMINAL</strong>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+
+            <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
+                <table id="tabla" class="table_r table-striped table-bordered table-condensed">
+                    <thead style="background-color: #131313;">
+                    <tr>
+                        <th class="th-titulo">ID</th>{# 0 #}
+                        <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
+                        <th class="th-titulo">Codigo</th>{# 2 #}
+                        <th class="th-titulo">Afiliado</th>{# 3: Legajo y Nombre #}
+                        <th class="th-titulo">Email/Telefono</th>{# 4 #}
+                        <th class="th-titulo">Fecha respuesta enviada</th>{# 5 #}
+                        <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
+                        <th class="th-titulo">Observación</th>{# 7 #}
+                        <th class="th-titulo">Estado de Asistencia</th>{# 8 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
+                        <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 9 : Botones para aceptar/cancelar Asistencia #}
+                        <th class="th-titulo">Imprimir Comprobante</th>{# 10 #}
+                    </tr>
+                    </thead>
+                </table>
             </div>
-            <div class="col-sm-12" align="center">
-                <hr>
 
-                <div class=" col-sm-2 col-sm-offset-3">
-
-                    <div class="cuadrado-azul"><i class="fa fa-bookmark"></i></div>
-                    <strong> ONLINE</strong>
-                </div>
-                <div class=" col-sm-2">
-
-                    <div class="cuadrado-verde"><i class="fa fa-bookmark"></i></div>
-                    <strong> TERMINAL </strong>
-                </div>
-                <div class=" col-sm-2">
-
-                    <div class="cuadrado-amarillo"><i class="fa fa-bookmark"></i></div>
-                    <strong> MANUALES</strong>
-                </div>
-            </div>
-
-        {% endif %}
-
-    </div>
-
-    <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-
-        <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
-            <table id="tabla" class="table_r table-striped table-bordered table-condensed">
-                <thead style="background-color: #131313;">
-                <tr>
-                    <th class="th-titulo">ID</th>{# 0 #}
-                    <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
-                    <th class="th-titulo">Codigo</th>{# 2 #}
-                    <th class="th-titulo">Afiliado</th>{# 3: Legajo y Nombre #}
-                    <th class="th-titulo">Email/Telefono</th>{# 4 #}
-                    <th class="th-titulo">Fecha respuesta enviada</th>{# 5 #}
-                    <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
-                    <th class="th-titulo">Observación</th>{# 7 #}
-                    <th class="th-titulo">Estado de Asistencia</th>{# 8 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
-                    <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 9 : Botones para aceptar/cancelar Asistencia #}
-                    <th class="th-titulo">Imprimir Comprobante</th>{# 10 #}
-                </tr>
-                </thead>
-            </table>
         </div>
 
     </div>
-
 </section>
+
 <!-- Modal -->
 <div class="modal fade" id="modal_resultado" role="dialog" >
     <div class="modal-dialog modal-sm" style="width:450px !important; border: 0;border-top: 5px solid #5BC0DE;box-shadow: 0 2px 10px rgba(0,0,0,0.8);">
