@@ -158,6 +158,7 @@
     $(".alert-info").fadeTo(4000, 500).slideUp(500, function () {
         $(".alert-info").alert('close');
     });
+
     $(document).ready(function ()
     {
         var fechaIS = '{{ informacion['fechaInicio'] }}';
@@ -173,7 +174,7 @@
                 dataType: 'json'
             },
             "processing": true,
-            dom: 'Bfrtip',
+            dom: 'Bfrtlip',
             buttons:
             [
                 {
@@ -189,7 +190,7 @@
                     extend: 'pdfHtml5',
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
-                    download: 'open', //abre una nueva ventana
+                    download: 'open',
                     exportOptions: {
                         columns:[2, 3, 4, 5, 6, 7, 8, 11]
                     }
@@ -317,7 +318,6 @@
                         console.log(data);
                     });
         });
-    })
-    ;
+    });
 
 </script>
