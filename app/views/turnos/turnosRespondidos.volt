@@ -30,6 +30,8 @@
             </div>
         </div>
 
+    </div>
+
         <hr>
 
         <div class="col-md-12">
@@ -98,21 +100,24 @@
 
         <div class="row form-blanco borde-top borde-left-4 borde-right-4">
 
+            <br/>
+
             <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
                 <table id="tabla" class="table_r table-striped table-bordered table-condensed">
                     <thead style="background-color: #131313;">
                     <tr>
                         <th class="th-titulo">ID</th>{# 0 #}
                         <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
-                        <th class="th-titulo">Codigo</th>{# 2 #}
+                        <th class="th-titulo">Código</th>{# 2 #}
                         <th class="th-titulo">Afiliado</th>{# 3: Legajo y Nombre #}
                         <th class="th-titulo">Email/Telefono</th>{# 4 #}
                         <th class="th-titulo">Fecha respuesta enviada</th>{# 5 #}
-                        <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
-                        <th class="th-titulo">Observación</th>{# 7 #}
-                        <th class="th-titulo">Estado de Asistencia</th>{# 8 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
-                        <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 9 : Botones para aceptar/cancelar Asistencia #}
-                        <th class="th-titulo">Imprimir Comprobante</th>{# 10 #}
+                        <th class="th-titulo">Usuario</th>{# 6 #}
+                        <th class="th-titulo">Estado</th>{# 7 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
+                        <th class="th-titulo">Observación</th>{# 8 #}
+                        <th class="th-titulo">Estado de asistencia</th>{# 9 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
+                        <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 10 : Botones para aceptar/cancelar Asistencia #}
+                        <th class="th-titulo">Ver Comprobante</th>{# 11 #}
                     </tr>
                     </thead>
                 </table>
@@ -120,7 +125,6 @@
 
         </div>
 
-    </div>
 </section>
 
 <!-- Modal -->
@@ -154,17 +158,24 @@
     $(".alert-info").fadeTo(4000, 500).slideUp(500, function () {
         $(".alert-info").alert('close');
     });
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+        var fechaIS = '{{ informacion['fechaInicio'] }}';
+        var fechaFS = '{{ informacion['fechaFinal'] }}';
+        var fechaIA = '{{ informacion['diaAtencion'] }}';
+        var fechaFA = '{{ informacion['diaAtencionFinal'] }}';
 
         var tabla = $('#tabla').DataTable({
-            ajax: {
+            ajax:
+            {
                 'url': '/impsweb/turnos/turnosRespondidosAjax',
                 'type': 'POST',
                 dataType: 'json'
             },
             "processing": true,
-            dom: 'Bfrtlip',
-            buttons: [
+            dom: 'Bfrtip',
+            buttons:
+            [
                 {
                     text: 'Recargar Tabla',
                     action: function (e, dt, node, config) {
@@ -173,16 +184,19 @@
                 },
                 {
                     text: "Exportar PDF",
+                    title: "Listado de turnos",
+                    message:"Periodo de solicitud: "+fechaIS+" - "+fechaFS+"   Periodo de atención: "+fechaIA+" - "+fechaFA,
                     extend: 'pdfHtml5',
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
-                    download: 'open',
+                    download: 'open', //abre una nueva ventana
                     exportOptions: {
-                        columns:[2, 3, 4, 5, 6, 7,10]
+                        columns:[2, 3, 4, 5, 6, 7, 8, 11]
                     }
                 }
             ],
-            "columnDefs": [
+            "columnDefs":
+            [
                 {
                     "targets": [0,1],
                     "visible": false,
@@ -190,8 +204,9 @@
                 }
             ],
             'pageLength': 10,
-            'lengthMenu': [[10, 20, 50, 75, -1], [10, 20, 50, 75, 'Todos']]
-            , "language": {
+            'lengthMenu': [[10, 20, 50, 75, -1], [10, 20, 50, 75, 'Todos']],
+            "language":
+            {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
@@ -215,7 +230,8 @@
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull)
+            {
                 var $nRow = $(nRow);
                 //console.log(aData[9]);
                 if (aData[6] != "AUTORIZADO") {//ESTADO
