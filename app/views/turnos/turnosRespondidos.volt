@@ -99,17 +99,17 @@
             <table id="tabla" class="table_r table-striped table-bordered table-condensed">
                 <thead style="background-color: #131313;">
                 <tr>
-                    <th class="th-titulo">Codigo</th>
-                    <th class="th-titulo">Legajo</th>
-                    <th class="th-titulo">Apellido y nombre</th>
-                    <th class="th-titulo">Email</th>
-                    <th class="th-titulo">Telefono</th>
-                    <th class="th-titulo">Fecha respuesta enviada</th>
-                    <th class="th-titulo">Empleado</th>
-                    <th class="th-titulo">Estado</th>
-                    <th class="th-titulo">Información</th>
-                    <th class="th-titulo">Imprimir Comprobante</th>
-                    <th class="th-titulo">Tipo</th>
+                    <th class="th-titulo">ID</th>{# 0 #}
+                    <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
+                    <th class="th-titulo">Codigo</th>{# 2 #}
+                    <th class="th-titulo">Afiliado</th>{# 3: Legajo y Nombre #}
+                    <th class="th-titulo">Email/Telefono</th>{# 4 #}
+                    <th class="th-titulo">Fecha respuesta enviada</th>{# 5 #}
+                    <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
+                    <th class="th-titulo">Observación</th>{# 7 #}
+                    <th class="th-titulo">Estado de Asistencia</th>{# 8 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
+                    <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 9 : Botones para aceptar/cancelar Asistencia #}
+                    <th class="th-titulo">Imprimir Comprobante</th>{# 10 #}
                 </tr>
                 </thead>
             </table>
@@ -119,36 +119,24 @@
 
 </section>
 <!-- Modal -->
-<div class="modal fade" id="confirmarAsistencia" role="dialog">
-    <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top: 6%" align="center">
-        <div class="modal-dialog ">
+<div class="modal fade" id="modal_resultado" role="dialog" >
+    <div class="modal-dialog modal-sm" style="width:450px !important; border: 0;border-top: 5px solid #5BC0DE;box-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+        <div class="modal-content" align="center" style="border-radius: 0px;">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
+            <a class="btn btn-lg btn-info " >
+                <i class="fa fa-info-circle fa-2x"></i> Información</a>
 
-                    <h1><i class="fa fa-question-circle fa-3x bg-info-icon" aria-hidden="true"></i></h1>
-
-                    <h3>Por favor presione el botón CONFIRMAR si el afiliado informó que fue notificado.</h3>
-
-                    <div id="mensaje"></div>
-                    <hr>
-                    {{ hidden_field('confirma_id') }}
-                    <p><strong>LEGAJO</strong> {{ text_field('confirma_legajo','readOnly':'true') }}</p>
-
-                    <p id="posible_ocultar">
-                        <strong>CODIGO</strong> {{ text_field('confirma_codigo','readOnly':'true') }}</p>
-                    <hr>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
-                    <button type="button" class="btn btn-success" onclick="guardarConfirmarAsistencia()">CONFIRMAR
-                    </button>
-
-                </div>
+            <div id="mensaje_resultado" class="modal-body" align="left">
+                <div class="alerta_mensaje"></div>
             </div>
 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">CERRAR</button>
+            </div>
         </div>
     </div>
 </div>
+
 <script>
     var myVar = setInterval(function () {
         myTimer()
@@ -156,29 +144,6 @@
 
     function myTimer() {
         $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
-    }
-
-    function confirmarAsistencia(solicitudTurno_id, solicitudTurno_legajo, solicitudTurno_codigo) {
-        $('.help-block').remove(); // Limpieza de los mensajes de alerta.
-        $("#confirmarAsistencia").modal();
-        var id = $("#confirma_id");
-        var codigo = $("#confirma_codigo");
-        var legajo = $("#confirma_legajo");
-        id.val("");
-        codigo.val("");
-        legajo.val("");
-        //==========
-        if (solicitudTurno_codigo == "" || solicitudTurno_codigo == null) {
-            $("#posible_ocultar").attr('class', 'ocultar');
-            // $('#mensaje').append('<div class="help-block alert alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> El afiliado no tiene asignado ningún código. Por favor haga click en el botón "asignar nuevo código"</h4></div>');
-            //FIXME: Ver si es necesario agregar un boton donde pueda generar y guardar el codigo nuevo al turnosolicitado.
-        } else {
-            $("#posible_ocultar").attr('class', 'mostrar');
-            codigo.val(solicitudTurno_codigo);
-        }
-        id.val(solicitudTurno_id);
-        legajo.val(solicitudTurno_legajo);
-
     }
 
     $(".alert-info").fadeTo(4000, 500).slideUp(500, function () {
@@ -206,12 +171,15 @@
                     extend: 'pdfHtml5',
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
-                    download: 'open'
+                    download: 'open',
+                    exportOptions: {
+                        columns:[2, 3, 4, 5, 6, 7,10]
+                    }
                 }
             ],
             "columnDefs": [
                 {
-                    "targets": [10],
+                    "targets": [0,1],
                     "visible": false,
                     "searchable": false
                 }
@@ -245,10 +213,13 @@
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 var $nRow = $(nRow);
                 //console.log(aData[9]);
-                if (aData[7] != "AUTORIZADO") {
+                if (aData[6] != "AUTORIZADO") {//ESTADO
                     $nRow.css({"color": "red"});
                 }
-
+                if (aData[1] == 4) {// SI EL ESTADO ASISTENCIA ES CANCELADO
+                    $nRow.css({"color": "white"});
+                    $nRow.css({"background-color": "#4A0D0D"});
+                }
 
             }
         });
@@ -258,43 +229,74 @@
 
         function myTimer() {
             tabla.ajax.reload();
-
         }
 
+        var cuerpoTabla = $('#tabla tbody');
+        cuerpoTabla.on('dblclick', '#acepta', function () {
+            $('.alerta_mensaje').remove();
+            $('#mensaje_resultado').append('<div class="alerta_mensaje" align="center">' +
+            '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i> <span class="sr-only">Loading...</span> Procesando...</div>');
+            $("#modal_resultado").modal();
+            var data = tabla.row($(this).parents('tr')).data();
+            var datos = {
+                'solicitudTurno_id': data[0]
+            };
+            //==========
+            $.ajax({
+                type: 'POST',
+                url: '/impsweb/turnos/aceptaAsistenciaAjax',
+                data: datos,
+                dataType: 'json',
+                encode: true
+            })
+                    .done(function (data) {
+                        //console.log(data);
+                        $('.alerta_mensaje').remove();
+                        if (!data.success) {
+                            $('#mensaje_resultado').append('<div class="alerta_mensaje alert-danger"><h3>' + data.mensaje + '</h3></div>');
+                        } else {
+                            $('#mensaje_resultado').append('<div class="alerta_mensaje  alert-success"><h3>' + data.mensaje + '</h3></div>');
+                        }
+                        tabla.ajax.reload();
+
+                    })
+                    .fail(function (data) {
+                        console.log(data);
+                    });
+        });
+        cuerpoTabla.on('dblclick', '#cancela', function () {
+            $('.alerta_mensaje').remove();
+            $('#mensaje_resultado').append('<div class="alerta_mensaje" align="center>' +
+            '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i> <span class="sr-only">Loading...</span>  Procesando...</div>');
+            $("#modal_resultado").modal();
+            var data = tabla.row($(this).parents('tr')).data();
+            var datos = {
+                'solicitudTurno_id': data[0]
+            };
+            //==========
+            $.ajax({
+                type: 'POST',
+                url: '/impsweb/turnos/cancelaAsistenciaAjax',
+                data: datos,
+                dataType: 'json',
+                encode: true
+            })
+                    .done(function (data) {
+                        //console.log(data);
+                        $('.alerta_mensaje').remove();
+                        if (!data.success) {
+                            $('#mensaje_resultado').append('<div class="alerta_mensaje alert-danger"><h3>' + data.mensaje + '</h3></div>');
+                        } else {
+                            $('#mensaje_resultado').append('<div class="alerta_mensaje  alert-success"><h3>' + data.mensaje + '</h3></div>');
+                        }
+                        tabla.ajax.reload();
+
+                    })
+                    .fail(function (data) {
+                        console.log(data);
+                    });
+        });
     })
     ;
 
-    function guardarConfirmarAsistencia() {
-        $('.help-block').remove(); // Limpieza de los mensajes de alerta.
-
-
-        var datos = {
-            'solicitudTurno_id': document.getElementById('confirma_id').value,
-            'solicitudTurno_legajo': document.getElementById('confirma_legajo').value
-        };
-        //==========
-        $.ajax({
-            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
-            url: '/impsweb/turnos/confirmarRespuestaAjax', // the url where we want to POST
-            data: datos, // our data object
-            dataType: 'json', // what type of data do we expect back from the server
-            encode: true
-        })
-                .done(function (data) {
-                    //console.log(data);
-                    if (!data.success) {
-                        $('#mensaje').append('<div class="help-block  alert-danger"><h4><i class="fa fa-exclamation-triangle"></i> ' + data.mensaje + '</h4></div>'); // add the actual error message under our input
-                    } else {
-                        $('#mensaje').append('<div class="help-block  alert-success"><h4>' + data.mensaje + '</h4></div>');
-                        $("#confirmarAsistencia").hide(500);
-                        setTimeout("redireccionar()", 1000); //tiempo expresado en milisegundos
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                });
-    }
-    function redireccionar() {
-        window.location = "/impsweb/turnos/turnosRespondidos";
-    }
 </script>

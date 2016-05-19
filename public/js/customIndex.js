@@ -24,7 +24,7 @@ $('#map_canvas').gmap().bind('init', function (ev, map) {
 
 
 /* ----------------------------------------------------------- */
-/*  3. Featured Slider
+/*  3. Featured Slider Promociones
  /* ----------------------------------------------------------- */
 
 
@@ -41,7 +41,7 @@ $('.featured_slider').slick({
     cssEase: 'linear'
 });
 /* ----------------------------------------------------------- */
-/*  7. TEAM SLIDER
+/*  7. TEAM SLIDER Prestaciones
  /* ----------------------------------------------------------- */
 
 $('.team_slider').slick({
@@ -117,8 +117,8 @@ $('.blog_slider').slick({
 
 
 /* ----------------------------------------------------------- */
-/*  9. TESTIMONIAL SLIDER
- /* ----------------------------------------------------------- */
+/*  9. TESTIMONIAL SLIDER SIN USAR
+ /* -----------------------------------------------------------
 
 $('.testimonial_slider').slick({
     dots: true,
@@ -131,11 +131,11 @@ $('.testimonial_slider').slick({
     fade: true,
     autoplaySpeed: 3000,
     cssEase: 'linear'
-});
+});*/
 
 
 /* ----------------------------------------------------------- */
-/*  10. CLIENTS SLIDER
+/*  10. CLIENTS SLIDER Información de Contacto
  /* ----------------------------------------------------------- */
 
 $('.clients_slider').slick({
@@ -171,3 +171,37 @@ $('.clients_slider').slick({
     ]
 });
 
+/*Novedades*/
+
+$('.responsive').slick({
+    dots: false,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+        {
+            breakpoint: 1199,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }
+    ]
+});

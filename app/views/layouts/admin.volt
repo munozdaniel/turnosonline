@@ -16,12 +16,12 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul id="top-menu" class="nav navbar-nav navbar-right main_nav">
-                    <li class="active ">{{ link_to('index/index#','class':'','Inicio' )}}</li>
+                    <li>{{ link_to('index/index#','class':'','Inicio' )}}</li>
                     <li>{{ link_to('index/index#about','class':'','Informacion') }}</li>
                     <li>{{ link_to('index/index#service','class':'','Servicios') }}</li>
                     <li>{{ link_to('index/index#works','class':'','Guía de Tramites') }}</li>
                     <li>{{ link_to('index/index#team','class':'','Prestaciones' )}}</li>
-                    <li>{{ link_to('index/index#clients','class':'si_recorrer','Contactos' )}}</li>
+                    <li>{{ link_to('index/index#clients','class':'','Contactos' )}}</li>
                     <li id="opciones-institucion" class="dropdown">
                         <button class="btn btn-menu dropdown-toggle" type="button" id="desplegar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Institución

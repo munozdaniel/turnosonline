@@ -8,7 +8,7 @@
                 </h1>
                 <table class="" width="100%">
                     <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-home'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
+                        <td align="right">{{ link_to("sesion/cerrar", "<i class='fa fa-home'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
                     </tr>
                 </table>
 
@@ -22,8 +22,8 @@
                             <span class="box-icon bg-azul-pl">
                                 <i class="fa fa-list-alt "></i>
                             </span>
-                        <div class="box-info">
-                            <p class="size-h2"><strong>Listado</strong></p>
+                        <div class="box-info" align="left">
+                            <p class="size-h2"><strong>Listado de </strong></p>
                             <p class="text-muted">Turnos Solicitados</p>
                         </div>
                     </div>') }}
@@ -35,10 +35,10 @@
                                 <i class="fa fa-paper-plane-o"></i>
                             </span>
 
-                        <div class="box-info">
-                            <p class="size-h2"><strong>Listado</strong></p>
+                        <div class="box-info" align="left">
+                            <p class="size-h2"><strong>Listado de</strong></p>
 
-                            <p class="text-muted">Respuestas Enviadas</p>
+                            <p class="text-muted"> Respuestas Enviadas</p>
                         </div>
                     </div>') }}
                 </div>
@@ -49,24 +49,10 @@
                                 <i class="fa fa-ticket"></i>
                             </span>
 
-                        <div class="box-info">
-                            <p class="size-h2"><strong>Listado</strong></p>
+                        <div class="box-info"  align="left">
+                            <p class="size-h2"><strong>Listado de</strong></p>
 
-                            <p class="text-muted">Turnos Cancelados</p>
-                        </div>
-                    </div>') }}
-                </div>
-                <div class="col-sm-4">
-                    {{ link_to('turnos/solicitudManual','
-                    <div class="panel mini-box">
-                            <span class="box-icon bg-red-pl">
-                                <i class="fa fa-ticket"></i>
-                            </span>
-
-                        <div class="box-info">
-                            <p class="size-h2"><strong>Solicitud Manual</strong></p>
-
-                            <p class="text-muted">Turno</p>
+                            <p class="text-muted"> Turnos Cancelados</p>
                         </div>
                     </div>') }}
                 </div>
@@ -80,8 +66,8 @@
                             <i class="fa fa-calendar"></i>
                         </span>
 
-                    <div class="box-info">
-                        <p class="size-h2"><strong>Crear Periodo</strong></p>
+                    <div class="box-info"  align="left">
+                        <p class="size-h2"><strong>Crear Periodo de</strong></p>
 
                         <p class="text-muted">Atención de Turnos</p>
                     </div>
@@ -94,10 +80,10 @@
                             <i class="fa fa-bars"></i>
                         </span>
 
-                    <div class="box-info">
+                    <div class="box-info"  align="left">
                         <p class="size-h2"><strong>Historial</strong></p>
 
-                        <p class="text-muted">Periodos</p>
+                        <p class="text-muted">de Periodos</p>
                     </div>
                 </div>') }}
                 </div>

@@ -23,8 +23,10 @@ class IndexController extends ControllerBase
         $this->view->setTemplateAfter('main');
         $this->assets->collection('headerCss')
             ->addCss('css/slick.css')
-            ->addCss('plugins/vegas/vegas.css')
-            ->addCss('css/superslides.css');
+            ->addCss('plugins/vegas/vegas.css');
+            //->addCss('css/superslides.css');
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         $this->assets->collection('footer')
             ->addJs('js/jquery.min.js')
             //->addJs('js/menu.js')
@@ -33,7 +35,7 @@ class IndexController extends ControllerBase
             ->addJs('js/jquery.ui.map.js')
             ->addJs('https://maps.googleapis.com/maps/api/js',false)
             ->addJs('js/customIndex.js')
-            ->addJs('js/redireccionarSeccion.js')
+            //->addJs('js/redireccionarSeccion.js')
             ->addJs('plugins/vegas/vegas.min.js')
         ;
           $this->assets->collection('footerInline')
@@ -48,9 +50,10 @@ class IndexController extends ControllerBase
                       animation: 'random',
                       animationDuration: 20000,
                       slides: [
-                        { src: '/impsweb/public/img/inicio/1.jpg' },
-                        { src: '/impsweb/public/img/inicio/4.jpg' },
-                        { src: '/impsweb/public/img/inicio/5.gif' }
+                        { src: '/impsweb/public/img/inicio/01_ini.jpg' },
+                        { src: '/impsweb/public/img/inicio/02_ini.jpg' },
+                        { src: '/impsweb/public/img/inicio/03_ini.jpg' },
+                        { src: '/impsweb/public/img/inicio/4.jpg' }
                       ],
                       overlay: '/impsweb/public/plugins/vegas/overlays/04.png'
                     });

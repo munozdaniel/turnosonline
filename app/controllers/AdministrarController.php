@@ -16,6 +16,8 @@ class AdministrarController extends ControllerBase
 
     public function indexAction()
     {
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         $miSesion = $this->session->get('auth');
         $rol = $miSesion['rol_nombre'];
         $this->view->admin = false;
