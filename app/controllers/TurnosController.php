@@ -1824,65 +1824,58 @@ class TurnosController extends ControllerBase
     public function solicitudesPorPeriodoAjaxAction()
     {
         $this->view->disable();
+
+        $id = $this->request->get('id');
+
         $retorno = array();
         $datos = array();
 
-        $idP = $this->request->getPost('idP');
+        $solicitudes = Solicitudturno::find(array('solicitudTurnos_fechasTurnos = :fechasTurnos_id:',
+                                                            'bind' => array('fechasTurnos_id' => $id),
+                                                            'order' => 'solicitudTurno_id ASC'));
+        foreach ($solicitudes as $unaSolicitud)
+        {
+            $item = array();
 
-            $solicitudes = Solicitudturno::find(array('solicitudTurnos_fechasTurnos = :fechasTurnos_id:',
-                'bind' => array('fechasTurnos_id' => $idP),
-                'order' => 'solicitudTurno_id ASC'));
+            //0 ID: Se utiliza para aceptar/cancelar asistencia
+            $item[] = $unaSolicitud->getSolicitudturnoId();
+            //1 Tipo de Turno: para pintar la fila de rojo
+            $item[] = $unaSolicitud->getSolicitudturnoEstadoasistenciaid();
+            //2 Codigo
+            $item[] = $unaSolicitud->getSolicitudturnoCodigo();
+            //3 Afiliado
+            $item[] = '<h4><ins>' . $unaSolicitud->getSolicitudturnoLegajo() . ' </ins></h4>' . $unaSolicitud->getSolicitudturnoNomape();
+            //4 Email/Telefono
+            if ($unaSolicitud->getSolicitudturnoEmail() == NULL || trim($unaSolicitud->getSolicitudturnoEmail()) == "")
+                $email = '';
+            else
+                $email = "" . $unaSolicitud->getSolicitudturnoEmail();
+            $item[] = "<i class='fa fa-envelope-o'></i> " . $email . " <br> <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
 
-            foreach ($solicitudes as $unaSolicitud)
+            //5 Usuario
+            $item[] =$unaSolicitud->getSolicitudturnoNickusuario();
+            //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
+            $item[] = $unaSolicitud->getSolicitudturnoEstado();
+            //7 Observaciones
+            $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
+
+            switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid())
             {
-                    $item = array();
-
-                    //0 ID: Se utiliza para aceptar/cancelar asistencia
-                    $item[] = $unaSolicitud->getSolicitudturnoId();
-                    //1 Tipo de Turno: para pintar la fila de rojo
-                    $item[] = $unaSolicitud->getSolicitudturnoEstadoasistenciaid();
-                    //2 Codigo
-                    $item[] = $unaSolicitud->getSolicitudturnoCodigo();
-                    //3 Afiliado
-                    $item[] = '<h4><ins>' . $unaSolicitud->getSolicitudturnoLegajo() . ' </ins></h4>' . $unaSolicitud->getSolicitudturnoNomape();
-                    //4 Email/Telefono
-                    if ($unaSolicitud->getSolicitudturnoEmail() == NULL || trim($unaSolicitud->getSolicitudturnoEmail()) == "")
-                        $email = '';
-                    else
-                        $email = "" . $unaSolicitud->getSolicitudturnoEmail();
-                    $item[] = "<i class='fa fa-envelope-o'></i> " . $email . " <br> <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
-
-                    //5 Usuario
-                    $item[] =$unaSolicitud->getSolicitudturnoNickusuario();
-                    //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
-                    $item[] = $unaSolicitud->getSolicitudturnoEstado();
-                    //7 Observaciones
-                    $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
-
-
-                    switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid())
-                    {
-                        case 1:
-                            $estadoAsistencia = 'EN ESPERA';
-                            break;
-                        case 2:
-                            $estadoAsistencia = "CONFIRMADO";
-                            break;
-                        case 3:
-                            $estadoAsistencia = "PLAZO VENCIDO";
-                            break;
-                        case 4:
-                            $estadoAsistencia ="CANCELADO";
-                            break;
-                    }
-
-                    //8 Estado Asistencia
-                    $item[] = $estadoAsistencia;
-
-                    //9 tipo solicitud
-                    $item[] = $unaSolicitud->getTipoturno()->getTipoturnoNombre();
-                    $datos[] = $item;
+                case 1: $estadoAsistencia = 'EN ESPERA';break;
+                case 2: $estadoAsistencia = "CONFIRMADO";break;
+                case 3: $estadoAsistencia = "PLAZO VENCIDO";break;
+                case 4: $estadoAsistencia = "CANCELADO";break;
+                default : $estadoAsistencia = ' ';break;
             }
+
+            //8 Estado Asistencia
+            $item[] = $estadoAsistencia;
+
+            //9 tipo solicitud
+            $item[] = $unaSolicitud->getTipoturno()->getTipoturnoNombre();
+
+            $datos[] = $item;
+        }
 
         $retorno['data'] = $datos;
         echo json_encode($retorno);
