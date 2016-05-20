@@ -3,64 +3,23 @@
 class Fechasturnos extends \Phalcon\Mvc\Model
 {
 
-    /**
-     *
-     * @var integer
-     */
     protected $fechasTurnos_id;
 
-    /**
-     *
-     * @var string
-     */
     protected $fechasTurnos_inicioSolicitud;
 
-    /**
-     *
-     * @var string
-     */
     protected $fechasTurnos_finSolicitud;
 
-    /**
-     *
-     * @var string
-     */
     protected $fechasTurnos_diaAtencion;
-    /**
-     *
-     * @var string
-     */
+
     protected $fechasTurnos_diaAtencionFinal;
-    /**
-     *
-     * @var integer
-     */
+
     protected $fechasTurnos_cantidadDeTurnos;
 
-    /**
-     *
-     * @var integer
-     */
     protected $fechasTurnos_cantidadAutorizados;
 
-    /**
-     *
-     * @var integer
-     */
-    protected $fechasTurnos_cantidadDiasConfirmacion;
-
-    /**
-     *
-     * @var integer
-     */
     protected $fechasTurnos_activo;
 
-    /**
-     *
-     * @var integer
-     */
     protected $fechasTurnos_sinTurnos;
-
 
 
     /**
@@ -150,19 +109,6 @@ class Fechasturnos extends \Phalcon\Mvc\Model
     public function setFechasturnosCantidadautorizados($fechasTurnos_cantidadAutorizados)
     {
         $this->fechasTurnos_cantidadAutorizados = $fechasTurnos_cantidadAutorizados;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field fechasTurnos_cantidadDiasConfirmacion
-     *
-     * @param integer $fechasTurnos_cantidadDiasConfirmacion
-     * @return $this
-     */
-    public function setFechasturnosCantidaddiasconfirmacion($fechasTurnos_cantidadDiasConfirmacion)
-    {
-        $this->fechasTurnos_cantidadDiasConfirmacion = $fechasTurnos_cantidadDiasConfirmacion;
 
         return $this;
     }
@@ -263,15 +209,6 @@ class Fechasturnos extends \Phalcon\Mvc\Model
         return $this->fechasTurnos_cantidadAutorizados;
     }
 
-    /**
-     * Returns the value of field fechasTurnos_cantidadDiasConfirmacion
-     *
-     * @return integer
-     */
-    public function getFechasturnosCantidaddiasconfirmacion()
-    {
-        return $this->fechasTurnos_cantidadDiasConfirmacion;
-    }
 
     /**
      * Returns the value of field fechasTurnos_activo
