@@ -50,7 +50,7 @@
 
         <div class="row form-blanco borde-top borde-left-4 borde-right-4">
             {% if informacion is defined %}
-                <div class="col-sm-4" align="right">
+                <div class="col-sm-4" align="center">
                     <h3><strong>
                             <ins>PERIODO DE SOLICITUD</ins>
                         </strong>
@@ -63,7 +63,7 @@
                 <div class="col-sm-4" align="center">
                     <h3>
                         <strong>
-                            <ins>DÍA DE ATENCI&Oacute;N</ins>
+                            <ins>PERIODO DE ATENCI&Oacute;N</ins>
                         </strong>
                     </h3>
                     <h4>
