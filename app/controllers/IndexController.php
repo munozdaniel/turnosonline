@@ -104,10 +104,12 @@ class IndexController extends ControllerBase
 
             }
             //Si el periodo para solicitar turnos ya termino.
-            if ($puntoProgramado->isAfter()) {
-
+            if ($puntoProgramado->isAfter())
+            {
                 $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-                if (!empty($ultimoPeriodo)) {
+
+               /* if (!empty($ultimoPeriodo))
+                {
                     $solicitudes = Solicitudturno::findBySolicitudTurno_respuestaChequeada(0);
                     foreach ($solicitudes as $unaSolicitud) {
                         $unaSolicitud->solicitudTurno_respuestaChequeada = 2;//Se los cancela porque se les vencieron el plazo.
@@ -117,8 +119,7 @@ class IndexController extends ControllerBase
                     if (!$ultimoPeriodo->save()) {
                         $this->flash->error("LOS PERIODOS PARA LA SOLICITUD DE TURNOS NO SE HAN DESHABILITADOS. ");
                     }
-                }
-
+                }*/
             }
         }
 
