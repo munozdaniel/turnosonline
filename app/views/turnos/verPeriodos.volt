@@ -35,8 +35,8 @@
                             <th style="text-align: center !important;">Dia final para solicitud</th>
                             <th style="text-align: center !important;">Día inicial para atención</th>
                             <th style="text-align: center !important;">Día final para atención</th>
-                            <th style="text-align: center !important;">Cantidad de Turnos</th>
-                            <th style="text-align: center !important;">Cantidad de Turnos Autorizados</th>
+                            <th style="text-align: center !important;">Cantidad de turnos</th>
+                            <th style="text-align: center !important;">Cantidad de turnos autorizados</th>
                             <th style="text-align: center !important;">Cantidad de días para confirmación</th>
                             <th style="text-align: center !important;">Periodo activo</th>
                             <th style="text-align: center !important;"><i class="glyphicon glyphicon-edit"></i></th>
