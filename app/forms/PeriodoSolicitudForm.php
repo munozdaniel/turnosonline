@@ -116,30 +116,6 @@ class PeriodoSolicitudForm extends Form
             ));
 
         $this->add($cantidadTurnos);
-
-        /*=================== CANTIDAD DE DIAS ==========================*/
-        $cantidadDias = new Text("fechasTurnos_cantidadDiasConfirmacion",
-            array('style'=>'text-align:right !important;font-size: 18px;',
-                'required'=>'true',
-                'placeholder'=>'INGRESE LA CANTIDAD DE DIAS'));
-        $cantidadDias->setLabel('<small class="font-rojo">* </small>Cantidad de días para confirmar el mensaje');
-        $cantidadDias->setFilters(array('int'));
-        $cantidadDias->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Ingrese la <strong>cantidad de días</strong> para confirmar el mensaje.'
-                    )
-                ),
-                new Numericality(
-                    array(
-                        'message' => 'La <strong>cantidad de días</strong> debe ser un número.'
-                    )
-                ),
-                new NumberValidator()
-            )
-        );
-        $this->add($cantidadDias);
     }
 
     public function messages($name)
