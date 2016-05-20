@@ -29,20 +29,21 @@
         outline: none;
     }
 </style>
+
 <section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
+
                 <h1>
                     <ins>CALENDARIO</ins>
-                    <br>
+                    {{ link_to("administrar/index", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:66%;background-color:#195889;') }}
+                    <br/>
                 </h1>
-                <h3><small><em style=" color:#FFF !important;"> A continuación se visualizará el periodo para solicitar turnos.</em></small></h3>
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
+
+                <h3>
+                    <small><em style=" color:#FFF !important;"> A continuación se visualizará el periodo para solicitar turnos.</em></small>
+                </h3>
 
             </div>
             <hr>
