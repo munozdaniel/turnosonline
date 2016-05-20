@@ -38,7 +38,7 @@
                 </h3>
 
                 <h4>
-                    Desde {{ffInicioAtencion}}<br/> Hasta {{ ffInicioAtencion }}
+                    Desde {{ffInicioAtencion}} <br/> Hasta {{ ffFinAtencion }}
                 </h4>
             </div>
 
@@ -78,41 +78,43 @@
     {
         var ffIS = '{{ ffInicioSol }}';
         var ffFS = '{{ ffFinSol }}';
-        var ffIA= '{{ ffInicioAtencion }}';
-        var ffFA = '{{ ffInicioAtencion }}';
+        var ffIA = '{{ ffInicioAtencion }}';
+        var ffFA = '{{ ffFinAtencion }}';
+        var id  = {{ idP }};
 
-        var tabla = $('#tabla').DataTable({
+        var tabla = $('#tabla').DataTable
+        ({
             ajax:
             {
-                'url': '/impsweb/turnos/solicitudesPorPeriodoAjax/?idP='+{{ idP }},
-                'type': 'POST',
-                dataType: 'json'
+                 url: '/impsweb/turnos/solicitudesPorPeriodoAjax/?id='+id,
+                 type: 'POST',
+                 dataType: 'json',
             },
             "processing": true,
             dom: 'Bfrtlip',
             buttons:
-                    [
-                        {
-                            text: "Exportar PDF",
-                            title: "Listado de turnos",
-                            message:"Periodo de solicitud: "+ffIS+' - '+ffFS+'   Periodo de atención: '+ffIA+' -'+ffFA,
-                            extend: 'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize: 'LEGAL',
-                            download: 'open',
-                            exportOptions: {
-                                columns:[2, 3, 4, 5, 6, 7, 8, 9]
-                            }
-                        }
-                    ],
+            [
+                {
+                    text: "Exportar PDF",
+                    title: "Listado de turnos",
+                    message:"Periodo de solicitud: "+ffIS+' - '+ffFS+'   Periodo de atencion: '+ffIA+' -'+ffFA,
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    download: 'open',
+                    exportOptions: {
+                        columns:[2, 3, 4, 5, 6, 7, 8, 9]
+                    }
+                }
+            ],
             "columnDefs":
-                    [
-                        {
-                            "targets": [0,1],
-                            "visible": false,
-                            "searchable": false
-                        }
-                    ],
+            [
+                {
+                    "targets": [0,1],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
             'pageLength': 10,
             'lengthMenu': [[10, 20, 40, -1], [10, 20, 40, 'Todos']],
             "language":
@@ -140,8 +142,7 @@
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-        });
 
-        var cuerpoTabla = $('#tabla tbody');
+        });
     });
 </script>
