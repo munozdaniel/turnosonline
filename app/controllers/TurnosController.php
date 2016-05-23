@@ -596,6 +596,7 @@ class TurnosController extends ControllerBase
                                                 <i class="fa fa-ban text-danger"></i>
                                                 ' . "CANCELADO</a>";
                                 break;
+
                         }
 
                     }
@@ -932,135 +933,139 @@ class TurnosController extends ControllerBase
         //no hace nada, esta solo para que vaya a la vista.
     }
 
-
     /**
-     * Envia el correo segun el estado en el que se encuentra sera el mensaje enviado.
-     * Si es una solicitud Personal/Terminal también se generará un numero de comprobante pero no se enviará ningún correo.
+     * Verifica quien tiene correo, y se le envia una respuesta.
+     * Si es autorizado se lo pone en espera.
      */
     public function enviarRespuestasAction()
     {
+        set_time_limit(300);
         $usuarioActual = $this->session->get('auth')['usuario_nick'];
         $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
-
-        $solicitudesAutorizadas = Solicitudturno::recuperaSolicitudesSegunEstado('AUTORIZADO', $usuarioActual, $ultimoPeriodo);
-        $solicitudesDenegadas = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO', $usuarioActual, $ultimoPeriodo);
-        $solicitudesDenegadasFaltaTurnos = Solicitudturno::recuperaSolicitudesSegunEstado('DENEGADO POR FALTA DE TURNOS', $usuarioActual, $ultimoPeriodo);
-
-        if (count($solicitudesAutorizadas) == 0 && count($solicitudesDenegadas) == 0 && count($solicitudesDenegadasFaltaTurnos) == 0) {
+        $solicitudes = Solicitudturno::find(array("solicitudTurno_respuestaEnviada LIKE 'NO'
+                                                    AND solicitudTurno_nickUsuario=:usuario:
+                                                        AND solicitudTurnos_fechasTurnos=:periodo_id:
+                                                            AND solicitudTurno_email IS NOT NULL",
+            "bind" => array(
+                'usuario' => $usuarioActual,
+                'periodo_id' => $ultimoPeriodo->getFechasturnosId()
+            )));
+        if (empty($solicitudes)) {
             $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
                                             </button> NO SE ENVIARON LAS RESPUESTAS, YA QUE SOLO HAY SOLICITUDES PENDIENTES O EN REVISIÓN.</h3>');
             return $this->response->redirect('turnos/turnosSolicitados');
         }
         $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+        $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
         //FIXME: Preguntar como serán los mensajes que se van a enviar a los afiliados.
-        $textoA = "En respuesta a su solicitud, le comunicamos que podrá dirigirse a nuestra institución el día " . $fechaAtencion . " para <b>trámitar</b> un préstamo personal.";
-        $textoDxFdT = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
-        $textoD = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque ";
+        $mensajeAutorizado = "En respuesta a su solicitud, le comunicamos que podrá acercarse a nuestra institución desde el <b>$fechaAtencion hasta el $fechaAtencionFinal</b> para trámitar un préstamo personal.";
+        $mensajeDenegadoFT = "En respuesta a su solicitud, le comunicamos que <b>no es posible otorgarle</b> un turno para trámitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
+        $mensajeDenegado = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque ";
+        $afiliados = "";
+        foreach ($solicitudes as $solicitud) {
+            $this->db->begin();
+            $solicitud->setSolicitudturnoRespuestaenviada('SI');
+            $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
+            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+                $solicitud->setSolicitudturnoEstadoasistenciaid(1);//EN ESPERA
+            } else {
+                $solicitud->setSolicitudturnoEstadoasistenciaid(5);//NO DEBE ASISTIR
+            }
+            if (!$solicitud->update()) {
+                $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">X</span>
+                                            </button> Ocurrió un error al enviar el correo al afiliado: ' . $solicitud->getSolicitudturnoNomape() . '<br> Intente la operación nuevamente.</h3>');
+                $this->db->rollback();
+            } else {
+                $this->db->commit();
+            }
+            $template = "";
+            if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL) {
+                $mail = $this->mailDesarrollo;
+                try {
+                    $mail->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
+                    $mail->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
+                    if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+                        $template = $this->seleccionarTemplateAutorizado($solicitud, $mensajeAutorizado);
+                    } else {
+                        if ($solicitud->getSolicitudturnoEstado() == "DENEGADO") {
+                            $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegado);
+                        } else {
+                            if ($solicitud->getSolicitudturnoEstado() == "DENEGADO POR FALTA DE TURNOS") {
+                                $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegadoFT);
+                            }
+                        }
+                    }
+                    $this->mailDesarrollo->MsgHTML($template);
+                    $this->mailDesarrollo->body = strip_tags($template);
+                    if (!$this->mailDesarrollo->send()) {
+                        $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
+                    }
+                    $this->mailDesarrollo->clearAddresses();
+                }catch (phpmailerException $e) {
+                    echo $e->errorMessage(); //Pretty error messages from PHPMailer
+                } catch (Exception $e) {
+                    echo $e->getMessage(); //Boring error messages from anything else!
+                }
 
-        if (count($solicitudesAutorizadas) != 0)
-            $this->envioRespuestas($solicitudesAutorizadas, $textoA, 'A', $ultimoPeriodo);
-
-        if (count($solicitudesDenegadas) != 0)
-            $this->envioRespuestas($solicitudesDenegadas, $textoD, 'D');
-
-        if (count($solicitudesDenegadasFaltaTurnos) != 0)
-            $this->envioRespuestas($solicitudesDenegadasFaltaTurnos, $textoDxFdT, 'DFT');
+            }
+        }
         $this->flash->message('dismiss', '<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
                                             </button> LAS RESPUESTAS FUERON ENVIADAS A LOS AFILIADOS</h3>');
+        if (trim($afiliados) != "")
+            $this->flash->warning('<ul> Los siguientes afiliados no pudieron ser avisados por correo:  <br>' . $afiliados . '</ul>');
+        $this->view->pick('turnos/enviarRespuestas');
     }
 
-    /**
-     * Verifica si la solicitud es Terminal para generar el codigo de turno. Si la solicitud es online, envia
-     * un correo al afiliado.
-     * @param $solicitudes
-     * @param $texto
-     * @param $tipoEstado
-     * @param null $ultimoPeriodo
-     */
-    private function envioRespuestas($solicitudes, $texto, $tipoEstado, $ultimoPeriodo = null)
+    private function seleccionarTemplateAutorizado($solicitud, $mensaje)
     {
-        foreach ($solicitudes as $solicitud) {
-            $solicitud->setSolicitudTurnoFecharespuestaenviada(date('Y-m-d H:i:s'));
-            if (!$solicitud->update()) {
-                $this->flash->error("Ocurrió un error al generar el codigo de turno para el afiliado con legajo: " . $solicitud->getSolicitudTurnoLegajo());
+        $solicitudTurno_id = $solicitud->getSolicitudturnoId();
+        $idCodificado = base64_encode($solicitudTurno_id);
+        $correo = $solicitud->getSolicitudturnoEmail();
+        $nomApe = $solicitud->getSolicitudturnoNomape();
+        $obs = $solicitud->getSolicitudturnoObservaciones();
+        $template = file_get_contents('http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/files/emailtemplate/autorizado.volt');
+        $template = str_replace('%nombreAfiliado%', $nomApe, $template);
+        $template = str_replace('%mensaje%', $mensaje, $template);
+        //Si es online: tiene 96hs. Si es Terminal: tiene 72hs
+        $fechaLimiteConfirmacion = date('d/m/Y');
+        if ($solicitud->getSolicitudturnoTipoturnoid() == 1) {
+            $fechaLimiteConfirmacion = strtotime('+4 day', strtotime($solicitud->getSolicitudturnoFechapedido()));
+            $fechaLimiteConfirmacion = date('d/m/Y', $fechaLimiteConfirmacion);
+        } else {
+            if ($solicitud->getSolicitudturnoTipoturnoid() == 2) {
+                $fechaLimiteConfirmacion = strtotime('+3 day', strtotime($solicitud->getSolicitudturnoFechapedido()));
+                $fechaLimiteConfirmacion = date('d/m/Y', $fechaLimiteConfirmacion);
             }
-            if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL)
-                $this->enviarEmail($solicitud, $texto, $tipoEstado, $ultimoPeriodo);
         }
+        $mensajeConfirmacion = "Recuerde que usted tiene hasta el <b>" . $fechaLimiteConfirmacion . "</b> para confirmar el mensaje, de lo contrario el turno será cancelado.<br/>";
+        $template = str_replace('%mensajeConfirmacion%', $mensajeConfirmacion, $template);
+        if ($obs != "-" && trim($obs) != "") {
+            $template = str_replace('%observacion%', 'Observación: ' . $obs, $template);
+        } else {
+            $template = str_replace('%observacion%', '', $template);
+        }
+        $template = str_replace('%linkConfirmar%', 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/../turnos/confirmaEmail/?id=' . $idCodificado, $template);
+        $template = str_replace('%linkCancelar%', 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/../turnos/cancelarEmail/?id=' . $idCodificado, $template);
+        $template = str_replace('%urlImagenAdvertencia%', 'http://imps.org.ar/impsweb/public/img/emailtemplate/warning.png', $template);
+        return $template;
     }
 
-    /**
-     * Envia el correo al afiliado.
-     * @param $unaSolicitud
-     * @param $mensaje
-     * @param $tipoEstado
-     */
-    private function enviarEmail($unaSolicitud, $mensaje, $tipoEstado, $unPeriodo)
+    private function seleccionarTemplateDenegado($solicitud, $mensaje)
     {
-        if ($unaSolicitud->getSolicitudturnoEmail() != "" || $unaSolicitud->getSolicitudturnoEmail() != null) {
-            $diasConfirmacion = 1;
-            if ($unPeriodo != null)
-                $diasConfirmacion = $unPeriodo->getFechasTurnosCantidadDiasConfirmacion();
-
-            $idSol = $unaSolicitud->getSolicitudturnoId();
-            $correo = $unaSolicitud->getSolicitudturnoEmail();
-            $nomApe = $unaSolicitud->getSolicitudturnoNomape();
-            $obs = $unaSolicitud->getSolicitudturnoObservaciones();
-
-            $this->mailDesarrollo->CharSet = 'UTF-8';
-            $this->mailDesarrollo->Host = 'mail.imps.org.ar';
-            $this->mailDesarrollo->SMTPAuth = true;
-            $this->mailDesarrollo->Username = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->Password = 'sis$%&--temas';
-            $this->mailDesarrollo->SMTPSecure = '';
-            $this->mailDesarrollo->Port = 26;
-            $this->mailDesarrollo->From = 'desarrollo@imps.org.ar';
-            $this->mailDesarrollo->FromName = 'IMPS - DIVISIÓN AFILIADOS';
-
-            $this->mailDesarrollo->addAddress($correo, $nomApe);
-            $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS.";
-
-            $idCodif = base64_encode($idSol);
-
-            $texto = "Estimado/a  " . $nomApe . ":<br/> <br/>" . $mensaje;
-            $textoFinal = "Para confirmar que recibio este mensaje, "
-                . " <a href='http://localhost/impsweb/turnos/confirmaEmail/?id=" . $idCodif . "' target='_blank'>haga click aquí.</a>"
-                . "<br/><br/> Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono: (0299) 4433798"
-                . "<br/><br/> <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta podrá dirijirse a nuestras oficinas o "
-                . "<a href='http://imps.org.ar/impsweb/' target='_blank'>hacer click aquí.</a></p>";
-
-            if ($tipoEstado == 'A') {
-                $cadena = "";
-                if ($obs != '-' && $obs != '')
-                    $cadena .= "Nota: " . $obs . "<br/>";
-                //Si es online: tiene 96hs. Si es Terminal: tiene 72hs
-                if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 1) {
-                    $fechaLimiteConfirmacion = strtotime('+4 day', strtotime($unaSolicitud->getSolicitudturnoFechapedido()));
-                    $fechaLimiteConfirmacion = date('d/m/Y', $fechaLimiteConfirmacion);
-                } else {
-                    if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 2) {
-                        $fechaLimiteConfirmacion = strtotime('+3 day', strtotime($unaSolicitud->getSolicitudturnoFechapedido()));
-                        $fechaLimiteConfirmacion = date('d/m/Y', $fechaLimiteConfirmacion);
-                    }
-                }
-                $cadena .= "Recuerde que usted tiene hasta el " . $fechaLimiteConfirmacion . " para confirmar el mensaje, de lo contrario el turno será cancelado.<br/>";
-
-                $this->mailDesarrollo->Body = $texto . '<br/>' . $cadena . $textoFinal;
-            } else {
-                if ($tipoEstado == 'D')
-                    $this->mailDesarrollo->Body = $texto . ' ' . strtolower($obs) . '.<br/>' . $textoFinal;
-                else {
-                    if ($obs != '-' && $obs != '')
-                        $texto .= "Nota: " . $obs . "<br/>";
-
-                    $this->mailDesarrollo->Body = $texto . '<br/>' . $textoFinal;
-                }
-            }
-
-            $send = $this->mailDesarrollo->send();
+        $nomApe = $solicitud->getSolicitudturnoNomape();
+        $obs = $solicitud->getSolicitudturnoObservaciones();
+        $template = file_get_contents('http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/files/emailtemplate/denegado.html');
+        $template = str_replace('%nombreAfiliado%', $nomApe, $template);
+        $template = str_replace('%mensaje%', $mensaje, $template);
+        if ($obs != "-" && trim($obs) != "") {
+            $template = str_replace('%observacion%', $obs, $template);
+        } else {
+            $template = str_replace('%observacion%', '', $template);
         }
+        return $template;
     }
 
     /**
@@ -1098,15 +1103,14 @@ class TurnosController extends ControllerBase
         $this->db->begin();
         if ($estado == 'AUTORIZADO') {
             //Verifico si venció, según el tipo de turno.
-            $dentroPlazoValido=false;
+            $dentroPlazoValido = false;
             if ($solicitud->getSolicitudturnoTipoturnoid() == 1)
                 $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitud->getSolicitudturnoFechapedido());
             else
                 if ($solicitud->getSolicitudturnoTipoturnoid() == 1)
                     $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitud->getSolicitudturnoFechapedido());
             //Si venció, lo sanciono.
-            if(!$dentroPlazoValido)
-            {
+            if (!$dentroPlazoValido) {
                 $solicitud->setSolicitudturnoEstadoasistenciaid(3);
                 $solicitud->setSolicitudturnoSanciones($solicitud->getSolicitudturnoSanciones() + 1);
                 //FIXME: Mostrar las reglas del juego
@@ -1114,7 +1118,7 @@ class TurnosController extends ControllerBase
                     $this->db->rollback();
                 $this->db->commit();
                 $this->view->solicitud = NULL;
-                $this->flash->error("<h3>LAMENTABLEMENTE SE VENCIÓ EL TURNO PARA CONFIRMAR LA ASISTENCIA</h3>");
+                $this->flash->error("<h3>LAMENTABLEMENTE SE VENCIÓ EL TIEMPO PARA CONFIRMAR LA ASISTENCIA.</h3>");
                 return $this->redireccionar('turnos/resultadoConfirmacion');
             }
             //Esta cancelado
@@ -1509,30 +1513,6 @@ class TurnosController extends ControllerBase
         return "";
     }
 
-    /**
-     * Explica como funciona el sistema de turnos.
-     */
-    public function presentacionAction()
-    {
-
-        $this->assets->collection('headerCss')->addCss("plugins/multiscroll/jquery.multiscroll.css")
-            ->addCss("css/individual.css");
-        $this->assets->collection('footer')->addJs("plugins/multiscroll/vendors/jquery.easings.min.js")
-            ->addJs("plugins/multiscroll/jquery.multiscroll.min.js");
-        $this->assets->collection('footerInline')->addInlineJs("
-         $(document).ready(function() {
-            $('#contenedor-presentacion').multiscroll({
-            	sectionsColor: ['#2b8dd6', '#1BBC9B', '#2b8dd6'],
-            	anchors: ['first', 'second', 'third'],
-            	menu: '#menu',
-                navigation: true,
-            	navigationTooltips: ['Presentación', 'Guia Online', 'Guia Presencial'],
-            	css3: 'true',
-            	paddingTop: '70px',
-            	paddingBottom: '70px'
-            });
-        });");
-    }
 
     /**
      * Muestra un calendario con los periodos disponibles.

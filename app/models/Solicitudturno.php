@@ -722,46 +722,5 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         substr($an, rand(0, $su), 1) .
         substr($an, rand(0, $su), 1);
     }
-    /*
-    ESTA FUNCION RECUPERA LAS SOLICITUDES QUE RESPONDEN AL ESTADO y USUARIO PASADOS POR PARAMETRO,
-    ADEMAS QUE NO SEAN SOLITUDES MANUALES, QUE EL CAMPO RESPUESTA ENVIADA ESTE EN 'NO' */
-    /**
-     *
-     * @param $estado
-     * @param $usuario
-     * @return array
-     */
-    public static function recuperaSolicitudesSegunEstado($estado, $usuario, $fechaTurnos)
-    {
-        $lista = array();
 
-        if (!empty($fechaTurnos)) {
-            $fechaIniSol = $fechaTurnos->getFechasturnosIniciosolicitud();
-            $fechaFinSol = $fechaTurnos->getFechasturnosFinsolicitud();
-
-            $condiciones = "solicitudTurno_estado=?1 AND solicitudTurno_respuestaEnviada=?2  AND solicitudTurno_nickUsuario=?4
-            AND solicitudTurnos_fechasTurnos=?5 AND solicitudTurno_email IS NOT NULL";
-            $parametros = array(1 => $estado, 2 => 'NO', 4 => $usuario, 5 => $fechaTurnos->getFechasturnosId());
-            $solicitudes = Solicitudturno::find(array($condiciones, "bind" => $parametros));
-
-            foreach ($solicitudes as $unaSolicitud) {
-                $date = date_create($unaSolicitud->getSolicitudturnoFechapedido());
-                $fechaPedido = date_format($date, 'Y-m-d');
-
-                if ($fechaIniSol <= $fechaPedido and $fechaPedido <= $fechaFinSol)//
-                {
-                    $lista[] = $unaSolicitud;
-                    if($estado!="AUTORIZADO"){
-                        $unaSolicitud->setSolicitudturnoEstadoasistenciaid(5);
-                    }
-                    $unaSolicitud->setSolicitudturnoRespuestaenviada('SI');
-                    $unaSolicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
-                    if (!$unaSolicitud->update()) {
-                        echo "<h1>Ocurrió un problema al actualizar los datos, por favor comunicarse con el Soporte Técnico. [Solicitud Turno - 1004]</h1>";
-                    }
-                }
-            }
-        }
-        return $lista;
-    }
 }
