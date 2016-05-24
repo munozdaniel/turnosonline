@@ -326,10 +326,10 @@
 
             html += '<label for="causa">SELECCIONAR CAUSA</label><br>';
             html += '<select id="causa" name="causa" class="form-control" >';
-            html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO">No cumple con el 50% capital adeudado</option>';
-            html += '<option value="SE ENCUENTRA EN ROJO">Se encuentra en rojo</option>';
-            html += '<option value="NO CUMPLE CON LA ANTIGUEDAD">No cumple con la antigüedad</option>';
-            html += '<option value="REFINANCIACION TOTAL">Tiene refinanciación total</option>';
+            html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO.">No cumple con el 50% capital adeudado</option>';
+            html += '<option value="SE ENCUENTRA INHABILITADO EN ROJO.">Se encuentra en rojo</option>';
+            html += '<option value="NO CUMPLE CON EL MÍNIMO DE ANTIGÜEDAD REQUERIDA.">No cumple con la antigüedad</option>';
+            html += '<option value="POSEE UNA REFINANCIACIÓN TOTAL DE SU DEUDA QUE LO INHABILITA.">Tiene refinanciación total</option>';
             html += '</select>';
             html += '</div>';
 

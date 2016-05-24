@@ -640,7 +640,7 @@ Sizes: [
                                                                             -->
                                                                             <h3 mc:edit="header"
                                                                                 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">
-                                                                                Estimado/a %nombreAfiliado% </h3>
+                                                                                Sr/a. %nombreAfiliado%, </h3>
 
                                                                             <div mc:edit="body"
                                                                                  style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
@@ -656,6 +656,9 @@ Sizes: [
                                                                                  style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%; font-weight: bold;">
                                                                                 %observacion%
                                                                             </div>
+                                                                            <p style="font-style: italic;">
+                                                                                Este documento no acredita un préstamos personal, es solo informativo.
+                                                                            </p>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

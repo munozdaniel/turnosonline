@@ -944,8 +944,7 @@ class TurnosController extends ControllerBase
         $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
         $solicitudes = Solicitudturno::find(array("solicitudTurno_respuestaEnviada LIKE 'NO'
                                                     AND solicitudTurno_nickUsuario=:usuario:
-                                                        AND solicitudTurnos_fechasTurnos=:periodo_id:
-                                                            AND solicitudTurno_email IS NOT NULL",
+                                                        AND solicitudTurnos_fechasTurnos=:periodo_id:",
             "bind" => array(
                 'usuario' => $usuarioActual,
                 'periodo_id' => $ultimoPeriodo->getFechasturnosId()
@@ -958,11 +957,11 @@ class TurnosController extends ControllerBase
         }
         $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
         $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-        //FIXME: Preguntar como serán los mensajes que se van a enviar a los afiliados.
-        $mensajeAutorizado = "En respuesta a su solicitud, le comunicamos que podrá acercarse a nuestra institución desde el <b>$fechaAtencion hasta el $fechaAtencionFinal</b> para trámitar un préstamo personal.";
-        $mensajeDenegadoFT = "En respuesta a su solicitud, le comunicamos que <b>no es posible otorgarle</b> un turno para trámitar un préstamo personal porque todos los turnos disponibles para este mes ya fueron dados.";
-        $mensajeDenegado = "En respuesta a su solicitud, le comunicamos que no es posible otorgarle un turno para trámitar un préstamo personal porque ";
+        $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
+        $mensajeDenegado = "Su solicitud ha sido <b>DENEGADA</b> debido a que ";
+        $mensajeDenegadoFT = "Los turnos correspondientes al mes en curso ya han sido otorgados en su totalidad. Le sugerimos solicitar un turno en el <b> periodo siguiente </b>.";
         $afiliados = "";
+
         foreach ($solicitudes as $solicitud) {
             $this->db->begin();
             $solicitud->setSolicitudturnoRespuestaenviada('SI');
@@ -973,19 +972,13 @@ class TurnosController extends ControllerBase
                 $solicitud->setSolicitudturnoEstadoasistenciaid(5);//NO DEBE ASISTIR
             }
             if (!$solicitud->update()) {
-                $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">X</span>
-                                            </button> Ocurrió un error al enviar el correo al afiliado: ' . $solicitud->getSolicitudturnoNomape() . '<br> Intente la operación nuevamente.</h3>');
                 $this->db->rollback();
-            } else {
-                $this->db->commit();
             }
             $template = "";
             if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL) {
-                $mail = $this->mailDesarrollo;
                 try {
-                    $mail->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
-                    $mail->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
+                    $this->mailDesarrollo->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
+                    $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
                     if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
                         $template = $this->seleccionarTemplateAutorizado($solicitud, $mensajeAutorizado);
                     } else {
@@ -1001,6 +994,11 @@ class TurnosController extends ControllerBase
                     $this->mailDesarrollo->body = strip_tags($template);
                     if (!$this->mailDesarrollo->send()) {
                         $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
+                        $this->db->rollback();
+                    }
+                    else
+                    {
+                        $this->db->commit();//Se envió el correo,por lo tanto actualizó los datos.
                     }
                     $this->mailDesarrollo->clearAddresses();
                 }catch (phpmailerException $e) {
@@ -1040,7 +1038,7 @@ class TurnosController extends ControllerBase
                 $fechaLimiteConfirmacion = date('d/m/Y', $fechaLimiteConfirmacion);
             }
         }
-        $mensajeConfirmacion = "Recuerde que usted tiene hasta el <b>" . $fechaLimiteConfirmacion . "</b> para confirmar el mensaje, de lo contrario el turno será cancelado.<br/>";
+        $mensajeConfirmacion = "Recuerde confirmar éste mensaje hasta el <b>" . $fechaLimiteConfirmacion . "</b> inclusive, caso contrario el turno será cancelado.<br/>";
         $template = str_replace('%mensajeConfirmacion%', $mensajeConfirmacion, $template);
         if ($obs != "-" && trim($obs) != "") {
             $template = str_replace('%observacion%', 'Observación: ' . $obs, $template);
@@ -1056,12 +1054,13 @@ class TurnosController extends ControllerBase
     private function seleccionarTemplateDenegado($solicitud, $mensaje)
     {
         $nomApe = $solicitud->getSolicitudturnoNomape();
-        $obs = $solicitud->getSolicitudturnoObservaciones();
+        $causa = $solicitud->getSolicitudturnoObservaciones();
         $template = file_get_contents('http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/files/emailtemplate/denegado.html');
         $template = str_replace('%nombreAfiliado%', $nomApe, $template);
         $template = str_replace('%mensaje%', $mensaje, $template);
-        if ($obs != "-" && trim($obs) != "") {
-            $template = str_replace('%observacion%', $obs, $template);
+        if ($causa != "-" && trim($causa) != "") {
+            $causa = "<b>$causa</b>";
+            $template = str_replace('%observacion%', strtolower($causa), $template);
         } else {
             $template = str_replace('%observacion%', '', $template);
         }
