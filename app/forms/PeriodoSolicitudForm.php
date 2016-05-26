@@ -71,7 +71,7 @@ class PeriodoSolicitudForm extends Form
                 'message' => 'Ingrese la <strong>Fecha Inicial</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que el <strong>dia de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
+                'mensajeError' => 'Verifique que el <strong>dia inicial de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
                 'desde' =>$periodoSolicitudHasta->getValue()
             ))
         ));
@@ -86,11 +86,12 @@ class PeriodoSolicitudForm extends Form
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que <strong>dia de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
+                'mensajeError' => 'Verifique que el <strong>dia final de atención </strong> sea posterior al <strong>dia inicial de atención</strong>.',
                 'desde' =>$periodoAtencionDesde->getValue()
             ))
         ));
         $this->add($periodoAtencionHasta);
+
         /*=================== CANTIDAD DE TURNOS ==========================*/
 
         $cantidadTurnos = new Text("fechasTurnos_cantidadDeTurnos",
@@ -121,9 +122,11 @@ class PeriodoSolicitudForm extends Form
     public function messages($name)
     {
         $cadena= "";
-        if ($this->hasMessagesFor($name)) {
+
+        if ($this->hasMessagesFor($name))
+        {
             foreach ($this->getMessagesFor($name) as $message) {
-                $cadena.= "<div class='problema'>".$message ."</div>";//para mostrar con tooltip
+                $cadena.= "<div class='problema'>".$message ."</div>";
             }
         }
         return $cadena;
