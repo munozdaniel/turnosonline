@@ -12,6 +12,7 @@ use \Phalcon\Forms\Element\Date;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\StringLength as StringLength;
 use Phalcon\Validation\Validator\Email;
+use Phalcon\Validation\Validator\Regex;
 
 class TurnosOnlineForm extends Form
 {
@@ -36,10 +37,10 @@ class TurnosOnlineForm extends Form
                     )
                 ),
                 new StringLength(array(
-                    'min' => 4,
+                    'min' => 3,
                     'max' => 30,
-                    'messageMinimum' => 'El apellido demasiado corto.',
-                    'messageMaximun' => 'El apellido demasiado largo.',
+                    'messageMinimum' => 'El apellido es demasiado corto.',
+                    'messageMaximun' => 'El apellido es demasiado largo.',
                 )),
             )
         );
@@ -61,14 +62,15 @@ class TurnosOnlineForm extends Form
                     )
                 ),
                 new StringLength(array(
-                    'min' => 4,
+                    'min' => 3,
                     'max' => 30,
-                    'messageMinimum' => 'El nombre demasiado corto.',
-                    'messageMaximun' => 'El nombre demasiado largo.',
+                    'messageMinimum' => 'El nombre es demasiado corto.',
+                    'messageMaximun' => 'El nombre es demasiado largo.',
                 )),
             )
         );
         $this->add($nombre);
+
         /*=================== Nro Legajo ==========================*/
         $legajo = new Text("solicitudTurno_legajo",
             array('style' => 'text-align:right !important;font-size: 18px;',
@@ -79,24 +81,10 @@ class TurnosOnlineForm extends Form
         $legajo->setLabel("<strong style='color: red'>*</strong> Legajo: ");
         $legajo->setFilters(array('int'));
         $legajo->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Ingrese el <strong>legajo</strong>.'
-                    )
-                ),
-                new Numericality(
-                    array(
-                        'message' => 'El <strong>legajo</strong> debe ser un número sin puntos ni coma.'
-                    )
-                ),
-                new NumberValidator(),
-                new StringLength(array(
-                    'min' => 4,
-                    'max' => 12,
-                    'messageMinimum' => 'El legajo debe tener como minimo 4 digitos.',
-                    'messageMaximun' => 'El legajo debe tener como maximo 12 digitos.',
-                )),
+            array
+            (
+                new PresenceOf(array('message' => 'Ingrese el <strong>legajo</strong>.')),
+                new LegajoValidator(),
             )
         );
         $this->add($legajo);

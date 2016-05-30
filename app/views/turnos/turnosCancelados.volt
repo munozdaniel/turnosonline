@@ -11,94 +11,98 @@
 </style>
 
 <section id="onepage" class="admin bg_line">
-    <div align="center">
-        <div class="curriculum-bg-header modal-header " align="left">
-            <h1>
-                <ins>LISTA DE TURNOS CANCELADOS</ins>
-                <br>
-            </h1>
-            <h3>
-                <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados
-                        con turnos Autorizado/Denegado.</em></small>
-            </h3>
-            <table class="" width="100%">
-                <tr>
-                    <td align="right">{{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
-                </tr>
-            </table>
+    <div class="container">
 
-        </div>
-    </div>
-    <hr>
-    <div class="col-md-12">
-        {{ content() }}
-    </div>
-    <div class="row form-blanco borde-top borde-left-4 borde-right-4">
-        {% if informacion is defined %}
-        <div class="col-sm-4" align="right">
-            <h3><strong>
-                    <ins>PERIODO DE SOLICITUD</ins>
-                </strong>
-            </h3>
-            <h4>
-                Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
-            </h4>
+        <div align="center">
+            <div class="curriculum-bg-header modal-header " align="left">
 
-        </div>
-        <div class="col-sm-4" align="center">
-            <h3>
-                <strong>
-                    <ins>DÍA DE ATENCI&Oacute;N</ins>
-                </strong>
-            </h3>
-            <h4>
-                Desde {{ informacion['diaAtencion'] }}
-                <br>Hasta {{ informacion['diaAtencionFinal'] }}
-            </h4>
-        </div>
-        <div id="cantAutorizados">
-            <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                <h1>
+                    <ins>LISTA DE TURNOS CANCELADOS</ins>
+                    {{ link_to("administrar", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:35%;background-color:#195889;') }}
+                    <br>
+                </h1>
+
                 <h3>
-                    <strong>
-                        <ins>TURNOS</ins>
+                    <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos turnos que fueron cancelados.</em></small>
+                </h3>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="col-md-12">
+            {{ content() }}
+        </div>
+
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+            {% if informacion is defined %}
+            <div class="col-sm-4" align="right">
+                <h3><strong>
+                        <ins>PERIODO DE SOLICITUD</ins>
                     </strong>
                 </h3>
                 <h4>
-                    Total: {{ informacion['cantidadTurnos'] }}<br>
-                    Autorizados: {{ informacion['cantidadAutorizados'] }}
+                    Desde {{ informacion['fechaInicio'] }} <br> Hasta {{ informacion['fechaFinal'] }}
+                </h4>
+
+            </div>
+            <div class="col-sm-4" align="center">
+                <h3>
+                    <strong>
+                        <ins>DÍA DE ATENCI&Oacute;N</ins>
+                    </strong>
+                </h3>
+                <h4>
+                    Desde {{ informacion['diaAtencion'] }}
+                    <br>Hasta {{ informacion['diaAtencionFinal'] }}
                 </h4>
             </div>
+            <div id="cantAutorizados">
+                <div class="col-sm-4" align="left" {% if rojo == true %}style="color: red;"{% endif %}>
+                    <h3>
+                        <strong>
+                            <ins>TURNOS</ins>
+                        </strong>
+                    </h3>
+                    <h4>
+                        Total: {{ informacion['cantidadTurnos'] }}<br>
+                        Autorizados: {{ informacion['cantidadAutorizados'] }}
+                    </h4>
+                </div>
+            </div>
         </div>
-    </div>
 
-    {% endif %}
+        {% endif %}
 
+        <div class="row form-blanco borde-top borde-left-4 borde-right-4">
 
-    <div class="row form-blanco borde-top borde-left-4 borde-right-4">
+            <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
+                <table id="tabla" class="table table-striped table-bordered table-condensed"
+                       style="color: rgba(139, 0, 0, 1)">
+                    <thead style="background-color: #900000; color: #FFF !important;">
+                    <tr>
+                        <th class="th-titulo">Codigo</th>
+                        <th class="th-titulo">Legajo</th>
+                        <th class="th-titulo">Apellido y nombre</th>
+                        <th class="th-titulo">Email</th>
+                        <th class="th-titulo">Telefono</th>
+                        <th class="th-titulo">Estado</th>
+                        <th class="th-titulo">Fecha respuesta enviada</th>
+                        <th class="th-titulo">Empleado</th>
+                        <th class="th-titulo">Estado Anterior</th>
+                        <th class="th-titulo">Tipo</th>
+                        <th class="th-titulo">Sanciones</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
 
-        <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
-            <table id="tabla" class="table table-striped table-bordered table-condensed"
-                   style="color: rgba(139, 0, 0, 1)">
-                <thead style="background-color: #900000; color: #FFF !important;">
-                <tr>
-                    <th class="th-titulo">Codigo</th>
-                    <th class="th-titulo">Legajo</th>
-                    <th class="th-titulo">Apellido y nombre</th>
-                    <th class="th-titulo">Email</th>
-                    <th class="th-titulo">Telefono</th>
-                    <th class="th-titulo">Estado</th>
-                    <th class="th-titulo">Fecha respuesta enviada</th>
-                    <th class="th-titulo">Empleado</th>
-                    <th class="th-titulo">Estado Anterior</th>
-                    <th class="th-titulo">Tipo</th>
-                    <th class="th-titulo">Sanciones</th>
-                </tr>
-                </thead>
-            </table>
         </div>
 
     </div>
 </section>
+
 <script>
     var myVar = setInterval(function () {
         myTimer()

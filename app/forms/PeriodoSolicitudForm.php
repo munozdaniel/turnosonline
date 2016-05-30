@@ -37,7 +37,7 @@ class PeriodoSolicitudForm extends Form
         $periodoSolicitudDesde= new Date('fechasTurnos_inicioSolicitud',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoSolicitudDesde->setLabel('<small class="font-rojo">* </small>Desde');
+        $periodoSolicitudDesde->setLabel('<small class="font-rojo">* </small>Día inicial para solicitud');
         $periodoSolicitudDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la solicitud de turnos.'
@@ -48,7 +48,7 @@ class PeriodoSolicitudForm extends Form
         $periodoSolicitudHasta= new Date('fechasTurnos_finSolicitud',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoSolicitudHasta->setLabel('<small class="font-rojo">* </small>Hasta');
+        $periodoSolicitudHasta->setLabel('<small class="font-rojo">* </small>Día final para solicitud');
         $periodoSolicitudHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la solicitud de turnos.'
@@ -65,13 +65,13 @@ class PeriodoSolicitudForm extends Form
         $periodoAtencionDesde= new Date('fechasTurnos_diaAtencion',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoAtencionDesde->setLabel('<small class="font-rojo">* </small>Día de atención de turnos inicial');
+        $periodoAtencionDesde->setLabel('<small class="font-rojo">* </small>Día inicial para atención');
         $periodoAtencionDesde->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Inicial</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que el <strong>dia de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
+                'mensajeError' => 'Verifique que el <strong>dia inicial de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
                 'desde' =>$periodoSolicitudHasta->getValue()
             ))
         ));
@@ -80,17 +80,18 @@ class PeriodoSolicitudForm extends Form
         $periodoAtencionHasta= new Date('fechasTurnos_diaAtencionFinal',
             array('style'=>'text-align:right !important;font-size: 18px;',
                 'required'=>'true'));
-        $periodoAtencionHasta->setLabel('<small class="font-rojo">* </small>Día de atención de turnos final');
+        $periodoAtencionHasta->setLabel('<small class="font-rojo">* </small>Día final para atención');
         $periodoAtencionHasta->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Ingrese la <strong>Fecha Final</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que <strong>dia de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
+                'mensajeError' => 'Verifique que el <strong>dia final de atención </strong> sea posterior al <strong>dia inicial de atención</strong>.',
                 'desde' =>$periodoAtencionDesde->getValue()
             ))
         ));
         $this->add($periodoAtencionHasta);
+
         /*=================== CANTIDAD DE TURNOS ==========================*/
 
         $cantidadTurnos = new Text("fechasTurnos_cantidadDeTurnos",
@@ -98,7 +99,7 @@ class PeriodoSolicitudForm extends Form
                 'placeholder'=>' INGRESE CANT. TURNOS',
                 'required'=>'true'));
         $cantidadTurnos->setDefault(70);
-        $cantidadTurnos->setLabel('<small class="font-rojo">* </small>Cantidad de Turnos');
+        $cantidadTurnos->setLabel('<small class="font-rojo">* </small>Cantidad');
         $cantidadTurnos->setFilters(array('int'));
         $cantidadTurnos->addValidators(
             array(
@@ -116,38 +117,16 @@ class PeriodoSolicitudForm extends Form
             ));
 
         $this->add($cantidadTurnos);
-
-        /*=================== CANTIDAD DE DIAS ==========================*/
-        $cantidadDias = new Text("fechasTurnos_cantidadDiasConfirmacion",
-            array('style'=>'text-align:right !important;font-size: 18px;',
-                'required'=>'true',
-                'placeholder'=>'INGRESE LA CANTIDAD DE DIAS'));
-        $cantidadDias->setLabel('<small class="font-rojo">* </small>Cantidad de días para confirmar el mensaje');
-        $cantidadDias->setFilters(array('int'));
-        $cantidadDias->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Ingrese la <strong>cantidad de días</strong> para confirmar el mensaje.'
-                    )
-                ),
-                new Numericality(
-                    array(
-                        'message' => 'La <strong>cantidad de días</strong> debe ser un número.'
-                    )
-                ),
-                new NumberValidator()
-            )
-        );
-        $this->add($cantidadDias);
     }
 
     public function messages($name)
     {
         $cadena= "";
-        if ($this->hasMessagesFor($name)) {
+
+        if ($this->hasMessagesFor($name))
+        {
             foreach ($this->getMessagesFor($name) as $message) {
-                $cadena.= "<div class='problema'>".$message ."</div>";//para mostrar con tooltip
+                $cadena.= "<div class='problema'>".$message ."</div>";
             }
         }
         return $cadena;
