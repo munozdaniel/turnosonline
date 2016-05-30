@@ -37,7 +37,6 @@
                             <th style="text-align: center !important;">Día final para atención</th>
                             <th style="text-align: center !important;">Cantidad de turnos</th>
                             <th style="text-align: center !important;">Cantidad de turnos autorizados</th>
-                            <th style="text-align: center !important;">Cantidad de días para confirmación</th>
                             <th style="text-align: center !important;">Periodo activo</th>
                             <th style="text-align: center !important;"><i class="glyphicon glyphicon-edit"></i></th>
                             <th style="text-align: center !important;">Listado de solicitudes</th>
@@ -70,7 +69,6 @@
                             </td>
                             <td>{{ item.fechasTurnos_cantidadDeTurnos }}</td>
                             <td>{{ item.fechasTurnos_cantidadAutorizados }}</td>
-                            <td>{{ item.fechasTurnos_cantidadDiasConfirmacion }}</td>
 
                             {% if   item.fechasTurnos_activo == 0 %}
                                 <td>NO</td>
