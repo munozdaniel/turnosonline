@@ -235,7 +235,7 @@
             {
                 var $nRow = $(nRow);
                 //console.log(aData[9]);
-                if (aData[6] != "AUTORIZADO") {//ESTADO
+                if (aData[7] != "AUTORIZADO") {//ESTADO
                     $nRow.css({"color": "red"});
                 }
                 if (aData[1] == 4) {// SI EL ESTADO ASISTENCIA ES CANCELADO

@@ -6,7 +6,9 @@
                     <ins>SOLICITAR TURNO PARA PRÉSTAMOS PERSONALES</ins>
                     <br>
                 </h1>
-                <h3><small><em style=" color:#FFF !important;"> Complete sus datos para solicitar un turno</em></small></h3>
+                <h3><small><em style=" color:#FFF !important;">Complete con sus datos personales el siguiente formulario.
+
+                        </em></small></h3>
                 <table class="" width="100%">
                     <tr>
                         <td align="right">{{ link_to("index", "<i class='fa fa-home'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
@@ -21,10 +23,11 @@
                     <div class="col-md-12">
                         {{ form('turnos/guardarTurnoOnline','method':'post','style':'','class':'') }}
                         <div class="col-md-12" style="margin-bottom: 30px; text-align: left;">
-                            <ul>
+                            <ul><strong><ins>INSTRUCCIONES</ins></strong>
                                 <li><i class="fa fa-dot-circle-o"></i> Es muy importante que complete correctamente sus datos personales, correo electrónico y  teléfono.</li>
                                 <li><i class="fa fa-dot-circle-o"></i> Los campos que contienen * son obligatorios.</li>
                                 <li><i class="fa fa-dot-circle-o"></i> Al finalizar, nuestros empleados analizarán su estado de deuda y le enviarán un correo electrónico.</li>
+                                <li><i class="fa fa-dot-circle-o"></i>  Recuerde que solo los <strong>afiliados activos</strong> pueden solicitar un turno online.</li>
                             </ul>
                             <hr>
                             {% for elto in formulario %}
