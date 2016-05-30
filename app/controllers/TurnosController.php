@@ -973,42 +973,56 @@ class TurnosController extends ControllerBase
                 'usuario' => $usuarioActual,
                 'periodo_id' => $ultimoPeriodo->getFechasturnosId()
             )));
-        if (empty($solicitudes)) {
+
+        if (empty($solicitudes))
+        {
             $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
                                             </button> NO SE ENVIARON LAS RESPUESTAS, YA QUE SOLO HAY SOLICITUDES PENDIENTES O EN REVISIÓN.</h3>');
             return $this->response->redirect('turnos/turnosSolicitados');
         }
+
         $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
         $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+
         $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
         $mensajeDenegado = "Su solicitud ha sido <b>DENEGADA</b> debido a que ";
         $mensajeDenegadoFT = "Los turnos correspondientes al mes en curso ya han sido otorgados en su totalidad. Le sugerimos solicitar un turno en el <b> periodo siguiente </b>.";
         $afiliados = "";
 
-        foreach ($solicitudes as $solicitud) {
+        foreach ($solicitudes as $solicitud)
+        {
             $this->db->begin();
             $solicitud->setSolicitudturnoRespuestaenviada('SI');
             $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
-            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+
+            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO")
                 $solicitud->setSolicitudturnoEstadoasistenciaid(1);//EN ESPERA
-            } else {
+            else
                 $solicitud->setSolicitudturnoEstadoasistenciaid(5);//NO DEBE ASISTIR
-            }
-            if (!$solicitud->update()) {
+
+            if (!$solicitud->update())
                 $this->db->rollback();
-            }
+
             $template = "";
-            if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL) {
-                try {
+
+            if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL)
+            {
+                try
+                {
                     $this->mailDesarrollo->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
                     $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
-                    if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+
+                    if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO")
+                    {
                         $template = $this->seleccionarTemplateAutorizado($solicitud, $mensajeAutorizado);
-                    } else {
+                    }
+                    else
+                    {
                         if ($solicitud->getSolicitudturnoEstado() == "DENEGADO") {
                             $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegado);
-                        } else {
+                        }
+                        else {
                             if ($solicitud->getSolicitudturnoEstado() == "DENEGADO POR FALTA DE TURNOS") {
                                 $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegadoFT);
                             }
@@ -1016,12 +1030,17 @@ class TurnosController extends ControllerBase
                     }
                     $this->mailDesarrollo->MsgHTML($template);
                     $this->mailDesarrollo->body = strip_tags($template);
-                    if (!$this->mailDesarrollo->send()) {
+
+                    if (!$this->mailDesarrollo->send())
+                    {
                         $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
                         $this->db->rollback();
-                    } else {
+                    }
+                    else
+                    {
                         $this->db->commit();//Se envió el correo,por lo tanto actualizó los datos.
                     }
+
                     $this->mailDesarrollo->clearAddresses();
                 } catch (phpmailerException $e) {
                     echo $e->errorMessage(); //Pretty error messages from PHPMailer
@@ -1031,11 +1050,13 @@ class TurnosController extends ControllerBase
 
             }
         }
+
         $this->flash->message('dismiss', '<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
                                             </button> LAS RESPUESTAS FUERON ENVIADAS A LOS AFILIADOS</h3>');
         if (trim($afiliados) != "")
             $this->flash->warning('<ul> Los siguientes afiliados no pudieron ser avisados por correo:  <br>' . $afiliados . '</ul>');
+
         $this->view->pick('turnos/enviarRespuestas');
     }
 
