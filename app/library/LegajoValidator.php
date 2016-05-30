@@ -19,7 +19,7 @@ class LegajoValidator extends Validator implements ValidatorInterface
 
         if ($value>=10000 && $value <=12999)
         {
-            $validator->appendMessage(new Message('El legajo ingresado debe ser de un afiliado ACTIVO'));
+            $validator->appendMessage(new Message('<h1>El legajo ingresado debe ser de un afiliado ACTIVO</h1>'));
             return false;
         }
 
