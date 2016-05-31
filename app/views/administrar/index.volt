@@ -1,3 +1,7 @@
+<style>
+    .exito{font-size: 21px;}
+</style>
+
 <section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
