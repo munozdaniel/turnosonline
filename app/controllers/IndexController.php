@@ -24,18 +24,13 @@ class IndexController extends ControllerBase
         $this->assets->collection('headerCss')
             ->addCss('css/slick.css')
             ->addCss('plugins/vegas/vegas.css');
-            //->addCss('css/superslides.css');
         $this->assets->collection('jquery')
             ->addJs('js/jquery.min.js');
         $this->assets->collection('footer')
-            ->addJs('js/jquery.min.js')
-            //->addJs('js/menu.js')
-           // ->addJs('js/jquery.superslides.min.js')
             ->addJs('js/slick.min.js')
             ->addJs('js/jquery.ui.map.js')
             ->addJs('https://maps.googleapis.com/maps/api/js',false)
             ->addJs('js/customIndex.js')
-            //->addJs('js/redireccionarSeccion.js')
             ->addJs('plugins/vegas/vegas.min.js')
         ;
           $this->assets->collection('footerInline')
@@ -160,11 +155,15 @@ class IndexController extends ControllerBase
     public function catalogoAction()
     {
         $this->tag->setTitle('Catalogo IMPS');
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
 
     }
     public function revistaAction(){
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         if(!$this->request->isGet()){
             return $this->redireccionar('index/catalogo');
         }
@@ -184,13 +183,12 @@ class IndexController extends ControllerBase
             $this->flash->error("La revista seleccionada no se encuentra disponible por el momento");
             return $this->redireccionar('index/catalogo');
         }
-
-
-
     }
 
 
     public function emprendimientoAction(){
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         $this->tag->setTitle('Emprendimiento IMPS');
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
@@ -200,6 +198,8 @@ class IndexController extends ControllerBase
      * Explica como funciona el sistema de turnos.
      */
     public function presentacionTurnosAction(){
+        $this->assets->collection('jquery')
+            ->addJs('js/jquery.min.js');
         $this->tag->setTitle('Información Turnos Online');
         $this->view->setTemplateAfter('admin');
         $this->assets->collection('headerCss')
