@@ -17,12 +17,12 @@
                     <div class="row">
                         <div class="col-md-4 list-group list-group-content">
                             <h3 class="font-gotham">{{ image('img/servicios/icon_turnos.png') }} Turnos Online <small>para</small> Préstamos</h3>
-                            {{ link_to('index/presentacionTurnos',' <h4>Como funciona?</h4>
-                                <p>Te explicamos con detalle en que consiste nuestro servicio para solicitar los turnos.</p>
+                            {{ link_to('index/presentacionTurnos',' <h4>¿Como funciona?</h4>
+                                <p>Le explicamos con detalle en que consiste nuestro servicio para solicitar los turnos.</p>
                             ','class':'list-group-item puntero') }}
                             {#============#}
                             {{ link_to('turnos/calendario',' <h4>Ver Calendario</h4>
-                                <p>Visitá nuestro calendario para visualizar los periodos habilitados.</p>','class':'list-group-item puntero') }}
+                                <p>Visite nuestro calendario para visualizar cuando puede solictar turnos.</p>','class':'list-group-item puntero') }}
                             {#===== Se genera un link_to en index/index =======#}
                             <div id="solicitudes">
                                 {{ linkTurnoOnline }}
