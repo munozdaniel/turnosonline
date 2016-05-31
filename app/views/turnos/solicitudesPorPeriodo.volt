@@ -7,7 +7,7 @@
             <div class="curriculum-bg-header modal-header " align="left">
 
                 <h1>
-                    <ins>LISTA DE TURNOS SOLICITADOS</ins>
+                    <ins>LISTADO DE SOLICITUDES</ins>
                     {{ link_to("turnos/verPeriodos", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:35%;background-color:#195889;') }}
                     <br>
                 </h1>
