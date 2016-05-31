@@ -919,7 +919,7 @@ class TurnosController extends ControllerBase
         $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
         $solicitudes = Solicitudturno::find(array("solicitudTurno_respuestaEnviada LIKE 'NO'
                                                     AND solicitudTurno_nickUsuario=:usuario:
-                                                        AND solicitudTurnos_fechasTurnos=:periodo_id: AND solicitudTurnos_estado  NOT LIKE ('PENDIENTE' OR  'REVISION')",
+                                                        AND solicitudTurnos_fechasTurnos=:periodo_id: AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR  'REVISION')",
             "bind" => array(
                 'usuario' => $usuarioActual,
                 'periodo_id' => $ultimoPeriodo->getFechasturnosId()
@@ -976,10 +976,9 @@ class TurnosController extends ControllerBase
                         $band = $this->mailDesarrollo->send();
                         if (!$band) {
                             $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-                            echo $this->mailDesarrollo->ErrorInfo;
+                            echo "ERROR ".$this->mailDesarrollo->ErrorInfo ."<br>";
                             $this->db->rollback();
                         } else {
-                            echo "<br> sse envian <br>";
                             $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
                         }
                         $this->mailDesarrollo->clearAddresses();
