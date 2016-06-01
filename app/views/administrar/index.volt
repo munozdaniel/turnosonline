@@ -48,20 +48,6 @@
                         </div>
                     </div>') }}
                 </div>
-                <div class="col-sm-4">
-                    {{ link_to('turnos/turnosCancelados','
-                    <div class="panel mini-box">
-                            <span class="box-icon bg-red-pl">
-                                <i class="fa fa-ticket"></i>
-                            </span>
-
-                        <div class="box-info"  align="left">
-                            <p class="size-h2"><strong>Listado de</strong></p>
-
-                            <p class="text-muted"> Turnos Cancelados</p>
-                        </div>
-                    </div>') }}
-                </div>
 
                 {% endif %}
                 {% if admin or supervisor %}
