@@ -1,0 +1,122 @@
+/*TURNOS SOLICITADOS*/
+.btn_enviarRespuestas{
+    width:38%;position:fixed;bottom:0;border-top:#2AA0C7 2px;
+}
+a {
+    color: #2da2c8
+}
+
+.heading h2 {
+    font-size: 30px;
+    line-height: 35px;
+}
+
+.th-estilo {
+    text-align: center;
+    color: white;
+    background-color: #006688;
+}
+
+.td-estilo {
+    vertical-align: middle text-align : center;
+    width: 180px
+}
+
+.td-observaciones {
+    max-width: 230px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+/* Preloader enviar respuestas*/
+#loader_bg {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0, 0, 0, 0.26); /* change if the mask should have another color then white */
+    z-index:99999; /* makes sure it stays on top */
+}
+
+#loader_gif {
+    width:200px;
+    height:200px;
+    position:absolute;
+    left:50%; /* centers the loading animation horizontally one the screen */
+    top:50%; /* centers the loading animation vertically one the screen */
+    background-image:url(../img/turnos/enviaresp.gif); /* path to your loading animation */
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:-100px 0 0 -100px; /* is width and height divided by two */
+}
+.loader_text{
+    color: #000;
+    width:200px;
+    height:200px;
+    position:absolute;
+    left:50%; /* centers the loading animation horizontally one the screen */
+    top:50%; /* centers the loading animation vertically one the screen */
+    margin:-100px 0 0 -100px; /* is width and height divided by two */
+    font-weight: bold;
+    font-size: xx-large;
+
+}
+.pulse1 {
+    -webkit-animation: pulse1 1s linear infinite;
+    -moz-animation: pulse1 1s linear infinite;
+    -ms-animation: pulse1 1s linear infinite;
+    animation: pulse1 1s linear infinite;
+}
+
+@keyframes pulse1 {
+    0% {
+        color: rgb(0, 122, 255);
+    }
+    90% {
+        color: rgba(255,0,0,0.0);
+    }
+    100% {
+        color: rgb(0, 115, 143);
+    }
+
+}
+
+@-moz-keyframes pulse1 {
+    0% {
+        color: rgb(30, 76, 143);
+    }
+    90% {
+        color: rgba(255,0,0,0.0);
+    }
+    100% {
+        color: rgb(0, 122, 255);
+    }
+
+}
+
+@-webkit-keyframes pulse1 {
+    0% {
+        color: rgb(30, 76, 143);
+    }
+    90% {
+        color: rgba(255,0,0,0.0);
+    }
+    100% {
+        color: rgb(0, 122, 255);
+    }
+
+}
+
+@-ms-keyframes pulse1 {
+    0% {
+        color: rgb(0, 111, 143);
+    }
+    90% {
+        color: rgba(255,0,0,0.0);
+    }
+    100% {
+        color: rgb(0, 122, 255);
+    }
+
+}

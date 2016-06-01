@@ -243,8 +243,7 @@ class TurnosController extends ControllerBase
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
 
-            if ($periodoSolicitudForm->isValid($data) != false)
-            {
+            if ($periodoSolicitudForm->isValid($data) != false) {
                 $this->db->begin();
 
                 //Comprobamos que: fechasTurnos_finSolicitud + cantidadDiasConfirmacion < fechasTurnos_diaAtencion
@@ -256,8 +255,7 @@ class TurnosController extends ControllerBase
 
                 $fechaVencimiento = TipoFecha::sumarDiasAlDate(7, $periodoSolicitudHasta);
 
-                if ($fechaVencimiento < $periodoDiaAtencion)
-                {
+                if ($fechaVencimiento < $periodoDiaAtencion) {
                     $fechasTurnos = new Fechasturnos();
                     $fechasTurnos->assign(array(
                         'fechasTurnos_inicioSolicitud' => $fechasTurnos_inicioSolicitud,
@@ -298,8 +296,7 @@ class TurnosController extends ControllerBase
                     $this->flash->message('exito', 'La configuración de las fechas se ha realizado satisfactoriamente.');
                     $periodoSolicitudForm->clear();
                     return $this->redireccionar('administrar/index');
-                }
-                else
+                } else
                     $this->flash->message('problema', "Deberá modificar el <ins>periodo de atención de turnos</ins> para que el afiliado tenga tiempo de <strong>confirmar el mensaje</strong>.");
             }
         }
@@ -542,18 +539,18 @@ class TurnosController extends ControllerBase
                     $botonesAsistencia = "";
                     $estadoAsistencia = "";
                     $comprobante = "";
-                    $colorComprobante="";
+                    $colorComprobante = "";
                     $idCodificado = base64_encode($unaSolicitud->getSolicitudturnoId());
                     if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 1) {//Online
                         $colorComprobante = "btn btn-info btn-block";
-                        $comprobante = '<a class=\''.$colorComprobante.'\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
+                        $comprobante = '<a class=\'' . $colorComprobante . '\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
                     } else {
                         if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 2) {//Terminal
                             $colorComprobante = "btn btn-success btn-block";
-                            $comprobante = '<a class=\''.$colorComprobante.'\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
+                            $comprobante = '<a class=\'' . $colorComprobante . '\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
                         }
                     }
-                            //Controlo si las respuesta se vencio
+                    //Controlo si las respuesta se vencio
                     if ($unaSolicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
 
 
@@ -577,7 +574,7 @@ class TurnosController extends ControllerBase
                                     '</div>';
                                 $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado,
                                     '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ',
-                                    'class' =>"$colorComprobante", 'target' => '_blank'));
+                                    'class' => "$colorComprobante", 'target' => '_blank'));
                                 break;
                             case 3://Vencido
                                 $estadoAsistencia = '<a class="btn btn-block btn-white">
@@ -704,9 +701,9 @@ class TurnosController extends ControllerBase
                     //Respuesta chequeda
                     $idCodificado = base64_encode($unaSolicitud->getSolicitudturnoId());
 
-                        $respondio = '<i class="fa fa-check-square" style="color:#0ec705"></i> ' . $unaSolicitud->getEstadoasistencia()->getEstadoasistenciaNombre();
-                        $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado
-                        , '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ', 'class' => 'btn btn-info btn-block', 'target' => '_blank'));
+                    $respondio = '<i class="fa fa-check-square" style="color:#0ec705"></i> ' . $unaSolicitud->getEstadoasistencia()->getEstadoasistenciaNombre();
+                    $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado
+                    , '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ', 'class' => 'btn btn-info btn-block', 'target' => '_blank'));
 
 
                     $item[] = $respondio;
@@ -764,7 +761,7 @@ class TurnosController extends ControllerBase
             echo json_encode($retorno);
             return;
         }
-        $dentroPlazoValido=true;
+        $dentroPlazoValido = true;
         if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1) {
             if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 1)
                 $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitudTurno->getSolicitudturnoFechapedido());
@@ -791,7 +788,7 @@ class TurnosController extends ControllerBase
                 }
                 $mensajeCodigo = "<br><br> <ins>Código</ins>: <strong class='strong-azul font-gotham' style='letter-spacing: 0.3em; font-size:22px;'> " . $solicitudTurno->getSolicitudturnoCodigo() . "</strong>";
                 $mensajeCodigo .= "<br><br> <ins>Afiliado</ins>: <strong> " . $solicitudTurno->getSolicitudturnoNomape() . "</strong>";
-                $mensajeCodigo .= "<br><br> <ins>Fecha de Atención</ins>: <strong> " . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencion() )) . "</strong> al <strong>".date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencionfinal() ))."</strong>" ;
+                $mensajeCodigo .= "<br><br> <ins>Fecha de Atención</ins>: <strong> " . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencion())) . "</strong> al <strong>" . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencionfinal())) . "</strong>";
             }
 
             if (!$solicitudTurno->update()) {
@@ -834,7 +831,7 @@ class TurnosController extends ControllerBase
             echo json_encode($retorno);
             return;
         }
-        $dentroPlazoValido=true;
+        $dentroPlazoValido = true;
         //Lo deberia hacer el evento de mysql
         if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 1)
             $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitudTurno->getSolicitudturnoFechapedido());
@@ -869,7 +866,7 @@ class TurnosController extends ControllerBase
                 return;
             }
             $mensajeCodigo = "<br> <ins>Afiliado</ins>: <strong> " . $solicitudTurno->getSolicitudturnoNomape() . "</strong>";
-            $mensajeCodigo .= "<br> <ins>Fecha de Atención</ins>: <strong> " . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencion() )) . "</strong> al <strong>".date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencionfinal() ))."</strong>" ;
+            $mensajeCodigo .= "<br> <ins>Fecha de Atención</ins>: <strong> " . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencion())) . "</strong> al <strong>" . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencionfinal())) . "</strong>";
 
         }
         $this->db->commit();
@@ -913,37 +910,41 @@ class TurnosController extends ControllerBase
      * Verifica quien tiene correo, y se le envia una respuesta.
      * Si es autorizado se lo pone en espera.
      */
-    public function enviarRespuestasAction()
+    public function enviarRespuestasAjaxAction()
     {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success'] = false;
+        $retorno['mensaje'] = "";
+        $retorno['errores'] = "";
         set_time_limit(300);
         $usuarioActual = $this->session->get('auth')['usuario_nick'];
         $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
-        $solicitudes = Solicitudturno::find(array("solicitudTurno_respuestaEnviada LIKE 'NO'
-                                                    AND solicitudTurno_nickUsuario=:usuario:
-                                                        AND solicitudTurnos_fechasTurnos=:periodo_id: AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR  'REVISION')",
+
+        $solicitudes = Solicitudturno::find(array(
+            "solicitudTurno_respuestaEnviada LIKE 'NO'
+            AND solicitudTurno_nickUsuario LIKE :usuario:
+            AND solicitudTurnos_fechasTurnos=:periodo_id:
+            AND solicitudTurno_estado  NOT LIKE 'PENDIENTE'
+            AND solicitudTurno_estado NOT LIKE 'REVISION'",
             "bind" => array(
                 'usuario' => $usuarioActual,
                 'periodo_id' => $ultimoPeriodo->getFechasturnosId()
-            )));
-
-        if (empty($solicitudes))
-        {
-            $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">X</span>
-                                            </button> NO SE ENVIARON LAS RESPUESTAS, YA QUE SOLO HAY SOLICITUDES PENDIENTES O EN REVISIÓN.</h3>');
-            return $this->response->redirect('turnos/turnosSolicitados');
+            )
+        ));
+        if (count($solicitudes)==0) {
+            $retorno['mensaje'] =count($solicitudes). "No es posible enviar las respuestas, ya que no hay solicitudes que se hayan autorizado o denegado.";
+            echo json_encode($retorno);
+            return;
         }
-
-        $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-        $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-
+        $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());
+        $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());
         $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
         $mensajeDenegado = "Su solicitud ha sido <b>DENEGADA</b> debido a que ";
         $mensajeDenegadoFT = "Los turnos correspondientes al mes en curso ya han sido otorgados en su totalidad. Le sugerimos solicitar un turno en el <b> periodo siguiente </b>.";
         $afiliados = "";
-
-        foreach ($solicitudes as $solicitud)
-        {
+        $errorMail = "";
+        foreach ($solicitudes as $solicitud) {
             $this->db->begin();
             $solicitud->setSolicitudturnoRespuestaenviada('SI');
             $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
@@ -977,7 +978,95 @@ class TurnosController extends ControllerBase
                         $band = $this->mailDesarrollo->send();
                         if (!$band) {
                             $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-                            echo "ERROR ".$this->mailDesarrollo->ErrorInfo ."<br>";
+                            $errorMail .= $this->mailDesarrollo->ErrorInfo ."<br>";
+                            $this->db->rollback();
+                        } else {
+                            $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
+                        }
+                        $this->mailDesarrollo->clearAddresses();
+                    } catch (phpmailerException $e) {
+                        $errorMail .= $e->errorMessage(); //Pretty error messages from PHPMailer
+                    } catch (Exception $e) {
+                        $errorMail .= $e->getMessage(); //Boring error messages from anything else!
+                    }
+                }
+            }
+        }
+        $retorno['success']=true;
+        $retorno['mensaje']="Las respuestas fueron enviadas a los afiliados.";
+        if (trim($afiliados) != "")
+            $retorno['mensaje'].='<ul> Los siguientes afiliados no pudieron ser avisados por correo:  <br>' . $afiliados . '</ul>';
+        if($errorMail!="")
+            $retorno['errores'] = $errorMail;
+        echo json_encode($retorno);
+        return;
+    }
+    public function enviarRespuestasAction()
+    {
+        set_time_limit(300);
+        $usuarioActual = $this->session->get('auth')['usuario_nick'];
+        $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
+        $solicitudes = Solicitudturno::find(array(
+            "solicitudTurno_respuestaEnviada LIKE 'NO'
+                        AND solicitudTurno_nickUsuario=:usuario:
+                            AND solicitudTurnos_fechasTurnos=:periodo_id:
+                                AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR  'REVISION')",
+            "bind" => array(
+                    'usuario' => $usuarioActual,
+                    'periodo_id' => $ultimoPeriodo->getFechasturnosId()
+                )
+        ));
+
+        if (empty($solicitudes)) {
+            $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">X</span>
+                                            </button> NO SE ENVIARON LAS RESPUESTAS, YA QUE SOLO HAY SOLICITUDES PENDIENTES O EN REVISIÓN.</h3>');
+            return $this->response->redirect('turnos/turnosSolicitados');
+        }
+
+        $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());
+        $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());
+
+        $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
+        $mensajeDenegado = "Su solicitud ha sido <b>DENEGADA</b> debido a que ";
+        $mensajeDenegadoFT = "Los turnos correspondientes al mes en curso ya han sido otorgados en su totalidad. Le sugerimos solicitar un turno en el <b> periodo siguiente </b>.";
+        $afiliados = "";
+
+        foreach ($solicitudes as $solicitud) {
+            $this->db->begin();
+            $solicitud->setSolicitudturnoRespuestaenviada('SI');
+            $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
+            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+                $solicitud->setSolicitudturnoEstadoasistenciaid(1);//EN ESPERA
+            } else {
+                $solicitud->setSolicitudturnoEstadoasistenciaid(5);//NO DEBE ASISTIR
+            }
+            if (!$solicitud->update()) {
+                $this->db->rollback();
+                $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
+            } else {
+                $template = "";
+                if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL) {
+                    try {
+                        $this->mailDesarrollo->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
+                        $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
+                        if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+                            $template = $this->seleccionarTemplateAutorizado($solicitud, $mensajeAutorizado);
+                        } else {
+                            if ($solicitud->getSolicitudturnoEstado() == "DENEGADO") {
+                                $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegado);
+                            } else {
+                                if ($solicitud->getSolicitudturnoEstado() == "DENEGADO POR FALTA DE TURNOS") {
+                                    $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegadoFT);
+                                }
+                            }
+                        }
+                        $this->mailDesarrollo->MsgHTML($template);
+                        $this->mailDesarrollo->body = strip_tags($template);
+                        $band = $this->mailDesarrollo->send();
+                        if (!$band) {
+                            $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
+                            echo "ERROR " . $this->mailDesarrollo->ErrorInfo . "<br>";
                             $this->db->rollback();
                         } else {
                             $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
@@ -1761,12 +1850,11 @@ class TurnosController extends ControllerBase
         $idPeriodo = $this->request->get('idP');
         $periodo = Fechasturnos::findFirstByFechasTurnos_id($idPeriodo);
 
-        if ($periodo)
-        {
-            $this->view->ffInicioSol = date('d/m/Y',strtotime($periodo->fechasTurnos_inicioSolicitud));
-            $this->view->ffFinSol = date('d/m/Y',strtotime($periodo->fechasTurnos_finSolicitud));
-            $this->view->ffInicioAtencion = date('d/m/Y',strtotime($periodo->fechasTurnos_diaAtencion));
-            $this->view->ffFinAtencion= date('d/m/Y',strtotime($periodo->fechasTurnos_diaAtencionFinal));
+        if ($periodo) {
+            $this->view->ffInicioSol = date('d/m/Y', strtotime($periodo->fechasTurnos_inicioSolicitud));
+            $this->view->ffFinSol = date('d/m/Y', strtotime($periodo->fechasTurnos_finSolicitud));
+            $this->view->ffInicioAtencion = date('d/m/Y', strtotime($periodo->fechasTurnos_diaAtencion));
+            $this->view->ffFinAtencion = date('d/m/Y', strtotime($periodo->fechasTurnos_diaAtencionFinal));
             $this->view->idP = $idPeriodo;
         }
     }
@@ -1781,10 +1869,9 @@ class TurnosController extends ControllerBase
         $datos = array();
 
         $solicitudes = Solicitudturno::find(array('solicitudTurnos_fechasTurnos = :fechasTurnos_id:',
-                                                            'bind' => array('fechasTurnos_id' => $id),
-                                                            'order' => 'solicitudTurno_id ASC'));
-        foreach ($solicitudes as $unaSolicitud)
-        {
+            'bind' => array('fechasTurnos_id' => $id),
+            'order' => 'solicitudTurno_id ASC'));
+        foreach ($solicitudes as $unaSolicitud) {
             $item = array();
 
             //0 ID: Se utiliza para aceptar/cancelar asistencia
@@ -1803,19 +1890,28 @@ class TurnosController extends ControllerBase
             $item[] = "<i class='fa fa-envelope-o'></i> " . $email . " <br> <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
 
             //5 Usuario
-            $item[] =$unaSolicitud->getSolicitudturnoNickusuario();
+            $item[] = $unaSolicitud->getSolicitudturnoNickusuario();
             //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
             $item[] = $unaSolicitud->getSolicitudturnoEstado();
             //7 Observaciones
             $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
 
-            switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid())
-            {
-                case 1: $estadoAsistencia = 'EN ESPERA';break;
-                case 2: $estadoAsistencia = "CONFIRMADO";break;
-                case 3: $estadoAsistencia = "PLAZO VENCIDO";break;
-                case 4: $estadoAsistencia = "CANCELADO";break;
-                default : $estadoAsistencia = ' ';break;
+            switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid()) {
+                case 1:
+                    $estadoAsistencia = 'EN ESPERA';
+                    break;
+                case 2:
+                    $estadoAsistencia = "CONFIRMADO";
+                    break;
+                case 3:
+                    $estadoAsistencia = "PLAZO VENCIDO";
+                    break;
+                case 4:
+                    $estadoAsistencia = "CANCELADO";
+                    break;
+                default :
+                    $estadoAsistencia = ' ';
+                    break;
             }
 
             //8 Estado Asistencia
