@@ -744,8 +744,8 @@ class TurnosController extends ControllerBase
         $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:', 'bind' =>
             array('solicitudTurno_id' => $this->request->getPost('solicitudTurno_id'))));
         if (!$solicitudTurno) {
-            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el turno solicitado.
-             Por favor intenteló nuevamente, en caso que el problema persista comuniquesé con Soporte Técnico.  ";
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el turno solicitado.<hr>
+             Por favor inténtelo nuevamente, en caso que el problema persista comuniquesé con Soporte Técnico.  ";
             echo json_encode($retorno);
             return;
         }
@@ -773,7 +773,7 @@ class TurnosController extends ControllerBase
                     $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitudTurno->getSolicitudturnoFechapedido());
             if (!$dentroPlazoValido) {
                 //FIXME: Deberia acumular la sancion el evento de mysql
-                $retorno['mensaje'] = "El plazo para confirmar el turno ha finalizado. Se ha acumulado una sanción. ";
+                $retorno['mensaje'] = "El plazo para confirmar el turno ha finalizado. <hr> Se ha acumulado una sanción. ";
                 echo json_encode($retorno);
                 return;
             }
@@ -785,29 +785,26 @@ class TurnosController extends ControllerBase
             $solicitudTurno->setSolicitudturnoEstadoasistenciaid(2);//Confirmado
             $mensajeCodigo = "";
             if ($solicitudTurno->getSolicitudturnoEstado() == "AUTORIZADO") {
-                if (!$periodo->incrementarCantAutorizados()) {
-                    $this->db->rollback();
-                    $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
-                    de que el problema persista comuniquesé con el Soporte Técnico.";
-                }
                 if ($solicitudTurno->getSolicitudturnoCodigo() == null || trim($solicitudTurno->getSolicitudturnoCodigo()) == "") {
                     $codigo = $this->getRandomCode($periodo->getFechasTurnosId());
                     $solicitudTurno->setSolicitudturnoCodigo($codigo);
                 }
-                $mensajeCodigo = "<br> Presentarse en nuestras oficinas con el código: <strong> " . $solicitudTurno->getSolicitudturnoCodigo() . "</strong>";
+                $mensajeCodigo = "<br><br> <ins>Código</ins>: <strong class='strong-azul font-gotham' style='letter-spacing: 0.3em; font-size:22px;'> " . $solicitudTurno->getSolicitudturnoCodigo() . "</strong>";
+                $mensajeCodigo .= "<br><br> <ins>Afiliado</ins>: <strong> " . $solicitudTurno->getSolicitudturnoNomape() . "</strong>";
+                $mensajeCodigo .= "<br><br> <ins>Fecha de Atención</ins>: <strong> " . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencion() )) . "</strong> al <strong>".date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencionfinal() ))."</strong>" ;
             }
 
             if (!$solicitudTurno->update()) {
                 $this->db->rollback();
-                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos. Intentelo nuevamente, en caso
-                de que el problema persista comuniquesé con el Soporte Técnico.";
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos. <hr> Inténtelo nuevamente, en caso
+                de que el problema persista comuniquesé con el <strong>Soporte Técnico</strong>.";
                 echo json_encode($retorno);
                 return;
             }
         }
         $this->db->commit();
         $retorno['success'] = true;
-        $retorno['mensaje'] = "Operación Exitosa, el turno ha sido confirmado. $mensajeCodigo";
+        $retorno['mensaje'] = $mensajeCodigo;
         echo json_encode($retorno);
         return;
     }
@@ -824,8 +821,8 @@ class TurnosController extends ControllerBase
         if ($this->request->getPost('solicitudTurno_id') == ""
             || $this->request->getPost('solicitudTurno_id') == NULL
         ) {
-            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el IDentificador del turno solicitado.
-             Por favor intenteló nuevamente, en caso que el problema persista comuniquesé con Soporte Técnico.  ";
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el <strong>IDentificador </strong> del turno solicitado.
+             <hr> Por favor intenteló nuevamente, en caso que el problema persista comuniquesé con Soporte Técnico.  ";
             echo json_encode($retorno);
             return;
         }
@@ -838,6 +835,7 @@ class TurnosController extends ControllerBase
             return;
         }
         $dentroPlazoValido=true;
+        //Lo deberia hacer el evento de mysql
         if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 1)
             $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitudTurno->getSolicitudturnoFechapedido());
         else
@@ -845,7 +843,7 @@ class TurnosController extends ControllerBase
                 $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitudTurno->getSolicitudturnoFechapedido());
         if (!$dentroPlazoValido) {
             //FIXME: Deberia acumular la sancion el evento de mysql
-            $retorno['mensaje'] = "El plazo para confirmar el turno ha finalizado. Se ha acumulado una sanción. ";
+            $retorno['mensaje'] = "El plazo para confirmar el turno ha finalizado. <hr> Se ha acumulado una sanción. ";
             echo json_encode($retorno);
             return;
         }
@@ -858,8 +856,8 @@ class TurnosController extends ControllerBase
             $solicitudTurno->setSolicitudturnoEstadoasistenciaid(4);
             if (!$periodo->decrementarCantAutorizados()) {
                 $this->db->rollback();
-                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. Intentelo nuevamente, en caso
-                de que el problema persista comuniquesé con el Soporte Técnico.";
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. <hr> Inténtelo nuevamente, en caso
+                de que el problema persista comuniquesé con el <strong>Soporte Técnico</strong>.";
                 echo json_encode($retorno);
                 return;
             }
@@ -870,10 +868,13 @@ class TurnosController extends ControllerBase
                 echo json_encode($retorno);
                 return;
             }
-            $this->db->commit();
-        }
+            $mensajeCodigo = "<br> <ins>Afiliado</ins>: <strong> " . $solicitudTurno->getSolicitudturnoNomape() . "</strong>";
+            $mensajeCodigo .= "<br> <ins>Fecha de Atención</ins>: <strong> " . date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencion() )) . "</strong> al <strong>".date('d/m/Y', strtotime($periodo->getFechasturnosDiaatencionfinal() ))."</strong>" ;
 
-        $retorno['mensaje'] = "Operación Exitosa, el turno ha sido cancelado.";
+        }
+        $this->db->commit();
+        $retorno['success'] = true;
+        $retorno['mensaje'] = $mensajeCodigo;
         echo json_encode($retorno);
         return;
     }
