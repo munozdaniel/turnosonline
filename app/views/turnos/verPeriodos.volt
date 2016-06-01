@@ -40,7 +40,7 @@
                             <th style="text-align: center !important;">Periodo activo</th>
                             <th style="text-align: center !important;"><i class="glyphicon glyphicon-edit"></i></th>
                             <th style="text-align: center !important;">Listado de solicitudes</th>
-                            <th style="text-align: center !important;">Listado de solicitudes canceladas</th>
+                            <th style="text-align: center !important;">Listado de turnos cancelados</th>
                         </tr>
                     </thead>
 
@@ -74,7 +74,7 @@
                                 <td>NO</td>
                                 <td>-</td>
                                 <td> {{ link_to("turnos/solicitudesPorPeriodo/?idP="~item.fechasTurnos_id,'LISTA','class':'btn btn-success') }} </td>
-                                <td> {{ link_to("turnos/solicitudesCanceladasPorPeriodo/?idP="~item.fechasTurnos_id,'CANCELADOS','class':'btn btn-danger') }} </td>
+                                <td> {{ link_to("turnos/solicitudesCanceladasPorPeriodo/?idP="~item.fechasTurnos_id,'LISTA','class':'btn btn-danger') }} </td>
                             {% else %}
                                 <td>SI</td>
                                 <td width="7%"> {{ link_to("turnos/editarPeriodo/"~item.fechasTurnos_id,'<i class="glyphicon glyphicon-edit"></i> Editar', "class": "btn btn-info") }} </td>

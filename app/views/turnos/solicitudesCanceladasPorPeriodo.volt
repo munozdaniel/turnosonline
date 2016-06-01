@@ -7,8 +7,8 @@
             <div class="curriculum-bg-header modal-header " align="left">
 
                 <h1>
-                    <ins>LISTADO DE SOLICITUDES</ins>
-                    {{ link_to("turnos/verPeriodos", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:46%;background-color:#195889;') }}
+                    <ins>LISTADO DE TURNOS CANCELADOS</ins>
+                    {{ link_to("turnos/verPeriodos", "<i class='fa fa-sign-out'></i> VOLVER",'class':'btn btn-lg btn-primary','style':'margin-left:30%;background-color:#195889;') }}
                     <br>
                 </h1>
 
@@ -44,24 +44,22 @@
 
         </div>
 
-
         <div class="row form-blanco borde-top borde-left-4 borde-right-4">
 
             <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
+
                 <table id="tabla" class="table_r table-striped table-bordered table-condensed">
                     <thead style="background-color: #131313;">
                         <tr>
-                            <th class="th-titulo">Afiliado</th>{# 0  #}
+                            <th class="th-titulo">Afiliado</th>{# 0 #}
                             <th class="th-titulo">Email/Telefono</th>{# 1 #}
                             <th class="th-titulo">Usuario</th>{# 2 #}
-                            <th class="th-titulo">Estado</th>{# 3 #}
+                            <th class="th-titulo">Estado solicitud</th>{# 3 #}
                             <th class="th-titulo">Observaci&oacute;n</th>{# 4 #}
-                            <th class="th-titulo">C&oacute;digo</th>{# 5 #}
-                            <th class="th-titulo">Estado de asistencia</th>{# 6 #}
-                            <th class="th-titulo">Tipo Solicitud</th>{# 7 #}
                         </tr>
                     </thead>
                 </table>
+
             </div>
 
         </div>
@@ -82,25 +80,25 @@
         ({
             ajax:
             {
-                 url: '/impsweb/turnos/solicitudesPorPeriodoAjax/?id='+id,
-                 type: 'POST',
-                 dataType: 'json',
+                url: '/impsweb/turnos/solicitudesCanceladasPorPeriodoAjax/?id='+id,
+                type: 'POST',
+                dataType: 'json',
             },
             "processing": true,
             dom: 'Bfrtlip',
             buttons:
-            [
-                {
-                    text: "Exportar PDF",
-                    title: "Listado de turnos",
-                    message:"Periodo de solicitud: "+ffIS+' - '+ffFS+'   Periodo de atencion: '+ffIA+' -'+ffFA,
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL',
-                    download: 'open',
-                    exportOptions: { columns:[0, 1, 2, 3, 4, 5, 6, 7] }
-                }
-            ],
+                    [
+                        {
+                            text: "Exportar PDF",
+                            title: "Listado de turnos cancelados",
+                            message:"Periodo de solicitud: "+ffIS+' - '+ffFS+'   Periodo de atencion: '+ffIA+' -'+ffFA,
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            download: 'open',
+                            exportOptions: {columns:[0,1,2,3,4]}
+                        }
+                    ],
             'pageLength': 10,
             'lengthMenu': [[10, 20, 40, -1], [10, 20, 40, 'Todos']],
             "language":
@@ -128,7 +126,6 @@
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-
         });
     });
 </script>
