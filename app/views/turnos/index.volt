@@ -24,10 +24,10 @@
                         {{ form('turnos/guardarTurnoOnline','method':'post','style':'','class':'') }}
                         <div class="col-md-12" style="margin-bottom: 30px; text-align: left;">
                             <ul><strong><ins>INSTRUCCIONES</ins></strong>
-                                <li><i class="fa fa-dot-circle-o"></i> Es muy importante que complete correctamente sus datos personales, correo electrónico y  teléfono.</li>
+                                <li><i class="fa fa-dot-circle-o"></i> Es muy importante que complete correctamente sus datos personales, correo electrónico y teléfono.</li>
                                 <li><i class="fa fa-dot-circle-o"></i> Los campos que contienen * son obligatorios.</li>
-                                <li><i class="fa fa-dot-circle-o"></i> Al finalizar, nuestros empleados analizarán su estado de deuda y le enviarán un correo electrónico.</li>
-                                <li><i class="fa fa-dot-circle-o"></i>  Recuerde que solo los <strong>afiliados activos</strong> pueden solicitar un turno online.</li>
+                                <li><i class="fa fa-dot-circle-o"></i> Al finalizar, nuestros empleados analizarán su petici&oacute;n y le enviarán un correo electrónico.</li>
+                                <li><i class="fa fa-dot-circle-o"></i> Recuerde que solo los <strong>afiliados activos</strong> pueden solicitar un turno online.</li>
                             </ul>
                             <hr>
                             {% for elto in formulario %}
