@@ -61,6 +61,20 @@ class TurnosController extends ControllerBase
      * 4. verifica que no haya solicitado otro turno en el periodo actual.
      * 5. verifica que el email no se haya utilizado
      */
+
+    private function cantCeros($valor)
+    {
+        switch($valor)
+        {
+            case 1: $cad = '0'; break;
+            case 2: $cad = '00'; break;
+            case 3: $cad = '000'; break;
+            case 4: $cad = '0000'; break;
+        }
+
+        return $cad;
+    }
+
     public function guardarTurnoOnlineAction()
     {
         $this->view->setTemplateAfter('admin');
@@ -90,16 +104,22 @@ class TurnosController extends ControllerBase
             return $this->redireccionar('turnos/index');
         }
         //Filtramos los campos
-        $legajo = $this->request->getPost('solicitudTurno_legajo', array('alphanum', 'trim'));
+        $legajo = $this->request->getPost('solicitudTurno_legajo');
         $nombre = $this->request->getPost('solicitudTurno_nom', array('striptags', 'string', 'upper'));
         $nombre = rtrim($nombre);
         $nombre = ltrim($nombre);
         $apellido = $this->request->getPost('solicitudTurno_ape', array('striptags', 'string', 'upper'));
         $apellido = rtrim($apellido);
         $apellido = ltrim($apellido);
-        $documento = $this->request->getPost('solicitudTurno_documento', array('alphanum', 'trim', 'string'));
-        $numTelefono = $this->request->getPost('solicitudTurno_numTelefono', 'int');
+        $documento = $this->request->getPost('solicitudTurno_documento');
+        $numTelefono = $this->request->getPost('solicitudTurno_numTelefono');
         $email = $this->request->getPost('solicitudTurno_email', array('email', 'trim', 'upper'));
+
+        //verificar cantidad de digitos del legajo
+
+        $cant = strlen($legajo);
+        if ($cant < 6)
+            $legajo = $this->cantCeros(6-$cant).$legajo;
 
         //3. verifica si los datos ingresados pertenecen a un afiliado de siprea
         $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
@@ -169,8 +189,8 @@ class TurnosController extends ControllerBase
         try {
             $sql = "SELECT AF.afiliado_legajo, AF.afiliado_apenom
                       FROM siprea2.afiliados AS AF
-                       WHERE (AF.afiliado_apenom LIKE '%" . $nombreCompleto . "%')
-                       AND (AF.afiliado_legajo LIKE '%" . $legajo . "%')
+                       WHERE (AF.afiliado_apenom LIKE '%".$nombreCompleto."%')
+                       AND (AF.afiliado_legajo LIKE '".$legajo."')
                         AND (AF.afiliado_activo = 1);";
             $result = $this->dbSiprea->query($sql);
             $texto = '';
