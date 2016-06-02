@@ -132,7 +132,7 @@ class TurnosOnlineForm extends Form
             array(
                 new PresenceOf(array('message' => 'Ingrese el <strong>n&uacute;mero</strong>.')),
                 new Regex(array(
-                    'message'=>'El valor ingresado debe ser un <strong>n&uacute;mero</strong> v&aacute;lido.',
+                    'message'=>'El <strong>n&uacute;mero de telefono/celular</strong> debe ser v&aacute;lido.',
                     'pattern' =>'/^[0-9][0-9][0-9][0-9][0-9]([0-9]{1,10})$/')),
             ));
         $this->add($telefono);
