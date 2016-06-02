@@ -122,7 +122,8 @@ class TurnosController extends ControllerBase
             $legajo = $this->cantCeros(6-$cant).$legajo;
 
         //3. verifica si los datos ingresados pertenecen a un afiliado de siprea
-        $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido . " " . $nombre);
+        $nombreCompleto = $this->comprobarDatosEnSiprea($legajo, $apellido);
+
         if (!$nombreCompleto) {
             $this->flash->error('<h1>USTED NO SE ENCUENTRA REGISTRADO EN EL SISTEMA, PARA OBTENER MAS INFORMACIÓN DIRÍJASE A NUESTRAS OFICINAS.</h1>');
             return $this->redireccionar('turnos/index');
@@ -184,13 +185,13 @@ class TurnosController extends ControllerBase
      * No es necesario que este completo.
      * @return bool|string
      */
-    private function comprobarDatosEnSiprea($legajo, $nombreCompleto)
+    private function comprobarDatosEnSiprea($legajo, $apellido)
     {
         try {
             $sql = "SELECT AF.afiliado_legajo, AF.afiliado_apenom
                       FROM siprea2.afiliados AS AF
-                       WHERE (AF.afiliado_apenom LIKE '%".$nombreCompleto."%')
-                       AND (AF.afiliado_legajo LIKE '".$legajo."')
+                       WHERE (AF.afiliado_apenom LIKE '%".$apellido."%')
+                       AND (AF.afiliado_legajo like '".$legajo."')
                         AND (AF.afiliado_activo = 1);";
             $result = $this->dbSiprea->query($sql);
             $texto = '';
