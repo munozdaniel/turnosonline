@@ -8,6 +8,9 @@
     .th-titulo {
         vertical-align: middle !important;
     }
+
+    .alert-info{background-color:indianred;border:solid red;width:900px;text-align: center;margin-left: 20%;}
+
 </style>
 
 <section id="onepage" class="admin bg_line">
@@ -23,8 +26,7 @@
                 </h1>
 
                 <h3>
-                    <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos
-                            afiliados
+                    <small> <em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados
                             a los cuales se les envio la respuesta a su solicitud con Autorizado/Denegado.</em></small>
                 </h3>
 
@@ -193,9 +195,7 @@
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
                     download: 'open',
-                    exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 11]
-                    }
+                    exportOptions: {columns:[2, 3, 4, 5, 6, 7, 8, 11]}
                 }
             ],
             "columnDefs": [

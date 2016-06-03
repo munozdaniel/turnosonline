@@ -1,3 +1,7 @@
+<style>
+    .exito{font-size: 21px;}
+</style>
+
 <section id="onepage" class="admin bg_line">
     <div class="container ">
         <div align="center">
@@ -41,20 +45,6 @@
                             <p class="size-h2"><strong>Listado de</strong></p>
 
                             <p class="text-muted"> Respuestas Enviadas</p>
-                        </div>
-                    </div>') }}
-                </div>
-                <div class="col-sm-4">
-                    {{ link_to('turnos/turnosCancelados','
-                    <div class="panel mini-box">
-                            <span class="box-icon bg-red-pl">
-                                <i class="fa fa-ticket"></i>
-                            </span>
-
-                        <div class="box-info"  align="left">
-                            <p class="size-h2"><strong>Listado de</strong></p>
-
-                            <p class="text-muted"> Turnos Cancelados</p>
                         </div>
                     </div>') }}
                 </div>
