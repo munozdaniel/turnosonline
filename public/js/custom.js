@@ -81,7 +81,7 @@ jQuery(function ($) {
         $('#status').fadeOut(); // will first fade out the loading animation
         $('#preloader').delay(100).fadeOut('slow'); // will fade out the white DIV that covers the website.
         $('body').delay(100).css({'overflow': 'visible'});
-    })
+    });
 
 
     /* ----------------------------------------------------------- */
@@ -93,7 +93,7 @@ jQuery(function ($) {
     // Cache selectors
     var lastId,
         topMenu = $("#top-menu"),
-        topMenuHeight = topMenu.outerHeight() + 13,
+        topMenuHeight = topMenu.outerHeight() ,
     // All list items
         menuItems = topMenu.find("a.si_recorrer"),
     // Anchors corresponding to menu items

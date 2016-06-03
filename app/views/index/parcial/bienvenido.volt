@@ -74,17 +74,19 @@
     }
 </style>
 
-<div class="col-sm-12 col-xs-12 col-md-7 col-lg-8 novedades_slider" align="center">
-    <h3 class=""><strong>NOVEDADES</strong> </h3>
+<div class="col-sm-12 col-xs-12 col-md-7 col-lg-8 novedades_slider">
+    <h3 class=""  align="center"><strong>NOVEDADES</strong> </h3>
 
     <div class="nov slider responsive">
         <div class="col-xs-12 col-sm-12  col-md-3 col-lg-4">
 
             <div class="thumbnail">
-                {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
+                {{ link_to('index/catalogo','target':'_blank',
+                            image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') )}}
                 <div class="caption">
                     <p>
-                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        {{ link_to('index/catalogo','target':'_blank','class':'btn btn-info btn-xs pull-right',
+                        'ABRIR')}}
                         <i class="fa fa-calendar"></i> <small>01/05/2016</small>
                     </p>
                     <strong>REVISTA IMPS</strong><br>
@@ -95,10 +97,12 @@
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
 
             <div class="thumbnail">
-                {{ image('img/informacion/n_turnos.jpg','alt':'Guía para Solicitar Turno') }}
+                {{ link_to('index/presentacionTurnos','target':'_blank',
+                image('img/informacion/n_turnos.jpg','alt':'Guía para Solicitar Turno') )}}
                 <div class="caption">
                     <p>
-                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        {{ link_to('index/presentacionTurnos','target':'_blank','class':'btn btn-info btn-xs pull-right',
+                        'ABRIR')}}
                         <i class="fa fa-calendar"></i> <small>11/04/2016</small>
                     </p>
                     <strong>TURNOS ONLINE</strong><br>
@@ -110,10 +114,12 @@
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
 
             <div class="thumbnail">
-                {{ image('img/informacion/n_jub.jpg','alt':'Impuestos a la ganancia') }}
+                {{ link_to('files/novedad/afiliados.pdf','target':'_blank',
+                image('img/informacion/n_jub.jpg','alt':'Impuestos a la ganancia') )}}
                 <div class="caption">
                     <p>
-                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        {{ link_to('files/novedad/afiliados.pdf','target':'_blank','class':'btn btn-info btn-xs pull-right',
+                        'ABRIR')}}
                         <i class="fa fa-calendar"></i> <small>01/03/2016</small>
                     </p>
                     <strong>JUB. Y PENSIONADOS</strong><br>
@@ -125,13 +131,15 @@
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
 
             <div class="thumbnail">
-                {{ image('img/informacion/n-emprendimiento.jpg','alt':'Emprendimiento Marimenuco') }}
+                {{ link_to('index/emprendimiento','target':'_blank',
+                image('img/informacion/n-emprendimiento.jpg','alt':'Emprendimiento Marimenuco') )}}
                 <div class="caption">
                     <p>
-                        <a href="#" class="btn btn-info btn-xs pull-right" role="button">ABRIR</a>
+                        {{ link_to('index/emprendimiento','target':'_blank','class':'btn btn-info btn-xs pull-right',
+                        'ABRIR')}}
                         <i class="fa fa-calendar"></i> <small>01/05/2014</small>
                     </p>
-                    <strong>EMPRENDIMIENTO </strong><br>
+                    <strong>EMPRENDIMIENTO MARIMENUCO</strong><br><br>
                     <small>Instituto Municipal de Previsión Social</small>
 
                 </div>

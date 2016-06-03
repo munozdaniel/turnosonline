@@ -55,7 +55,7 @@
                                 GUÍA BÁSICA
                             </h1>
 
-                            <p><strong>Selecciona un paso para ver la explicación</strong></p>
+                            <p><strong>Seleccione un paso para ver la explicación</strong></p>
 
                             <hr>
                             <ul id="ul">
@@ -64,34 +64,31 @@
                                         1º
                                     </button>
                                     <a class="hover-background " onmouseover="cambiarInstruccion(1)">Verifique cuando
-                                        estará habilitado el periodo para solicitar turno.</a>
+                                        estará habilitado el período para solicitar turnos.</a>
                                 </li>
                                 <li id="paso-2" class="hr cursor-hand">
                                     <button type="button" class="btn btn-blue btn-circle margin-right-5">2º</button>
-                                    <a class="hover-background" onmouseover="cambiarInstruccion(2)"> Cuando se habilite
-                                        el
-                                        período, se habilitará el botón para solicitar turnos.</a>
+                                    <a class="hover-background" onmouseover="cambiarInstruccion(2)"> Cuando esté habilitado dicho período, se habilitará el botón para solicitar turnos.</a>
                                 </li>
                                 <li id="paso-3" class="hr cursor-hand">
                                     <button type="button" class="btn btn-blue btn-circle margin-right-5">
                                         3º
                                     </button>
-                                    <a class="hover-background" onmouseover="cambiarInstruccion(3)">Completa con tus
-                                        datos personales el formulario.</a>
+                                    <a class="hover-background" onmouseover="cambiarInstruccion(3)">Complete el formulario con sus datos personales.</a>
                                 </li>
                                 <li id="paso-4" class="hr cursor-hand">
                                     <button type="button" class="btn btn-blue btn-circle margin-right-5">
                                         4º
                                     </button>
                                     <a class="hover-background" onmouseover="cambiarInstruccion(4)">Nuestros empleados
-                                        analizarán su estado de deuda.</a>
+                                        analizarán su petición.</a>
                                 </li>
                                 <li id="paso-5" class="hr cursor-hand">
                                     <button type="button" class="btn btn-blue btn-circle margin-right-5">
                                         5º
                                     </button>
                                     <a class="hover-background" onmouseover="cambiarInstruccion(5)"> Confirme el correo
-                                        enviado por nuestros empleados.</a>
+                                        que le fue enviado.</a>
                                 </li>
                                 <li id="paso-6" class="cursor-hand">
                                     <button type="button" class="btn btn-blue btn-circle margin-right-5">
@@ -110,11 +107,11 @@
                                     {{ image('img/turnos/presentacion/2.png') }}
                                 </div>
                                 <div id="contenido-1" class="ocultar">
-                                    <h3> Verificar Periodo para Solicitar Turnos</h3>
+                                    <h3> Verificar Período para Solicitar Turnos</h3>
 
                                     <p> En la sección
                                         <ins>Servicios</ins>
-                                        se dispondrá un enlace para ver el calendario de periodos.
+                                        se dispondrá un enlace para ver el calendario de períodos.
                                     </p>
                                     {{ image('img/turnos/presentacion/1.jpg') }}
                                     <br>
@@ -124,7 +121,7 @@
                                 <div id="contenido-2" class="ocultar">
                                     <h3> Servicio Habilitado</h3>
 
-                                    <p>Cuando el período esté disponible se habilitará el boton
+                                    <p>Cuando el período esté disponible se habilitará el botón
                                         <ins>Solicitar Turno</ins>
                                     </p>
                                     {{ image('img/turnos/presentacion/2.png') }}
@@ -135,10 +132,10 @@
                                 <div id="contenido-3" class="ocultar">
                                     <h3> Completar Formulario</h3>
 
-                                    <p>Al hacer click en el botón del paso 2 podremos acceder a un formulario en el que
-                                        deberás
+                                    <p>Al hacer click en el botón del Paso 2 podrá acceder a un formulario en el que
+                                        deberá
                                         cargar
-                                        tus datos personales.
+                                        sus datos personales.
                                         <strong>Es importante que utilice un correo válido</strong></p>
                                     {{ image('img/turnos/presentacion/3.jpg') }}
                                 </div>
@@ -146,8 +143,8 @@
                                 <div id="contenido-4" class="ocultar">
                                     <h3> Espera del Análisis</h3>
 
-                                    <p>Su pedido será analizado por nuestro equipo y se le enviará una respuesta al
-                                        correo. </p>
+                                    <p>Su pedido será analizado por nuestros agentes y se le enviará una respuesta al
+                                        correo ingresado en el Paso 3. </p>
                                     {{ image('img/turnos/presentacion/4.jpg') }}
                                     <br>
                                 </div>
@@ -155,20 +152,20 @@
                                 <div id="contenido-5" class="ocultar">
                                     <h3> Confirmar Correo</h3>
 
-                                    <p> En el correo enviado por nuestros empleados encontrarás un enlace para que
-                                        puedas
-                                        confirmar tu
+                                    <p> En el correo enviado por nuestros empleados encontrará un enlace para que
+                                        pueda
+                                        confirmar su
                                         asistencia
-                                        <strong>(en un plazo determinado)</strong>, al hacerlo se generará un codigo.
+                                        <strong>(en un plazo determinado)</strong>, al hacerlo se generará un código y se le indicará las fechas para su asistencia. <strong>ES IMPORTANTE QUE GUARDE EL CÓDIGO.</strong>
                                     </p>
                                     {{ image('img/turnos/presentacion/5.jpg') }}
                                 </div>
                                 <div id="contenido-6" class="ocultar">
                                     <h3> Asistencia</h3>
 
-                                    <p> Cuando asista a nuestra oficina deberá ingresar su codigo en la <strong>terminal
+                                    <p> Cuando asista a nuestra institución deberá ingresar su código en la <strong>terminal
                                             de
-                                            afiliados</strong> para ser atendido.</p>
+                                            afiliados</strong> para que lo podamos atender.</p>
                                     {{ image('img/turnos/presentacion/6.jpg') }}
                                 </div>
                             </div>
@@ -179,43 +176,43 @@
             <div class="curriculum-bg-form borde-top">
                 <div class="row">
                     <div class=" col-md-6 col-md-offset-3">
-                        <h1>NO TIENES LA POSIBILIDAD DE ACCEDER VIA ONLINE? </h1>
+                        <h1>¿NO TIENE LA POSIBILIDAD DE ACCEDER VIA ONLINE?</h1>
                         <br>
-                        <h4>Te brindamos una terminal para que vengas personalmente a solicitar el turno.</h4>
+                        <h4>En nuestra Institución dispondremos de una terminal para que pueda solicitar un turno.</h4>
                     </div>
 
                     <div class="col-md-12">
                         <hr>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div align="right">
                                 {{ image('img/turnos/presentacion/6.jpg','alt':'persona terminal','align':'center','width':'350','height':'200') }}
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <ul style="text-align: left">
                                 <li class="hr cursor-hand">
                                     <button type="button" class="btn btn-warning btn-circle margin-right-5">
                                         1º
                                     </button>
-                                    Accede a la terminal.
+                                    Acceda a la terminal.
                                 </li>
                                 <li class="hr cursor-hand">
                                     <button type="button" class="btn btn-warning btn-circle margin-right-5">
                                         2º
                                     </button>
-                                    Ingresar el legajo y el número de documento.
+                                    Ingrese los datos solicitados.
                                 </li>
                                 <li class="hr cursor-hand">
                                     <button type="button" class="btn btn-warning btn-circle margin-right-5">
                                         3º
                                     </button>
-                                    Esperar que nuestros empleados analicen tu solicitud.
+                                    Transcurridas 48hs, usted deberá acercarse a nuestra institución o llamar al 0299-4433978 int 10 para confirmar su asistencia.
                                 </li>
                                 <li class="hr cursor-hand">
                                     <button type="button" class="btn btn-warning btn-circle margin-right-5">
                                         4º
                                     </button>
-                                        Aguarde a que sea llamado por nuestros empleados.
+                                        Deberá acercarse a nuestra Institución entre las fechas informadas por nuestros agentes para comenzar los trámites del préstamo personal.
                                 </li>
                             </ul>
                         </div>

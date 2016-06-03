@@ -1,32 +1,10 @@
-<style>
-    a {
-        color: #2da2c8
-    }
+{#Estilos para las tablas y loading#}
+{{ stylesheet_link('css/style_turnos.css') }}-->
 
-    .heading h2 {
-        font-size: 30px;
-        line-height: 35px;
-    }
-
-    .th-estilo {
-        text-align: center;
-        color: white;
-        background-color: #006688;
-    }
-
-    .td-estilo {
-        vertical-align: middle text-align : center;
-        width: 180px
-    }
-
-    .td-observaciones {
-        max-width: 230px !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
-    }
-</style>
-
+<div id="loader_bg" style="display: none;" align="center">
+    <div id="loader_gif" style="display: none;">&nbsp;</div>
+    <p class="loader_text pulse1">ENVIANDO</p>
+</div>
 <section id="onepage" class="admin bg_line">
     <div class="container">
 
@@ -40,7 +18,8 @@
                 </h1>
 
                 <h3>
-                    <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados que han solicitado un turno.</em></small>
+                    <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos
+                            afiliados que han solicitado un turno.</em></small>
                 </h3>
 
             </div>
@@ -95,6 +74,9 @@
             <div class="col-md-12">
                 {{ content() }}
                 {{ flashSession.output() }}
+                <div id="mensaje_resultado" class="modal-body" align="left">
+                    <div class="alerta_mensaje"></div>
+                </div>
             </div>
             <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
                 <table class="table table-striped table-bordered table-condensed">
@@ -202,9 +184,10 @@
 
             <div class="row">
                 <div align="center"
-                     style="width:38%;position:fixed;bottom:0;border-top:#2AA0C7 2px;"
-                     class=" col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
-                    {{ submit_button('ENVIAR RESPUESTAS A LOS AFILIADOS','class':'btn btn-blue btn-lg btn-block') }}
+                     class="btn_enviarRespuestas col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
+                    <a class=" btn btn-primary btn-lg btn-block" ondblclick="enviarRespuestas()"> ENVIAR RESPUESTA A LOS
+                        AFILIADOS</a>
+
                 </div>
             </div>
 
@@ -216,6 +199,46 @@
 <!-- ====================================== -->
 
 <script type="text/javascript">
+    /**
+     * Se encarga de mostrar la imagen de 'loading', de llamar al enviarRespuestasAjax y
+     * de mostrar los mensajes correspondientes
+     */
+    function enviarRespuestas() {
+        $('#loader_gif').fadeIn();
+        $('#loader_bg').delay(100).fadeIn('slow');
+        //$('body').delay(100).css({'overflow': 'visible'});
+        //==========
+        $.ajax({
+            type: 'POST',
+            url: '/impsweb/turnos/enviarRespuestasAjax',
+            dataType: 'json',
+            encode: true
+        })
+                .done(function (data) {
+                    //console.log(data);
+                    $('.alerta_mensaje').remove();
+                    if (!data.success) {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-danger alert-dismissible" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        '<h3><strong>Advertencia!</strong></h3><hr>' + data.mensaje + '<hr>' + data.errores  + '</div>');
+                    } else {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success alert-dismissible" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        '<strong>Operación Exitosa!</strong><hr>' + data.mensaje + '</div>');
+                    }
+                })
+                .fail(function (data) {
+                    console.log(data);
+                })
+                .always(function (data) {
+                    $('#solicitudes').load(document.URL + ' #solicitudes');
+                    $('#loader_gif').fadeOut();
+                    $('#loader_bg').delay(100).fadeOut('slow');
+                    console.log(data);
+                });
+    }
+
+    /*==========================================================*/
     $(".problema").fadeTo(4000, 500).slideUp(500, function () {
         $(".problema").alert('close');
     });
