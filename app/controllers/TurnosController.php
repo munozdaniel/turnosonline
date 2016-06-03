@@ -818,7 +818,7 @@ class TurnosController extends ControllerBase
     {
         //no hace nada, esta solo para que vaya a la vista.
     }
-
+//------------------------------------
     /**
      * Verifica quien tiene correo, y se le envia una respuesta.
      * Si es autorizado se lo pone en espera.
@@ -833,20 +833,24 @@ class TurnosController extends ControllerBase
         set_time_limit(300);
         $usuarioActual = $this->session->get('auth')['usuario_nick'];
         $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
-        $solicitudes = Solicitudturno::find(array("solicitudTurno_respuestaEnviada LIKE 'NO'
-                                                    AND solicitudTurno_nickUsuario=:usuario:
-                                                        AND solicitudTurnos_fechasTurnos=:periodo_id: AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR 'REVISION')",
+
+        $solicitudes = Solicitudturno::find(array(
+            "solicitudTurno_respuestaEnviada LIKE 'NO'
+            AND solicitudTurno_nickUsuario LIKE :usuario:
+            AND solicitudTurnos_fechasTurnos=:periodo_id:
+            AND solicitudTurno_estado  NOT LIKE 'PENDIENTE'
+            AND solicitudTurno_estado NOT LIKE 'REVISION'",
             "bind" => array(
                 'usuario' => $usuarioActual,
                 'periodo_id' => $ultimoPeriodo->getFechasturnosId()
             )
         ));
-        if (count($solicitudes)==0) {
-            $retorno['mensaje'] =count($solicitudes). "No es posible enviar las respuestas, ya que no hay solicitudes que se hayan autorizado o denegado.";
+        if (count($solicitudes) == 0) {
+            $retorno['mensaje'] = count($solicitudes) . "No es posible enviar las respuestas, ya que no hay solicitudes que se hayan autorizado o denegado.";
             echo json_encode($retorno);
             return;
         }
-        $fechaAtencion = TipoFecha::fechaEnLetrasSinAnio($ultimoPeriodo->getFechasturnosDiaatencion());
+        $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());
         $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());
         $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
         $mensajeDenegado = "Su solicitud ha sido <b>DENEGADA</b> debido a que ";
@@ -887,30 +891,39 @@ class TurnosController extends ControllerBase
                         $band = $this->mailDesarrollo->send();
                         if (!$band) {
                             $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-                            $errorMail .= $this->mailDesarrollo->ErrorInfo ."<br>";
+                            $errorMail .= $this->mailDesarrollo->ErrorInfo . "<br>";
                             $this->db->rollback();
                         } else {
                             $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
                         }
                         $this->mailDesarrollo->clearAddresses();
-                    } catch (phpmailerException $e) {
-                        $errorMail .= $e->errorMessage(); //Pretty error messages from PHPMailer
-                    } catch (Exception $e) {
-                        $errorMail .= $e->getMessage(); //Boring error messages from anything else!
+
+                    }
+                    catch (phpmailerException $e)
+                    {
+                        $errorMail .= $e->getCode()." error 1 phpmailer"; //Pretty error messages from PHPMailer
+
+                    }
+                    catch (Exception $e)
+                    {
+                        $errorMail .= $e->getCode()."error 2 general"; //Boring error messages from anything else!
+
                     }
                 }
             }
         }
-        $retorno['success']=true;
-        $retorno['mensaje']="Las respuestas fueron enviadas a los afiliados.";
+        $retorno['success'] = true;
+        $retorno['mensaje'] = "Las respuestas fueron enviadas a los afiliados.";
         if (trim($afiliados) != "")
-            $retorno['mensaje'].='<ul> Los siguientes afiliados no pudieron ser avisados por correo:  <br>' . $afiliados . '</ul>';
-        if($errorMail!="")
+            $retorno['mensaje'] .= '<ul> Los siguientes afiliados no pudieron ser avisados por correo:  <br>' . $afiliados . '</ul>';
+        if ($errorMail != "")
             $retorno['errores'] = $errorMail;
         echo json_encode($retorno);
         return;
     }
-    public function enviarRespuestasAction()
+
+    //---------------------
+    public function enviarRespuestasAction() //NO SE USA MAS.
     {
         set_time_limit(300);
         $usuarioActual = $this->session->get('auth')['usuario_nick'];
@@ -919,7 +932,7 @@ class TurnosController extends ControllerBase
             "solicitudTurno_respuestaEnviada LIKE 'NO'
                         AND solicitudTurno_nickUsuario=:usuario:
                             AND solicitudTurnos_fechasTurnos=:periodo_id:
-                                AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR  'REVISION')",
+                                AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR 'REVISION')",
             "bind" => array(
                     'usuario' => $usuarioActual,
                     'periodo_id' => $ultimoPeriodo->getFechasturnosId()
@@ -945,7 +958,7 @@ class TurnosController extends ControllerBase
 
         foreach ($solicitudes as $solicitud)
         {
-            $this->db->begin();
+            //$this->db->begin();
             $solicitud->setSolicitudturnoRespuestaenviada('SI');
             $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
 
@@ -956,7 +969,7 @@ class TurnosController extends ControllerBase
 
             if (!$solicitud->update())
             {
-                $this->db->rollback();
+               // $this->db->rollback();
                 $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
             }
             else
@@ -989,11 +1002,11 @@ class TurnosController extends ControllerBase
                         {
                             $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
                             $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
-                            $this->db->rollback();
+                            //$this->db->rollback();
                         }
                         else
                         {
-                            $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
+                           // $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
                             $mensaje = '<h3> <i class="fa fa-info-circle"></i> LAS RESPUESTAS SE ENVIARON EXITOSAMENTE A LOS AFILIADOS.</h3>' ;
                         }
                         $this->mailDesarrollo->clearAddresses();
