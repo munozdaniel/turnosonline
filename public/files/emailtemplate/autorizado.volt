@@ -657,7 +657,7 @@ Sizes: [
                                                                                 %observacion%
                                                                             </div>
                                                                             <p style="font-style: italic;">
-                                                                                Este documento no acredita un préstamos personal, es solo informativo.
+                                                                                Este documento no acredita un préstamo personal, es solo informativo.
                                                                             </p>
                                                                         </td>
                                                                     </tr>
