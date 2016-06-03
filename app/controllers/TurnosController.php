@@ -926,7 +926,7 @@ class TurnosController extends ControllerBase
                 )
         ));
 
-        if (empty($solicitudes))
+        if (count($solicitudes) == 0)
         {
             $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">X</span>
@@ -934,7 +934,7 @@ class TurnosController extends ControllerBase
             return $this->response->redirect('turnos/turnosSolicitados');
         }
 
-        $fechaAtencion = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
+        $fechaAtencion = TipoFecha::fechaEnLetrasSinAnio($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
         $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
 
         $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
@@ -948,15 +948,19 @@ class TurnosController extends ControllerBase
             $this->db->begin();
             $solicitud->setSolicitudturnoRespuestaenviada('SI');
             $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
-            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+
+            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO")
                 $solicitud->setSolicitudturnoEstadoasistenciaid(1);//EN ESPERA
-            } else {
+            else
                 $solicitud->setSolicitudturnoEstadoasistenciaid(5);//NO DEBE ASISTIR
-            }
-            if (!$solicitud->update()) {
+
+            if (!$solicitud->update())
+            {
                 $this->db->rollback();
                 $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-            } else {
+            }
+            else
+            {
                 $template = "";
 
                 if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL)
@@ -965,6 +969,7 @@ class TurnosController extends ControllerBase
                     {
                         $this->mailDesarrollo->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
                         $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
+
                         if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
                             $template = $this->seleccionarTemplateAutorizado($solicitud, $mensajeAutorizado);
                         } else {
@@ -983,10 +988,11 @@ class TurnosController extends ControllerBase
                         if (!$band)
                         {
                             $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-                            echo $this->mailDesarrollo->ErrorInfo;
+                            $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
                             $this->db->rollback();
-                        } else {
-                            echo "<br> sse envian <br>";
+                        }
+                        else
+                        {
                             $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
                             $mensaje = '<h3> <i class="fa fa-info-circle"></i> LAS RESPUESTAS SE ENVIARON EXITOSAMENTE A LOS AFILIADOS.</h3>' ;
                         }
@@ -994,12 +1000,10 @@ class TurnosController extends ControllerBase
                     }
                     catch (phpmailerException $e)
                     {
-                        //echo $e->errorMessage(); //Pretty error messages from PHPMailer
                         $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
                     }
                     catch (Exception $e)
                     {
-                        //echo $e->getMessage(); //Boring error messages from anything else!
                         $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
                     }
                 }
