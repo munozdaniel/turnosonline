@@ -3,7 +3,7 @@
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
                 <h1>
-                    <ins>TURNO SOLICITADO</ins>
+                    <ins>{{ titulo }}</ins>
                     <br>
                 </h1>
                 <h3>
