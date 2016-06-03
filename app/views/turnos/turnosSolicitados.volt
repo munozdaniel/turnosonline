@@ -117,7 +117,7 @@
 
                             <td style="vertical-align: middle">
                                 {% if item.getSolicitudturnoTipoturnoid()==1 %}
-                                    <button class="btn btn-block btn-primary">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
+                                    <button class="btn btn-info btn-block">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
                                 {% else %}
                                     <button class="btn btn-block btn-success">{{ item.getTipoturno().getTipoTurnoNombre() }}</button>
                                 {% endif %}
@@ -145,8 +145,8 @@
 
                             <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
 
-                            <td class="td-estilo"><strong><a
-                                            class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
+                            <td class="td-estilo">
+                                <strong> <a class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
                             </td>
 
                             <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
@@ -158,14 +158,14 @@
                                 OR (session.get('auth')['rol_nombre']== "ADMIN")
                                 OR (session.get('auth')['rol_nombre'] == "SUPERVISOR")) %}
 
-                                    <a class="btn editar" style="background-color: #2E6E9F;"
+                                    <a class="btn editar" style="background-color: #85B8D6;color:darkslategrey;"
                                        onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
                                         <i class="fa fa-pencil-square"></i> EDITAR</a>
 
                                 {% elseif(item.getSolicitudTurnoNickUsuario() == '-') %}
 
                                     {% if( informacion['cantidadAutorizados']  <  informacion['cantidadTurnos'] ) %}
-                                        <a class="btn editar" style="background-color: #2E6E9F;"
+                                        <a class="btn editar" style="background-color: #85B8D6;color:darkslategrey;"
                                            onclick="crudPhalcon.edit('<?php echo htmlentities(json_encode($item->toArray())) ?>')">
                                             <i class="fa fa-pencil"></i> EDITAR</a>
                                     {% else %}
