@@ -845,7 +845,12 @@ Sizes: [
                                                         <tr>
                                                             <td align="left" valign="top" class="textContent">
                                                                 <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:#5F5F5F;line-height:135%;">
-                                                                    Señor/a afiliado/a se le recuerda que en caso de solicitar un turno y no confirmar o cancelar el mismo, dentro de las fechas que se le indican, automáticamente el sistema registrará una sanción al legajo correspondiente. Si usted alcanza las 2 sanciones, en el próximo período de turnos habilitado el sistema no permitirá que pueda solicitar uno, ya sea en la modalidad online o por terminal.
+                                                                    En caso de solicitar un turno y no confirmar o cancelar el mismo,
+                                                                    dentro de las fechas que se le indican, automáticamente el sistema
+                                                                    registrará una sanción al legajo correspondiente. Si se alcanzan
+                                                                    las 2 sanciones, en el próximo período habilitado el sistema
+                                                                    no permitirá que pueda solicitar un turno, ya sea en la modalidad online
+                                                                    o por terminal.
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -890,9 +895,10 @@ Sizes: [
                                                                     <tr>
                                                                         <td valign="top" class="textContent">
                                                                             <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">
-                                                                                Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono: (0299) 4433798
-                                                                                <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta podrá llamar al  (0299) 4433978 Int 10 o
-                                                                                    escribirnos a tráves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>página web</a></p>
+                                                                                Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital <br/> Teléfono: (0299) 4433798
+                                                                                <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta
+                                                                                    podrá acercarse a nuestra institución, llamar al  (0299) 4433978 Int 10 o
+                                                                                    escribirnos a tráves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>página web</a>.</p>
 
                                                                             </div>
                                                                         </td>
@@ -949,12 +955,12 @@ Sizes: [
                                                             <td valign="top" bgcolor="#E1E1E1">
 
                                                                 <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                                                                    <div>Copyright &#169; 2014 <a
+                                                                    <div>Copyright &#169; 2016 <a
                                                                                 href="http://imps.org.ar"
                                                                                 target="_blank"
                                                                                 style="text-decoration:none;color:#828282;"><span
                                                                                     style="color:#828282;">Instituto Municipal de Previsión Social</span></a>.
-                                                                        All&nbsp;rights&nbsp;reserved.
+                                                                        Todos&nbsp;los&nbsp;derechos&nbsp;reservados.
                                                                     </div>
 
                                                                 </div>
