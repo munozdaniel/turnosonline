@@ -28,11 +28,12 @@
                             </div>
                         </a>
                     </div>
-                    <!-- BEGAIN CALL US FEATURE -->
+                    {#
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         {{ link_to('curriculum/login','<div class="single_contact_feaured wow fadeInUp"><i class="fa fa-suitcase"></i><h4>Buscas Trabajo?</h4>
                             <p>Envianos tu Curriculum.</p></div>') }}
                     </div>
+                    #}
                 </div>
             </div>
         </div>
