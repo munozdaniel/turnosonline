@@ -76,11 +76,6 @@
                             {{ formulario.render('fechasTurnos_cantidadDeTurnos' ,['class': 'form-control']) }}
                             {{ formulario.messages('fechasTurnos_cantidadDeTurnos') }}
                         </div>
-                        <div class="col-md-4">
-                            {{ formulario.label('fechasTurnos_cantidadDiasConfirmacion',['class': 'control-label']) }}
-                            {{ formulario.render('fechasTurnos_cantidadDiasConfirmacion',['class': 'form-control']) }}
-                            {{ formulario.messages('fechasTurnos_cantidadDiasConfirmacion') }}
-                        </div>
 
                     </div>
                     <hr>
