@@ -1013,6 +1013,10 @@ class TurnosController extends ControllerBase
                     } catch (Exception $e) {
                         $errorMail .= $e->getMessage(); //Boring error messages from anything else!
                     }
+                }else
+                {
+                    $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
+
                 }
             }
         }
@@ -1026,118 +1030,6 @@ class TurnosController extends ControllerBase
         return;
     }
 
-    //---------------------
-    public function enviarRespuestasAction() //NO SE USA MAS.
-    {
-        set_time_limit(300);
-        $usuarioActual = $this->session->get('auth')['usuario_nick'];
-        $ultimoPeriodo = Fechasturnos::findFirst("fechasTurnos_activo=1");
-        $solicitudes = Solicitudturno::find(array(
-            "solicitudTurno_respuestaEnviada LIKE 'NO'
-                        AND solicitudTurno_nickUsuario=:usuario:
-                            AND solicitudTurnos_fechasTurnos=:periodo_id:
-                                AND solicitudTurno_estado  NOT LIKE ('PENDIENTE' OR 'REVISION')",
-            "bind" => array(
-                    'usuario' => $usuarioActual,
-                    'periodo_id' => $ultimoPeriodo->getFechasturnosId()
-                )
-        ));
-
-        if (count($solicitudes) == 0)
-        {
-            $this->flashSession->error('<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">X</span>
-                                            </button> NO SE ENVIARON LAS RESPUESTAS, YA QUE SOLO HAY SOLICITUDES PENDIENTES O EN REVISIÓN.</h3>');
-            return $this->response->redirect('turnos/turnosSolicitados');
-        }
-
-        $fechaAtencion = TipoFecha::fechaEnLetrasSinAnio($ultimoPeriodo->getFechasturnosDiaatencion());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-        $fechaAtencionFinal = TipoFecha::fechaEnLetras($ultimoPeriodo->getFechasturnosDiaatencionfinal());//date('d-m-Y', strtotime($ultimoPeriodo->fechasTurnos_diaAtencion));
-
-        $mensajeAutorizado = "Su solicitud ha sido <b>AUTORIZADA</b>. Deberá acercarse a nuestra institución entre los días <b>$fechaAtencion y $fechaAtencionFinal</b> para realizar el trámite.";
-        $mensajeDenegado = "Su solicitud ha sido <b>DENEGADA</b> debido a que ";
-        $mensajeDenegadoFT = "Los turnos correspondientes al mes en curso ya han sido otorgados en su totalidad. Le sugerimos solicitar un turno en el <b> periodo siguiente </b>.";
-        $afiliados = "";
-        $mensaje="";
-
-        foreach ($solicitudes as $solicitud)
-        {
-            //$this->db->begin();
-            $solicitud->setSolicitudturnoRespuestaenviada('SI');
-            $solicitud->setSolicitudturnoFecharespuestaenviada(date('Y-m-d H:i:s'));
-
-            if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO")
-                $solicitud->setSolicitudturnoEstadoasistenciaid(1);//EN ESPERA
-            else
-                $solicitud->setSolicitudturnoEstadoasistenciaid(5);//NO DEBE ASISTIR
-
-            if (!$solicitud->update())
-            {
-               // $this->db->rollback();
-                $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-            }
-            else
-            {
-                $template = "";
-
-                if (trim($solicitud->getSolicitudturnoEmail()) != "" && $solicitud->getSolicitudturnoEmail() != NULL)
-                {
-                    try
-                    {
-                        $this->mailDesarrollo->addAddress($solicitud->getSolicitudturnoEmail(), $solicitud->getSolicitudturnoNomape());
-                        $this->mailDesarrollo->Subject = "Respuesta por solicitud de un turno en IMPS WEB";
-
-                        if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
-                            $template = $this->seleccionarTemplateAutorizado($solicitud, $mensajeAutorizado);
-                        } else {
-                            if ($solicitud->getSolicitudturnoEstado() == "DENEGADO") {
-                                $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegado);
-                            } else {
-                                if ($solicitud->getSolicitudturnoEstado() == "DENEGADO POR FALTA DE TURNOS") {
-                                    $template = $this->seleccionarTemplateDenegado($solicitud, $mensajeDenegadoFT);
-                                }
-                            }
-                        }
-                        $this->mailDesarrollo->MsgHTML($template);
-                        $this->mailDesarrollo->body = strip_tags($template);
-                        $band = $this->mailDesarrollo->send();
-
-                        if (!$band)
-                        {
-                            $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
-                            $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
-                            //$this->db->rollback();
-                        }
-                        else
-                        {
-                           // $this->db->commit();//Se envió el correo,por lo tanto actualizo los datos.
-                            $mensaje = '<h3> <i class="fa fa-info-circle"></i> LAS RESPUESTAS SE ENVIARON EXITOSAMENTE A LOS AFILIADOS.</h3>' ;
-                        }
-                        $this->mailDesarrollo->clearAddresses();
-                    }
-                    catch (phpmailerException $e)
-                    {
-                        $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
-                    }
-                    catch (Exception $e)
-                    {
-                        $mensaje = '<h3> <i class="fa fa-info-circle"></i> FALLÓ EL ENVIO DE LAS RESPUESTAS, INTENTE EN OTRO MOMENTO.</h3>' ;
-                    }
-                }
-            }
-        }
-
-       /* $this->flash->message('dismiss', '<h3> <i class="fa fa-info-circle"></i> <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">X</span>
-                                            </button> LAS RESPUESTAS SE ENVIARON EXITOSAMENTE A LOS AFILIADOS.</h3>');*/
-
-        $this->flash->message('dismiss',$mensaje);
-
-        if (trim($afiliados) != "")
-            $this->flash->warning('<ul> Los siguientes afiliados no pudieron ser avisados por correo:  <br>' . $afiliados . '</ul>');
-
-        $this->view->pick('turnos/enviarRespuestas');
-    }
 
 
     private function seleccionarTemplateAutorizado($solicitud, $mensaje)
