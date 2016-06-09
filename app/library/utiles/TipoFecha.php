@@ -29,6 +29,11 @@ class TipoFecha
             return false;
     }
 
+    /**
+     * Data una fecha en formato 'Y-m-d' obtiene el mes y el dia para devolverlo en letras
+     * @param $fecha
+     * @return string
+     */
     public static function fechaEnLetrasSinAnio($fecha)
     {
         $texto ="";
