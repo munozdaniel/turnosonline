@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-md-12" align="center">
                         {{ content() }}
-                        {{ form('turnos/miTurno','method':'post','style':'','class':'') }}
+                        {{ form('turnos/verTurno','method':'post','style':'','class':'') }}
                         <div class="row">
 
                             <div class="col-md-4 col-md-offset-4">
