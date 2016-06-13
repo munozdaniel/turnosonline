@@ -398,7 +398,7 @@
                 crudPhalcon.editPost = function ()//procesamos la edición
                 {
                     $.ajax({
-                        url: "<?php echo $this->url->get('turnos/edit') ?>",
+                        url: "<?php echo $this->url->get('turnos/editarSolcitudAjax') ?>",
                         data: $("#form").serialize(),
                         method: "POST",
                         success: function (data) {

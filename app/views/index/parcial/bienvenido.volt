@@ -36,37 +36,6 @@
         opacity: .6;
         font-size: 1.7em;
     }
-
-    /*.p {
-        font-size: 2em;
-    }
-
-    .tablas-news {
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 0 10px #000;
-        text-shadow: 0 0 5px #000;
-        color: #fff;
-
-    }*/
-
-    /* .a {
-         position: absolute;
-         left: 1em;
-         bottom: 3em;
-         border: 3px solid #fff;
-         border-radius: 8px;
-         box-shadow: 0 0 10px #000;
-         padding: 20px 40px;
-         text-align: center;
-         text-decoration: none;
-         text-shadow: 0 0 5px #000;
-         font-size: 13px;
-         color: #fff;
-         animation: pulse 4s infinite;
-
-     }*/
-
     .container-bottom {
         position: absolute;
         bottom: 2em;
@@ -157,42 +126,3 @@
         <h2 class="h2">de Previsión Social</h2>
     </div>
 </section>
-
-<!--
-<div class="tablas-news col-md-7" style="height: 275px; background-color: rgba(238, 238, 238, 0.8); margin-top: 14em;">
-
-        <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
-                    <div class="caption">
-                        <h3>Thumbnail label</h3>
-                        <p>...</p>
-                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
-                    <div class="caption">
-                        <h3>Thumbnail label</h3>
-                        <p>...</p>
-                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    {{ image('img/informacion/n_revista.jpg','alt':'Catalogo de revistas') }}
-                    <div class="caption">
-                        <h3>Thumbnail label</h3>
-                        <p>...</p>
-                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-</div>
--->
