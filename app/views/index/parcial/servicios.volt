@@ -21,7 +21,7 @@
                                 <p>Le explicamos con detalle en que consiste nuestro servicio para solicitar los turnos.</p>
                             ','class':'list-group-item puntero') }}
                             {#============#}
-                            {{ link_to('turnos/calendario',' <h4>Ver Calendario</h4>
+                            {{ link_to('solicitudTurno/calendario',' <h4>Ver Calendario</h4>
                                 <p>Visite nuestro calendario para visualizar cuando puede solictar turnos.</p>','class':'list-group-item puntero') }}
                             {#===== Se genera un link_to en index/index =======#}
                             <div id="solicitudes">

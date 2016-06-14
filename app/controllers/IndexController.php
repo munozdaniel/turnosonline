@@ -78,14 +78,14 @@ class IndexController extends ControllerBase
             //Si el periodo se encuentra
             if ($puntoProgramado->isActive()) {
                 if (Fechasturnos::verificaSiHayTurnosEnPeriodo()['success']) {
-                    $aSolicitarTurno = $this->tag->linkTo(array('turnos/index', '<h4>Solicitar Turno</h4>
+                    $aSolicitarTurno = $this->tag->linkTo(array('solicitudTurno/index', '<h4>Solicitar Turno</h4>
                                                 <p>Periodo habilitado para solicitar turnos</p>', 'class' => 'list-group-item borde-3-verde'));
                 } else {
-                    $aSolicitarTurno = $this->tag->linkTo(array('turnos/index', '<h4><i class="fa fa-ban"></i> Solicitar Turno</h4>
+                    $aSolicitarTurno = $this->tag->linkTo(array('solicitudTurno/index', '<h4><i class="fa fa-ban"></i> Solicitar Turno</h4>
                                                 <p>Lamentablemente no hay turnos disponibles</p>', 'style' => 'background-color: #F44336;
     color: #FFF;', 'class' => 'list-group-item'));
                 }
-                $aVerTurno = $this->tag->linkTo(array('turnos/buscarTurno', '<h4>Ver Turno</h4>
+                $aVerTurno = $this->tag->linkTo(array('solicitudTurno/buscarTurno', '<h4>Ver Turno</h4>
                                                 <p>Si desea puede consultar el código de turno o cancelarlo. Se recuerda que la cancelación debe ser con 48 hs de anticipación al inicio de atención de turnos .</p>', 'class' => 'list-group-item'));
                 $this->view->linkTurnoOnline = $aSolicitarTurno . " " . $aVerTurno;
 
