@@ -48,9 +48,9 @@
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-3">
                                 {% if deshabilitar is defined AND deshabilitar == true %}
-                                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block disabled') }}
+                                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block disabled','style':'width:360px;') }}
                                 {% else %}
-                                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block') }}
+                                    {{ submit_button('GUARDAR DATOS','class':'btn btn-blue btn-lg btn-block','style':'width:360px;') }}
                                 {% endif %}
                             </div>
                         </div>
