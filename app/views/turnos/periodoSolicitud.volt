@@ -1,3 +1,8 @@
+<style>
+    .problema,.exito{font-size: 17px;}
+</style>
+
+
 <section id="onepage" class="admin bg_line">
     <div class="container ">
 
