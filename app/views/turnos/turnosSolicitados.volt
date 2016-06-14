@@ -184,7 +184,7 @@
 
             <div class="row">
                 <div align="center" class="btn_enviarRespuestas col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
-                    <a class=" btn btn-primary btn-lg btn-block" ondblclick="enviarRespuestas()"> ENVIAR RESPUESTA A LOS AFILIADOS (doble click)</a>
+                    <a class=" btn btn-primary btn-lg btn-block" style="border: solid black;" ondblclick="enviarRespuestas()"> ENVIAR RESPUESTA A LOS AFILIADOS (doble click)</a>
                 </div>
             </div>
 
