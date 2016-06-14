@@ -21,7 +21,7 @@
             <div class="curriculum-bg-form borde-top" align="center">
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form('turnos/guardarTurnoOnline','method':'post','style':'','class':'') }}
+                        {{ form('solicitudTurno/guardarTurnoOnline','method':'post','style':'','class':'') }}
                         <div class="col-md-12" style="margin-bottom: 30px; text-align: left;">
                             <ul><strong><ins>INSTRUCCIONES</ins></strong>
                                 <li><i class="fa fa-dot-circle-o"></i> Es muy importante que complete correctamente sus datos personales, correo electrónico y teléfono.</li>
