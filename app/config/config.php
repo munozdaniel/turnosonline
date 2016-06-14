@@ -45,7 +45,6 @@ return new \Phalcon\Config(array(
         'curriculumDir'       => APP_PATH . '/app/forms/curriculum/',
         'libraryDir'     => APP_PATH . '/app/library/',
         'mpdfDir'        => APP_PATH . '/app/library/mpdf/',
-        'vendorDir'        => APP_PATH . '/app/vendor/',
         'componentesDir'        => APP_PATH . '/app/library/componentes/',
         'phpmailerDir'   => APP_PATH . '/app/library/phpmailer/',
         'utilesDir'     => APP_PATH . '/app/library/utiles/',

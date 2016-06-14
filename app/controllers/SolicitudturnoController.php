@@ -31,19 +31,19 @@ class SolicitudturnoController extends ControllerBase
         //Verificamos si existe un periodo disponible.
         if (!$ultimoPeriodo) {
             $this->flash->error("<h1>NO HAY NINGÚN PERIODO DISPONIBLE</h1>");
-            $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h1>", 'class' => 'text-decoration-none ')));
+            $this->flash->notice($this->tag->linkTo(array('solicitudTurno/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h1>", 'class' => 'text-decoration-none ')));
             return $this->redireccionar('solicitudTurno/turnoProcesado');
         }
         //Verifificamos si el plazo para solicitar turnos venció.
         if (!$ultimoPeriodo->esPlazoParaSolicitarTurno()) {
             $this->flash->error("<h1>EL PLAZO PARA SOLICITAR TURNO NO ESTÁ HABILITADO </h1>");
-            $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h1>", 'class' => 'text-decoration-none ')));
+            $this->flash->notice($this->tag->linkTo(array('solicitudTurno/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h1>", 'class' => 'text-decoration-none ')));
             return $this->redireccionar('solicitudTurno/turnoProcesado');
         }
         //verificamos si hay turnos disponibles.
         if (!$ultimoPeriodo->hayTurnosDisponibles()) {
             $this->flash->error("<h1>LAMENTABLEMENTE NO HAY TURNOS DISPONIBLES</h1>");
-            $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h1>", 'class' => 'text-decoration-none ')));
+            $this->flash->notice($this->tag->linkTo(array('solicitudTurno/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO</h1>", 'class' => 'text-decoration-none ')));
             return $this->redireccionar('solicitudTurno/turnoProcesado');
         }
         $this->view->formulario = new TurnosOnlineForm();

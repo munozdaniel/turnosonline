@@ -5,8 +5,7 @@ $loader = new \Phalcon\Loader();
 // Register some namespaces
 $loader->registerNamespaces(
     array(
-        "Modules"    => "../app/vendor/schedule/",
-        "Curriculum"    => "../app/models/curriculum/",
+        "Curriculum"    => "../app/models/curriculum/"
     )
 );
 /**
@@ -23,7 +22,6 @@ $loader->registerDirs(
         $config->application->phpmailerDir,
         $config->application->utilesDir,
         $config->application->pluginsDir,
-        $config->application->vendorDir,
         $config->application->modelsDir
     )
 )->register();

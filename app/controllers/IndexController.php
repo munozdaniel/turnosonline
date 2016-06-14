@@ -31,6 +31,7 @@ class IndexController extends ControllerBase
             ->addJs('js/jquery.ui.map.js')
             ->addJs('https://maps.googleapis.com/maps/api/js', false)
             ->addJs('js/customIndex.js')
+            ->addJs('js/afterload.js')
             ->addJs('plugins/vegas/vegas.min.js');
         $this->assets->collection('footerInline')
             ->addInlineJs("
@@ -47,74 +48,64 @@ class IndexController extends ControllerBase
                         { src: '/impsweb/public/img/inicio/01_ini.jpg' },
                         { src: '/impsweb/public/img/inicio/02_ini.jpg' },
                         { src: '/impsweb/public/img/inicio/03_ini.jpg' },
-                        { src: '/impsweb/public/img/inicio/4.jpg' }
+                        { src: '/impsweb/public/img/inicio/07_ini.jpg' }
                       ],
                       overlay: '/impsweb/public/plugins/vegas/overlays/04.png'
                     });
                ");
-
-        $schedule = $this->getDi()->get('schedule');
-        $puntoProgramado = $schedule->getByType('plazo')->getLast();
-        //MENSAJES PREDETERMINADOS:
-        $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-rojo fondo-rojo'><h4>Solicitar Turno</h4>
+    }
+    /**
+     * Verifica en que estado se encuentra el periodo para solicitar turnos y genera los botones.
+     */
+    public function controlarEstadoTurnosAjaxAction()
+    {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success']=false;
+        $retorno['mensaje']="";
+        $retorno['boton']="<a class='list-group-item'><h4> <i class='fa fa-ban'></i> Solicitar Turno</h4>
                                 <p><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong></p>
                            </a>";
+        $aVerTurno = $this->tag->linkTo(array('solicitudTurno/buscarTurno', '<h4> <i class="fa fa-ticket"></i>  Ver Comprobante de Turno</h4>
+                                                <p>Si desea puede <strong>CANCELAR</strong> su asistencia.</p>', 'class' => 'list-group-item'));
 
-        if (!empty($puntoProgramado)) {
-
-            $date = date_create($puntoProgramado->getStart());
-            $dateFin = date_create($puntoProgramado->getEnd());
-
-            //Si el periodo  no esta habilitado todavia
-            if ($puntoProgramado->isBefore()) {
-
-                $this->view->linkTurnoOnline = "<a class='list-group-item  borde-3-naranja fondo-naranja'><h4>Solicitar Turno</h4>
-                                <p>El período para solicitar turnos no se encuentran habilitado por el momento.</p>
-                                <p>Los turnos se podrán solicitar entre :<br> <strong>" . date_format($date, 'd/m/Y') . " - " . date_format($dateFin, 'd/m/Y') . "</strong></p>
-                           </a>";
-
-            }
-
-            //Si el periodo se encuentra
-            if ($puntoProgramado->isActive()) {
-                if (Fechasturnos::verificaSiHayTurnosEnPeriodo()['success']) {
-                    $aSolicitarTurno = $this->tag->linkTo(array('solicitudTurno/index', '<h4>Solicitar Turno</h4>
-                                                <p>Periodo habilitado para solicitar turnos</p>', 'class' => 'list-group-item borde-3-verde'));
-                } else {
-                    $aSolicitarTurno = $this->tag->linkTo(array('solicitudTurno/index', '<h4><i class="fa fa-ban"></i> Solicitar Turno</h4>
-                                                <p>Lamentablemente no hay turnos disponibles</p>', 'style' => 'background-color: #F44336;
-    color: #FFF;', 'class' => 'list-group-item'));
-                }
-                $aVerTurno = $this->tag->linkTo(array('solicitudTurno/buscarTurno', '<h4>Ver Turno</h4>
-                                                <p>Si desea puede consultar el código de turno o cancelarlo. Se recuerda que la cancelación debe ser con 48 hs de anticipación al inicio de atención de turnos .</p>', 'class' => 'list-group-item'));
-                $this->view->linkTurnoOnline = $aSolicitarTurno . " " . $aVerTurno;
-
-                /*$this->view->mensajePeriodo = '' . $this->tag->linkTo(array("turnos/index", '<div class="service_iconarea"><span class="fa fa-ticket service_icon"></span></div><h3 class="service_title">Turnos Online <br> '. date_format($date, 'd/m/Y').' al '. date_format($dateFin, 'd/m/Y') .' </h3>', "class" => "text-decoration-none")) .
-                    '<p><strong> SOLICITUD DE TURNOS HABILITADOS  </strong><br>Para adquirir los Préstamos Personales es necesario que solicite un turno con anticipación. En caso de no poseer un correo electrónico se puede acercar a las oficinas de IMPS para solicitarlo manualmente.  </p><p>Por cualquier consulta puede escribirnos <a href="#contact" style="color: #1E90FF"> aquí </a>
-                                                o llamarnos al (0299) 4479921</p>';*/
-
-            }
-            //Si el periodo para solicitar turnos ya termino.
-            if ($puntoProgramado->isAfter()) {
-
-                /*   $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
-                   if (!empty($ultimoPeriodo)) {
-                       $solicitudes = Solicitudturno::findBySolicitudTurno_respuestaChequeada(0);
-                       foreach ($solicitudes as $unaSolicitud) {
-                           $unaSolicitud->solicitudTurno_respuestaChequeada = 2;//Se los cancela porque se les vencieron el plazo.
-                           $unaSolicitud->save();
-                       }
-                       //$ultimoPeriodo->fechasTurnos_activo = 0; // NO se debe desactivar el periodo. El periodo se desactiva cuando finaliza la fecha de atencion
-                       if (!$ultimoPeriodo->save()) {
-                           $this->flash->error("LOS PERIODOS PARA LA SOLICITUD DE TURNOS NO SE HAN DESHABILITADOS. ");
-                       }
-                   }
-                   */
-            }
+        //Existe un periodo?.
+        $periodo= Fechasturnos::findFirst(array('fechasTurnos_activo=1'));
+        if(!$periodo)
+        {
+            echo json_encode($retorno);
+            return;
         }
+        //Tiene turnos disponibles?
+        if($periodo->getFechasturnosSinturnos()==0)
+        {
+            $retorno['boton']="<a class='list-group-item  borde-3-rojo fondo-rojo'>
+                                <h4> <i class='fa fa-ban'></i> Solicitar Turno</h4>
+                                <p><strong>Lamentablemente no hay turnos disponibles</strong></p>
+                           </a>";
+            echo json_encode($retorno);
+            return;
+        }
+        //Está habilitado el periodo para solicitar turnos?.
+        if(!$periodo->esPlazoParaSolicitarTurno())
+        {
+            $aSolicitarTurno="<a class='list-group-item '>
+                                <h4> <i class='fa fa-ban'></i> Solicitar Turno</h4>
+                                <p><strong>El plazo para solicitar turnos ha finalizado</strong></p>
+                           </a>";
+             $retorno['boton'] = $aSolicitarTurno . " " . $aVerTurno;
+            echo json_encode($retorno);
+            return;
+        }
+        $aSolicitarTurno = $this->tag->linkTo(array('solicitudTurno/index', '<h4> <i class="fa fa-check-circle"></i> Solicitar Turno</h4>
+                                                <p>Periodo habilitado para solicitar turnos</p>', 'class' => 'list-group-item borde-3-verde'));
+           $retorno['boton'] = $aSolicitarTurno . " " . $aVerTurno;
+        $retorno['success']=true;
+
+        echo json_encode($retorno);
+        return;
 
     }
-
 
     public function emailContactoAction()
     {

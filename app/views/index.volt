@@ -73,4 +73,8 @@
 {% if (assets.collection("footerInline")) %}
     {{ assets.outputInlineJs("footerInline") }}
 {% endif %}
+<script>
+
+
+</script>
 </html>
