@@ -108,23 +108,20 @@
         <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
             <table id="tabla" class="table_r table-striped table-bordered table-condensed">
                 <thead style="background-color: #131313;">
-                <tr>
-                    <th class="th-titulo">ID</th>{# 0 #}
-                    <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
-                    <th class="th-titulo">Código</th>{# 2 #}
-                    <th class="th-titulo">Afiliado</th>{# 3: Legajo y Nombre #}
-                    <th class="th-titulo">Email/Telefono</th>{# 4 #}
-                    <th class="th-titulo">Fecha respuesta enviada</th>{# 5 #}
-                    <th class="th-titulo">Usuario</th>{# 6 #}
-                    <th class="th-titulo">Estado
-                    </th>{# 7 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
-                    <th class="th-titulo">Observación</th>{# 8 #}
-                    <th class="th-titulo">Estado de asistencia
-                    </th>{# 9 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
-                    <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste
-                    </th>{# 10 : Botones para aceptar/cancelar Asistencia #}
-                    <th class="th-titulo">Ver Comprobante</th>{# 11 #}
-                </tr>
+                    <tr>
+                        <th class="th-titulo">ID</th>{# 0 #}
+                        <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
+                        <th class="th-titulo">Afiliado</th>{# 2: Legajo y Nombre #}
+                        <th class="th-titulo">Email/Telefono</th>{# 3 #}
+                        <th class="th-titulo">Fecha respuesta enviada</th>{# 4 #}
+                        <th class="th-titulo">Usuario</th>{# 5 #}
+                        <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
+                        <th class="th-titulo">Observación</th>{# 7 #}
+                        <th class="th-titulo">Código</th>{# 8 #}
+                        <th class="th-titulo">Estado de asistencia</th>{# 9 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
+                        <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 10 : Botones para aceptar/cancelar Asistencia #}
+                        <th class="th-titulo">Ver Comprobante</th>{# 11 #}
+                    </tr>
                 </thead>
             </table>
         </div>
