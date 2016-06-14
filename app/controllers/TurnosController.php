@@ -551,17 +551,15 @@ class TurnosController extends ControllerBase
                     $item[] = $unaSolicitud->getSolicitudturnoId();
                     //1 Tipo de Turno: para pintar la fila de rojo
                     $item[] = $unaSolicitud->getSolicitudturnoEstadoasistenciaid();
-                    //2 Codigo
-                    $item[] = $unaSolicitud->getSolicitudturnoCodigo();
-                    //3 Afiliado
+                    //2 Afiliado
                     $item[] = '<h4><ins>' . $unaSolicitud->getSolicitudturnoLegajo() . ' </ins></h4>' . $unaSolicitud->getSolicitudturnoNomape();
-                    //4 Email/Telefono
+                    //3 Email/Telefono
                     if ($unaSolicitud->getSolicitudturnoEmail() == NULL || trim($unaSolicitud->getSolicitudturnoEmail()) == "")
                         $email = '';
                     else
                         $email = "" . $unaSolicitud->getSolicitudturnoEmail();
                     $item[] = "<i class='fa fa-envelope-o'></i> " . $email . " <br> <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
-                    //5 FechaRespuestaEnviada
+                    //4 FechaRespuestaEnviada
                     $item[] = (new DateTime($unaSolicitud->getSolicitudturnoFecharespuestaenviada()))->format('d/m/Y');
 
                     $botonesAsistencia = "";
@@ -617,12 +615,14 @@ class TurnosController extends ControllerBase
                         }
                     }
 
-                    //6 Usuario
+                    //5 Usuario
                     $item[] = $unaSolicitud->getSolicitudturnoNickusuario();
-                    //7 Estado Deuda: Autorizado, denegado, denegado por falta de turno
+                    //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
                     $item[] = $unaSolicitud->getSolicitudturnoEstado();
-                    //8 Observaciones
+                    //7 Observaciones
                     $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
+                    //8 Codigo
+                    $item[] = $unaSolicitud->getSolicitudturnoCodigo();
                     //9 Estado Asistencia
                     $item[] = $estadoAsistencia;
                     //10 Botones par cancelar/Autorizar asistencia
