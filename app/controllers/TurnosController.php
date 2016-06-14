@@ -474,7 +474,7 @@ class TurnosController extends ControllerBase
             )
         ));
         if (count($solicitudes) == 0) {
-            $retorno['mensaje'] = count($solicitudes) . "No es posible enviar las respuestas, ya que no hay solicitudes que se hayan autorizado o denegado.";
+            $retorno['mensaje'] = "No es posible enviar las respuestas, porque no hay solicitudes que se hayan autorizado o denegado.";
             echo json_encode($retorno);
             return;
         }
