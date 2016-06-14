@@ -58,7 +58,8 @@ class TurnosController extends ControllerBase
 
                 $fechaVencimiento = TipoFecha::sumarDiasAlDate(7, $periodoSolicitudHasta);
 
-                if ($fechaVencimiento < $periodoDiaAtencion) {
+                if ($fechaVencimiento < $periodoDiaAtencion)
+                {
                     $fechasTurnos = new Fechasturnos();
                     $fechasTurnos->assign(array(
                         'fechasTurnos_inicioSolicitud' => $fechasTurnos_inicioSolicitud,
@@ -99,8 +100,11 @@ class TurnosController extends ControllerBase
                     $this->flash->message('exito', 'La configuración de las fechas se ha realizado satisfactoriamente.');
                     $periodoSolicitudForm->clear();
                     return $this->redireccionar('administrar/index');
-                } else
-                    $this->flash->message('problema', "Deberá modificar el <ins>periodo de atención de turnos</ins> para que el afiliado tenga tiempo de <strong>confirmar el mensaje</strong>.");
+                }
+                else
+                    $this->flash->message('problema', "El <ins>periodo para atención de turnos</ins> debe
+                                                comenzar por lo menos despues de una semana de finalizado el periodo de solicitud de turnos.<br/>
+                                                Por favor modifique las fechas de atención.");
             }
         }
     }
