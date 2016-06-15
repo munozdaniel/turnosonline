@@ -265,7 +265,7 @@ class SolicitudturnoController extends ControllerBase
         if ($this->request->getPost('solicitudTurno_id') == ""
             || $this->request->getPost('solicitudTurno_id') == NULL
         ) {
-            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el Identificador del turno solicitado.
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el Identificador del turno solicitado.<hr>
              Por favor inténtelo nuevamente, en caso que el problema persista comuníquese con Soporte Técnico.  " . $this->request->getPost('solicitudTurno_id');
             echo json_encode($retorno);
             return;
@@ -358,7 +358,7 @@ class SolicitudturnoController extends ControllerBase
         $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:', 'bind' =>
             array('solicitudTurno_id' => base64_decode($this->request->getPost('solicitudTurno_id')))));
         if (!$solicitudTurno) {
-            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el turno solicitado.
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el turno solicitado.<hr>
              Por favor inténtelo nuevamente, en caso que el problema persista comuníquese con Soporte Técnico.  ";
             echo json_encode($retorno);
             return;
