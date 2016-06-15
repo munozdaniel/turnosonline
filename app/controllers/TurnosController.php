@@ -335,7 +335,7 @@ class TurnosController extends ControllerBase
                 if ($unaSolicitud->getSolicitudturnoRespuestaenviada() == 'SI') {
                     $item = array();
                     //0 ID: Se utiliza para aceptar/cancelar asistencia
-                    $item[] = $unaSolicitud->getSolicitudturnoId();
+                    $item[] = base64_encode($unaSolicitud->getSolicitudturnoId()); //se codifico para que funcione el aceptar/cancelar asistencia
                     //1 Tipo de Turno: para pintar la fila de rojo
                     $item[] = $unaSolicitud->getSolicitudturnoEstadoasistenciaid();
                     //2 Afiliado
