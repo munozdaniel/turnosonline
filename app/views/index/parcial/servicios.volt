@@ -25,7 +25,11 @@
                                 <p>Visite nuestro calendario para visualizar cuando puede solictar turnos.</p>','class':'list-group-item puntero') }}
                             {#===== Se genera un link_to en index/index =======#}
                             <div id="solicitudes">
-                                {{ linkTurnoOnline }}
+                                <a id="btn_turno" class="list-group-item">
+                                  {{ image('img/turnos/loading.gif','alt':'Analizando Estado del Periodo', 'height':'30','weight':'30') }}
+                                    <p class="pulse_text" style="display: inline;"> Analizando Estado del Período</p>
+
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-4 list-group list-group-content">
@@ -41,13 +45,3 @@
     </div>
 </section>
 <!--=========== END SERVICE SECTION ================-->
-<script>
-    var myVar = setInterval(function () {
-        myTimer()
-    }, 10000);
-
-    function myTimer() {
-        $('#solicitudes').load(document.URL + ' #solicitudes');
-    }
-
-</script>

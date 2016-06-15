@@ -88,14 +88,6 @@ class TurnosController extends ControllerBase
                     }
 
                     //-----------------------------------------------------
-                    //Creo un nuevo schedule
-                    $puntoProgramado = \Modules\Models\Schedule::crearSchedule('plazo', 'Vencimiento de Periodo', $fechasTurnos_inicioSolicitud, $periodoSolicitudHasta);
-                    if (!$puntoProgramado) {
-                        $this->flash->message('problema', 'Surgió un problema al insertar un nuevo punto programado.');
-                        $this->db->rollback();
-                        return $this->redireccionar('turnos/periodoSolicitud');
-                    }
-                    //-----------------------------------------------------
                     $this->db->commit();
                     $this->flash->message('exito', 'La configuración de las fechas se ha realizado satisfactoriamente.');
                     $periodoSolicitudForm->clear();
@@ -118,14 +110,9 @@ class TurnosController extends ControllerBase
         $this->tag->setTitle('Deshabilitar Periodo');
         $periodo = Fechasturnos::findFirstByFechasTurnos_id($idPeriodo);
         $periodo->fechasTurnos_activo = 0;
-        if ($periodo->update()) {
-            $schedule = $this->getDi()->get('schedule');
-            $puntoProgramado = $schedule->getByType('plazo')->getLast();
-            $puntoProgramado->setEnd('00-00-0000');
-            if ($puntoProgramado->update())
-                $this->flash->success("EL PERIODO SE HA DESHABILITADO CORRECTAMENTE");
-        } else
-            $this->flash->error("NO SE HA PODIDO DESHABILITAR EL PERIODO, INFORMAR AL SOPORTE TÉCNICO.");
+        if (!$periodo->update()) {
+            $this->flash->error("NO SE HA PODIDO DESHABILITAR EL PERÍODO, INFORMAR AL SOPORTE TÉCNICO.");
+        }
         $this->redireccionar('turnos/verPeriodos');
     }
 
@@ -295,7 +282,6 @@ class TurnosController extends ControllerBase
         //Verificamos si existe un periodo disponible.
         if (!$ultimoPeriodo) {
             $this->flash->error("<h1>NO HAY NINGÚN PERIODO DISPONIBLE.</h1>");
-            $this->flash->notice($this->tag->linkTo(array('turnos/calendario', "<h1><i class='fa fa-calendar'></i> CONSULTAR CALENDARIO.</h1>", 'class' => 'text-decoration-none ')));
             return $this->redireccionar('administrar/index');
 
         }
@@ -673,41 +659,11 @@ class TurnosController extends ControllerBase
             $this->db->rollback();
             return $this->redireccionar('turnos/editarPeriodo/' . $id);
         }
-        $band = $this->programarTableroPeriodo($this->request->getPost('fechasTurnos_inicioSolicitud'), $this->request->getPost('fechasTurnos_finSolicitud'));
-        if (!$band) {
-            $this->db->rollback();
-            $this->flash->message('problema', "SURGIÓ UN PROBLEMA AL INSERTAR UN NUEVO PUNTO PROGRAMADO");
-            return $this->redireccionar('turnos/editarPeriodo/' . $id);
-        }
+
         $periodoSolicitudForm->clear();
         $this->flash->message('exito', "ACTUALIZACIÓN EXITOSA");
         $this->db->commit();
         return $this->redireccionar('turnos/verPeriodos');
-    }
-
-    /**
-     * ELIMINAR
-     * Setea la tabla schedule con los datos del periodo.
-     * @param $desde
-     * @param $hasta
-     * @return bool
-     */
-    private function programarTableroPeriodo($desde, $hasta)
-    {
-        $retorno = false;
-        $this->db->begin();
-        $schedule = $this->getDi()->get('schedule');
-        $puntoProgramado = $schedule->getByType('plazo')->getLast();
-        $puntoProgramado->setStart($desde);
-        $new_time = date('Y-m-d H:i:s', strtotime($hasta) + 82800);//Le seteo a la fecha final las 23:00:00
-        $puntoProgramado->setEnd($new_time);
-        if (!$puntoProgramado->update()) {
-            $this->db->rollback();
-        } else {
-            $this->db->commit();
-            $retorno = true;
-        }
-        return $retorno;
     }
 
     /**
