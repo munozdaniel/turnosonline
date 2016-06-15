@@ -179,7 +179,7 @@
         //==========
         $.ajax({
             type: 'POST',
-            url: '/impsweb/turnos/cancelaAsistenciaAjax',
+            url: '/impsweb/solicitudTurno/cancelaAsistenciaAjax',
             data: datos,
             dataType: 'json',
             encode: true
@@ -217,7 +217,7 @@
         //==========
         $.ajax({
             type: 'POST',
-            url: '/impsweb/turnos/aceptaAsistenciaAjax',
+            url: '/impsweb/solicitudTurno/aceptaAsistenciaAjax',
             data: datos,
             dataType: 'json',
             encode: true

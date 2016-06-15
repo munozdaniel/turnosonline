@@ -231,7 +231,7 @@
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 var $nRow = $(nRow);
                 //console.log(aData[9]);
-                if (aData[7] != "AUTORIZADO") {//ESTADO
+                if (aData[6] != "AUTORIZADO") {//ESTADO
                     $nRow.css({"color": "red"});
                 }
                 if (aData[1] == 4) {// SI EL ESTADO ASISTENCIA ES CANCELADO
@@ -262,7 +262,7 @@
             //==========
             $.ajax({
                 type: 'POST',
-                url: '/impsweb/turnos/aceptaAsistenciaAjax',
+                url: '/impsweb/solicitudTurno/aceptaAsistenciaAjax',
                 data: datos,
                 dataType: 'json',
                 encode: true
@@ -297,7 +297,7 @@
             //==========
             $.ajax({
                 type: 'POST',
-                url: '/impsweb/turnos/cancelaAsistenciaAjax',
+                url: '/impsweb/solicitudTurno/cancelaAsistenciaAjax',
                 data: datos,
                 dataType: 'json',
                 encode: true
