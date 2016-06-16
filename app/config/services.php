@@ -148,26 +148,7 @@ $di->set('mailDesarrollo',function() use ($config)
 
     return $mailDesarrollo;
 });
-/* Usar mailDesarrollo para los turnos.
-$di->set('mailInformatica', function () use ($config) {
 
-    $mailInformatica = new PHPMailer;
-    $mailInformatica->isSMTP();
-    $mailInformatica->isHTML(true);
-
-    $mailInformatica->CharSet      = $config->mailInformatica->charset;
-    $mailInformatica->Host         = $config->mailInformatica->host;
-    $mailInformatica->SMTPAuth     = true;
-    $mailInformatica->Username     = $config->mailInformatica->username;
-    $mailInformatica->Password     = $config->mailInformatica->password;
-    $mailInformatica->SMTPSecure   = $config->mailInformatica->security;
-    $mailInformatica->Port         = $config->mailInformatica->port;
-    $mailInformatica->From         = $config->mailInformatica->email;
-    $mailInformatica->FromName     = $config->mailInformatica->name;
-
-    return $mailInformatica;
-});
-*/
 /**
  * Register the flash service with custom CSS classes
  */
@@ -224,11 +205,3 @@ $di->set('dispatcher', function() use ($di)
 
     return $dispatcher;
 });
-
-$di->set('datetime', function () use ($config) {
-    return new \Modules\Datetime($config->datetime);
-}, true);
-
-$di->set('schedule', function () {
-    return new \Modules\Schedule();
-}, true);

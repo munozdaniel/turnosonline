@@ -51,15 +51,6 @@ return new \Phalcon\Config(array(
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/impsweb/',
     ),
-    /**
-     * Config for datetime
-     */
-    'datetime' => array(
-        'production' => 'normal',
-        'staging' => 'normal',
-        'testing' => 'normal',
-        'development' => '2015-12-02 12:30:00'
-    ),
     'mail' => array(
         'host'     => 'mail.imps.org.ar',
         'username'        => 'plantilla@imps.org.ar',
