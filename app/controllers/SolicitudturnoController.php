@@ -347,13 +347,12 @@ class SolicitudturnoController extends ControllerBase
                     $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
                         para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
                         'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
-                    $body .= "Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital <br/> Teléfono: (0299) 4433798
-                        <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta
-                        podrá acercarse a nuestra institución, llamar al  (0299) 4433978 Int 10 o
-                        escribirnos a tráves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>página web</a>.</p>";
+
+                    $template = $this->seleccionarTemplateCodigo($body);
 
                     $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
-                    $this->mailDesarrollo->Body = $body;
+                    $this->mailDesarrollo->MsgHTML($template);
+                    $this->mailDesarrollo->body = strip_tags($template);
                     $this->mailDesarrollo->addAddress($email,'');
                     $this->mailDesarrollo->send();
                 }
@@ -552,7 +551,8 @@ class SolicitudturnoController extends ControllerBase
                 $template = $this->seleccionarTemplateCodigo($body);
 
                 $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
-                $this->mailDesarrollo->Body = strip_tags($template);
+                $this->mailDesarrollo->MsgHTML($template);
+                $this->mailDesarrollo->body = strip_tags($template);
                 $this->mailDesarrollo->addAddress($email,'');
                 $seEnvio = $this->mailDesarrollo->send();
 
