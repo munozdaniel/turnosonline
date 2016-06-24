@@ -115,12 +115,12 @@ class SolicitudturnoController extends ControllerBase
         }
         // 4. verifica que no haya solicitado otro turno en el periodo actual.
         if ($this->tieneTurnoSolicitado($legajo, $nombreCompleto)) {
-            $this->flash->error('<h1>SUS DATOS YA FUERON INGRESADOS, NO PUEDE OBTENER MÁS DE UN TURNO POR PERÍODO</h1>');
+            $this->flash->error('<h1>SUS DATOS YA FUERON INGRESADOS, NO PUEDE OBTENER MÁS DE UN TURNO POR PERÍODO.</h1>');
             return $this->redireccionar('solicitudTurno/index');
         }
         //5. verifica que el email no se haya utilizado
         if ($this->existeEmailEnElPeriodo($ultimoPeriodo, $email)) {
-            $this->flash->error('<h1>EL EMAIL INGRESADO YA HA SIDO UTILIZADO PARA SOLICITAR UN TURNO</h1>');
+            $this->flash->error('<h1>EL EMAIL INGRESADO YA HA SIDO UTILIZADO PARA SOLICITAR UN TURNO, POR FAVOR INGRESE OTRO EMAIL.</h1>');
             return $this->redireccionar('solicitudTurno/index');
         }
         //6. Guardar los datos.
@@ -129,19 +129,20 @@ class SolicitudturnoController extends ControllerBase
 
         if (!$turno)//la solicitud se ingreso con exito.
         {
-            $this->flash->error('<h1>OCURRIO UN PROBLEMA, POR FAVOR VUELVA A INTENTARLO EN UNOS MINUTOS</h1>');
+            $this->flash->error('<h1>OCURRIO UN PROBLEMA, POR FAVOR VUELVA A INTENTARLO EN UNOS MINUTOS.</h1>');
             return $this->redireccionar('solicitudTurno/index');
         }
-        $this->flash->notice('<div align="left">
-                                <h1>
-                                <i class="fa fa-info-circle fa-3x pull-left" style="display: inline-block;"></i>
-                                    LA SOLICITUD FUE INGRESADA CORRECTAMENTE
-                                </h1>
-                                <h3>
-                                    Cuando nuestros empleados finalicen con el análisis de su estado
-                                    de deuda se le enviará un correo electrónico para que confirme su asistencia.
-                                </h3>
-                                </div>  ');
+        $this->flash->notice('<div text-align="left">
+                                    <h1>
+                                        <i class="fa fa-info-circle fa-3x pull-left" style="display: inline-block;"></i>
+                                        LA SOLICITUD SE INGRESO CORRECTAMENTE
+                                    </h1>
+                                    <h3>
+                                        Nuestros agentes analizarán su petición. Este análisis toma un plazo máximo
+                                        de 48 hs, por lo cual, transcurrido ese tiempo usted recibirá un
+                                        correo electrónico con los pasos a seguir para confirmar su asistencia.
+                                    </h3>
+                                </div>');
         $turnosOnlineForm->clear();
         return $this->redireccionar('solicitudTurno/turnoProcesado');
     }
@@ -294,7 +295,9 @@ class SolicitudturnoController extends ControllerBase
             return;
         }
         $dentroPlazoValido = true;
-        if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1) {
+
+        if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1) //en espera
+        {
             if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 1)
                 $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitudTurno->getSolicitudturnoFechapedido());
             else
@@ -330,7 +333,33 @@ class SolicitudturnoController extends ControllerBase
                 echo json_encode($retorno);
                 return;
             }
+            else
+            {
+                //Se envia el email con el codigo de operacion-------------
+
+                $email = $solicitudTurno->getSolicitudturnoEmail();
+
+                if( trim($email) != "" && $email != NULL)
+                {
+                    $nomApe= $solicitudTurno->getSolicitudturnoNomape();
+                    $codigo = $solicitudTurno->getSolicitudturnoCodigo();
+
+                    $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
+                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
+                        'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
+                    $body .= "Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital <br/> Teléfono: (0299) 4433798
+                        <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta
+                        podrá acercarse a nuestra institución, llamar al  (0299) 4433978 Int 10 o
+                        escribirnos a tráves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>página web</a>.</p>";
+
+                    $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
+                    $this->mailDesarrollo->Body = $body;
+                    $this->mailDesarrollo->addAddress($email,'');
+                    $this->mailDesarrollo->send();
+                }
+            }
         }
+
         $this->db->commit();
         $retorno['success'] = true;
         $retorno['mensaje'] = $mensajeCodigo;
@@ -464,7 +493,7 @@ class SolicitudturnoController extends ControllerBase
             //Esta cancelado
             if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 4) {
                 $this->view->solicitud = NULL;
-                $this->flash->error("<h3>USTED HA CANCELADO SU ASISTENCIA ANTERIORMENTE, DEBERÁ SOLICITAR UN TURNO NUEVAMENTE. </h3>");
+                $this->flash->error("<h3>USTED HA CANCELADO SU ASISTENCIA, SI DESEA PUEDE SOLICITAR UN TURNO NUEVAMENTE. </h3>");
                 return $this->redireccionar('solicitudTurno/resultadoConfirmacion');
             }
             //No venció, preparo el comprobante y las variables para la vista.
@@ -504,6 +533,37 @@ class SolicitudturnoController extends ControllerBase
             }
             $this->view->mensaje_alerta = "Gracias por confirmar su asistencia";
             $this->db->commit();
+
+            //se envia el email con el codigo de operacion-------------
+
+            $email = $solicitud->getSolicitudturnoEmail();
+
+            if( trim($email) != "" && $email != NULL)
+            {
+                $this->db->begin();
+
+                $nomApe= $solicitud->getSolicitudturnoNomape();
+                $codigo = $solicitud->getSolicitudturnoCodigo();
+
+                $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
+                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
+                'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
+                $body .= "Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital <br/> Teléfono: (0299) 4433798
+                        <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta
+                        podrá acercarse a nuestra institución, llamar al  (0299) 4433978 Int 10 o
+                        escribirnos a tráves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>página web</a>.</p>";
+
+                $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
+                $this->mailDesarrollo->Body = $body;
+                $this->mailDesarrollo->addAddress($email,'');
+                $seEnvio = $this->mailDesarrollo->send();
+
+                if ($seEnvio)
+                    $this->db->commit();
+                else
+                    $this->db->rollback();
+            }
+
             return $this->redireccionar('solicitudTurno/resultadoConfirmacion');
         }
     }
@@ -546,6 +606,7 @@ class SolicitudturnoController extends ControllerBase
     public function buscarTurnoAction()
     {
         $this->tag->setTitle('Buscar Turno');
+
         $ultimoPeriodo = Fechasturnos::findFirstByFechasTurnos_activo(1);
         if (!$ultimoPeriodo) {
             $this->flash->error("EL PERIODO PARA LOS TURNOS ONLINE NO SE ENCUENTRA HABILITADO.");
@@ -566,33 +627,36 @@ class SolicitudturnoController extends ControllerBase
 
         if (!$this->request->isPost()) {
             //Proviene de cancelarEmail
-            $this->view->titulo = "Confirmar/Cancelar Asistencia";
+            $this->view->titulo = "CONFIRMAR / CANCELAR ASISTENCIA";
             $idSolicitud = $this->dispatcher->getParam("solicitudTurno_id");
             $id = base64_decode($idSolicitud);
             $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_id=:id:',
                 'bind' => array('id' => $id)));
             if (!$solicitudTurno) {
-                $this->flash->error('SU SOLICITUD DE TURNO NO SE ENCUENTRA CARGADA EN NUESTRA BASE DE DATOS');
+                $this->flash->error('SU SOLICITUD DE TURNO NO SE ENCUENTRA REGISTRADA EN NUESTRO SISTEMA.');
                 return $this->redireccionar('solicitudTurno/buscarTurno');
             }
         } else {
-            $this->view->titulo = "Consulta de turno";
+            $this->view->titulo = "CONSULTA DE TURNO";
             //Validacion
             if (!$this->request->hasPost('legajo') || $this->request->getPost('legajo', 'int') == null) {
                 $this->flash->error('INGRESE EL LEGAJO');
             }
 
-            if (!$this->request->hasPost('codigo') || $this->request->getPost('codigo', 'alphanum') == null) {
+            if (!$this->request->hasPost('codigo') || $this->request->getPost('codigo','alphanum') == null) {
                 $this->flash->error('INGRESE EL CODIGO');
             }
+
             //Buscar Solicitud
             $legajo = $this->request->getPost('legajo', 'int');
             $codigo = $this->request->getPost('codigo', 'alphanum');
-            $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_legajo=:legajo: AND
-         solicitudTurno_codigo=:codigo: ',
-                'bind' => array('legajo' => $legajo, 'codigo' => $codigo)));
+
+            $solicitudTurno = Solicitudturno::findFirst(
+                array('solicitudTurno_legajo=:legajo: AND solicitudTurno_codigo=:codigo: ',
+                'bind' => array('legajo'=>$legajo,'codigo'=>$codigo)));
+
             if (!$solicitudTurno) {
-                $this->flash->error('NO SE HA ENCONTRADO EL TURNO ASOCIADO CON LOS DATOS INGRESADO');
+                $this->flash->error('NO SE HA ENCONTRADO EL TURNO ASOCIADO CON LOS DATOS INGRESADOS');
                 return $this->redireccionar('solicitudTurno/buscarTurno');
             }
         }
@@ -620,12 +684,13 @@ class SolicitudturnoController extends ControllerBase
                 }
             }
             if (!$dentroPlazoValido) {
-                $this->flash->error('<h3>El plazo para confirmar/cancelar el turno ha finalizado el día ' . $fechaVencimiento . '. Por favor, vuelva a solicitar un turno nuevamente.</h3>');
+                $this->flash->error('<h3>El plazo para confirmar/cancelar el turno ha finalizado el día ' . $fechaVencimiento . '. Si desea puede volver a solicitar un turno.</h3>');
                 return $this->redireccionar('solicitudTurno/buscarTurno');
             }
             $this->view->solicitud_id = base64_encode($solicitudTurno->getSolicitudturnoId());
             //Pendiente de confirmacion
-            if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1) {
+            if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1)
+            {
                 $this->flash->notice('<h3>Su asistencia se encuentra <strong>PENDIENTE</strong> </h3>
                     <h4>Por favor, confirme/cancele su asistencia. Recuerde que tiene tiempo hasta el ' . $fechaVencimiento . ' de lo contrario el sistema acumulará una sanción.</h4>');
                 $this->view->pendiente = true;
@@ -687,7 +752,7 @@ class SolicitudturnoController extends ControllerBase
      */
     public function comprobanteTurnoAction()
     {
-        $idSolicitud = $this->request->get('id');
+        //$idSolicitud = $this->request->get('id');
         //echo  $this->request->get('id') ." --- ". $id = base64_decode($idSolicitud); ;
         //$this->view->pick('turnos/turnosRespondidos');
 
@@ -735,7 +800,6 @@ class SolicitudturnoController extends ControllerBase
         $pdf->SetHeader(date('d/m/Y'));
         $pdf->WriteHTML($html, 2);
         $pdf->Output('comprobanteTurno.pdf', "I");
-
     }
 
 
