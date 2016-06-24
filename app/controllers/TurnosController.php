@@ -385,7 +385,7 @@ class TurnosController extends ControllerBase
                                 $botonesAsistencia = '<div class="btn-block" align="center">' .
                                     '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
                                     '</div>';
-                                $comprobante = $this->tag->linkTo(array('turnos/comprobanteTurno/?id=' . $idCodificado,
+                                $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $idCodificado,
                                     '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ',
                                     'class' => "$colorComprobante", 'target' => '_blank'));
                                 break;
