@@ -14,12 +14,6 @@
                             Social de la
                             Ciudad de Neuquén.</em></small>
                 </h3>
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-home'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
-
             </div>
             {{ content() }}
             <div class="curriculum-bg-form borde-top" align="center">
