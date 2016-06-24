@@ -13,20 +13,27 @@
                 {{ image('img/certificacion/certificacion-header.jpg','alt':'Header certificacion') }}
             </div>
 
-            {#LA PERSONA EXISTE Y POSEE BENEFICIOS#}
+            <p style="font-weight: bold; font-size: 25px;text-align: center;">COMPROBANTE DE TURNO</p>
 
             <table  align="center" style="border: 2px solid #000; padding:25px; width: 500px;">
                 <tr >
                     <td class="layout"  align="left" style="font-weight: bold; font-size: 20px;">Código de Turno </td>
                     <td align="right" style="font-weight: bold; font-size: 20px;">  {{ solicitud.solicitudTurno_codigo }}</td>
                 </tr>
+
                 <tr>
-                    <td class="layout"  align="left" >Fecha de Confirmación </td>
-                    <td align="right" >{{  date('d/m/Y',(solicitud.solicitudTurno_fechaConfirmacion) | strtotime) }}</td>
+                    <td class="layout"  align="left" style="font-weight: bold;font-size: 18px;">Período de Atención</td>
+                    <td align="right" style="font-weight: bold;font-size:15px;"> {{ date('d/m/Y',( solicitud.getFechasturnos().getFechasturnosDiaatencion()) | strtotime) }} al {{ date('d/m/Y',( solicitud.getFechasturnos().getFechasturnosDiaatencionfinal()) | strtotime) }} </td>
                 </tr>
+
                 <tr>
                     <td class="layout"  align="left" >Apellido/s y Nombre/s </td>
                     <td align="right" >{{ solicitud.solicitudTurno_nomApe }}</td>
+                </tr>
+
+                <tr>
+                    <td class="layout"  align="left" >Nº de Documento</td>
+                    <td align="right" > {{ solicitud.solicitudTurno_documento }}</td>
                 </tr>
 
                 <tr>
@@ -35,12 +42,8 @@
                 </tr>
 
                 <tr>
-                    <td class="layout"  align="left" >Nº de Documento</td>
-                    <td align="right" > {{ solicitud.solicitudTurno_documento }}</td>
-                </tr>
-                <tr>
-                    <td class="layout"  align="left">Período de Atención</td>
-                    <td align="right" style="font-weight: bold;"> {{ date('d/m/Y',( solicitud.getFechasturnos().getFechasturnosDiaatencion()) | strtotime) }} al {{ date('d/m/Y',( solicitud.getFechasturnos().getFechasturnosDiaatencionfinal()) | strtotime) }} </td>
+                    <td class="layout"  align="left" >Turno confirmado el dia </td>
+                    <td align="right" >{{  date('d/m/Y',(solicitud.solicitudTurno_fechaConfirmacion) | strtotime) }}</td>
                 </tr>
             </table>
 
