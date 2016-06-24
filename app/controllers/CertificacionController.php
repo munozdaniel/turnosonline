@@ -24,6 +24,7 @@ class CertificacionController extends ControllerBase
     public function generarAction()
     {
         $certificacionForm = new CertificacionForm();
+
         if (!$this->request->isPost())
         {
             $certificacionForm->clear();
@@ -39,9 +40,7 @@ class CertificacionController extends ControllerBase
                 $dni = $this->request->getPost('nroDoc', array('int'));
 
                 $persona = Datospersona::findFirstByDatospersona_nroDoc($dni);
-
                 $beneficio = new Datosbeneficio();
-
                 $tipoBeneficio = -1;//Inicializo, porque sino el pdf no se genera.
                 $tipoDni = -1;//Inicializo, porque sino el pdf no se genera.
 
