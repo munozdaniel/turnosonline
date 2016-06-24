@@ -274,7 +274,7 @@
                             $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-danger">' + data.mensaje + '</h3></div>');
                         } else {
                             $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success">' +
-                            '<h3> El turno ha sido <strong>Confirmado</strong> correctamente' +
+                            '<h3> El turno ha sido <strong>confirmado</strong> correctamente' +
                             ' <hr>' +
                             ' </h3><h4>' + data.mensaje + '</small></h4></div>');
                         }
@@ -308,7 +308,7 @@
                         if (!data.success) {
                             $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-danger">' + data.mensaje + '</h3></div>');
                         } else {
-                            $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-success"> El turno ha sido cancelado correctamente <hr> <small>' + data.mensaje + '</small></h3></div>');
+                            $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-success"> El turno ha sido <strong>cancelado</strong> correctamente <hr> <small>' + data.mensaje + '</small></h3></div>');
                         }
                         tabla.ajax.reload();
 
