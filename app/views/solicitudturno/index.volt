@@ -6,15 +6,7 @@
                     <ins>SOLICITAR TURNO PARA PRÉSTAMOS PERSONALES</ins>
                     <br>
                 </h1>
-                <h3><small><em style=" color:#FFF !important;">Complete con sus datos personales el siguiente formulario.
-
-                        </em></small></h3>
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-home'></i> VOLVER",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
-
+                <h3><small><em style=" color:#FFF !important;">Complete con sus datos personales el siguiente formulario.</em></small></h3>
             </div>
             <hr>
             {{ content() }}

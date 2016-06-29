@@ -1,4 +1,5 @@
 <section id="onepage" class="admin bg_line">
+
     <div class="container ">
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
@@ -6,13 +7,6 @@
                     <ins>{{ titulo }}</ins>
                     <br>
                 </h1>
-
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-home '></i> INICIO",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
-
             </div>
             <hr>
             {{ content() }}
@@ -68,12 +62,11 @@
                             {% endif %}
                             {% if confirmado is defined %}
 
-                                {{ form('turnos/comprobanteTurnoPost','method':'POST', 'id':'form_comprobante') }}
+                                {{ form('solicitudTurno/comprobanteTurnoPost','method':'POST', 'id':'form_comprobante') }}
 
-
-                                <button id="imprimir_comprobante_btn" type='submit' class='btn btn-info btn-lg btn-block' formtarget='_blank'><i
+                                    <button id="imprimir_comprobante_btn" type='submit' class='btn btn-info btn-lg btn-block' formtarget='_blank'><i
                                             class='fa fa-print' style=""></i> IMPRIMIR COMPROBANTE
-                                </button>
+                                    </button>
                                 {{ end_form() }}
                             {% endif %}
                             <div style="">
@@ -92,6 +85,9 @@
             </div>
         </div>
     </div>
+
+    <!--- MODALES -->
+
     <div class="modal fade" id="cancelarAsistencia" role="dialog">
         <div class="modal-dialog modal-sm"
              style="width:550px !important; border: 0;border-top: 5px solid #5BC0DE;box-shadow: 0 2px 10px rgba(0,0,0,0.8);">
@@ -116,6 +112,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="confirmarAsistencia" role="dialog">
         <div class="modal-dialog modal-sm"
              style="width:550px !important; border: 0;border-top: 5px solid #5BC0DE;box-shadow: 0 2px 10px rgba(0,0,0,0.8);">
@@ -125,39 +122,45 @@
                     <i class="fa fa-question-circle fa-3x"></i> </a>
 
                 <div  class="modal-body" align="center">
+
                     <div class="ocultar_proximo">
-                    <h3>Está seguro de confirmar su asistencia?</h3>
-                    <h4>Una vez que confirmado podrá imprimir un comprobante con los datos para asistir a nuestra
-                        sucursal.</h4>
+                        <h3>Está seguro de confirmar su asistencia?</h3>
+                        <h4>Una vez que confirmado podrá imprimir un comprobante con los datos para asistir a nuestra institución.</h4>
                     </div>
+
                     <a id="confirmar_btn" class="btn btn-info btn-lg ocultar_proximo" onclick="confirmarAsistencia()">SI</a>
+
                     <div id="mensaje_resultado_confirmar" class="modal-body" align="center"></div>
-                    {{ form('turnos/comprobanteTurnoPost','method':'POST', 'id':'form_comprobante_confirmar','class':'ocultar') }}
-                    <div class="bs-callout bs-callout-danger" align="left">
-                        <h3 class="font-azul"><i class="fa fa-warning"></i>
-                            <ins>IMPORTANTE</ins>
-                            , LEA LAS SIGUIENTES INSTRUCCIONES PARA SER ATENDIDO
-                        </h3>
-                        <p style="font-size: medium">A continuación se muestran las <strong class="strong-azul">
-                                fechas de atención</strong> y un <strong class="strong-azul">código de
-                                turno</strong>.
-                            <br>
-                            1. Las <strong class="strong-azul"> fechas de atención</strong> le indicará cuando
-                            podrá acercarse a nuestras oficinas para comenzar con los trámites del préstamo
-                            personal.
-                            <br>
-                            2. El <strong class="strong-azul">código de turno</strong> es muy importante que lo
-                            guarde porque deberá ingresarlo en la terminal de autoconsulta para que pueda ser
-                            atendido.
-                            <br>
-                            3. Opcionalmente, puede guardar o imprimir el comprobante.
-                        </p>
-                    </div>
-                    {{ hidden_field("solicitud_id",'class':'comprobanteConfirmar_id') }}
-                    <button type='submit' class='btn btn-info btn-lg btn-block' formtarget='_blank'>
-                        <i class='fa fa-print' style=""></i> IMPRIMIR COMPROBANTE
-                    </button>
+
+                    {{ form('solicitudTurno/comprobanteTurnoPost','method':'POST', 'id':'form_comprobante_confirmar','class':'ocultar') }}
+
+                        <div class="bs-callout bs-callout-danger" align="left">
+                            <h3 class="font-azul"><i class="fa fa-warning"></i>
+                                <ins>IMPORTANTE</ins>
+                                , LEA LAS SIGUIENTES INSTRUCCIONES PARA SER ATENDIDO
+                            </h3>
+                            <p style="font-size: medium">A continuación se muestran las <strong class="strong-azul">
+                                    fechas de atención</strong> y un <strong class="strong-azul">código de
+                                    turno</strong>.
+                                <br>
+                                1. Las <strong class="strong-azul"> fechas de atención</strong> le indicará cuando
+                                podrá acercarse a nuestras oficinas para comenzar con los trámites del préstamo
+                                personal.
+                                <br>
+                                2. El <strong class="strong-azul">código de turno</strong> es muy importante que lo
+                                guarde porque deberá ingresarlo en la terminal de autoconsulta para que pueda ser
+                                atendido.
+                                <br>
+                                3. Opcionalmente, puede guardar o imprimir el comprobante.
+                            </p>
+                        </div>
+                        {{ hidden_field("solicitud_id",'class':'comprobanteConfirmar_id') }}
+                        <button type='submit' class='btn btn-info btn-lg btn-block' formtarget='_blank'>
+                            <i class='fa fa-print' style=""></i> IMPRIMIR COMPROBANTE
+                        </button>
+
                     {{ end_form() }}
+
                 </div>
 
                 <div class="modal-footer">
@@ -166,7 +169,11 @@
             </div>
         </div>
     </div>
+
+    <!-- FIN MODALES -->
+
 </section>
+
 <script>
     function cancelarAsistencia() {
         $('.alerta_mensaje').remove();

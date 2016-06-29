@@ -26,14 +26,14 @@ We are using width of 500 for the whole content,
 you can change it any size you want (e.g. 600).
 The fastest and safest way is to use find & replace
 Sizes: [
-        wrapper   : '500',
-        columns   : '210',
-        x-columns : [
-                        left : '90',
-                        right: '350'
-                ]
-        }
-    -->
+    wrapper   : '500',
+    columns   : '210',
+    x-columns : [
+                    left : '90',
+                    right: '350'
+            ]
+    }
+-->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,7 +43,6 @@ Sizes: [
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no"/>
     <!-- disable auto telephone linking in iOS -->
-    <title>IMPS - DIVISIÓN AFILIADOS</title>
     <style type="text/css">
         /* RESET STYLES */
         html {
@@ -515,7 +514,7 @@ Sizes: [
                                                                     <tr>
                                                                         <td align="left" class="textContent">
                                                                             <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                                                                                Respuesta por solicitud de un turno en IMPS.
+
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -562,7 +561,7 @@ Sizes: [
                                 in case its width is set to 100%.
                             -->
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;"
-                                   bgcolor="#F44336">
+                                   bgcolor="#3498db">
                                 <tr>
                                     <td align="center" valign="top">
                                         <!-- FLEXIBLE CONTAINER // -->
@@ -588,10 +587,9 @@ Sizes: [
                                                         <tr>
                                                             <td align="center" valign="top" class="textContent">
                                                                 <h1 style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;">
-                                                                    Solicitud de Turnos ONLINE</h1>
-
-                                                                <h2 style="text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:#ffffff;line-height:135%;">
-                                                                    Instituto Municipal de Previsión Social</h2>
+                                                                    C&oacute;digo de operaci&oacute;n de Turno IMPS</h1>
+                                                                <h2 style="text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:#205478;line-height:135%;">
+                                                                    Instituto Municipal de Previsi&oacute;n Social</h2>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -608,6 +606,9 @@ Sizes: [
                         </td>
                     </tr>
                     <!-- // MODULE ROW -->
+
+
+
                     <!-- MODULE ROW // -->
                     <tr>
                         <td align="center" valign="top">
@@ -635,13 +636,10 @@ Sizes: [
                                                                                 you to edit certain row. It makes it easy for you to quickly edit row sections.
                                                                                 http://kb.mailchimp.com/templates/code/create-editable-content-areas-with-mailchimps-template-language
                                                                             -->
-                                                                            <h3 mc:edit="header"
-                                                                                style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">
-                                                                                Estimado/a %nombreAfiliado% </h3>
 
                                                                             <div mc:edit="body"
                                                                                  style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
-                                                                                %mensaje% %observacion%
+                                                                                %mensaje%
                                                                             </div>
 
                                                                         </td>
@@ -663,6 +661,7 @@ Sizes: [
                         </td>
                     </tr>
                     <!-- // MODULE ROW -->
+
                     <!-- MODULE ROW // -->
                     <tr>
                         <td align="center" valign="top">
@@ -686,9 +685,10 @@ Sizes: [
                                                                     <tr>
                                                                         <td valign="top" class="textContent">
                                                                             <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">
-                                                                                Saluda atte.,<br/> Instituto Municipal de Previsión Social <br/> Fotheringham 277 - Neuquén Capital. <br/> Teléfono: (0299) 4433798
-                                                                                <p style='color:gray;'>Por favor no responda a esta dirección de correo. Si desea realizar alguna consulta podrá llamar al  (0299) 4433978 Int 10 o
-                                                                                    escribirnos a tráves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>página web</a>.</p>
+                                                                                Saluda atte.,<br/> Instituto Municipal de Previsi&oacute;n Social <br/> Fotheringham 277 - Neuqu&eacute;n Capital <br/> Tel&eacute;fono: (0299) 4433798
+                                                                                <p style='color:gray;'>Por favor no responda a esta direcci&oacute;n de correo. Si desea realizar alguna consulta
+                                                                                    podr&aacute; acercarse a nuestra instituci&oacute;n, llamar al  (0299) 4433978 Int 10 o
+                                                                                    escribirnos a tr&aacute;ves de nuestra <a href='http://imps.org.ar/impsweb/' target='_blank'>p&aacute;gina web</a>.</p>
 
                                                                             </div>
                                                                         </td>
@@ -746,10 +746,10 @@ Sizes: [
 
                                                                 <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
                                                                     <div>Copyright &#169; 2016 <a
-                                                                            href="http://imps.org.ar"
-                                                                            target="_blank"
-                                                                            style="text-decoration:none;color:#828282;"><span
-                                                                            style="color:#828282;">Instituto Municipal de Previsión Social</span></a>.
+                                                                                href="http://imps.org.ar"
+                                                                                target="_blank"
+                                                                                style="text-decoration:none;color:#828282;"><span
+                                                                                    style="color:#828282;">Instituto Municipal de Previsi&oacute;n Social</span></a>.
                                                                         Todos&nbsp;los&nbsp;derechos&nbsp;reservados.
                                                                     </div>
 

@@ -9,12 +9,6 @@
                 <h3>
                     <small><em style=" color:#FFF !important;"> Verificación de los datos</em></small>
                 </h3>
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
-
             </div>
             <hr>
             <div class="curriculum-bg-form borde-top">
@@ -103,7 +97,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="layout" align="left">Turno confirmado el día:</td>
+                                            <td class="layout" align="left">Turno confirmado el día</td>
                                             <td align="right">
                                                 {{ date('d/m/Y',(solicitud.getSolicitudturnoFechaconfirmacion()) | strtotime) }}
                                             </td>
@@ -114,7 +108,7 @@
                             </div>
                         {% endif %}
                         {% if solicitud_id is defined %}
-                            {{ form('turnos/comprobanteTurnoPost','method':'POST') }}
+                            {{ form('solicitudTurno/comprobanteTurnoPost','method':'POST') }}
                             {{ hidden_field('solicitud_id',solicitud_id) }}
                             {{ end_form() }}
                         {% endif %}

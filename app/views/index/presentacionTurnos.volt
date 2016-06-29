@@ -11,12 +11,6 @@
                                 4433978 Int 10</em>
                     </small>
                 </h3>
-                <table class="" width="100%">
-                    <tr>
-                        <td align="right">{{ link_to("index", "<i class='fa fa-sign-out'></i> SALIR",'class':'btn btn-lg btn-primary') }}</td>
-                    </tr>
-                </table>
-
             </div>
             <hr>
             {{ content() }}
@@ -206,13 +200,13 @@
                                     <button type="button" class="btn btn-warning btn-circle margin-right-5">
                                         3º
                                     </button>
-                                    Transcurridas 48hs, usted deberá acercarse a nuestra institución o llamar al 0299-4433978 int 10 para confirmar su asistencia.
+                                    Transcurridas 48hs, deberá acercarse a nuestra Institución o llamar al 0299-4433978 int 10 para confirmar su asistencia.
                                 </li>
                                 <li class="hr cursor-hand">
                                     <button type="button" class="btn btn-warning btn-circle margin-right-5">
                                         4º
                                     </button>
-                                        Deberá acercarse a nuestra Institución entre las fechas informadas por nuestros agentes para comenzar los trámites del préstamo personal.
+                                        Cuando realize la confirmación, se le informarán las fechas en las cuales podrá concurrir a nuestra Institución para comenzar los trámites del préstamo personal.
                                 </li>
                             </ul>
                         </div>
