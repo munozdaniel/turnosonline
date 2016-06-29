@@ -66,8 +66,10 @@ class IndexController extends ControllerBase
         $retorno['boton']="<a class='list-group-item'><h4> <i class='fa fa-ban'></i> Solicitar Turno</h4>
                                 <p><strong>El período para solicitar turnos no se encuentran habilitado por el momento.</strong></p>
                            </a>";
-        $aVerTurno = $this->tag->linkTo(array('solicitudTurno/buscarTurno', '<h4> <i class="fa fa-ticket"></i>  Ver información de Turno</h4>
-                                                <p>Si desea puede <strong>CANCELAR</strong> su asistencia.</p>', 'class' => 'list-group-item'));
+        $aVerTurno = $this->tag->linkTo(
+            array('solicitudTurno/buscarTurno',
+                '<h4> <i class="fa fa-ticket"></i>  Ver información de Turno</h4>
+                                                <p>Si usted desea puede cancelar su asistencia o imprimir el comprobante de turno. </p>', 'class' => 'list-group-item'));
 
         //Existe un periodo?.
         $periodo= Fechasturnos::findFirst(array('fechasTurnos_activo=1'));
