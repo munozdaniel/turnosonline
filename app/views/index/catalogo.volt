@@ -22,6 +22,10 @@
                         {{ link_to('index/revista?volumen=57','class':'thumbnail btn btn-block btn-gris','target':'',
                         image('img/revista/volumen/57/1.jpg')~'ABRIL') }}
                     </div>
+                    <div class="col-xs-6 col-md-3">
+                        {{ link_to('index/revista?volumen=58','class':'thumbnail btn btn-block btn-gris','target':'',
+                        image('img/revista/volumen/58/1.jpg')~'JULIO') }}
+                    </div>
 
                     <div class="col-xs-6 col-md-3">
                         <a  class="thumbnail btn btn-block">
