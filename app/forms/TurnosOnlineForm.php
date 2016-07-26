@@ -94,13 +94,19 @@ class TurnosOnlineForm extends Form
 
         $dni = new Text("solicitudTurno_documento",
             array('style' => 'text-align:right !important;font-size: 18px;',
-                'placeholder' => 'NRO DOCUMENTO',
+                'placeholder' => 'NRO DOCUMENTO','maxlength'=>8,
                 'class' => 'form-control',
                 'autocomplete' => 'off', 'required' => true));
         $dni->setLabel("<strong style='color: red'>*</strong> Nro Documento (SIN puntos ni comas): ");
         $dni->setFilters(array('int'));
         $dni->addValidators(
             array(
+                new StringLength(array(
+                    'min' => 5,
+                    'max' =>8,
+                    'messageMinimum' => 'El DNI es demasiado corto.',
+                    'messageMaximun' => 'El DNI es demasiado largo.',
+                )),
                 new PresenceOf(array('message' => 'Ingrese el <strong>nro de documento.</strong>.')),
                 new Regex(array(
                     'message'=>'El valor ingresado debe ser un <strong>nro de documento</strong> v&aacute;lido.',
