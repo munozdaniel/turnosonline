@@ -354,6 +354,7 @@ class SolicitudturnoController extends ControllerBase
                     $this->mailDesarrollo->MsgHTML($template);
                     $this->mailDesarrollo->body = strip_tags($template);
                     $this->mailDesarrollo->addAddress($email,'');
+                    $this->mailDesarrollo->Charset = 'UTF-8';
                     $this->mailDesarrollo->send();
                 }
             }
@@ -554,6 +555,7 @@ class SolicitudturnoController extends ControllerBase
                 $this->mailDesarrollo->MsgHTML($template);
                 $this->mailDesarrollo->body = strip_tags($template);
                 $this->mailDesarrollo->addAddress($email,'');
+                $this->mailDesarrollo->Charset = 'UTF-8';
                 $seEnvio = $this->mailDesarrollo->send();
 
                 if ($seEnvio)

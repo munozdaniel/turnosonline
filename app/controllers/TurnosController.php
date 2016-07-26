@@ -502,6 +502,7 @@ class TurnosController extends ControllerBase
                         }
                         $this->mailDesarrollo->MsgHTML($template);
                         $this->mailDesarrollo->body = strip_tags($template);
+                        $this->mailDesarrollo->Charset = 'UTF-8';
                         $band = $this->mailDesarrollo->send();
                         if (!$band) {
                             $afiliados .= "<li>" . $solicitud->getSolicitudturnoNomape() . "</li>";
