@@ -1,9 +1,9 @@
 
 function loadApp() {
+    /** Agregado para recuperar el valor del volumen */
     var vol = document.getElementById("volumen").value;
-    $('#canvas').fadeIn(1000);
-
     var flipbook = $('.magazine');
+    $('#canvas').fadeIn(1000);
 
     // Check if the CSS was already loaded
 
@@ -42,7 +42,7 @@ function loadApp() {
 
         // The number of pages
 
-        pages: 32,//Hacer lo mismo que con volumen para la proxima revista.
+        pages: 32,//FIXME: Hacer lo mismo que con volumen para la proxima revista.
 
         // Events
 

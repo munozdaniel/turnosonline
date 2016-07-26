@@ -155,7 +155,8 @@ class IndexController extends ControllerBase
     public function revistaAction()
     {
         $this->assets->collection('jquery')
-            ->addJs('js/jquery.min.js');
+            ->addJs('js/jquery.min.js')
+        ->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js');
         if (!$this->request->isGet()) {
             return $this->redireccionar('index/catalogo');
         }
@@ -165,7 +166,7 @@ class IndexController extends ControllerBase
             $this->view->volumen = $volumen;
             $this->tag->setTitle('Revista IMPS');
             $this->assets->collection('footer')
-                ->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js')
+                //->addJs('plugins/turnjs/extras/jquery-ui-1.8.20.custom.min.js')
                 ->addJs('plugins/turnjs/extras/modernizr.2.5.3.min.js')
                 ->addJs('plugins/turnjs/lib/hash.js')
                 ->addJs('plugins/turnjs/magazine/conf-slider.js');
