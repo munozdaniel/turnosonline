@@ -159,6 +159,7 @@
                                     <a href="#" class="btn btn-gris editar" onclick="mensaje()">SIN PERMISOS </a>
                                 {% endif %}
                             </td>
+
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -184,7 +185,8 @@
 
             <div class="row">
                 <div align="center" class="btn_enviarRespuestas col-xs-12 col-sm-12 col-md-5 col-md-offset-3">
-                    <a class=" btn btn-primary btn-lg btn-block" style="border: solid black;" ondblclick="enviarRespuestas()"> ENVIAR RESPUESTA A LOS AFILIADOS (doble click)</a>
+                    <a class=" btn btn-primary btn-lg btn-block" style="border: solid black;"
+                       ondblclick="enviarRespuestas()"> ENVIAR RESPUESTA A LOS AFILIADOS (doble click)</a>
                 </div>
             </div>
 
@@ -217,7 +219,7 @@
                     if (!data.success) {
                         $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-danger alert-dismissible" role="alert">' +
                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                        '<h3><strong>Advertencia!</strong></h3><hr>' + data.mensaje + '<hr>' + data.errores  + '</div>');
+                        '<h3><strong>Advertencia!</strong></h3><hr>' + data.mensaje + '<hr>' + data.errores + '</div>');
                     } else {
                         $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success alert-dismissible" role="alert">' +
                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
@@ -241,7 +243,7 @@
     });
     var myVar = setInterval(function () {
         myTimer()
-    }, 1000);
+    }, 10000);
 
     function myTimer() {
         $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
@@ -253,11 +255,12 @@
 
     $(document).ready(function () {
         //mostramos la modal para editar un post con sus datos
-        crudPhalcon.edit = function (post) {
+        function armarModal(json) {
             //en post tenemos todos los datos del post parseado
-            var json = crudPhalcon.parse(post), html = "";
-            console.log(json);
+            var  html = "";
+            //console.log(json);
             $("#modalCrudPhalcon .modal-title").html("<strong>" + json.solicitudTurno_legajo + "</strong> |   <strong>NOMBRE:</strong> " + json.solicitudTurno_nomApe + " <strong> ESTADO: </strong> " + json.solicitudTurno_estado);
+            $("#modalCrudPhalcon").show();
 
 
             /*============================ VERIFICANDO EN QUE ESTADO SE ENCUENTRA PARA ARMAR LA LISTA ============*/
@@ -269,7 +272,7 @@
             var cantidadDeTurnos = parseInt(document.getElementById("cantidadTurnos").value);
             if (turnosAutorizados >= cantidadDeTurnos) {
                 sinTurnos = true;
-                alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR." + turnosAutorizados + ">=" + cantidadDeTurnos);
+                alert("NO HAY TURNOS DISPONIBLES PARA AUTORIZAR.");
 
             }
             lista = ['REVISION'];
@@ -373,6 +376,37 @@
             $("#onclickBtn").attr("onclick", "crudPhalcon.editPost()").text("Guardar").show();
             $("#modalCrudPhalcon .modal-body ").html(html);
             $("#modalCrudPhalcon").modal("show");
+        }
+
+        crudPhalcon.edit = function (post) {
+            var json = crudPhalcon.parse(post);
+            if (json.solicitudTurno_estado == "PENDIENTE") {
+                //Control de Concurrencia
+                var datos = {'solicitudTurno_id': json.solicitudTurno_id};
+                $.ajax({
+                    type: 'POST',
+                    url: '/impsweb/turnos/atenderSolicitudAjax',
+                    data: datos,
+                    dataType: 'json',
+                    encode: true
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            if (!data.success) {
+                                alert(data.mensaje);
+                            } else {
+                                //armarModal(json);
+                            }
+                            myTimer();
+                        })
+                        .fail(function (data) {
+                            console.log(data);
+                        });
+                //Fin: Control de Concurrencia
+            }else
+            {
+                armarModal(json);
+            }
         },
             // Evento onChange del select estado.
                 crudPhalcon.habilitarDeshabilitarSegunElEstado = function () {
@@ -407,6 +441,8 @@
                                     "<p >La solicitud se edito correctamente.</p>"
                             );
                             $("#onclickBtn").hide();
+                            $("#modalCrudPhalcon").hide();
+
                             //console.log( data);//BORRAR EN PRODUCCION
                         },
                         error: function (error) {

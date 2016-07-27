@@ -58,8 +58,7 @@ class TurnosController extends ControllerBase
 
                 $fechaVencimiento = TipoFecha::sumarDiasAlDate(7, $periodoSolicitudHasta);
 
-                if ($fechaVencimiento < $periodoDiaAtencion)
-                {
+                if ($fechaVencimiento < $periodoDiaAtencion) {
                     $fechasTurnos = new Fechasturnos();
                     $fechasTurnos->assign(array(
                         'fechasTurnos_inicioSolicitud' => $fechasTurnos_inicioSolicitud,
@@ -92,8 +91,7 @@ class TurnosController extends ControllerBase
                     $this->flash->message('exito', 'La configuración de las fechas se ha realizado satisfactoriamente.');
                     $periodoSolicitudForm->clear();
                     return $this->redireccionar('administrar/index');
-                }
-                else
+                } else
                     $this->flash->message('problema', "El <ins>periodo para atención de turnos</ins> debe
                                                 comenzar por lo menos despues de una semana de finalizado el periodo de solicitud de turnos.<br/>
                                                 Por favor modifique las fechas de atención.");
@@ -191,6 +189,7 @@ class TurnosController extends ControllerBase
         }
         return $cant;
     }
+
     /**
      * @desc - permitimos editar la informacion del prestamo. AJAX
      * @return json
@@ -433,6 +432,7 @@ class TurnosController extends ControllerBase
     {
         //no hace nada, esta solo para que vaya a la vista.
     }
+
     /**
      * Verifica quien tiene correo, y se le envia una respuesta.
      * Si es autorizado se lo pone en espera.
@@ -800,6 +800,61 @@ class TurnosController extends ControllerBase
         $retorno['data'] = $datos;
         echo json_encode($retorno);
         return;
+    }
+
+    public function atenderSolicitudAjaxAction()
+    {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success'] = false;
+        if ($this->request->isPost()) {
+            if ($this->request->isAjax()) {
+                $solicitud_id = $this->request->getPost('solicitudTurno_id', 'int');
+                $fileBloqueo = 'files\bloqueo\bloqueo_' . $solicitud_id . '.txt';
+                clearstatcache(); //Limpia la caché de estado de un archivo
+                if (is_file($fileBloqueo)) {
+                    $retorno['success'] = false;
+                    $retorno['mensaje'] = 'El turno solicitado está siendo atendido por otro usuario.';
+                } else {
+                    //crea el archivo
+                    fopen($fileBloqueo, 'a');
+                    //Logica
+                    $this->db->begin();
+                    $solicitud = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:',
+                        'bind' => array('solicitudTurno_id' => $solicitud_id)));
+                    if (!$solicitud){}
+                    else {
+                        $solicitud->setSolicitudturnoEstado('REVISION');
+                        $solicitud->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
+                        $solicitud->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
+                        if(!$solicitud->update())
+                        {
+                            $m = "";
+                            foreach ($solicitud->getMessages() as $mensaje) {
+                                $m .= $mensaje." ";
+                            }
+                            $this->db->rollback();
+                            $retorno['mensaje']= $m;
+                        }else{
+
+                            $retorno['success'] = true;
+                            $retorno['mensaje'] = "El turno ha sido reservado por ti, ningún usuario podrá acceder al mismo.";
+                            $this->db->commit();
+                        }
+                    }
+                    //Fin:Logica
+                    //sleep(5);   // ver si se necesita mas tiempo.
+                    unlink($fileBloqueo);
+
+
+                }
+
+                echo json_encode($retorno);
+                return;
+            }
+
+        }
+
     }
 }
 
