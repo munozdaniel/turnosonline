@@ -246,7 +246,9 @@
         }, 220000);
 
         function myTimer() {
-            tabla.ajax.reload();
+          //  tabla.ajax.reload();
+            tabla.ajax.reload( null, false ); // user paging is not reset on reload
+
         }
 
         var cuerpoTabla = $('#tabla tbody');
