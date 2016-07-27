@@ -15,7 +15,7 @@ class CertificacionForm extends Form {
      */
     public function initialize($entity = null, $options = array())
     {
-        $nroDoc = new \Phalcon\Forms\Element\Numeric("nroDoc",array('style'=>'width:50%;height: 50px !important;font-size: 26px;','placeholder'=>' INGRESE SU Nº DE DOCUMENTO'));
+        $nroDoc = new \Phalcon\Forms\Element\Numeric("nroDoc",array('style'=>'width:300px;height:50px !important;font-size: 26px;'));
         $nroDoc->setLabel("Nº Documento");
         $nroDoc->setFilters(array('int'));
         $nroDoc->addValidators(
