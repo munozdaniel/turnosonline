@@ -85,6 +85,11 @@ class Solicitudturno extends \Phalcon\Mvc\Model
      *
      * @var string
      */
+    protected $solicitudTurno_causa;
+    /**
+     *
+     * @var string
+     */
     protected $solicitudTurno_observaciones;
 
     /**
@@ -287,6 +292,18 @@ class Solicitudturno extends \Phalcon\Mvc\Model
         return $this;
     }
 
+    /**
+     * Method to set the value of field solicitudTurno_causa
+     *
+     * @param string $solicitudTurno_causa
+     * @return $this
+     */
+    public function setSolicitudturnoCausa($solicitudTurno_causa)
+    {
+        $this->solicitudTurno_causa = $solicitudTurno_causa;
+
+        return $this;
+    }
     /**
      * Method to set the value of field solicitudTurno_observaciones
      *
@@ -492,6 +509,16 @@ class Solicitudturno extends \Phalcon\Mvc\Model
     public function getSolicitudturnoFecharespuestaenviada()
     {
         return $this->solicitudTurno_fechaRespuestaEnviada;
+    }
+
+    /**
+     * Returns the value of field solicitudTurno_causa
+     *
+     * @return string
+     */
+    public function getSolicitudturnoCausa()
+    {
+        return $this->solicitudTurno_causa;
     }
 
     /**
