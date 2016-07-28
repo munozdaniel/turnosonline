@@ -88,6 +88,7 @@
                         <th class="th-estilo">Fecha revisión</th>
                         <th class="th-estilo">Atendido por</th>
                         <th class="th-estilo">Estado</th>
+                        <th class="th-estilo">Causa Denegado</th>
                         <th class="th-estilo">Observaciones</th>
                         <th class="th-estilo">EDITAR</th>
                     </tr>
@@ -128,12 +129,16 @@
                             <td class="td-estilo">{{ item.getSolicitudTurnoNickUsuario() }}</td>
 
                             <td class="td-estilo">
-                                <strong> <a class="btn btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
+                                <strong> <a class=" btn-block "> {{ item.getSolicitudTurnoEstado() }}</a></strong>
                             </td>
-
+                            <td class="td-estilo ">
+                                {#<div><a class="tooltipo tooltip-topo btn" data-tooltip="{{ item.getSolicitudTurnoCausa() }}"><i class="fa fa-info-circle "></i></a></div>#}
+                              {{ item.getSolicitudTurnoCausa() }}
+                            </td>
                             <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
                                 {{ item.getSolicitudTurnoObservaciones() }}
                             </td>
+
 
                             <td width="7%">
                                 {% if ((item.getSolicitudTurnoNickUsuario() ==  session.get('auth')['usuario_nick'])
@@ -346,10 +351,7 @@
                 html += '<input id="editable" name="editable" value="0" type="hidden" class="form-control">';//1 Editable / 0 No editable
             }
 
-            html += '<div id="observacion" >';
-            html += '<label for="solicitudTurno_observaciones">Observaciones</label>';
-            html += '<textarea id="solicitudTurno_observaciones" maxlength="150"class="form-control" name="solicitudTurno_observaciones" placeholder="INGRESE UNA OBSERVACIÓN" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
-            html += '</div>';
+
             html += '<input type="hidden" id="solicitudTurno_legajo" name="solicitudTurno_legajo"  value="' + json.solicitudTurno_legajo + '" class="form-control">';
             html += '<input type="hidden" id="solicitudTurno_id" name="solicitudTurno_id"  value="' + json.solicitudTurno_id + '" class="form-control">';
             html += '</div>';//fin campos_editables
@@ -360,15 +362,19 @@
                 html += '<div id="causaDenegado" class="ocultar">';
             }
 
-            html += '<label for="causa">SELECCIONAR CAUSA</label><br>';
-            html += '<select id="causa" name="causa" class="form-control" >';
-            html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO.">No cumple con el 50% capital adeudado</option>';
-            html += '<option value="SE ENCUENTRA INHABILITADO EN ROJO.">Se encuentra en rojo</option>';
-            html += '<option value="NO CUMPLE CON EL MÍNIMO DE ANTIGÜEDAD REQUERIDA.">No cumple con la antigüedad</option>';
-            html += '<option value="POSEE UNA REFINANCIACIÓN TOTAL DE SU DEUDA QUE LO INHABILITA.">Tiene refinanciación total</option>';
+            html += '<label for="solicitudTurno_causa">SELECCIONAR CAUSA</label><br>';
+            html += '<select id="solicitudTurno_causa" name="solicitudTurno_causa" class="form-control" >';
+            html += '<option value="NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO.">NO CUMPLE CON EL 50% DEL CAPITAL ADEUDADO</option>';
+            html += '<option value="SE ENCUENTRA INHABILITADO EN ROJO.">SE ENCUENTRA EN ROJO</option>';
+            html += '<option value="NO CUMPLE CON EL MÍNIMO DE ANTIGÜEDAD REQUERIDA.">NO CUMPLE CON LA ANTIGÜEDAD</option>';
+            html += '<option value="POSEE UNA REFINANCIACIÓN TOTAL DE SU DEUDA QUE LO INHABILITA.">TIENE REFINANCIACIÓN TOTAL</option>';
             html += '</select>';
             html += '</div>';
 
+            html += '<div id="observacion" >';
+            html += '<label for="solicitudTurno_observaciones">Observaciones</label>';
+            html += '<textarea id="solicitudTurno_observaciones" maxlength="150"class="form-control" name="solicitudTurno_observaciones" placeholder="INGRESE UNA OBSERVACIÓN" rows="3">' + json.solicitudTurno_observaciones + '</textarea>';
+            html += '</div>';
             html += '<?php echo $this->tag->endForm() ?>';
             html += '</div>';//col
             html += '</div>';//fin row
@@ -376,6 +382,9 @@
             $("#onclickBtn").attr("onclick", "crudPhalcon.editPost()").text("Guardar").show();
             $("#modalCrudPhalcon .modal-body ").html(html);
             $("#modalCrudPhalcon").modal("show");
+            //Seteo el combo box luego de haber creado el modal.
+            $("#solicitudTurno_causa").val(json.solicitudTurno_causa);
+
         }
 
         crudPhalcon.edit = function (post) {
@@ -410,20 +419,23 @@
         },
             // Evento onChange del select estado.
                 crudPhalcon.habilitarDeshabilitarSegunElEstado = function () {
+
                     //Si esta autorizado puede modificar todos los campos, el div editor debe aparecer.
                     var solicitudTurno_estado = document.getElementById("solicitudTurno_estado");
                     if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "AUTORIZADO"
                     ) {
+                        $("#solicitudTurno_observaciones").val('');
                         $("#campos_editables").removeClass('ocultar');
                         $("#causaDenegado").addClass('ocultar');
                     }
                     else {
                         if (solicitudTurno_estado.options[solicitudTurno_estado.selectedIndex].value == "DENEGADO")
+                        {
                             $("#causaDenegado").removeClass('ocultar');
-
+                        }
                         else
                             $("#causaDenegado").addClass('ocultar');
-                        $("#campos_editables").addClass('ocultar');
+                        //$("#campos_editables").addClass('ocultar');
 
                     }
 

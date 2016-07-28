@@ -221,15 +221,12 @@ class TurnosController extends ControllerBase
                 {
                     if ($ultimoPeriodo->getFechasturnosCantidaddeturnos() == $ultimoPeriodo->getFechasturnosCantidadautorizados()) {
                         $solicitudTurno->setSolicitudturnoEstado('DENEGADO POR FALTA DE TURNOS');
-                        $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('solicitudTurno_observaciones', array('string')));
-                        $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
-                        $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
                     } else {
                         Fechasturnos::incrementarCantAutorizados();
-                        $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('solicitudTurno_observaciones', array('string')));
-                        $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
-                        $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
                     }
+                    $solicitudTurno->setSolicitudturnoObservaciones(strtoupper($this->request->getPost('solicitudTurno_observaciones', array('string'))));
+                    $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
+                    $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
                 } else {
                     //Si deja de estar autorizado se decrementa.
                     if ($estadoAntiguo == "AUTORIZADO" && $estadoNuevo != "AUTORIZADO")
@@ -240,19 +237,14 @@ class TurnosController extends ControllerBase
                             Fechasturnos::incrementarCantAutorizados();
                     }
                     //Verificamos si se puede editar todos los campos.
-                    if ($estadoNuevo == "REVISION" || $estadoNuevo == "AUTORIZADO") {
-                        $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('solicitudTurno_observaciones', array('string')));
-                        $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
-                        $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
-                    } else {
-                        if ($estadoNuevo == "DENEGADO")
-                            $solicitudTurno->setSolicitudturnoObservaciones($this->request->getPost('causa'));
-                        else
-                            $solicitudTurno->setSolicitudturnoObservaciones("-");
+                    if ($estadoNuevo == "DENEGADO")
+                        $solicitudTurno->setSolicitudturnoCausa(strtoupper($this->request->getPost('solicitudTurno_causa')));
+                    else
+                        $solicitudTurno->setSolicitudturnoCausa("");
 
-                        $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
-                        $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
-                    }
+                    $solicitudTurno->setSolicitudturnoObservaciones(strtoupper($this->request->getPost('solicitudTurno_observaciones', array('string'))));
+                    $solicitudTurno->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
+                    $solicitudTurno->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
                 }
 
                 if ($solicitudTurno->update()) {
@@ -810,6 +802,8 @@ class TurnosController extends ControllerBase
         if ($this->request->isPost()) {
             if ($this->request->isAjax()) {
                 $solicitud_id = $this->request->getPost('solicitudTurno_id', 'int');
+                $solicitud = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:',
+                    'bind' => array('solicitudTurno_id' => $solicitud_id)));
                 $fileBloqueo = 'files\bloqueo\bloqueo_' . $solicitud_id . '.txt';
                 clearstatcache(); //Limpia la caché de estado de un archivo
                 if (is_file($fileBloqueo)) {
@@ -820,8 +814,7 @@ class TurnosController extends ControllerBase
                     fopen($fileBloqueo, 'a');
                     //Logica
                     $this->db->begin();
-                    $solicitud = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:',
-                        'bind' => array('solicitudTurno_id' => $solicitud_id)));
+
                     if (!$solicitud){}
                     else {
                         $solicitud->setSolicitudturnoEstado('REVISION');
@@ -843,7 +836,7 @@ class TurnosController extends ControllerBase
                         }
                     }
                     //Fin:Logica
-                    //sleep(5);   // ver si se necesita mas tiempo.
+                    sleep(1);   // ver si se necesita mas tiempo.
                     unlink($fileBloqueo);
 
 
