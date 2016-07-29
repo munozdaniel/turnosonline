@@ -211,6 +211,18 @@ class IndexController extends ControllerBase
         $this->tag->setTitle('Guía de Trámites');
         $this->view->setTemplateAfter('admin');
     }
+    public function inauguracionAction()
+    {
+        $this->tag->setTitle('Nuestro Edificio');
+        $this->assets->collection('headerJs')
+            ->addJs('js/jquery.min.js')
+            ->addJs('plugins/galeria/demos/Single Gallery Demo/settings.demo.js')
+            ->addJs('plugins/galeria/flipgallery.min.js')
+        ;
+
+        $this->view->setTemplateAfter('admin');
+        $this->assets->collection('footerInline')->addInlineJs("$(\".navbar-fixed-top\").addClass('past-main');");
+    }
 
 }
 
