@@ -176,7 +176,7 @@ $('.clients_slider').slick({
 $('.responsive').slick({
     dots: false,
     infinite: true,
-    speed: 300,
+    speed: 9000,
     slidesToShow: 3,
     autoplay: true,
     slidesToScroll: 1,
