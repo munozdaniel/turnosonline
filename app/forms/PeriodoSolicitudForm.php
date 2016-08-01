@@ -40,7 +40,7 @@ class PeriodoSolicitudForm extends Form
         $periodoSolicitudDesde->setLabel('<small class="font-rojo">* </small>Día inicial para solicitud');
         $periodoSolicitudDesde->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha de Inicio</strong> para la solicitud de turnos.'
+                'message' => 'Ingrese el <strong>dia inicial</strong> para la solicitud de turnos.'
             ))
         ));
         $this->add($periodoSolicitudDesde);
@@ -51,10 +51,10 @@ class PeriodoSolicitudForm extends Form
         $periodoSolicitudHasta->setLabel('<small class="font-rojo">* </small>Día final para solicitud');
         $periodoSolicitudHasta->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha Final</strong> para la solicitud de turnos.'
+                'message' => 'Ingrese el <strong>dia final</strong> para la solicitud de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que la fecha  <strong>"HASTA"</strong> sea posterior a la fecha  <strong>"DESDE"</strong>.',
+                'mensajeError' => 'Verifique que el <strong>dia final para solicitud</strong> sea posterior al <strong>dia inicial para solicitud</strong>.',
                 'desde' =>$periodoSolicitudDesde->getValue()// valida qeu periodoSOlicitudHasta>periodoSolicitudDesde
             ))
         ));
@@ -68,7 +68,7 @@ class PeriodoSolicitudForm extends Form
         $periodoAtencionDesde->setLabel('<small class="font-rojo">* </small>Día inicial para atención');
         $periodoAtencionDesde->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha Inicial</strong> para la atención de turnos.'
+                'message' => 'Ingrese el <strong>dia inicial</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
                 'mensajeError' => 'Verifique que el <strong>dia inicial de atención </strong> sea posterior al <strong>período de solicitud</strong>.',
@@ -83,10 +83,10 @@ class PeriodoSolicitudForm extends Form
         $periodoAtencionHasta->setLabel('<small class="font-rojo">* </small>Día final para atención');
         $periodoAtencionHasta->addValidators(array(
             new PresenceOf(array(
-                'message' => 'Ingrese la <strong>Fecha Final</strong> para la atención de turnos.'
+                'message' => 'Ingrese el <strong>dia final</strong> para la atención de turnos.'
             )),
             new DateValidator(array(
-                'mensajeError' => 'Verifique que el <strong>dia final de atención </strong> sea posterior al <strong>dia inicial de atención</strong>.',
+                'mensajeError' => 'Verifique que el <strong>dia final de atención</strong> sea posterior al <strong>dia inicial de atención</strong>.',
                 'desde' =>$periodoAtencionDesde->getValue()
             ))
         ));
