@@ -112,6 +112,23 @@
 
     <div class="nov slider responsive">
         <div class="col-xs-12 col-sm-12  col-md-3 col-lg-4">
+            <div class="thumbnail">
+                {{ link_to('index/inauguracion','target':'_blank',
+                image('img/novedades/inauguración345x250.jpg','alt':'Inauguracion') )}}
+                <div class="caption">
+                    <p>
+                        {{ link_to('index/inauguracion','target':'_blank','class':'btn btn-info btn-xs pull-right',
+                        'ABRIR')}}
+                        <i class="fa fa-calendar"></i> <small>29/07/2016</small>
+                    </p>
+                    <strong>INAUGURACIÓN NUEVA SEDE</strong><br>
+                    <small>Ahora sí, llegamos a nuestra nueva casa y te lo mostramos.</small>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12  col-md-3 col-lg-4">
 
             <div class="thumbnail">
                 <div class="wrapper">

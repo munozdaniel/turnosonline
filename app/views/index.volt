@@ -40,7 +40,9 @@
     {% endif %}
 
     {{ stylesheet_link('css/style.css') }}
+    {# INAUGURACION: Eliminar cuando no se necesite#}
 
+    {# FIN INAUGURACION#}
     <!-- Google fonts
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&amp;o3h5y6' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
@@ -55,7 +57,9 @@
 </head>
 <body>
 {{ partial('parcial/preload') }}
+
 {{ content() }}
+
 </body>
 <!-- Javascript Files
    ================================================== -->
@@ -73,8 +77,5 @@
 {% if (assets.collection("footerInline")) %}
     {{ assets.outputInlineJs("footerInline") }}
 {% endif %}
-<script>
 
-
-</script>
 </html>

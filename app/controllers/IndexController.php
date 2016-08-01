@@ -32,18 +32,23 @@ class IndexController extends ControllerBase
             ->addJs('https://maps.googleapis.com/maps/api/js', false)
             ->addJs('js/customIndex.js')
             ->addJs('js/afterload.js')
+            ->addJs('plugins/video_popup/bootstrap.youtubepopup.js')//INAUGURACION: Eliminar cuando no se necesite
             ->addJs('plugins/vegas/vegas.min.js');
         $this->assets->collection('footerInline')
             ->addInlineJs("
-
+$(document).ready(function () {
+        //INAUGURACION: Eliminar cuando no se necesite
+        $(\"a.youtube\").YouTubeModal({autoplay: 1, width:100});
+        $( \".youtube\" ).trigger( \"click\" );
+    });
                     $('#inicio-slider').vegas({
                       overlay: true,
                       transition: 'fade',
-                      transitionDuration: 4000,
+                      transitionDuration: 5000,
                       delay: 10000,
                       color: '#375a7f',
                       animation: 'random',
-                      animationDuration: 20000,
+                      animationDuration: 30000,
                       slides: [
                         { src: '/impsweb/public/img/inicio/01_ini.jpg' },
                         { src: '/impsweb/public/img/inicio/02_ini.jpg' },
@@ -218,6 +223,10 @@ class IndexController extends ControllerBase
             ->addJs('js/jquery.min.js')
             ->addJs('plugins/galeria/demos/Single Gallery Demo/settings.demo.js')
             ->addJs('plugins/galeria/flipgallery.min.js')
+            ->addJs('plugins/video_popup/bootstrap.youtubepopup.js')
+        ;
+        $this->assets->collection('footer')
+            ->addJs('plugins/video_popup/bootstrap.youtubepopup.js')
         ;
 
         $this->view->setTemplateAfter('admin');

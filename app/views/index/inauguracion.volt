@@ -13,18 +13,6 @@
         cursor: pointer;
     }
 
-    .modal-body {
-        padding: 5px !important;
-    }
-
-    .modal-content {
-        border-radius: 0;
-    }
-
-    .modal-dialog img {
-        text-align: center;
-        margin: 0 auto;
-    }
 
     .controls {
         width: 50px;
@@ -39,18 +27,6 @@
         text-align: right;
     }
 
-    /*override modal for demo only*/
-    .modal-dialog {
-        max-width: 500px;
-        padding-top: 90px;
-    }
-
-    @media screen and (min-width: 768px) {
-        .modal-dialog {
-            width: 500px;
-            padding-top: 90px;
-        }
-    }
 
     @media screen and (max-width: 1500px) {
         #ads {
@@ -64,12 +40,13 @@
         <div align="center">
             <div class="curriculum-bg-header modal-header " align="left">
                 <h1>
-                    <ins>AHORA SÍ, LLEGAMOS A NUESTRA CASA NUEVA</ins>
+                    <ins>NUEVA SEDE</ins>
                     <br>
                 </h1>
                 <h3>
-                    <small><em style=" color:#FFF !important;"> Te mostramos como fue la inauguración de nuestro
-                            edificio</em></small>
+                    <small>
+                        <em style=" color:#FFF !important;"> Así fue la inauguración de nuestro edificio </em>
+                    </small>
                 </h3>
                 <table class="" width="100%">
                     <tr>
@@ -80,19 +57,25 @@
             </div>
             <hr>
             {{ content() }}
+
             <div class="curriculum-bg-form borde-top" align="center">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4 bg-danger" style="height: 300px;">
+                        <div class="col-sm-6">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="//www.youtube.com/embed/d_iLSPwxqUo"></iframe>
+                            </div>
+                        </div>
+                        <div class="col-md-4 bg-info" >
+                            <h4>Video de la Inauguración de la Nueva Sede</h4>
+                            <p></p>
 
                         </div>
-                        <div class="col-md-4 bg-info" style="height: 150px;">
 
-                        </div>
                     </div>
                     <div class="row" >
                         <h3> Galería</h3>
-                        <a class="btn btn-danger"  onclick="flipGallery()"></a>
+                        <a id="gallery" class="btn btn-danger"  onclick="flipGallery()"></a>
                         <div id="flipGallery">
                         </div>
                     </div>
@@ -100,5 +83,10 @@
             </div>
         </div>
     </div>
-
+<script>
+    $(document).ready(function () {
+        //INAUGURACION: Eliminar cuando no se necesite
+        $( "#gallery" ).trigger( "click" );
+    });
+</script>
 </section>
