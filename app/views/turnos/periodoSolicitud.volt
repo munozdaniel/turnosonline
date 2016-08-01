@@ -18,7 +18,10 @@
                 <h3>
                     <small><em style=" color:#FFF !important;"> A continuación se podrán crear los períodos para solicitud y atención de turnos.</em></small>
                 </h3>
+            </div>
 
+            <div align="center" style="background-color:indianred;color:white;width:auto;padding:4px;height:auto;position:fixed;top:235px;">
+                <p style="font-size:18px;"> Recuerde: los dias inicial y final del periodo para solicitud no se podr&aacute;n modificar.</p>
             </div>
 
             <hr>
@@ -54,7 +57,7 @@
 
                         </div>
 
-                        <br/><hr> <br>
+                        <br/><hr> <br/>
 
                         <div class="row">
 
@@ -112,8 +115,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </section>
