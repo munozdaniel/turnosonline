@@ -9,8 +9,28 @@
         vertical-align: middle !important;
     }
 
-    .alert-info{background-color:indianred;border:solid red;width:900px;text-align: center;margin-left: 20%;}
+    /* Preloader enviar respuestas*/
+    #loader_bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.26); /* change if the mask should have another color then white */
+        z-index: 99999; /* makes sure it stays on top */
+    }
 
+    #loader_gif {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: 50%; /* centers the loading animation horizontally one the screen */
+        top: 50%; /* centers the loading animation vertically one the screen */
+        background-image: url(../img/turnos/loading_bar.gif); /* path to your loading animation */
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: -100px 0 0 -100px; /* is width and height divided by two */
+    }
 </style>
 
 <section id="onepage" class="admin bg_line">
@@ -26,7 +46,8 @@
                 </h1>
 
                 <h3>
-                    <small> <em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos afiliados
+                    <small><em style=" color:#FFF !important;"> A continuación se muestra un listado de aquellos
+                            afiliados
                             a los cuales se les envio la respuesta a su solicitud con Autorizado/Denegado.</em></small>
                 </h3>
 
@@ -40,7 +61,10 @@
     <div class="col-md-12">
         {{ content() }}
     </div>
-
+    <div id="loader_bg" style="display: none;" align="center">
+        <div id="loader_gif" style="display: none;">&nbsp;</div>
+        <p class="loader_text pulse1">ENVIANDO</p>
+    </div>
     <div class="row form-blanco borde-top borde-left-4 borde-right-4">
         {% if informacion is defined %}
             <div class="col-sm-4" align="center">
@@ -108,20 +132,17 @@
         <div id="solicitudes" class="col-lg-12 col-md-12 table-responsive">
             <table id="tabla" class="table_r table-striped table-bordered table-condensed">
                 <thead style="background-color: #131313;">
-                    <tr>
-                        <th class="th-titulo">ID</th>{# 0 #}
-                        <th class="th-titulo">Estado Asistencia ID</th>{# 1: Online o Terminal #}
-                        <th class="th-titulo">Afiliado</th>{# 2: Legajo y Nombre #}
-                        <th class="th-titulo">Email/Telefono</th>{# 3 #}
-                        <th class="th-titulo">Fecha respuesta enviada</th>{# 4 #}
-                        <th class="th-titulo">Usuario</th>{# 5 #}
-                        <th class="th-titulo">Estado</th>{# 6 Estado de Deuda: Autorizado - Denegado - Denegado por Falta de Turno#}
-                        <th class="th-titulo">Observación</th>{# 7 #}
-                        <th class="th-titulo">Código</th>{# 8 #}
-                        <th class="th-titulo">Estado de asistencia</th>{# 9 En espera - Confirmado - Plazo vencido - cancelado (fondo bordo)#}
-                        <th class="th-titulo" style="width: 120px"><i class="fa fa-calendar fa-2x  "></i> Asiste</th>{# 10 : Botones para aceptar/cancelar Asistencia #}
-                        <th class="th-titulo">Ver Comprobante</th>{# 11 #}
-                    </tr>
+                <tr>
+                    <th class="th-titulo">ID</th>{# 0 #}
+                    <th class="th-titulo">Tipo de Turno</th>{# 1: Online o Terminal #}
+                    <th class="th-titulo">Legajo</th>{# 2: Legajo y Nombre #}
+                    <th class="th-titulo">Apellido y Nombre</th>{# 3 #}
+                    <th class="th-titulo">Email</th>{# 4 #}
+                    <th class="th-titulo">Teléfono</th> {# 5 #}
+                    <th class="th-titulo">Estado</th>{# 6 #}
+                    <th class="th-titulo">Estado para busquedas</th>{# 7 #}
+                    <th class="th-titulo">Estado Asistencia</th>{# 8 #}
+                </tr>
                 </thead>
             </table>
         </div>
@@ -130,26 +151,221 @@
 
 </section>
 
-<!-- Modal -->
-<div class="modal fade" id="modal_resultado" role="dialog">
-    <div class="modal-dialog modal-sm"
-         style="width:550px !important; border: 0;border-top: 5px solid #5BC0DE;box-shadow: 0 2px 10px rgba(0,0,0,0.8);">
-        <div class="modal-content" align="center" style="border-radius: 0px;">
 
-            <a class="btn btn-lg btn-info ">
-                <i class="fa fa-info-circle fa-2x"></i> Información</a>
+<div id="verDatos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="col-lg-12">
+            <div class="panel panel-yellow" style="background-color: rgb(255, 255, 255);">
+                <div class="panel-heading">Detalles
+                    <a class="btn btn-default btn-lg pull-right" data-dismiss="modal"><i
+                                class="fa fa-2x fa-remove "></i></a>
+                </div>
+                <div class="panel-body pan">
+                    <form action="#" class="form-horizontal">
+                        <div class="row">
+                            <div id="mensaje_resultado" class="col-md-6 modal-body" align="left">
+                                <div class="alerta_mensaje"></div>
+                            </div>
+                        </div>
+                        <div class="form-body pal"><h3>Afiliado</h3>
 
-            <div id="mensaje_resultado" class="modal-body" align="left">
-                <div class="alerta_mensaje"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_legajo" class="col-md-3 control-label">Legajo</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_legajo','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_nomApe" class="col-md-3 control-label">Apellido y
+                                            Nombre</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_nomApe','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_documento"
+                                               class="col-md-3 control-label">Documento</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_documento','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_email" class="col-md-3 control-label">Email</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_email','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_numTelefono"
+                                               class="col-md-3 control-label">Teléfono</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_numTelefono','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_fechaPedido" class="col-md-3 control-label">Fecha
+                                            Pedido</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_fechaPedido','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Turno Solicitado</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_tipo" class="col-md-3 control-label">Tipo de
+                                            Turno</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_tipo','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-3"></div>
+                                        <div id="accion_imprimir" class="col-md-9">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_estado" class="col-md-3 control-label">Estado</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_estado','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_estadoAsistencia" class="col-md-3 control-label">Estado
+                                            de Asistencia</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_estadoAsistencia','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_causa" class="col-md-3 control-label">Causa de
+                                            Denegado</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_causa','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="solicitudTurno_observacion" class="col-md-3 control-label">Observación</label>
+
+                                        <div class="col-md-9">
+                                            {{ text_field('solicitudTurno_observacion','class':'form-control','readOnly':'true') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                    </div>
+                                </div>
+                                <div id="accion_asistencia" class="col-md-6">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">CERRAR</button>
-            </div>
         </div>
     </div>
 </div>
 
+<script>
+    function verDatos(solicitudTurno_id) {
+        $('#loader_gif').fadeIn();
+        $('#loader_bg').delay(100).fadeIn('slow');
+        var datos = {'solicitudTurno_id': solicitudTurno_id};
+        $.ajax({
+            type: 'POST',
+            url: '/impsweb/turnos/buscarSolicitudAjax',
+            dataType: 'json',
+            data: datos,
+            encode: true
+        })
+                .done(function (data) {
+                    console.log(data);
+                    $('.alerta_mensaje').remove();
+                    $(".div_dinamico").remove();
+                    if (!data.success) {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-danger alert-dismissible" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        '<h3><strong>Advertencia!</strong></h3><hr>' + data.mensaje + '</div>');
+                    } else {
+                        var solicitud = data.solicitud;
+                        $("#solicitudTurno_legajo").val(solicitud['solicitudTurno_legajo']);
+                        $("#solicitudTurno_nomApe").val(solicitud['solicitudTurno_nomApe']);
+                        $("#solicitudTurno_documento").val(solicitud['solicitudTurno_documento']);
+                        $("#solicitudTurno_email").val(solicitud['solicitudTurno_email']);
+                        $("#solicitudTurno_fechaPedido").val(solicitud['solicitudTurno_fechaPedido']);
+                        $("#solicitudTurno_tipo").val(solicitud['solicitudTurno_tipo']);
+                        $("#solicitudTurno_estado").val(solicitud['solicitudTurno_estado']);
+                        $("#solicitudTurno_estadoAsistencia").val(solicitud['solicitudTurno_estadoAsistencia']);
+                        $("#solicitudTurno_causa").val(solicitud['solicitudTurno_causa']);
+                        $("#solicitudTurno_observacion").val(solicitud['solicitudTurno_observacion']);
+                        var div_accion =  $("#accion_asistencia");
+                        div_accion.append('<div class="div_dinamico form-group">'+solicitud['denegar']+solicitud['confirmar']+'</div>');
+                        var div_imprimir = $("#accion_imprimir");
+                        div_imprimir .append('<div class="div_dinamico">'+solicitud['comprobante']+'</div>');
+
+                    }
+                    $('#verDatos').modal('show');
+
+
+                })
+                .fail(function (data) {
+                    console.log(data);
+                })
+                .always(function (data) {
+                    console.log(data);
+                    $('#loader_gif').fadeOut();
+                    $('#loader_bg').delay(100).fadeOut('slow');
+                });
+    }
+
+</script>
 <script>
     var myVar = setInterval(function () {
         myTimer()
@@ -159,9 +375,9 @@
         $('#cantAutorizados').load(document.URL + ' #cantAutorizados');
     }
 
-    $(".alert-info").fadeTo(4000, 500).slideUp(500, function () {
-        $(".alert-info").alert('close');
-    });
+    /* $(".alert-info").fadeTo(4000, 500).slideUp(500, function () {
+     $(".alert-info").alert('close');
+     });*/
 
     $(document).ready(function () {
         var fechaIS = '{{ informacion['fechaInicio'] }}';
@@ -192,12 +408,12 @@
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
                     download: 'open',
-                    exportOptions: {columns:[2, 3, 4, 5, 6, 7, 8, 11]}
+                    exportOptions: {columns: [2, 3, 4, 5, 6, 7, 8, 11]}
                 }
             ],
             "columnDefs": [
                 {
-                    "targets": [0, 1],
+                    "targets": [0, 1, 7, 8],
                     "visible": false,
                     "searchable": false
                 }
@@ -231,12 +447,12 @@
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 var $nRow = $(nRow);
                 //console.log(aData[9]);
-                if (aData[6] != "AUTORIZADO") {//ESTADO
+                if (aData[1] != "AUTORIZADO") {//ESTADO
                     $nRow.css({"color": "red"});
                 }
                 if (aData[1] == 4) {// SI EL ESTADO ASISTENCIA ES CANCELADO
                     $nRow.css({"color": "white"});
-                    $nRow.css({"background-color": "#4A0D0D"});
+                    $nRow.css({"background-color": "rgb(96, 125, 139)"});
                 }
 
             }
@@ -246,8 +462,8 @@
         }, 220000);
 
         function myTimer() {
-          //  tabla.ajax.reload();
-            tabla.ajax.reload( null, false ); // user paging is not reset on reload
+            //  tabla.ajax.reload();
+            tabla.ajax.reload(null, false); // user paging is not reset on reload
 
         }
 

@@ -329,84 +329,103 @@ class TurnosController extends ControllerBase
                     $item[] = base64_encode($unaSolicitud->getSolicitudturnoId()); //se codifico para que funcione el aceptar/cancelar asistencia
                     //1 Tipo de Turno: para pintar la fila de rojo
                     $item[] = $unaSolicitud->getSolicitudturnoEstadoasistenciaid();
-                    //2 Afiliado
-                    $item[] = '<h4><ins>' . $unaSolicitud->getSolicitudturnoLegajo() . ' </ins></h4>' . $unaSolicitud->getSolicitudturnoNomape();
-                    //3 Email/Telefono
+                    //2 Legajo
+                    $item[] = $unaSolicitud->getSolicitudturnoLegajo();
+                    //3 Apellido
+                    $item[] = $unaSolicitud->getSolicitudturnoNomape();
+                    //4 Email
                     if ($unaSolicitud->getSolicitudturnoEmail() == NULL || trim($unaSolicitud->getSolicitudturnoEmail()) == "")
                         $email = '';
                     else
                         $email = "" . $unaSolicitud->getSolicitudturnoEmail();
-                    $item[] = "<i class='fa fa-envelope-o'></i> " . $email . " <br> <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
-                    //4 FechaRespuestaEnviada
-                    $item[] = (new DateTime($unaSolicitud->getSolicitudturnoFecharespuestaenviada()))->format('d/m/Y');
-
-                    $botonesAsistencia = "";
-                    $estadoAsistencia = "";
-                    $comprobante = "";
-                    $colorComprobante = "";
-                    $idCodificado = base64_encode($unaSolicitud->getSolicitudturnoId());
-                    if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 1) {//Online
-                        $colorComprobante = "btn btn-info btn-block";
-                        $comprobante = '<a class=\'' . $colorComprobante . '\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
-                    } else {
-                        if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 2) {//Terminal
-                            $colorComprobante = "btn btn-success btn-block";
-                            $comprobante = '<a class=\'' . $colorComprobante . '\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
-                        }
-                    }
-                    //Controlo si las respuesta se vencio
-                    if ($unaSolicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
-
-
-                        switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid()) {
-                            case 1://En Espera
-                                $estadoAsistencia = '<div class="btn-block" align="center">' .
-                                    '<a class="parpadea btn btn-white" style="display:inline-block;">
-                                        <i class="fa fa-spinner fa-spin  fa-fw margin-bottom"></i>
-                                            <span class="sr-only">Cargando...</span>EN ESPERA</a></div>';
-                                $botonesAsistencia = '<div class="btn-block" align="center">' .
-                                    '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> ACEPTAR </a> ' .
-                                    '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
-                                    '</div>';
-                                break;
-                            case 2://Confirmado
-                                $estadoAsistencia = '<a class="btn btn- btn-white">
-                                                        <i class="fa fa-check-square" style="display:inline-block;color:#0ec705"></i> '
-                                    . "CONFIRMADO  </a>";
-                                $botonesAsistencia = '<div class="btn-block" align="center">' .
-                                    '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
-                                    '</div>';
-                                $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $idCodificado,
-                                    '<i class="fa fa-print pull-left"></i> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong> ',
-                                    'class' => "$colorComprobante", 'target' => '_blank'));
-                                break;
-                            case 3://Vencido
-                                $estadoAsistencia = '<a class="btn btn-block btn-white">
-                                                <i class="fa fa-ban text-danger"></i>
-                                                ' . "PLAZO VENCIDO</a>";
-                                break;
-                            case 4://Cancelado
-                                $estadoAsistencia = '<a class="btn btn-block btn-white">
-                                                <i class="fa fa-ban text-danger"></i>
-                                                ' . "CANCELADO</a>";
-                                break;
-                        }
-                    }
-
-                    //5 Usuario
-                    $item[] = $unaSolicitud->getSolicitudturnoNickusuario();
-                    //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
+                    $item[] = "<i class='fa fa-envelope-o'></i> " . $email;
+                    //5 Telefono
+                    $item[] = " <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
+                    //6 Estado
+                    $color = "btn-danger";
+                    if ($unaSolicitud->getSolicitudturnoEstado() == "AUTORIZADO")
+                        $color = "btn-success";
+                    $item[] = '<a onclick=verDatos("' . $unaSolicitud->getSolicitudturnoId() . '")>' . $unaSolicitud->getSolicitudturnoEstado() . '</a>';
+                    //7 Estado: Para las busquedas dinamicas
                     $item[] = $unaSolicitud->getSolicitudturnoEstado();
-                    //7 Observaciones
-                    $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
-                    //8 Codigo
-                    $item[] = $unaSolicitud->getSolicitudturnoCodigo();
-                    //9 Estado Asistencia
-                    $item[] = $estadoAsistencia;
-                    //10 Botones par cancelar/Autorizar asistencia
-                    $item[] = $botonesAsistencia;
-                    //11 Comprobante
-                    $item[] = $comprobante;
+                    //8 Estado Asistencia
+                    $item[] = $unaSolicitud->getEstadoasistencia()->getEstadoasistenciaNombre();
+
+                    /*
+                                        //4 FechaRespuestaEnviada
+                                        $item[] = (new DateTime($unaSolicitud->getSolicitudturnoFecharespuestaenviada()))->format('d/m/Y') . " Por: ". $unaSolicitud->getSolicitudturnoNickusuario();
+
+                                        $botonesAsistencia = "";
+                                        $estadoAsistencia = "";
+                                        $comprobante = "";
+                                        $colorComprobante = "";
+                                        $idCodificado = base64_encode($unaSolicitud->getSolicitudturnoId());
+                                        if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 1) {//Online
+                                            $colorComprobante = "btn btn-info btn-block";
+                                            //$comprobante = '<a class=\'' . $colorComprobante . '\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
+                                        } else {
+                                            if ($unaSolicitud->getSolicitudturnoTipoturnoid() == 2) {//Terminal
+                                                $colorComprobante = "btn btn-success btn-block";
+                                              //  $comprobante = '<a class=\'' . $colorComprobante . '\'> <strong>' . $unaSolicitud->getTipoturno()->getTipoturnoNombre() . '</strong></a>';
+                                            }
+                                        }
+                                        //Controlo si las respuesta se vencio
+                                        if ($unaSolicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+
+
+                                            switch ($unaSolicitud->getSolicitudturnoEstadoasistenciaid()) {
+                                                case 1://En Espera
+                                                    $estadoAsistencia = '<div class="btn-block" align="center">' .
+                                                        '<a class="parpadea btn btn-white" style="display:inline-block;">
+                                                            <i class="fa fa-spinner fa-spin  fa-fw margin-bottom"></i>
+                                                                <span class="sr-only">Cargando...</span>EN ESPERA</a></div>';
+                                                    $botonesAsistencia = '<div class="btn-block" align="center">' .
+                                                        '<a id="acepta"  class=" btn btn-gris"> <i class="fa fa-check"></i> ACEPTAR </a> ' .
+                                                        '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
+                                                        '</div>';
+                                                    break;
+                                                case 2://Confirmado
+                                                    $estadoAsistencia = '<a class="btn btn- btn-white">
+                                                                            <i class="fa fa-check-square" style="display:inline-block;color:#0ec705"></i> '
+                                                        . "CONFIRMADO  </a>";
+                                                    $botonesAsistencia = '<div class="btn-block" align="center">' .
+                                                        '<a id="cancela" class=" btn btn-danger" ><em> <i class="fa fa-times"></i> CANCELAR</em></i></a>' .
+                                                        '</div>';
+                                                    $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $idCodificado,
+                                                        '<i class="fa fa-print fa-2x"></i> <strong> Autorizado  </strong> ',
+                                                        'class' => "$colorComprobante", 'target' => '_blank'));
+                                                    break;
+                                                case 3://Vencido
+                                                    $estadoAsistencia = '<a class="btn btn-block btn-white">
+                                                                    <i class="fa fa-ban text-danger"></i>
+                                                                    ' . "PLAZO VENCIDO</a>";
+                                                    break;
+                                                case 4://Cancelado
+                                                    $estadoAsistencia = '<a class="btn btn-block btn-white">
+                                                                    <i class="fa fa-ban text-danger"></i>
+                                                                    ' . "CANCELADO</a>";
+                                                    break;
+                                            }
+                                        }
+
+                                        //5 Usuario
+                                        //$item[] = $unaSolicitud->getSolicitudturnoNickusuario();
+                                        //6 Estado Deuda: Autorizado, denegado, denegado por falta de turno
+                                        $item[] = $unaSolicitud->getSolicitudturnoEstado() . "" .$comprobante;
+                                        //7 Causa
+                                        $item[] = $unaSolicitud->getSolicitudturnoCausa();
+                                        //8 Observaciones
+                                        $item[] = $unaSolicitud->getSolicitudturnoObservaciones();
+                                        //9 Codigo
+                                        $item[] = '<h4><ins>' . $unaSolicitud->getSolicitudturnoCodigo() . ' </ins></h4>';
+                                        //10 Estado Asistencia
+                                        $item[] = $unaSolicitud->getSolicitudturnoEstado()." Y ".$estadoAsistencia;
+                                        //11 Botones par cancelar/Autorizar asistencia
+                                        $item[] = $botonesAsistencia;
+                                        //12 Comprobante
+                                        //$item[] = $comprobante;
+                                        $item[] = $unaSolicitud->getSolicitudturnoEstado();//Se utiliza para pintar la fila cuando no es autorizado
+                                        */
                     $datos[] = $item;
                 }
             }
@@ -416,6 +435,74 @@ class TurnosController extends ControllerBase
         return;
     }
 
+    public function buscarSolicitudAjaxAction()
+    {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success'] = false;
+        $retorno['mensaje'] = "";
+        if ($this->request->isPost()) {
+            if ($this->request->isAjax()) {
+                $solicitud_id = $this->request->getPost('solicitudTurno_id', 'int');
+                if ($solicitud_id == "" || $solicitud_id == null) {
+                    $retorno['mensaje'] = "Ocurrió un error, no se encontró la solicitud.";
+                    echo json_encode($retorno);
+                    return;
+                }
+                $solicitud = Solicitudturno::findFirst(array('solicitudTurno_id=' . $solicitud_id));
+                if (!$solicitud) {
+                    $retorno['mensaje'] = "Ocurrió un error, no se encontró la solicitud . $solicitud_id";
+                    echo json_encode($retorno);
+                    return;
+                }
+                $datos = array();
+                $datos['solicitudTurno_legajo'] = $solicitud->getSolicitudturnoLegajo();
+                $datos['solicitudTurno_nomApe'] = $solicitud->getSolicitudturnoNomape();
+                $datos['solicitudTurno_documento'] = $solicitud->getSolicitudturnoDocumento();
+                $datos['solicitudTurno_email'] = $solicitud->getSolicitudturnoEmail();
+                $datos['solicitudTurno_fechaPedido'] = $solicitud->getSolicitudturnoFechapedido();
+                $datos['solicitudTurno_tipo'] = $solicitud->getTipoTurno()->getTipoTurnoNombre();
+                $datos['solicitudTurno_estado'] = $solicitud->getSolicitudturnoEstado();
+                $datos['solicitudTurno_estadoAsistencia'] = $solicitud->getEstadoAsistencia()->getEstadoasistenciaNombre();
+                $datos['solicitudTurno_causa'] = $solicitud->getSolicitudturnoCausa();
+                $datos['solicitudTurno_observacion'] = $solicitud->getSolicitudturnoObservaciones();
+                $comprobante = '<a class="btn btn-gris  btn-block"  disabled><i class="fa fa-print"></i> Imprimir Comprobante</a>';
+
+
+                $denegar = '<a class="btn btn-gris pull-right" disabled>Confirmar Asistencia</a>';
+                $confirmar = '<a class="btn btn-gris pull-right" disabled>Denegar Asistencia</a>';
+                if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
+                    if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 2)//CONFIRMADO
+                    {
+                        $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $solicitud->getSolicitudturnoId(),
+                            '<i class="fa fa-print"></i> <strong> Imprimir Comprobante </strong> ',
+                            'class' => 'btn btn-info btn-block', 'target' => '_blank'));
+                        $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(' . $solicitud->getSolicitudturnoId() . ')">Denegar Asistencia</a>';
+                    } else {
+                        if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 1)//EN ESPERA
+                        {
+                            $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $solicitud->getSolicitudturnoId(),
+                                '<i class="fa fa-print"></i> <strong> Imprimir Comprobante </strong> ',
+                                'class' => 'btn btn-info btn-block', 'target' => '_blank'));
+                            $confirmar = '<a class="btn btn-success pull-right" onclick="confirmarAsistencia(' . $solicitud->getSolicitudturnoId() . ')">Confirmar Asistencia</a>';
+                            $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(' . $solicitud->getSolicitudturnoId() . ')">Denegar Asistencia</a>';
+                        }
+                    }
+                }
+                $datos['denegar'] = $denegar;
+                $datos['confirmar'] = $confirmar;
+                $datos['comprobante'] = $comprobante;
+                $retorno['solicitud'] = $datos;
+                $retorno['mensaje'] = "";
+                $retorno['success'] = true;
+                echo json_encode($retorno);
+                return;
+            }
+
+        }
+        echo json_encode($retorno);
+        return;
+    }
 
     /**
      * Se usa??
@@ -815,20 +902,19 @@ class TurnosController extends ControllerBase
                     //Logica
                     $this->db->begin();
 
-                    if (!$solicitud){}
-                    else {
+                    if (!$solicitud) {
+                    } else {
                         $solicitud->setSolicitudturnoEstado('REVISION');
                         $solicitud->setSolicitudTurnoNickUsuario($this->session->get('auth')['usuario_nick']);
                         $solicitud->setSolicitudturnoFechaprocesamiento(Date('Y-m-d H:i:s'));
-                        if(!$solicitud->update())
-                        {
+                        if (!$solicitud->update()) {
                             $m = "";
                             foreach ($solicitud->getMessages() as $mensaje) {
-                                $m .= $mensaje." ";
+                                $m .= $mensaje . " ";
                             }
                             $this->db->rollback();
-                            $retorno['mensaje']= $m;
-                        }else{
+                            $retorno['mensaje'] = $m;
+                        } else {
 
                             $retorno['success'] = true;
                             $retorno['mensaje'] = "El turno ha sido reservado por ti, ningún usuario podrá acceder al mismo.";
