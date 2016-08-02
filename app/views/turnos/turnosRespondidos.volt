@@ -163,10 +163,10 @@
                 <div class="panel-body pan">
                     <form action="#" class="form-horizontal">
                         <div class="row">
-                            <div id="mensaje_resultado" class="col-md-6 modal-body" align="left">
+                            <div id="mensaje_resultado" class="col-md-6 col-md-offset-3 modal-body" align="center">
                                 <div class="alerta_mensaje"></div>
                             </div>
-                        </div>
+                        </div>  
                         <div class="form-body pal"><h3>Afiliado</h3>
 
                             <div class="row">
@@ -175,7 +175,7 @@
                                         <label for="solicitudTurno_legajo" class="col-md-3 control-label">Legajo</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_legajo','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_legajo','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                             Nombre</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_nomApe','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_nomApe','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -197,7 +197,7 @@
                                                class="col-md-3 control-label">Documento</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_documento','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_documento','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +206,7 @@
                                         <label for="solicitudTurno_email" class="col-md-3 control-label">Email</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_email','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_email','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@
                                                class="col-md-3 control-label">Teléfono</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_numTelefono','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_numTelefono','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
                                             Pedido</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_fechaPedido','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_fechaPedido','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -242,14 +242,17 @@
                                             Turno</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_tipo','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_tipo','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="col-md-3"></div>
-                                        <div id="accion_imprimir" class="col-md-9">
+                                        <label for="solicitudTurno_codigo" class="col-md-3 control-label">Código</label>
+                                        <div class="col-md-4">
+                                            {{ text_field('solicitudTurno_codigo','class':'form-control bg-info','readOnly':'true','placeholder':'SIN ESPECIFICAR','style':'border:3px solid #000;') }}
+                                        </div>
+                                            <div id="accion_imprimir" class="col-md-5">
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +263,7 @@
                                         <label for="solicitudTurno_estado" class="col-md-3 control-label">Estado</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_estado','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_estado','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -270,7 +273,7 @@
                                             de Asistencia</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_estadoAsistencia','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_estadoAsistencia','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -282,7 +285,7 @@
                                             Denegado</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_causa','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_causa','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -291,7 +294,7 @@
                                         <label for="solicitudTurno_observacion" class="col-md-3 control-label">Observación</label>
 
                                         <div class="col-md-9">
-                                            {{ text_field('solicitudTurno_observacion','class':'form-control','readOnly':'true') }}
+                                            {{ text_field('solicitudTurno_observacion','class':'form-control','readOnly':'true','placeholder':'SIN ESPECIFICAR') }}
                                         </div>
                                     </div>
                                 </div>
@@ -340,6 +343,7 @@
                         $("#solicitudTurno_documento").val(solicitud['solicitudTurno_documento']);
                         $("#solicitudTurno_email").val(solicitud['solicitudTurno_email']);
                         $("#solicitudTurno_fechaPedido").val(solicitud['solicitudTurno_fechaPedido']);
+                        $("#solicitudTurno_codigo").val(solicitud['solicitudTurno_codigo']);
                         $("#solicitudTurno_tipo").val(solicitud['solicitudTurno_tipo']);
                         $("#solicitudTurno_estado").val(solicitud['solicitudTurno_estado']);
                         $("#solicitudTurno_estadoAsistencia").val(solicitud['solicitudTurno_estadoAsistencia']);
@@ -362,6 +366,85 @@
                     console.log(data);
                     $('#loader_gif').fadeOut();
                     $('#loader_bg').delay(100).fadeOut('slow');
+                });
+    }
+    /*Confirmar Asistencia*/
+    function confirmarAsistencia(solicitudTurno_id)
+    {
+        $('.alerta_mensaje').remove();
+        $('#mensaje_resultado').append('<div class="alerta_mensaje" align="center">' +
+        '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i> <span class="sr-only">Loading...</span> Procesando...</div>');
+        var datos = {
+            'solicitudTurno_id': solicitudTurno_id
+        };
+        //==========
+        $.ajax({
+            type: 'POST',
+            url: '/impsweb/turnos/aceptaAsistenciaAjax',
+            data: datos,
+            dataType: 'json',
+            encode: true
+        })
+                .done(function (data) {
+                    //console.log(data);
+                    $(".div_dinamico").remove();
+
+                    $('.alerta_mensaje').remove();
+                    if (!data.success) {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-danger">' + data.mensaje + '</h3></div>');
+                    } else {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success">' +
+                        '<h3> El turno ha sido <strong>confirmado</strong> correctamente');
+                        var solicitud = data.solicitud;
+                        $("#solicitudTurno_codigo").val(solicitud['solicitudTurno_codigo']);
+                        $("#solicitudTurno_estadoAsistencia").val(solicitud['solicitudTurno_estadoAsistencia']);
+                        var div_accion =  $("#accion_asistencia");
+                        div_accion.append('<div class="div_dinamico form-group">'+solicitud['denegar']+solicitud['confirmar']+'</div>');
+                        var div_imprimir = $("#accion_imprimir");
+                        div_imprimir .append('<div class="div_dinamico">'+solicitud['comprobante']+'</div>');
+                    }
+                })
+                .fail(function (data) {
+                    console.log(data);
+                });
+    }
+    /*Denegar Asistencia*/
+    function denegarAsistencia(solicitudTurno_id) {
+        $('.alerta_mensaje').remove();
+        $('#mensaje_resultado').append('<div class="alerta_mensaje" align="center">' +
+        '<i class="fa fa-refresh fa-spin fa-3x fa-fw"></i> <span class="sr-only">Loading...</span> Procesando...</div>');
+        var datos = {
+            'solicitudTurno_id': solicitudTurno_id
+        };
+        //==========
+        $.ajax({
+            type: 'POST',
+            url: '/impsweb/turnos/cancelaAsistenciaAjax',
+            data: datos,
+            dataType: 'json',
+            encode: true
+        })
+                .done(function (data) {
+                    $(".div_dinamico").remove();
+
+                    console.log(data);
+                    $('.alerta_mensaje').remove();
+                    if (!data.success) {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-danger">' + data.mensaje + '</h3></div>');
+                    } else {
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success"> El turno ha sido <strong>cancelado</strong> correctamente </div>');
+                        var solicitud = data.solicitud;
+                        $("#solicitudTurno_codigo").val(solicitud['solicitudTurno_codigo']);
+                        $("#solicitudTurno_estadoAsistencia").val(solicitud['solicitudTurno_estadoAsistencia']);
+                        var div_accion =  $("#accion_asistencia");
+                        div_accion.append('<div class="div_dinamico form-group">'+solicitud['denegar']+solicitud['confirmar']+'</div>');
+                        var div_imprimir = $("#accion_imprimir");
+                        div_imprimir .append('<div class="div_dinamico">'+solicitud['comprobante']+'</div>');
+                    }
+
+                })
+                .fail(function (data) {
+                    console.log(data);
                 });
     }
 
@@ -467,7 +550,9 @@
 
         }
 
-        var cuerpoTabla = $('#tabla tbody');
+     /*   var cuerpoTabla = $('#tabla tbody');
+
+
         cuerpoTabla.on('dblclick', '#acepta', function () {
             $('.alerta_mensaje').remove();
             $('#mensaje_resultado').append('<div class="alerta_mensaje" align="center">' +
@@ -534,7 +619,7 @@
                     .fail(function (data) {
                         console.log(data);
                     });
-        });
+        });*/
     });
 
 </script>

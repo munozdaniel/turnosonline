@@ -456,11 +456,13 @@ class TurnosController extends ControllerBase
                     return;
                 }
                 $datos = array();
+                $idCodificado = base64_encode($solicitud->getSolicitudturnoId());
                 $datos['solicitudTurno_legajo'] = $solicitud->getSolicitudturnoLegajo();
                 $datos['solicitudTurno_nomApe'] = $solicitud->getSolicitudturnoNomape();
                 $datos['solicitudTurno_documento'] = $solicitud->getSolicitudturnoDocumento();
                 $datos['solicitudTurno_email'] = $solicitud->getSolicitudturnoEmail();
                 $datos['solicitudTurno_fechaPedido'] = $solicitud->getSolicitudturnoFechapedido();
+                $datos['solicitudTurno_codigo'] = $solicitud->getSolicitudturnoCodigo();
                 $datos['solicitudTurno_tipo'] = $solicitud->getTipoTurno()->getTipoTurnoNombre();
                 $datos['solicitudTurno_estado'] = $solicitud->getSolicitudturnoEstado();
                 $datos['solicitudTurno_estadoAsistencia'] = $solicitud->getEstadoAsistencia()->getEstadoasistenciaNombre();
@@ -469,26 +471,24 @@ class TurnosController extends ControllerBase
                 $comprobante = '<a class="btn btn-gris  btn-block"  disabled><i class="fa fa-print"></i> Imprimir Comprobante</a>';
 
 
-                $denegar = '<a class="btn btn-gris pull-right" disabled>Confirmar Asistencia</a>';
-                $confirmar = '<a class="btn btn-gris pull-right" disabled>Denegar Asistencia</a>';
+                $confirmar = '<a class="btn btn-gris pull-right" disabled>Confirmar Asistencia</a>';
+                $denegar = '<a class="btn btn-gris pull-right" disabled>Denegar Asistencia</a>';
                 if ($solicitud->getSolicitudturnoEstado() == "AUTORIZADO") {
                     if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 2)//CONFIRMADO
                     {
-                        $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $solicitud->getSolicitudturnoId(),
+                        $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $idCodificado,
                             '<i class="fa fa-print"></i> <strong> Imprimir Comprobante </strong> ',
                             'class' => 'btn btn-info btn-block', 'target' => '_blank'));
-                        $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(' . $solicitud->getSolicitudturnoId() . ')">Denegar Asistencia</a>';
+                        $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(\'' . $idCodificado . '\')">Denegar Asistencia</a>';
                     } else {
                         if ($solicitud->getSolicitudturnoEstadoasistenciaid() == 1)//EN ESPERA
                         {
-                            $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $solicitud->getSolicitudturnoId(),
-                                '<i class="fa fa-print"></i> <strong> Imprimir Comprobante </strong> ',
-                                'class' => 'btn btn-info btn-block', 'target' => '_blank'));
-                            $confirmar = '<a class="btn btn-success pull-right" onclick="confirmarAsistencia(' . $solicitud->getSolicitudturnoId() . ')">Confirmar Asistencia</a>';
-                            $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(' . $solicitud->getSolicitudturnoId() . ')">Denegar Asistencia</a>';
+                            $confirmar = '<a class="btn btn-success pull-right" onclick="confirmarAsistencia(\'' . $idCodificado . '\')">Confirmar Asistencia</a>';
+                            $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(\'' . $idCodificado . '\')">Denegar Asistencia</a>';
                         }
                     }
                 }
+
                 $datos['denegar'] = $denegar;
                 $datos['confirmar'] = $confirmar;
                 $datos['comprobante'] = $comprobante;
@@ -504,6 +504,207 @@ class TurnosController extends ControllerBase
         return;
     }
 
+    /**
+     * Acepta la asistencia, se utiliza en turnosRespondidos
+     */
+    public function aceptaAsistenciaAjaxAction()
+    {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success'] = false;
+        $retorno['mensaje'] = "";
+        if ($this->request->getPost('solicitudTurno_id') == ""
+            || $this->request->getPost('solicitudTurno_id') == NULL
+        ) {
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el Identificador del turno solicitado.<hr>
+             Por favor inténtelo nuevamente, en caso que el problema persista comuníquese con Soporte Técnico.  " . $this->request->getPost('solicitudTurno_id');
+            echo json_encode($retorno);
+            return;
+        }
+        $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:', 'bind' =>
+            array('solicitudTurno_id' => base64_decode($this->request->getPost('solicitudTurno_id')))));
+        if (!$solicitudTurno) {
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el turno solicitado.<hr>
+             Por favor inténtelo nuevamente, en caso que el problema persista comuníquese con Soporte Técnico.  ";
+            echo json_encode($retorno);
+            return;
+        }
+        if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 2) {
+            $retorno['mensaje'] = "El turno seleccionado ya ha sido confirmado.";
+            echo json_encode($retorno);
+            return;
+        }
+        if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 3) {
+            $retorno['mensaje'] = "El turno seleccionado no puede ser confirmado, ya que venció el plazo disponible.";
+            echo json_encode($retorno);
+            return;
+        }
+        if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 4) {
+            $retorno['mensaje'] = "El turno seleccionado ya fue cancelado, el afiliado deberá solicitar un nuevo turno.";
+            echo json_encode($retorno);
+            return;
+        }
+        $dentroPlazoValido = true;
+
+        if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1) //en espera
+        {
+            if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 1)
+                $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitudTurno->getSolicitudturnoFechapedido());
+            else
+                if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 2)
+                    $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitudTurno->getSolicitudturnoFechapedido());
+            if (!$dentroPlazoValido) {
+                //FIXME: Deberia acumular la sancion el evento de mysql
+                $retorno['mensaje'] = "El plazo para confirmar el turno ha finalizado. <hr> Se ha acumulado una sanción. ";
+                echo json_encode($retorno);
+                return;
+            }
+            $periodo = Fechasturnos::findFirst(array('fechasTurnos_id=:solicitudTurno_fechasTurnos:',
+                'bind' => array('solicitudTurno_fechasTurnos' => $solicitudTurno->getSolicitudturnosFechasturnos())));
+
+            $this->db->begin();
+            $solicitudTurno->setSolicitudturnoFechaconfirmacion(date('Y-m-d'));
+            $solicitudTurno->setSolicitudturnoEstadoasistenciaid(2);//Confirmado
+            $mensajeCodigo = "";
+            if ($solicitudTurno->getSolicitudturnoEstado() == "AUTORIZADO") {
+                if ($solicitudTurno->getSolicitudturnoCodigo() == null || trim($solicitudTurno->getSolicitudturnoCodigo()) == "") {
+                    $codigo = $this->getRandomCode($periodo->getFechasTurnosId());
+                    $solicitudTurno->setSolicitudturnoCodigo($codigo);
+                }
+            }
+
+            if (!$solicitudTurno->update()) {
+                $this->db->rollback();
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos. <hr> Inténtelo nuevamente, en caso
+                de que el problema persista comuníquese con el <strong>Soporte Técnico</strong>.";
+                echo json_encode($retorno);
+                return;
+            }
+            else
+            {
+                /* Devuelve el codigo y muestra el btn para imprimir el comprobante */
+                $solicitud = array();
+                $idCodificado = base64_encode($solicitudTurno->getSolicitudturnoId());
+                $solicitud['solicitudTurno_codigo']=$solicitudTurno->getSolicitudturnoCodigo();
+                $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $idCodificado,
+                    '<i class="fa fa-print"></i> <strong> Imprimir Comprobante </strong> ',
+                    'class' => 'btn btn-info btn-block', 'target' => '_blank'));
+                $solicitud['comprobante'] = $comprobante;
+                $confirmar = '<a class="btn btn-gris pull-right" disabled>Confirmar Asistencia</a>';
+                $solicitud['confirmar'] = $confirmar;
+                $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(\'' . $idCodificado . '\')">Denegar Asistencia</a>';
+                $solicitud['denegar'] = $denegar;
+                $solicitud['solicitudTurno_estadoAsistencia'] = $solicitudTurno->getEstadoAsistencia()->getEstadoasistenciaNombre();
+                $retorno['solicitud']=$solicitud;
+
+                //Se envia el email con el codigo de operacion-------------
+                $email = $solicitudTurno->getSolicitudturnoEmail();
+
+                if( trim($email) != "" && $email != NULL)
+                {
+                    $nomApe= $solicitudTurno->getSolicitudturnoNomape();
+                    $codigo = $solicitudTurno->getSolicitudturnoCodigo();
+
+                    $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
+                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
+                        'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
+
+                    $template = $this->seleccionarTemplateCodigo($body);
+
+                    $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
+                    $this->mailDesarrollo->MsgHTML($template);
+                    $this->mailDesarrollo->body = strip_tags($template);
+                    $this->mailDesarrollo->addAddress($email,'');
+                    $this->mailDesarrollo->Charset = 'UTF-8';
+                    $this->mailDesarrollo->send();
+                }
+            }
+        }
+
+        $this->db->commit();
+        $retorno['success'] = true;
+        $retorno['mensaje'] = $mensajeCodigo;
+        echo json_encode($retorno);
+        return;
+    }
+
+    /**
+     * Cancela la asistencia
+     */
+    public function cancelaAsistenciaAjaxAction()
+    {
+        $this->view->disable();
+        $retorno = array();
+        $retorno['success'] = false;
+        $retorno['mensaje'] = "";
+        if ($this->request->getPost('solicitudTurno_id') == ""
+            || $this->request->getPost('solicitudTurno_id') == NULL
+        ) {
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el <strong>Identificador </strong> del turno solicitado.
+             <hr> Por favor intenteló nuevamente, en caso que el problema persista comuníquese con Soporte Técnico.  ";
+            echo json_encode($retorno);
+            return;
+        }
+        $solicitudTurno = Solicitudturno::findFirst(array('solicitudTurno_id=:solicitudTurno_id:', 'bind' =>
+            array('solicitudTurno_id' => base64_decode($this->request->getPost('solicitudTurno_id')))));
+        if (!$solicitudTurno) {
+            $retorno['mensaje'] = "Ocurrió un problema, no se encontró el turno solicitado.<hr>
+             Por favor inténtelo nuevamente, en caso que el problema persista comuníquese con Soporte Técnico.  ";
+            echo json_encode($retorno);
+            return;
+        }
+        $dentroPlazoValido = true;
+        //Lo deberia hacer el evento de mysql
+        if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 1)
+            $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoOnline($solicitudTurno->getSolicitudturnoFechapedido());
+        else
+            if ($solicitudTurno->getSolicitudturnoTipoturnoid() == 2)
+                $dentroPlazoValido = Fechasturnos::verificarConfirmacionDentroPlazoTerminal($solicitudTurno->getSolicitudturnoFechapedido());
+        if (!$dentroPlazoValido) {
+            //FIXME: Deberia acumular la sancion el evento de mysql
+            $retorno['mensaje'] = "El plazo para confirmar el turno ha finalizado. <hr> Se ha acumulado una sanción. ";
+            echo json_encode($retorno);
+            return;
+        }
+        if ($solicitudTurno->getSolicitudturnoEstado() == "AUTORIZADO") {
+            //Se libera un turno
+            $periodo = Fechasturnos::findFirst(array('fechasTurnos_id=:solicitudTurno_fechasTurnos:',
+                'bind' => array('solicitudTurno_fechasTurnos' => $solicitudTurno->getSolicitudturnosFechasturnos())));
+
+            $this->db->begin();
+            $solicitudTurno->setSolicitudturnoEstadoasistenciaid(4);
+            if (!$periodo->decrementarCantAutorizados()) {
+                $this->db->rollback();
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos con respecto a los turnos autorizados. <hr> Inténtelo nuevamente, en caso
+                de que el problema persista comuníquese con el <strong>Soporte Técnico</strong>.";
+                echo json_encode($retorno);
+                return;
+            }
+            if (!$solicitudTurno->update()) {
+                $this->db->rollback();
+                $retorno['mensaje'] = "Ha ocurrido un error, no se pudieron actualizar los datos. Inténtelo nuevamente, en caso
+            de que el problema persista comuníquese con el Soporte Técnico.";
+                echo json_encode($retorno);
+                return;
+            }
+            /* Devuelve el codigo y muestra el btn para imprimir el comprobante */
+            $solicitud = array();
+            $idCodificado = base64_encode($solicitudTurno->getSolicitudturnoId());
+            $solicitud['solicitudTurno_codigo']=$solicitudTurno->getSolicitudturnoCodigo();
+            $comprobante = '<a class="btn btn-gris  btn-block"  disabled><i class="fa fa-print"></i> Imprimir Comprobante</a>';
+            $solicitud['comprobante'] = $comprobante;
+            $confirmar = '<a class="btn btn-gris pull-right" disabled>Confirmar Asistencia</a>';
+            $solicitud['confirmar'] = $confirmar;
+            $denegar = '<a class="btn btn-gris pull-right" disabled>Denegar Asistencia</a>';
+            $solicitud['denegar'] = $denegar;
+            $solicitud['solicitudTurno_estadoAsistencia'] = $solicitudTurno->getEstadoAsistencia()->getEstadoasistenciaNombre();
+            $retorno['solicitud']=$solicitud;
+        }
+        $this->db->commit();
+        $retorno['success'] = true;
+        echo json_encode($retorno);
+        return;
+    }
     /**
      * Se usa??
      */
