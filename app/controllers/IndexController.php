@@ -36,11 +36,7 @@ class IndexController extends ControllerBase
             ->addJs('plugins/vegas/vegas.min.js');
         $this->assets->collection('footerInline')
             ->addInlineJs("
-$(document).ready(function () {
-        //INAUGURACION: Eliminar cuando no se necesite
-        $(\"a.youtube\").YouTubeModal({autoplay: 1, width:100});
-        $( \".youtube\" ).trigger( \"click\" );
-    });
+
                     $('#inicio-slider').vegas({
                       overlay: true,
                       transition: 'fade',

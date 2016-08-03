@@ -2,8 +2,16 @@
  * Created by dmunioz on 14/06/2016.
  */
 $(window).bind("load", function () {
+    setTimeout(
+        function()
+        {
+            $("a.youtube").YouTubeModal({autoplay: 1, width:100});
+            $( ".youtube" ).trigger( "click" );
+        }, 2000);
+
     var myVar = setInterval(function () {
-        controlarEstadoTurnos()
+        controlarEstadoTurnos();
+
     }, 10000);
 
     function controlarEstadoTurnos() {
