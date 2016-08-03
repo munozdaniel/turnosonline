@@ -82,12 +82,12 @@
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
-                        <th class="th-estilo">Tipo</th>
+                        <th class="th-estilo">Tipo <br/>solicitud</th>
                         <th class="th-estilo">Fecha solicitud</th>
-                        <th class="th-estilo">Afiliado</th>
+                        <th class="th-estilo">Datos <br/>afiliado</th>
                         <th class="th-estilo">Fecha revisión</th>
-                        <th class="th-estilo">Atendido por</th>
-                        <th class="th-estilo">Estado</th>
+                        <th class="th-estilo">Atendido por usuario</th>
+                        <th class="th-estilo">Estado solicitud</th>
                         <th class="th-estilo">Causa Denegado</th>
                         <th class="th-estilo">Observaciones</th>
                         <th class="th-estilo">EDITAR</th>
