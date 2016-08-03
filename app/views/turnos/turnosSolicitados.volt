@@ -111,9 +111,8 @@
                             </td>
 
                             <td class="td-estilo">
-                                <h4>
-                                    <ins>{{ item.getSolicitudTurnoLegajo() }} </ins>
-                                </h4>{{ item.getSolicitudTurnoNomApe() }}
+                                <h4> LP <ins>{{ item.getSolicitudTurnoLegajo() }} </ins></h4>
+                                {{ item.getSolicitudTurnoNomApe() }}
                             </td>
 
                             <td class="td-estilo">
