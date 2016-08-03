@@ -54,7 +54,7 @@
             </div>
         </div>
 
-    </div>
+
 
     <hr>
 
@@ -105,22 +105,6 @@
                     </h4>
                 </div>
             </div>
-
-            <div class="col-sm-12" align="center">
-
-                <hr>
-
-                <div class=" col-sm-2 col-sm-offset-4">
-                    <div class="cuadrado-azul" style="background-color: #5bc0de;"><i class="fa fa-bookmark"></i></div>
-                    <strong>ONLINE</strong>
-                </div>
-
-                <div class=" col-sm-2">
-                    <div class="cuadrado-verde" style="background-color: #5cb85c;"><i class="fa fa-bookmark"></i></div>
-                    <strong>TERMINAL</strong>
-                </div>
-            </div>
-
         {% endif %}
 
     </div>
@@ -148,7 +132,7 @@
         </div>
 
     </div>
-
+    </div>
 </section>
 
 
@@ -491,12 +475,12 @@
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
                     download: 'open',
-                    exportOptions: {columns: [2, 3, 4, 5, 6, 7, 8, 11]}
+                    exportOptions: {columns: [2, 3, 4, 5, 6, 8]}
                 }
             ],
             "columnDefs": [
                 {
-                    "targets": [0, 1, 7, 8],
+                    "targets": [0, 1,7,8],
                     "visible": false,
                     "searchable": false
                 }
@@ -530,13 +514,13 @@
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 var $nRow = $(nRow);
                 //console.log(aData[9]);
-                if (aData[1] != "AUTORIZADO") {//ESTADO
+                if (aData[7] != "AUTORIZADO") {//ESTADO
                     $nRow.css({"color": "red"});
+                }else
+                {
+                    $nRow.css({"color": "green"});
                 }
-                if (aData[1] == 4) {// SI EL ESTADO ASISTENCIA ES CANCELADO
-                    $nRow.css({"color": "white"});
-                    $nRow.css({"background-color": "rgb(96, 125, 139)"});
-                }
+
 
             }
         });

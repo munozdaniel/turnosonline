@@ -335,7 +335,7 @@ class TurnosController extends ControllerBase
                     $item[] = $unaSolicitud->getSolicitudturnoNomape();
                     //4 Email
                     if ($unaSolicitud->getSolicitudturnoEmail() == NULL || trim($unaSolicitud->getSolicitudturnoEmail()) == "")
-                        $email = '';
+                        $email = 'SIN ESPECIFICAR';
                     else
                         $email = "" . $unaSolicitud->getSolicitudturnoEmail();
                     $item[] = "<i class='fa fa-envelope-o'></i> " . $email;
@@ -343,20 +343,23 @@ class TurnosController extends ControllerBase
                     $item[] = " <i class='fa fa-phone-square'></i> " . $unaSolicitud->getSolicitudturnoNumtelefono();
                     //6 Estado
                     $icono = "";
+                    $tachado = "";
                     if($unaSolicitud->getSolicitudturnoEstadoasistenciaid()==1)
                     {
-                        $icono =  '<i class="fa fa-clock-o"></i>';//$this->tag->image(array('img/turnos/loading.gif','alt'=>'En Espera','width'=>'14','height'=>'14'));
+                        $icono =  '<i class="fa fa-clock-o"  style="color:blue;"></i>';//$this->tag->image(array('img/turnos/loading.gif','alt'=>'En Espera','width'=>'14','height'=>'14'));
                     }else
                     {
                         if($unaSolicitud->getSolicitudturnoEstadoasistenciaid()==2)
-                            $icono = '<i class="fa fa-check"></i>';
-                        else
-                            $icono = '<i class="fa fa-remove"></i>';
+                            $icono = '<i class="fa fa-check"  style="color:green;"></i>';
+                        else {
+                            $tachado = "text-decoration:line-through; color:red;";//
+                            $icono = '<i class="fa fa-remove" style="color:red;"></i>';
+                        }
                     }
                     $color = "btn-danger";
                     if ($unaSolicitud->getSolicitudturnoEstado() == "AUTORIZADO")
                         $color = "btn-success";
-                    $item[] = '<a class="" style="text-decoration:bold; cursor: pointer;" onclick=verDatos("' . $unaSolicitud->getSolicitudturnoId() . '")>' .$icono."  ". $unaSolicitud->getSolicitudturnoEstado() . '</a>';
+                    $item[] = '<a class="" style="text-decoration:bold; cursor: pointer; '.$tachado.'" onclick=verDatos("' . $unaSolicitud->getSolicitudturnoId() . '")>' .$icono."  ". $unaSolicitud->getSolicitudturnoEstado() . '</a>';
                     //7 Estado: Para las busquedas dinamicas
 
                     $item[] = $unaSolicitud->getSolicitudturnoEstado();
@@ -472,8 +475,12 @@ class TurnosController extends ControllerBase
                 $datos['solicitudTurno_legajo'] = $solicitud->getSolicitudturnoLegajo();
                 $datos['solicitudTurno_nomApe'] = $solicitud->getSolicitudturnoNomape();
                 $datos['solicitudTurno_documento'] = $solicitud->getSolicitudturnoDocumento();
-                $datos['solicitudTurno_email'] = $solicitud->getSolicitudturnoEmail();
-                $datos['solicitudTurno_fechaPedido'] = $solicitud->getSolicitudturnoFechapedido();
+                if(trim($solicitud->getSolicitudturnoEmail())=="")
+                    $email = null;
+                else
+                    $email = $solicitud->getSolicitudturnoEmail();
+                $datos['solicitudTurno_email'] = $email;
+                $datos['solicitudTurno_fechaPedido'] = (new DateTime($solicitud->getSolicitudturnoFechapedido()))->format('d/m/Y');
                 $datos['solicitudTurno_codigo'] = $solicitud->getSolicitudturnoCodigo();
                 $datos['solicitudTurno_tipo'] = $solicitud->getTipoTurno()->getTipoTurnoNombre();
                 $datos['solicitudTurno_estado'] = $solicitud->getSolicitudturnoEstado();
