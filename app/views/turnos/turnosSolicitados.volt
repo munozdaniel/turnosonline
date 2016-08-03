@@ -135,8 +135,9 @@
                                 {#<div><a class="tooltipo tooltip-topo btn" data-tooltip="{{ item.getSolicitudTurnoCausa() }}"><i class="fa fa-info-circle "></i></a></div>#}
                               {{ item.getSolicitudTurnoCausa() }}
                             </td>
-                            <td class="td-observaciones" title="{{ item.getSolicitudTurnoObservaciones() }}">
-                                {{ item.getSolicitudTurnoObservaciones() }}
+                            {% set obs = item.getSolicitudTurnoObservaciones() %}
+                            <td class="td-observaciones"title="{{ obs }}" >
+                                <a onclick="alert('{{ obs }}')"> <i class="fa fa-plus-square" style="cursor:pointer;"></i> </a> {{ obs }}
                             </td>
 
 
