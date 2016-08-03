@@ -380,21 +380,21 @@
         //==========
         $.ajax({
             type: 'POST',
-            url: '/impsweb/turnos/aceptaAsistenciaAjax',
+            url: '/impsweb/solicitudTurno/aceptaAsistenciaTablaAjax',
             data: datos,
             dataType: 'json',
             encode: true
         })
                 .done(function (data) {
-                    //console.log(data);
+                    console.log(data);
                     $(".div_dinamico").remove();
 
                     $('.alerta_mensaje').remove();
                     if (!data.success) {
-                        $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-danger">' + data.mensaje + '</h3></div>');
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje">' + data.mensaje + '</div>');
                     } else {
                         $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success">' +
-                        '<h3> El turno ha sido <strong>confirmado</strong> correctamente');
+                        'El turno ha sido <strong>confirmado</strong> correctamente');
                         var solicitud = data.solicitud;
                         $("#solicitudTurno_codigo").val(solicitud['solicitudTurno_codigo']);
                         $("#solicitudTurno_estadoAsistencia").val(solicitud['solicitudTurno_estadoAsistencia']);
@@ -419,7 +419,7 @@
         //==========
         $.ajax({
             type: 'POST',
-            url: '/impsweb/turnos/cancelaAsistenciaAjax',
+            url: '/impsweb/solicitudTurno/cancelaAsistenciaTablaAjax',
             data: datos,
             dataType: 'json',
             encode: true
@@ -430,7 +430,7 @@
                     console.log(data);
                     $('.alerta_mensaje').remove();
                     if (!data.success) {
-                        $('#mensaje_resultado').append('<div class="alerta_mensaje"><h3 class="alert alert-danger">' + data.mensaje + '</h3></div>');
+                        $('#mensaje_resultado').append('<div class="alerta_mensaje">' + data.mensaje + '</div>');
                     } else {
                         $('#mensaje_resultado').append('<div class="alerta_mensaje alert alert-success"> El turno ha sido <strong>cancelado</strong> correctamente </div>');
                         var solicitud = data.solicitud;
