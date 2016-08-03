@@ -16,10 +16,12 @@
                 </h1>
 
                 <h3>
-                    Complete los campos para generar un nuevo período para solicitar turnos.
-                    <br><em style="color:tomato">
+                    <small style="color:white;">
+                        Complete los campos para generar un nuevo período para solicitar turnos.
+                        <br><em style="color:tomato">
                         <ins>Advertencia:</ins>
                         La modificación del periodo activo queda bajo responsabilidad del usuario.</em>
+                    </small>
                 </h3>
             </div>
 
