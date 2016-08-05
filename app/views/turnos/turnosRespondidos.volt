@@ -329,6 +329,11 @@
                         $("#solicitudTurno_fechaPedido").val(solicitud['solicitudTurno_fechaPedido']);
                         $("#solicitudTurno_codigo").val(solicitud['solicitudTurno_codigo']);
                         $("#solicitudTurno_tipo").val(solicitud['solicitudTurno_tipo']);
+                        if(solicitud['solicitudTurno_estadoAsistencia']==="CANCELADO")
+                        {
+                            $("#solicitudTurno_estadoAsistencia").addClass("cancelado");
+                        }
+
                         $("#solicitudTurno_estado").val(solicitud['solicitudTurno_estado']);
                         $("#solicitudTurno_estadoAsistencia").val(solicitud['solicitudTurno_estadoAsistencia']);
                         $("#solicitudTurno_causa").val(solicitud['solicitudTurno_causa']);

@@ -757,7 +757,7 @@ div[data-dimension] {
 /* Works SECTION */
 /*--------------------*/
 
-#works {
+#works,#guia_tramites {
   background-color: #4f535e;
   display: inline;
   float: left;
@@ -820,7 +820,6 @@ div[data-dimension] {
 
 
 .portfolio_area {
-  background: none repeat scroll 0 0 #4f535e;
   color: #fff;
   display: inline;
   float: left;
@@ -2478,7 +2477,7 @@ cursor: none;
 	#about,#admin {padding: 50px 0;}
 	#service {padding: 50px 0 50px;}
 	#onepage {padding: 80px 0 50px;}
-	#works {padding: 0 0 50px;}
+	#works,#guia_tramites {padding: 0 0 50px;}
 	#team {padding: 50px 0;}
 	#pricing {padding: 50px 0;}
 	#blog {padding: 50px 0;}
@@ -2756,6 +2755,14 @@ cursor: none;
      -o-background-size: cover !important;
      background-size: cover !important;
  }
+#guia_tramites
+{
+    background: url(../img/test.jpg ) no-repeat center center fixed !important;
+    -webkit-background-size: cover  !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important;
+}
 /*Slider */
 .borde-bottom{
     border-bottom: 2px solid #5e7b97;
@@ -3750,4 +3757,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .btn-3e:hover:after {
     width: 40%;
+}
+.cancelado
+{
+    background-color: #ed0d0d !important;
+    color: #FFF;
+    font-weight: bold !important;;
 }
