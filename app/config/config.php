@@ -49,7 +49,7 @@ return new \Phalcon\Config(array(
         'phpmailerDir'   => APP_PATH . '/app/library/phpmailer/',
         'utilesDir'     => APP_PATH . '/app/library/utiles/',
         'cacheDir'       => APP_PATH . '/app/cache/',
-        'baseUri'        => '/impsweb/',
+        'baseUri'        => '/turnosonline/',
     ),
     'mail' => array(
         'host'     => 'mail.imps.org.ar',
