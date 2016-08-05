@@ -14,28 +14,7 @@
                     <span class="hidden-sm" style="font-family: 'Archivo Black', sans-serif;font-weight: bolder; font-size:30px;">IMPS</span>
                 </a>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul id="top-menu" class="nav navbar-nav navbar-right main_nav">
-                    <li>{{ link_to('index/index#','class':'','Inicio' )}}</li>
-                    <li>{{ link_to('index/index#about','class':'','Informacion') }}</li>
-                    <li>{{ link_to('index/index#service','class':'','Servicios') }}</li>
-                    <li>{{ link_to('index/index#works','class':'','Guía de Tramites') }}</li>
-                    <li>{{ link_to('index/index#team','class':'','Prestaciones' )}}</li>
-                    <li>{{ link_to('index/index#clients','class':'','Contactos' )}}</li>
-                    <li id="opciones-institucion" class="dropdown">
-                        <button class="btn btn-menu dropdown-toggle" type="button" id="desplegar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Institución
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="miSubMenu" class="dropdown-menu main_nav" aria-labelledby="desplegar" style="color: #FFF !important;;">
-                            <li>{{ link_to('index/index#contact','class':'','Acerca de Nosotros') }}</li>
-                            <li role="separator" class="divider" style="width: 100%;"></li>
-                            {{ elemento.getItemMenu() }}
-                        </ul>
-                    </li>
-                </ul>
 
-            </div>
 
         </div>
     </div>
