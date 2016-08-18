@@ -332,28 +332,25 @@ class SolicitudturnoController extends ControllerBase
                 de que el problema persista comuníquese con el <strong>Soporte Técnico</strong>.";
                 echo json_encode($retorno);
                 return;
-            }
-            else
-            {
+            } else {
                 //Se envia el email con el codigo de operacion-------------
 
                 $email = $solicitudTurno->getSolicitudturnoEmail();
 
-                if( trim($email) != "" && $email != NULL)
-                {
-                    $nomApe= $solicitudTurno->getSolicitudturnoNomape();
+                if (trim($email) != "" && $email != NULL) {
+                    $nomApe = $solicitudTurno->getSolicitudturnoNomape();
                     $codigo = $solicitudTurno->getSolicitudturnoCodigo();
 
-                    $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
-                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
-                        'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
+                    $body = 'Estimado/a ' . $nomApe . ', el siguiente código le servirá
+                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>' .
+                        'Código de operación: <b>' . $codigo . '</b> <br/><br/><br/>';
 
                     $template = $this->seleccionarTemplateCodigo($body);
 
-                    $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
+                    $this->mailDesarrollo->Subject = 'Código de operación para turno IMPS';
                     $this->mailDesarrollo->MsgHTML($template);
                     $this->mailDesarrollo->body = strip_tags($template);
-                    $this->mailDesarrollo->addAddress($email,'');
+                    $this->mailDesarrollo->addAddress($email, '');
                     $this->mailDesarrollo->Charset = 'UTF-8';
                     $this->mailDesarrollo->send();
                 }
@@ -538,23 +535,22 @@ class SolicitudturnoController extends ControllerBase
 
             $email = $solicitud->getSolicitudturnoEmail();
 
-            if( trim($email) != "" && $email != NULL)
-            {
+            if (trim($email) != "" && $email != NULL) {
                 $this->db->begin();
 
-                $nomApe= $solicitud->getSolicitudturnoNomape();
+                $nomApe = $solicitud->getSolicitudturnoNomape();
                 $codigo = $solicitud->getSolicitudturnoCodigo();
 
-                $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
-                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
-                'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
+                $body = 'Estimado/a ' . $nomApe . ', el siguiente código le servirá
+                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>' .
+                    'Código de operación: <b>' . $codigo . '</b> <br/><br/><br/>';
 
                 $template = $this->seleccionarTemplateCodigo($body);
 
-                $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
+                $this->mailDesarrollo->Subject = 'Código de operación para turno IMPS';
                 $this->mailDesarrollo->MsgHTML($template);
                 $this->mailDesarrollo->body = strip_tags($template);
-                $this->mailDesarrollo->addAddress($email,'');
+                $this->mailDesarrollo->addAddress($email, '');
                 $this->mailDesarrollo->Charset = 'UTF-8';
                 $seEnvio = $this->mailDesarrollo->send();
 
@@ -650,7 +646,7 @@ class SolicitudturnoController extends ControllerBase
                 $this->flash->error('INGRESE EL LEGAJO');
             }
 
-            if (!$this->request->hasPost('codigo') || $this->request->getPost('codigo','alphanum') == null) {
+            if (!$this->request->hasPost('codigo') || $this->request->getPost('codigo', 'alphanum') == null) {
                 $this->flash->error('INGRESE EL CODIGO');
             }
 
@@ -660,7 +656,7 @@ class SolicitudturnoController extends ControllerBase
 
             $solicitudTurno = Solicitudturno::findFirst(
                 array('solicitudTurno_legajo=:legajo: AND solicitudTurno_codigo=:codigo: ',
-                'bind' => array('legajo'=>$legajo,'codigo'=>$codigo)));
+                    'bind' => array('legajo' => $legajo, 'codigo' => $codigo)));
 
             if (!$solicitudTurno) {
                 $this->flash->error('NO SE HA ENCONTRADO EL TURNO ASOCIADO CON LOS DATOS INGRESADOS');
@@ -696,8 +692,7 @@ class SolicitudturnoController extends ControllerBase
             }
             $this->view->solicitud_id = base64_encode($solicitudTurno->getSolicitudturnoId());
             //Pendiente de confirmacion
-            if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1)
-            {
+            if ($solicitudTurno->getSolicitudturnoEstadoasistenciaid() == 1) {
                 $this->flash->notice('<h3>Su asistencia se encuentra <strong>PENDIENTE</strong> </h3>
                     <h4>Por favor, confirme/cancele su asistencia. Recuerde que tiene tiempo hasta el ' . $fechaVencimiento . ' de lo contrario el sistema acumulará una sanción.</h4>');
                 $this->view->pendiente = true;
@@ -954,13 +949,11 @@ class SolicitudturnoController extends ControllerBase
                 de que el problema persista comuníquese con el <strong>Soporte Técnico</strong>.";
                 echo json_encode($retorno);
                 return;
-            }
-            else
-            {
+            } else {
                 /* Devuelve el codigo y muestra el btn para imprimir el comprobante */
                 $solicitud = array();
                 $idCodificado = base64_encode($solicitudTurno->getSolicitudturnoId());
-                $solicitud['solicitudTurno_codigo']=$solicitudTurno->getSolicitudturnoCodigo();
+                $solicitud['solicitudTurno_codigo'] = $solicitudTurno->getSolicitudturnoCodigo();
                 $comprobante = $this->tag->linkTo(array('solicitudTurno/comprobanteTurno/?id=' . $idCodificado,
                     '<i class="fa fa-print"></i> <strong> Imprimir Comprobante </strong> ',
                     'class' => 'btn btn-info btn-block', 'target' => '_blank'));
@@ -970,26 +963,25 @@ class SolicitudturnoController extends ControllerBase
                 $denegar = '<a class="btn btn-danger pull-right" onclick="denegarAsistencia(\'' . $idCodificado . '\')">Denegar Asistencia</a>';
                 $solicitud['denegar'] = $denegar;
                 $solicitud['solicitudTurno_estadoAsistencia'] = $solicitudTurno->getEstadoAsistencia()->getEstadoasistenciaNombre();
-                $retorno['solicitud']=$solicitud;
+                $retorno['solicitud'] = $solicitud;
 
                 //Se envia el email con el codigo de operacion-------------
                 $email = $solicitudTurno->getSolicitudturnoEmail();
 
-                if( trim($email) != "" && $email != NULL)
-                {
-                    $nomApe= $solicitudTurno->getSolicitudturnoNomape();
+                if (trim($email) != "" && $email != NULL) {
+                    $nomApe = $solicitudTurno->getSolicitudturnoNomape();
                     $codigo = $solicitudTurno->getSolicitudturnoCodigo();
 
-                    $body ='Estimado/a '.$nomApe.', el siguiente código le servirá
-                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>'.
-                        'Código de operación: <b>'.$codigo.'</b> <br/><br/><br/>';
+                    $body = 'Estimado/a ' . $nomApe . ', el siguiente código le servirá
+                        para cuando se presente en nuestra institución a realizar el trámite del préstamo personal. <br/><br/>' .
+                        'Código de operación: <b>' . $codigo . '</b> <br/><br/><br/>';
 
                     $template = $this->seleccionarTemplateCodigo($body);
 
-                    $this->mailDesarrollo->Subject='Código de operación para turno IMPS';
+                    $this->mailDesarrollo->Subject = 'Código de operación para turno IMPS';
                     $this->mailDesarrollo->MsgHTML($template);
                     $this->mailDesarrollo->body = strip_tags($template);
-                    $this->mailDesarrollo->addAddress($email,'');
+                    $this->mailDesarrollo->addAddress($email, '');
                     $this->mailDesarrollo->Charset = 'UTF-8';
                     $this->mailDesarrollo->send();
                 }
@@ -1064,7 +1056,7 @@ class SolicitudturnoController extends ControllerBase
             /* Devuelve el codigo y muestra el btn para imprimir el comprobante */
             $solicitud = array();
             $idCodificado = base64_encode($solicitudTurno->getSolicitudturnoId());
-            $solicitud['solicitudTurno_codigo']=$solicitudTurno->getSolicitudturnoCodigo();
+            $solicitud['solicitudTurno_codigo'] = $solicitudTurno->getSolicitudturnoCodigo();
             $comprobante = '<a class="btn btn-gris  btn-block"  disabled><i class="fa fa-print"></i> Imprimir Comprobante</a>';
             $solicitud['comprobante'] = $comprobante;
             $confirmar = '<a class="btn btn-gris pull-right" disabled>Confirmar Asistencia</a>';
@@ -1072,7 +1064,7 @@ class SolicitudturnoController extends ControllerBase
             $denegar = '<a class="btn btn-gris pull-right" disabled>Denegar Asistencia</a>';
             $solicitud['denegar'] = $denegar;
             $solicitud['solicitudTurno_estadoAsistencia'] = $solicitudTurno->getEstadoAsistencia()->getEstadoasistenciaNombre();
-            $retorno['solicitud']=$solicitud;
+            $retorno['solicitud'] = $solicitud;
         }
         $this->db->commit();
         $retorno['success'] = true;

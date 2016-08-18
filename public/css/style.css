@@ -2757,7 +2757,7 @@ cursor: none;
  }
 #guia_tramites
 {
-    background: url(../img/test.jpg ) no-repeat center center fixed !important;
+    background: url(../img/tramites/wall_bg.jpg ) no-repeat center center fixed !important;
     -webkit-background-size: cover  !important;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
@@ -3614,33 +3614,77 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
-
+.padding-left-md-10{
+    margin-left:10px;
+}
+.padding-left-md-40{
+    margin-left:40px;
+}
+.padding-left-md-75
+{
+    margin-left:75px;
+}
 
 /*==========  Non-Mobile First Method  ==========*/
 
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
-
+    .padding-left-md-10{
+        margin-left:10px;
+    }
+    .padding-left-md-40{
+        margin-left:40px;
+    }
+    .padding-left-md-75
+    {
+        margin-left:75px;
+    }
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
-
+    .padding-left-md-10{
+        margin-left:10px;
+    }
+    .padding-left-md-40{
+        margin-left:40px;
+    }
+    .padding-left-md-75
+    {
+        margin-left:75px;
+    }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
-
+    .padding-left-md-10{
+        margin-left:10px;
+    }
+    .padding-left-md-10,.padding-left-md-40,.padding-left-md-75{
+        margin-left:0 !important;;
+    }
 }
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
+    .padding-left-md-10{
+        margin-left:10px;
+    }
 
+    .padding-left-md-10,.padding-left-md-40,.padding-left-md-75{
+        margin-left:0 !important;;
+    }
 }
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
+    .padding-left-md-10{
+        margin-right:10px;
+    }
 
+    .padding-left-md-10,.padding-left-md-40,.padding-left-md-75{
+        margin-right:0 !important;;
+    }
 }
 
 .bs-callout {
@@ -3654,8 +3698,9 @@ input[type=number]::-webkit-outer-spin-button {
     border-left-color: #1b809e;
 }
 
-/* Button 6d: botones de la guia de tramites */
+/* Button 6d: botones de la guia de tramites FIXME: CREO QE NO SE USAN MAS */
 /* General button style (reset) */
+/*
 .btn-tramites {
     border: none;
     font-family: FontAwesome;
@@ -3682,7 +3727,7 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
 }
-/* Pseudo elements for icons */
+/* Pseudo elements for icons
 .btn:before{
     font-style: normal;
     font-weight: normal;
@@ -3697,7 +3742,7 @@ input[type=number]::-webkit-outer-spin-button {
      content:  "\f101";
  }
 
-/* Button 3 */
+/* Button 3
 .btn-3 {
     background: #2DA2C8;
     color: #fff;
@@ -3725,7 +3770,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 140%;
     width: 60px;
 }
-/* Button 3e */
+/* Button 3e
 .btn-3e {
     padding: 25px 120px 25px 60px;
     overflow: hidden;
@@ -3757,10 +3802,4 @@ input[type=number]::-webkit-outer-spin-button {
 
 .btn-3e:hover:after {
     width: 40%;
-}
-.cancelado
-{
-    background-color: #ed0d0d !important;
-    color: #FFF;
-    font-weight: bold !important;;
 }

@@ -41,7 +41,7 @@ var fg_my_content = {
                 // on the main directory level, then simply leave
                 // this empty (like so: gallery_master_folder: '',).
                 
-                main_menu_title: 'Single Gallery Demo',
+                main_menu_title: 'Galería de Imágenes',
                 
                 // This is the main title for your galleries menu.
                 
@@ -73,7 +73,7 @@ var fg_my_content = {
                         // relative to the location of your html file.
                         
                 
-                gallery_title: 'Gallery 1',
+                gallery_title: 'Galería',
                         
                         // Gallery title (optional).
                         
@@ -84,7 +84,7 @@ var fg_my_content = {
                         
                 image_1: {
                         
-                        thumb: '1.gif',
+                        thumb: 'In_000_s.png',
                         
                         // Image thumbnail file path (compulsory).
 
@@ -95,7 +95,7 @@ var fg_my_content = {
                         // thumbnail dimensions, flipGallery will
                         // automatically crop it for you.
                         
-                        enlarged: '1.gif',
+                        enlarged: 'In_000.png',
                         
                         // Image enlargement file path (compulsory).
 
@@ -116,20 +116,81 @@ var fg_my_content = {
                 // From now on the gallery images structure is compressed
                 // for speed of insertion.
 
-                image_2: { thumb: '2.jpg', enlarged: '2.jpg', text: '<b>PRUEBA</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_3: { thumb: '3.gif', enlarged: '3.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_4: { thumb: '4.gif', enlarged: '4.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_5: { thumb: '5.gif', enlarged: '5.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_6: { thumb: '6.gif', enlarged: '6.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_7: { thumb: '7.gif', enlarged: '7.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_8: { thumb: '8.gif', enlarged: '8.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_9: { thumb: '9.gif', enlarged: '9.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_10: { thumb: '10.gif', enlarged: '10.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_11: { thumb: '11.gif', enlarged: '11.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_12: { thumb: '12.gif', enlarged: '12.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_13: { thumb: '13.gif', enlarged: '13.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                image_14: { thumb: '14.gif', enlarged: '14.gif', text: '<b>Example Title</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac lorem vitae lacus sollicitudin lacinia. <a href="http://flipgallery.net/" target="_blank" style="color: #000;">Example Link</a>' },
-                
+                image_2: { thumb: 'In_059_s.jpg', enlarged: 'In_059.jpg', text: '' },
+                image_3: { thumb: 'In_060_s.jpg', enlarged: 'In_060.jpg', text: '' },
+                image_4: { thumb: 'In_061_s.jpg', enlarged: 'In_061.jpg', text: '' },
+                image_5: { thumb: 'In_062_s.jpg', enlarged: 'In_062.jpg', text: '' },
+                image_6: { thumb: 'In_063_s.jpg', enlarged: 'In_063.jpg', text: '' },
+                image_7: { thumb: 'In_064_s.jpg', enlarged: 'In_064.jpg', text: '' },
+                image_8: { thumb: 'In_065_s.jpg', enlarged: 'In_065.jpg', text: '' },
+                image_9: { thumb: 'In_066_s.jpg', enlarged: 'In_066.jpg', text: '' },
+                image_10: { thumb: 'In_067_s.jpg', enlarged: 'In_067.jpg', text: '' },
+                image_11: { thumb: 'In_068_s.jpg', enlarged: 'In_068.jpg', text: '' },
+                image_12: { thumb: 'In_069_s.jpg', enlarged: 'In_069.jpg', text: '' },
+                image_13: { thumb: 'In_070_s.jpg', enlarged: 'In_070.jpg', text: '' },
+                image_14: { thumb: 'In_071_s.jpg', enlarged: 'In_071.jpg', text: '' },
+                image_15: { thumb: 'In_072_s.jpg', enlarged: 'In_072.jpg', text: '' },
+                image_16: { thumb: 'In_073_s.jpg', enlarged: 'In_073.jpg', text: '' },
+                image_17: { thumb: 'In_074_s.jpg', enlarged: 'In_074.jpg', text: '' },
+                image_18: { thumb: 'In_075_s.jpg', enlarged: 'In_075.jpg', text: '' },
+            image_19: { thumb: 'In_01_s.jpg', enlarged: 'In_01.jpg', text: '' },
+            image_20: { thumb: 'In_02_s.jpg', enlarged: 'In_02.jpg', text: '' },
+            image_21: { thumb: 'In_03_s.jpg', enlarged: 'In_03.jpg', text: '' },
+            image_22: { thumb: 'In_04_s.jpg', enlarged: 'In_04.jpg', text: '' },
+            image_23: { thumb: 'In_05_s.jpg', enlarged: 'In_05.jpg', text: '' },
+            image_24: { thumb: 'In_06_s.jpg', enlarged: 'In_06.jpg', text: '' },
+            image_25: { thumb: 'In_07_s.jpg', enlarged: 'In_07.jpg', text: '' },
+            image_26: { thumb: 'In_08_s.jpg', enlarged: 'In_08.jpg', text: '' },
+            image_27: { thumb: 'In_09_s.jpg', enlarged: 'In_09.jpg', text: '' },
+            image_28: { thumb: 'In_010_s.jpg', enlarged: 'In_010.jpg', text: '' },
+            image_29: { thumb: 'In_011_s.jpg', enlarged: 'In_011.jpg', text: '' },
+            image_30: { thumb: 'In_012_s.jpg', enlarged: 'In_012.jpg', text: '' },
+            image_31: { thumb: 'In_013_s.jpg', enlarged: 'In_013.jpg', text: '' },
+            image_32: { thumb: 'In_014_s.jpg', enlarged: 'In_014.jpg', text: '' },
+            image_33: { thumb: 'In_015_s.jpg', enlarged: 'In_015.jpg', text: '' },
+            image_34: { thumb: 'In_016_s.jpg', enlarged: 'In_016.jpg', text: '' },
+            image_35: { thumb: 'In_017_s.jpg', enlarged: 'In_017.jpg', text: '' },
+            image_36: { thumb: 'In_018_s.jpg', enlarged: 'In_018.jpg', text: '' },
+            image_37: { thumb: 'In_019_s.jpg', enlarged: 'In_019.jpg', text: '' },
+            image_38: { thumb: 'In_020_s.jpg', enlarged: 'In_020.jpg', text: '' },
+            image_39: { thumb: 'In_021_s.jpg', enlarged: 'In_021.jpg', text: '' },
+            image_40: { thumb: 'In_022_s.jpg', enlarged: 'In_022.jpg', text: '' },
+            image_41: { thumb: 'In_023_s.jpg', enlarged: 'In_023.jpg', text: '' },
+            image_42: { thumb: 'In_024_s.jpg', enlarged: 'In_024.jpg', text: '' },
+            image_43: { thumb: 'In_025_s.jpg', enlarged: 'In_025.jpg', text: '' },
+            image_44: { thumb: 'In_026_s.jpg', enlarged: 'In_026.jpg', text: '' },
+            image_45: { thumb: 'In_027_s.jpg', enlarged: 'In_027.jpg', text: '' },
+            image_46: { thumb: 'In_028_s.jpg', enlarged: 'In_028.jpg', text: '' },
+            image_47: { thumb: 'In_029_s.jpg', enlarged: 'In_029.jpg', text: '' },
+            image_48: { thumb: 'In_030_s.jpg', enlarged: 'In_030.jpg', text: '' },
+            image_49: { thumb: 'In_031_s.jpg', enlarged: 'In_031.jpg', text: '' },
+            image_50: { thumb: 'In_032_s.jpg', enlarged: 'In_032.jpg', text: '' },
+            image_51: { thumb: 'In_033_s.jpg', enlarged: 'In_033.jpg', text: '' },
+            image_52: { thumb: 'In_034_s.jpg', enlarged: 'In_034.jpg', text: '' },
+            image_53: { thumb: 'In_035_s.jpg', enlarged: 'In_035.jpg', text: '' },
+            image_54: { thumb: 'In_036_s.jpg', enlarged: 'In_036.jpg', text: '' },
+            image_55: { thumb: 'In_037_s.jpg', enlarged: 'In_037.jpg', text: '' },
+            image_56: { thumb: 'In_038_s.jpg', enlarged: 'In_038.jpg', text: '' },
+            image_57: { thumb: 'In_039_s.jpg', enlarged: 'In_039.jpg', text: '' },
+            image_58: { thumb: 'In_040_s.jpg', enlarged: 'In_040.jpg', text: '' },
+            image_59: { thumb: 'In_041_s.jpg', enlarged: 'In_041.jpg', text: '' },
+            image_60: { thumb: 'In_042_s.jpg', enlarged: 'In_042.jpg', text: '' },
+            image_61: { thumb: 'In_043_s.jpg', enlarged: 'In_043.jpg', text: '' },
+            image_62: { thumb: 'In_044_s.jpg', enlarged: 'In_044.jpg', text: '' },
+            image_63: { thumb: 'In_045_s.jpg', enlarged: 'In_045.jpg', text: '' },
+            image_64: { thumb: 'In_046_s.jpg', enlarged: 'In_046.jpg', text: '' },
+            image_65: { thumb: 'In_047_s.jpg', enlarged: 'In_047.jpg', text: '' },
+            image_66: { thumb: 'In_048_s.jpg', enlarged: 'In_048.jpg', text: '' },
+            image_67: { thumb: 'In_049_s.jpg', enlarged: 'In_049.jpg', text: '' },
+            image_68: { thumb: 'In_050_s.jpg', enlarged: 'In_050.jpg', text: '' },
+            image_69: { thumb: 'In_051_s.jpg', enlarged: 'In_051.jpg', text: '' },
+            image_70: { thumb: 'In_052_s.jpg', enlarged: 'In_052.jpg', text: '' },
+            image_71: { thumb: 'In_053_s.jpg', enlarged: 'In_053.jpg', text: '' },
+            image_72: { thumb: 'In_054_s.jpg', enlarged: 'In_054.jpg', text: '' },
+            image_73: { thumb: 'In_055_s.jpg', enlarged: 'In_055.jpg', text: '' },
+            image_74: { thumb: 'In_056_s.jpg', enlarged: 'In_056.jpg', text: '' },
+            image_75: { thumb: 'In_057_s.jpg', enlarged: 'In_057.jpg', text: '' },
+
         },
 
 };
@@ -232,19 +293,19 @@ var fg_text_settings = {
     
         // *Gallery Navigation Text Settings*
     
-        return_to_main_gallery_text: '&lsaquo;&lsaquo; Back To Main Gallery',
+        return_to_main_gallery_text: '&lsaquo;&lsaquo; Volver a la Galería Principal',
     
         return_to_main_gallery_text_style: 'font-size: 14px; color: #333; font-weight: bold; text-decoration: none;',
     
-        next_gallery_text: 'Next &rsaquo;&rsaquo;',
+        next_gallery_text: 'Siguiente &rsaquo;&rsaquo;',
     
-        back_gallery_text: '&lsaquo;&lsaquo; Back',
+        back_gallery_text: '&lsaquo;&lsaquo; Atrás',
     
         next_and_back_text_style: 'font-size: 14px; color: #333; font-weight: bold; text-decoration: none;',
     
-        page_number_page: 'Page',
+        page_number_page: 'Página',
     
-        page_number_of: 'of',
+        page_number_of: 'de',
     
         page_number_text_style: 'font-size: 13px; color: #999;',
     
@@ -256,15 +317,15 @@ var fg_text_settings = {
     
         // *Picture/Lightbox Navigation Text Settings*
     
-        next_image_text: 'Next &rsaquo;&rsaquo;',
+        next_image_text: 'Siguiente &rsaquo;&rsaquo;',
     
-        back_image_text: '&lsaquo;&lsaquo; Back',
+        back_image_text: '&lsaquo;&lsaquo; Atrás',
     
         next_and_back_image_text_style: 'font-weight: bold; color: #000;',
     
-        image_number_page: 'Image',
+        image_number_page: 'Imagen',
     
-        image_number_of: 'of',
+        image_number_of: 'de',
     
         image_number_text_style: 'color: #999;',
 
